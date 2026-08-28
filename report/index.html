@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dinesh Potla">
-<meta name="dcterms.date" content="2026-08-27">
+<meta name="dcterms.date" content="2026-08-28">
 <meta name="description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
 
 <title>Canopy to Cohort</title>
@@ -431,7 +431,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 27, 2026</p>
+        <p class="date">August 28, 2026</p>
       </div>
     </div>
     
@@ -514,12 +514,12 @@ window.Quarto = {
 </div>
 </div>
 <div class="headline-result column-page">
-<p><span class="headline-result-label">Primary adjusted association</span></p>
-<p><strong>0.40× the odds of no seedlings tallied</strong> per standard-deviation increase in established sugar-maple basal area (95% CI 0.33–0.49).</p>
+<p><span class="headline-result-label">Primary adjusted pattern</span></p>
+<p><strong>Non-detection probability falls from 82% at zero established maple to 35% at 25 ft²/acre</strong> in the adjusted reference profile, then levels off. The relationship is nonlinear and observational.</p>
 </div>
 <section id="abstract" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="abstract">Abstract</h2>
-<p>This exploratory study evaluated 1,457 northern-hardwood plot-condition measurements from 78 Michigan counties. It asked whether places with substantial established sugar maple also showed evidence of the next cohort. Sugar-maple seedlings were tallied in 57.2% of conditions with demonstrated microplot sampling opportunity. A transparent, sample-relative indicator flagged 119 observations (8.4%) combining upper-third sugar-maple basal-area share with no sugar-maple seedlings tallied. Associations were evaluated with mixed-effects logistic regression. Results describe the analyzed sample and do not constitute FIA design-based population estimates or causal effects.</p>
+<p>This exploratory study evaluated 1,457 plot-condition measurements from FIA’s maple/beech/birch forest-type group—used here as the operational northern-hardwood cohort—across 78 Michigan counties. It asked whether places with substantial established sugar maple also showed evidence of the next cohort. Sugar-maple seedlings were tallied in 57.2% of conditions with demonstrated microplot sampling opportunity. A transparent, sample-relative indicator flagged 119 observations (8.4%) combining upper-third sugar-maple basal-area share with no sugar-maple seedlings tallied. Associations were evaluated with mixed-effects logistic regression, and geographic generalization was checked by holding out whole counties. Results describe the analyzed sample and do not constitute FIA design-based population estimates or causal effects.</p>
 </section>
 <section id="why-regeneration-matters" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="why-regeneration-matters"><span class="header-section-number">1</span> Why regeneration matters</h2>
@@ -536,7 +536,7 @@ window.Quarto = {
 <section id="forest-inventory-and-analysis" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="forest-inventory-and-analysis"><span class="header-section-number">2.1</span> Forest Inventory and Analysis</h3>
 <p>The analysis uses the Michigan SQLite release from the U.S. Forest Service FIA DataMart <span class="citation" data-cites="usfs_datamart">(<a href="#ref-usfs_datamart" role="doc-biblioref">U.S. Forest Service 2026</a>)</span>. FIA reference tables—not undocumented numeric constants—identify sugar maple and the retained forest types. The analytical key is a plot visit and condition (<code>PLT_CN + CONDID</code>). TREE and SEEDLING records are aggregated independently before they are joined, preventing a tree-by-seedling Cartesian product.</p>
-<p>FIA plot coordinates are legally protected. No public coordinates are plotted or treated as exact environmental locations. County identifiers supplied by FIA provide the spatial link used here.</p>
+<p>Exact FIA plot locations are confidential. Public FIA coordinates may be approximate; this analysis neither uses nor infers them. County identifiers supplied by FIA provide the only spatial link used here.</p>
 </section>
 </div><div class="column" style="width:50%;">
 <section id="climate" class="level3" data-number="2.2">
@@ -567,7 +567,7 @@ window.Quarto = {
 <div class="cohort-step">
 <p><span class="cohort-index">04</span></p>
 <p><span class="cohort-value"><strong>1,457</strong></span></p>
-<p>Northern-hardwood conditions</p>
+<p>Maple/beech/birch conditions</p>
 </div>
 <div class="cohort-step cohort-step-final">
 <p><span class="cohort-index">05</span></p>
@@ -622,7 +622,7 @@ Table&nbsp;1: Cohort construction and retained observations.
 </figure>
 </div>
 </div>
-<p>Release v1.1.0 pins the Michigan <code>EXPCURR</code> evaluation “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME” (EVALID 262501; inventory window 2019–2025). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement records span 2018–2025. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.</p>
+<p>Release v1.2.0 pins the Michigan <code>EXPCURR</code> evaluation “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME” (EVALID 262501; inventory window 2019–2025). It then filters assigned visits to sampled, accessible conditions in FIA’s maple/beech/birch forest-type group, the project’s operational northern-hardwood cohort. The assigned measurement records span 2018–2025. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.</p>
 </section>
 <section id="methods" class="level2 page-columns page-full" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="methods"><span class="header-section-number">4</span> Methods</h2>
@@ -640,12 +640,12 @@ Table&nbsp;1: Cohort construction and retained observations.
 <div class="method-card">
 <p><span class="method-label">03 · Enrich</span></p>
 <p><strong>Protected spatial link</strong></p>
-<p>County identifiers connect 1991–2020 Daymet proxies without exposing or approximating protected plot locations.</p>
+<p>County identifiers connect 1991–2020 Daymet proxies without using or inferring confidential plot locations.</p>
 </div>
 <div class="method-card">
 <p><span class="method-label">04 · Estimate</span></p>
 <p><strong>Cluster-aware inference</strong></p>
-<p>The supported logistic model carries county and plot-visit random intercepts plus transparent support gates.</p>
+<p>The supported logistic model carries a county random intercept, a nonlinear maple response, and transparent support and validation checks.</p>
 </div>
 </div>
 <section id="established-sugar-maple" class="level3" data-number="4.1">
@@ -654,8 +654,13 @@ Table&nbsp;1: Cohort construction and retained observations.
 <p><span class="math display">\[
 BA_i = 0.005454 \times DIA_i^2 \times TPA_{i,unadj},
 \]</span></p>
-<p>where diameter is in inches and the resulting contribution is in square feet per acre on the unadjusted sample basis. Condition-level densities use the recorded condition proportion. Sugar-maple basal-area share divides its live-tree contribution by the total live-tree contribution within the same condition.</p>
-<p>As a calculation check, derived live-tree basal area agreed closely with FIA’s condition-level <code>BALIVE</code> field across 1,457 conditions (Pearson <em>r</em> = 0.999; mean absolute error 0.57 ft²/ac).</p>
+<p>where diameter is in inches and the resulting contribution is in square feet per acre on the unadjusted sample basis. Expansion to condition density occurs <strong>record by record</strong> using the proportion for the tree’s sampling frame: <code>MICRPROP_UNADJ</code> for trees below 5 inches diameter, <code>SUBPPROP_UNADJ</code> for larger subplot trees, and <code>MACRPROP_UNADJ</code> only when a populated macroplot breakpoint applies. Equivalently,</p>
+<p><span class="math display">\[
+BA_c = \sum_{i \in c}\frac{0.005454 \times DIA_i^2 \times TPA_{i,unadj}}
+{PROP_{c,frame(i),unadj}}.
+\]</span></p>
+<p>Sugar-maple basal-area share divides the resulting frame-corrected sugar-maple density by frame-corrected total live-tree density within the condition.</p>
+<p>As a strict calculation check, derived live-tree basal area agreed with FIA’s condition-level <code>BALIVE</code> field across 1,457 conditions (Pearson <em>r</em> = 1.000000; mean absolute error 0.000132 ft²/acre; maximum absolute error 0.000697 ft²/acre).</p>
 </section>
 <section id="regeneration" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="regeneration"><span class="header-section-number">4.2</span> Regeneration</h3>
@@ -672,7 +677,8 @@ BA_i = 0.005454 \times DIA_i^2 \times TPA_{i,unadj},
 </section>
 <section id="model" class="level3 page-columns page-full" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="model"><span class="header-section-number">4.4</span> Model</h3>
-<p>The supported model is a mixed-effects logistic regression with no-sugar-maple-seedlings-tallied as the response. Continuous predictors are standardized. Retained fixed effects were Sugar maple basal area, Non-maple basal area, Microplot condition coverage, Stand age, Recorded disturbance, Mean annual temperature, Annual precipitation, Measurement year. The fitted random-effects structure was county and plot-visit random intercepts. The model uses 1,424 complete conditions from 1,341 plot visits across 78 counties; 83 visits contributed more than one condition. There were 76.1 outcome events per fixed-effect term. Odds ratios express associations with the odds of no seedlings being tallied.</p>
+<p>The supported model is a mixed-effects logistic regression with no-sugar-maple-seedlings-tallied as the response. Sugar-maple basal area enters as a 3-df natural spline of standardized <code>log1p</code> basal area; the spline improved AIC by 10.7 and the nested likelihood-ratio test gave <em>p</em> = 0.00063. Other continuous predictors are standardized within the final model-complete cohort, and their conventional coefficient summaries use model-based Wald 95% intervals. Retained fixed effects were nonlinear sugar-maple basal area, Non-maple basal area, Microplot condition coverage, Stand age, Recorded disturbance, Mean annual temperature, Annual precipitation, Measurement year.</p>
+<p>The fitted random-effects structure is a county random intercept. Adding a plot-visit intercept produced a small variance (0.0099), no support in a boundary-aware variance-component comparison (<em>p</em> = 0.485), and an AIC 2.0 points higher, so the parsimonious county-only structure was retained. The model uses 1,424 complete conditions—97.7% of the 1,457-condition analytical cohort—from 1,341 plot visits across 78 counties. There were 60.9 outcome events per non-intercept fixed-effect coefficient.</p>
 <div class="table-panel column-page">
 <div class="cell">
 <div id="tbl-model-specification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -685,7 +691,7 @@ Table&nbsp;2: Release model specification and support.
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 14%">
-<col style="width: 86%">
+<col style="width: 85%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -696,7 +702,7 @@ Table&nbsp;2: Release model specification and support.
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Formula</td>
-<td style="text-align: left;">outcome_no_seedlings ~ z_maple_ba + z_nonmaple_ba + z_microplot_coverage + z_stand_age + disturbed + z_mean_temp + z_precip + z_year + (1 | geoid) + (1 | plt_cn)</td>
+<td style="text-align: left;">outcome_no_seedlings ~ splines::ns(z_maple_ba, df = 3) + z_nonmaple_ba + z_microplot_coverage + z_stand_age + disturbed + z_mean_temp + z_precip + z_year + (1 | geoid)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Response events</td>
@@ -707,8 +713,8 @@ Table&nbsp;2: Release model specification and support.
 <td style="text-align: left;">815</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Complete-case fraction</td>
-<td style="text-align: left;">100.0%</td>
+<td style="text-align: left;">Model-complete cohort</td>
+<td style="text-align: left;">1,424 / 1,457 (97.7%)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Counties</td>
@@ -723,8 +729,8 @@ Table&nbsp;2: Release model specification and support.
 <td style="text-align: left;">83</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Events per fixed term</td>
-<td style="text-align: left;">76.1</td>
+<td style="text-align: left;">Events per fixed coefficient</td>
+<td style="text-align: left;">60.9</td>
 </tr>
 </tbody>
 </table>
@@ -746,12 +752,12 @@ Table&nbsp;2: Release model specification and support.
 </div>
 <div class="finding-card">
 <p><span class="finding-label">Established maple</span></p>
-<p><span class="finding-value"><strong>0.40</strong></span></p>
-<p>adjusted odds ratio for no seedlings per SD of log basal area.</p>
+<p><span class="finding-value"><strong>82% → 35%</strong></span></p>
+<p>adjusted non-detection probability from 0 to 25 ft²/acre maple basal area.</p>
 </div>
 <div class="finding-card">
 <p><span class="finding-label">Sampling opportunity</span></p>
-<p><span class="finding-value"><strong>0.61</strong></span></p>
+<p><span class="finding-value"><strong>0.64</strong></span></p>
 <p>adjusted odds ratio as microplot condition coverage increases by one SD.</p>
 </div>
 <div class="finding-card">
@@ -802,13 +808,13 @@ Figure&nbsp;1: Study context: geographic coverage and sampled live-tree composit
 <h3 data-number="5.2" class="anchored" data-anchor-id="canopycohort-mismatch"><span class="header-section-number">5.2</span> Canopy–cohort mismatch</h3>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-quadrant" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Scatterplot of sugar-maple live-tree basal-area share against seedling density. One hundred nineteen zero-seedling observations above the 50.6 percent canopy-share cutoff are highlighted.">
+<div id="fig-quadrant" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Scatterplot of sugar-maple live-tree basal-area share against seedling density. Zero-seedling observations above the sample upper-third established-maple cutoff are highlighted.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-quadrant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="../outputs/figures/03_regeneration_quadrant.png" class="img-fluid figure-img column-page" alt="Scatterplot of sugar-maple live-tree basal-area share against seedling density. One hundred nineteen zero-seedling observations above the 50.6 percent canopy-share cutoff are highlighted.">
+<img src="../outputs/figures/03_regeneration_quadrant.png" class="img-fluid figure-img column-page" alt="Scatterplot of sugar-maple live-tree basal-area share against seedling density. Zero-seedling observations above the sample upper-third established-maple cutoff are highlighted.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quadrant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Established sugar-maple share versus observed seedling density. Highlighted observations meet the exploratory potential-gap definition; the dashed line marks the 50.6% sample cutoff. Points are displayed at their exact values.
+Figure&nbsp;2: Established sugar-maple share versus observed seedling density. Highlighted observations meet the exploratory potential-gap definition; the dashed line marks the sample upper-third cutoff. Points are displayed at their exact values.
 </figcaption>
 </figure>
 </div>
@@ -819,13 +825,13 @@ Figure&nbsp;2: Established sugar-maple share versus observed seedling density. H
 <h3 data-number="5.3" class="anchored" data-anchor-id="model-associations"><span class="header-section-number">5.3</span> Model associations</h3>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-effects" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Forest plot of eight adjusted odds ratios with 95 percent confidence intervals. Sugar-maple basal area and microplot coverage have the strongest associations with lower seedling non-detection.">
+<div id="fig-effects" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Nonlinear adjusted probability curve. Seedling non-detection is highest at zero established sugar-maple basal area, falls sharply at low to moderate basal area, and then levels off; a confidence ribbon surrounds the curve.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="../outputs/figures/04_model_effects.png" class="img-fluid figure-img column-page" alt="Forest plot of eight adjusted odds ratios with 95 percent confidence intervals. Sugar-maple basal area and microplot coverage have the strongest associations with lower seedling non-detection.">
+<img src="../outputs/figures/04_model_effects.png" class="img-fluid figure-img column-page" alt="Nonlinear adjusted probability curve. Seedling non-detection is highest at zero established sugar-maple basal area, falls sharply at low to moderate basal area, and then levels off; a confidence ribbon surrounds the curve.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Odds ratios and 95% confidence intervals for no sugar-maple seedlings tallied. Continuous effects are per one standard deviation; basal-area variables are log-transformed before standardization.
+Figure&nbsp;3: Adjusted relationship between established sugar-maple basal area and seedling non-detection. The line is the county mixed-model fixed-effect prediction at the stated reference profile; the ribbon is a pointwise Wald 95% confidence interval. The pseudo-log horizontal scale preserves zero while making the steep low-range change legible.
 </figcaption>
 </figure>
 </div>
@@ -836,7 +842,7 @@ Figure&nbsp;3: Odds ratios and 95% confidence intervals for no sugar-maple seedl
 <div id="tbl-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Model coefficients expressed as odds ratios.
+Table&nbsp;3: Conventional fixed-effect coefficients expressed as adjusted odds ratios with model-based Wald 95% confidence intervals. Spline-basis coefficients are omitted because the maple association is reported as a probability curve.
 </figcaption>
 <div aria-describedby="tbl-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -851,52 +857,46 @@ Table&nbsp;3: Model coefficients expressed as odds ratios.
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Sugar maple basal area</td>
-<td style="text-align: right;">0.40</td>
-<td style="text-align: right;">0.33–0.49</td>
-<td style="text-align: right;">&lt;0.001</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Non-maple basal area</td>
-<td style="text-align: right;">1.13</td>
-<td style="text-align: right;">0.97–1.32</td>
-<td style="text-align: right;">0.122</td>
+<td style="text-align: right;">1.25</td>
+<td style="text-align: right;">1.07–1.46</td>
+<td style="text-align: right;">0.006</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Microplot condition coverage</td>
-<td style="text-align: right;">0.61</td>
-<td style="text-align: right;">0.52–0.71</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.55–0.74</td>
 <td style="text-align: right;">&lt;0.001</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Stand age</td>
-<td style="text-align: right;">1.01</td>
-<td style="text-align: right;">0.86–1.18</td>
-<td style="text-align: right;">0.918</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Recorded disturbance</td>
-<td style="text-align: right;">1.19</td>
-<td style="text-align: right;">0.86–1.65</td>
-<td style="text-align: right;">0.283</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.84–1.15</td>
+<td style="text-align: right;">0.807</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Mean annual temperature</td>
-<td style="text-align: right;">1.91</td>
-<td style="text-align: right;">1.47–2.48</td>
-<td style="text-align: right;">&lt;0.001</td>
+<td style="text-align: left;">Recorded disturbance</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">0.90–1.71</td>
+<td style="text-align: right;">0.198</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Mean annual temperature</td>
+<td style="text-align: right;">1.85</td>
+<td style="text-align: right;">1.44–2.38</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Annual precipitation</td>
 <td style="text-align: right;">0.77</td>
 <td style="text-align: right;">0.60–0.99</td>
-<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">0.041</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Measurement year</td>
 <td style="text-align: right;">0.93</td>
-<td style="text-align: right;">0.81–1.07</td>
-<td style="text-align: right;">0.307</td>
+<td style="text-align: right;">0.81–1.06</td>
+<td style="text-align: right;">0.296</td>
 </tr>
 </tbody>
 </table>
@@ -908,8 +908,8 @@ Table&nbsp;3: Model coefficients expressed as odds ratios.
 </div>
 <div class="result-interpretation column-page">
 <p><span class="result-interpretation-label">Reading the model</span></p>
-<p>Higher established sugar-maple basal area was associated with lower odds of no seedlings being tallied: a one-standard-deviation increase in log basal area corresponded to an odds ratio of 0.40 (95% CI 0.33–0.49). Greater microplot condition coverage was also associated with lower non-detection odds (OR 0.61, 95% CI 0.52–0.71), reinforcing why sampling opportunity belongs in the model.</p>
-<p>The retained county-scale climate terms described a broad geographic gradient. The temperature proxy had OR 1.91, 95% CI 1.47–2.48. The precipitation proxy had OR 0.77, 95% CI 0.60–0.99. These coefficients must not be read as plot-level climate effects. The 95% confidence intervals crossed one for stand age and recorded disturbance.</p>
+<p>The established-maple association was nonlinear. At the report’s reference profile—other continuous predictors at their model-cohort means, no recorded disturbance, and the county random effect set to zero—the adjusted probability of no seedlings tallied declined from 82% at zero maple basal area to 35% at 25 ft²/acre, then leveled off. These are conditional profile contrasts from an observational model, not causal probabilities for every forest condition. Greater microplot condition coverage was also associated with lower non-detection odds (OR 0.64, Wald 95% CI 0.55–0.74), reinforcing why sampling opportunity belongs in the model.</p>
+<p>The retained county-scale climate terms described a broad geographic gradient. The temperature proxy had OR 1.85, 95% CI 1.44–2.38. The precipitation proxy had OR 0.77, 95% CI 0.60–0.99, but its Wald p-value was 0.041, BH-adjusted p-value was 0.071, and the county-cluster sensitivity p-value was 0.188; it is therefore treated as weak and exploratory. These coefficients must not be read as plot-level climate effects. The 95% confidence intervals crossed one for stand age and recorded disturbance.</p>
 </div>
 </section>
 <section id="model-adequacy" class="level3 page-columns page-full" data-number="5.4">
@@ -924,28 +924,30 @@ Table&nbsp;3: Model coefficients expressed as odds ratios.
 <p>random-effects structure</p>
 </div>
 <div class="model-audit-card">
-<p><span class="model-audit-value"><strong>76.1</strong></span></p>
-<p>events per fixed-effect term</p>
+<p><span class="model-audit-value"><strong>0.179</strong></span></p>
+<p>county-held-out Brier score</p>
 </div>
 <div class="model-audit-card">
-<p><span class="model-audit-value"><strong>0.155</strong></span></p>
-<p>in-sample Brier score</p>
+<p><span class="model-audit-value"><strong>0.793</strong></span></p>
+<p>county-held-out ROC AUC</p>
 </div>
 </div>
+<p>Ten-fold cross-validation assigned entire counties—not individual records—to folds. Scaling and spline transformations were learned again inside each training fold, and held-out counties were predicted from fixed effects only. Across all 1,424 assessment predictions, Brier score was 0.179, ROC AUC was 0.793, calibration intercept was -0.193, and calibration slope was 0.901. For comparison, the conditional in-sample Brier score was 0.154; it is not presented as out-of-county performance.</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
-<div id="fig-model-diagnostics" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Two-panel DHARMa model diagnostic showing residual uniformity and residuals versus predictions, with no significant displayed problems.">
+<div id="fig-model-diagnostics" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Two-panel model diagnostic. Ordered scaled residuals closely follow the expected uniform line. Residuals versus fitted probabilities are broadly centered around one half, with a slight low-probability pattern.">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-model-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
-<img src="../outputs/figures/model_diagnostics.png" class="img-fluid figure-img column-page" alt="Two-panel DHARMa model diagnostic showing residual uniformity and residuals versus predictions, with no significant displayed problems.">
+<img src="../outputs/figures/model_diagnostics.png" class="img-fluid figure-img column-page" alt="Two-panel model diagnostic. Ordered scaled residuals closely follow the expected uniform line. Residuals versus fitted probabilities are broadly centered around one half, with a slight low-probability pattern.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-diagnostics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Simulation-based DHARMa diagnostics for the supported mixed-effects logistic model. The displayed checks did not flag residual-uniformity, dispersion, outlier, or residual-versus-predicted problems.
+Figure&nbsp;4: Simulation-based DHARMa diagnostics for the supported mixed-effects logistic model: uniform-quantile agreement and scaled residuals versus fitted conditional probability.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>No simulation-based check crossed the pre-specified 0.05 flag: uniformity <em>p</em> = 0.751, dispersion <em>p</em> = 0.888, and outlier <em>p</em> = 1.000. The combined residual-quantile check was borderline (<em>p</em> = 0.051), so absence of a formal flag is not treated as proof of perfect model fit.</p>
 </section>
 <section id="broad-geographic-pattern" class="level3 page-columns page-full" data-number="5.5">
 <h3 data-number="5.5" class="anchored" data-anchor-id="broad-geographic-pattern"><span class="header-section-number">5.5</span> Broad geographic pattern</h3>
@@ -957,7 +959,7 @@ Figure&nbsp;4: Simulation-based DHARMa diagnostics for the supported mixed-effec
 <img src="../outputs/figures/05_county_gap_map.png" class="img-fluid figure-img column-page" alt="Michigan county map of exploratory regeneration-gap fractions. Seventeen sufficiently sampled counties are colored and all other counties are gray.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gap-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Exploratory gap fraction among seedling-sampled conditions. Gray counties had fewer than 20 eligible conditions or no data. This is a descriptive sample map, not a design-based county estimate.
+Figure&nbsp;5: Exploratory gap fraction among seedling-sampled conditions. Gray counties had fewer than 20 seedling-sampled conditions or no data. This is a descriptive sample map, not a design-based county estimate.
 </figcaption>
 </figure>
 </div>
@@ -971,13 +973,13 @@ Figure&nbsp;5: Exploratory gap fraction among seedling-sampled conditions. Gray 
 <img src="../outputs/figures/06_county_gap_uncertainty.png" class="img-fluid figure-img column-page" alt="Ordered interval plot of exploratory regeneration-gap fractions for seventeen Michigan counties, with Wilson 95 percent intervals and sample denominators.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gap-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Wilson 95% intervals for the 17 counties meeting the support threshold. Denominators are shown beside county names; intervals remain descriptive rather than FIA design-based estimates.
+Figure&nbsp;6: Unweighted Wilson 95% reference intervals for the 17 counties meeting the support threshold. Denominators are shown beside county names. These descriptive binomial intervals ignore FIA survey design and within-county clustering; they are not inferential FIA county estimates.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Only 17 counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions. The interval panel makes clear that even supported county fractions retain substantial binomial uncertainty.</p>
+<p>Only 17 counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions. The interval panel shows unweighted binomial reference uncertainty only; it ignores the FIA survey design and within-county clustering.</p>
 </section>
 </section>
 <section id="discussion" class="level2 page-columns page-full" data-number="6">
@@ -1000,18 +1002,19 @@ Figure&nbsp;6: Wilson 95% intervals for the 17 counties meeting the support thre
 </ul>
 </div>
 </div>
-<p>The analysis makes the distinction between established live-tree basal area and observed seedling recruitment visible. Under the primary rule, 119 of 1424 sampled conditions were flagged. Raising the established-maple threshold from an upper-third share of 50.6% to an upper-quartile share of 62.3% reduced the flag count to 93 (6.5%). This sensitivity is a reason to treat the flag as a screening device rather than a fixed ecological category.</p>
-<p>The model estimates which measured stand and broad climate attributes covary with seedling detection after adjustment for the other retained terms. Confidence intervals—not prediction accuracy—are the primary evidence.</p>
+<p>The analysis makes the distinction between established live-tree basal area and observed seedling recruitment visible. Under the primary rule, 119 of 1424 sampled conditions were flagged. Raising the established-maple threshold from an upper-third share of 50.5% to an upper-quartile share of 62.3% reduced the flag count to 93 (6.5%). This sensitivity is a reason to treat the flag as a screening device rather than a fixed ecological category.</p>
+<p>The model estimates which measured stand and broad climate attributes covary with seedling detection after adjustment for the other retained terms. The maple curve and pointwise Wald intervals are the primary association evidence; county-grouped validation separately assesses discrimination and calibration outside the fitted counties.</p>
 <p>The results should be interpreted as hypotheses and patterns worthy of follow-up. A seedling tally is an imperfect window into recruitment, and seedlings do not guarantee survival into sapling or canopy cohorts.</p>
 </section>
 <section id="limitations" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="limitations"><span class="header-section-number">7</span> Limitations</h2>
 <ol type="1">
-<li><strong>Protected locations.</strong> County-scale climate and maps avoid treating public FIA coordinates as exact.</li>
+<li><strong>Confidential locations.</strong> Exact FIA plot locations are confidential. Public coordinates may be approximate; the analysis neither uses nor infers them, relying on county IDs alone.</li>
 <li><strong>Sampling opportunity.</strong> A zero means no seedlings were tallied on sampled microplots, not ecological absence across the condition.</li>
 <li><strong>Observational design.</strong> Associations are not causal effects.</li>
-<li><strong>Sample versus population.</strong> <code>TPA_UNADJ</code> expands records within the plot design; it is not a statewide survey weight. Formal statewide estimates require FIA evaluation, stratum, adjustment, and sampling-error procedures <span class="citation" data-cites="bechtold2005sampling">(<a href="#ref-bechtold2005sampling" role="doc-biblioref">Bechtold and Patterson 2005</a>)</span>.</li>
+<li><strong>Sample versus population.</strong> <code>TPA_UNADJ</code> and frame proportions expand records within the plot design; they are not statewide survey weights. Formal statewide estimates require FIA evaluation, stratum, adjustment, and sampling-error procedures <span class="citation" data-cites="bechtold2005sampling">(<a href="#ref-bechtold2005sampling" role="doc-biblioref">Bechtold and Patterson 2005</a>)</span>.</li>
 <li><strong>Exploratory indicator.</strong> The gap flag is sample-relative and threshold-dependent.</li>
+<li><strong>County summaries.</strong> Wilson intervals are unweighted descriptive references that ignore survey design and within-county clustering.</li>
 <li><strong>Unmeasured drivers.</strong> Deer browsing, soils, management history, competition, and other factors are incompletely represented.</li>
 <li><strong>Temporal alignment.</strong> Climate normals summarize 1991–2020 and do not reproduce weather immediately preceding each measurement.</li>
 </ol>
@@ -1028,7 +1031,7 @@ Figure&nbsp;6: Wilson 95% intervals for the 17 counties meeting the support thre
 <p>county Daymet responses</p>
 </div>
 <div class="repro-card">
-<p><span class="repro-value"><strong>33</strong></span></p>
+<p><span class="repro-value"><strong>72</strong></span></p>
 <p>full-build expectations passed</p>
 </div>
 <div class="repro-card">
@@ -1037,11 +1040,11 @@ Figure&nbsp;6: Wilson 95% intervals for the 17 counties meeting the support thre
 </div>
 </div>
 <p>Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county’s Daymet API response—are recorded in <code>outputs/audits/data-provenance.csv</code>. Important joins record row counts, unique keys, and unmatched keys. The public repository includes a curated <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/audits/release-validation.csv">release validation record</a> and <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/tables/model-support.csv">aggregate model-support evidence</a>.</p>
-<p>GitHub Actions runs the 11 data-free expectations and skips five derived-data/model tests by design. The completed v1.1.0 local build ran all 33 expectations. From a fresh clone, the full analysis runs with:</p>
+<p>GitHub Actions runs the data-free unit-test subset; tests requiring derived FIA data or a fitted model skip cleanly on a fresh clone. The completed v1.2.0 local build and its exact expectation counts are recorded in the release-validation artifact. From a fresh clone, the full analysis runs with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> setup</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> acquire</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Package versions are recorded in <code>renv.lock</code>. The release was tested with R 4.6.1 and Quarto 1.9.38. FIA’s state archive URL is mutable, so acquisition compares downloaded source sizes and SHA-256 hashes with the v1.0.0/v1.1.0 manifest and warns when a current-data rerun is not byte-identical to the published source snapshot.</p>
+<p>Package versions are recorded in <code>renv.lock</code>. The release was tested with R 4.6.1 and Quarto 1.9.38. FIA’s state archive URL is mutable, so acquisition compares downloaded source sizes and SHA-256 hashes with the v1.0.0–v1.2.0 manifest and warns when a current-data rerun is not byte-identical to the published source snapshot.</p>
 </section>
 <section id="references" class="level2 unnumbered page-columns page-full">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
