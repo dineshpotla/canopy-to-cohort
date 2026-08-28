@@ -18,7 +18,7 @@
 .landing-hero {
   align-items: center;
   gap: 2rem;
-  margin: 1.5rem 0 3rem;
+  margin: 1rem 0 2rem;
 }
 
 .landing-hero h2 {
@@ -87,6 +87,107 @@
   text-decoration: none;
 }
 
+.builder-strip {
+  background: #eef3ef;
+  border-left: 0.3rem solid var(--canopy-green);
+  border-radius: 0 0.6rem 0.6rem 0;
+  color: var(--ink);
+  margin: 0 auto 2.8rem;
+  max-width: 76rem;
+  padding: 0.9rem 1.2rem;
+  text-align: center;
+}
+
+.workflow-grid {
+  display: grid !important;
+  gap: 0.9rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 1.35rem 0 1rem;
+}
+
+.workflow-card {
+  background: #fff;
+  border: 1px solid #dbe3de;
+  border-top: 0.25rem solid var(--canopy-green);
+  border-radius: 0.65rem;
+  box-shadow: 0 0.55rem 1.5rem rgba(28, 60, 48, 0.07);
+  box-sizing: border-box;
+  min-height: 13.5rem;
+  padding: 1.1rem;
+  position: relative;
+}
+
+.workflow-card:not(:last-child)::after {
+  background: #fff;
+  border: 1px solid #dbe3de;
+  border-radius: 999px;
+  color: var(--maple-red);
+  content: "→";
+  font-weight: 800;
+  height: 1.45rem;
+  line-height: 1.25rem;
+  position: absolute;
+  right: -1.2rem;
+  text-align: center;
+  top: calc(50% - 0.7rem);
+  width: 1.45rem;
+  z-index: 2;
+}
+
+.workflow-index {
+  color: var(--maple-red);
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.workflow-card h3 {
+  color: var(--canopy-green);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.18rem;
+  line-height: 1.15;
+  margin: 0.9rem 0 0.7rem;
+}
+
+.workflow-card p {
+  color: #58665f;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.reviewer-strip {
+  background: linear-gradient(105deg, #173b2e, #2f6650);
+  border-radius: 0.65rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 1rem 0 3.2rem;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+
+.reviewer-strip a {
+  color: #ffd0ae;
+  font-weight: 700;
+}
+
+.quarto-dark .builder-strip,
+.quarto-dark .workflow-card {
+  background: #18231f;
+  border-color: #32443d;
+  color: #edf3ee;
+}
+
+.quarto-dark .workflow-card p {
+  color: #b8c4bd;
+}
+
+.quarto-dark .workflow-card:not(:last-child)::after {
+  background: #18231f;
+  border-color: #32443d;
+}
+
 @media (max-width: 850px) {
   div.landing-hero,
   div.feature-row {
@@ -110,10 +211,22 @@
   .stat-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .workflow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workflow-card:not(:last-child)::after {
+    display: none;
+  }
 }
 
 @media (max-width: 520px) {
   .stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-grid {
     grid-template-columns: 1fr;
   }
 
@@ -193,9 +306,9 @@ body.report-page .quarto-title-banner {
     radial-gradient(circle at 77% 24%, rgba(218, 145, 102, 0.32), transparent 24%),
     radial-gradient(circle at 92% 78%, rgba(120, 155, 121, 0.24), transparent 25%),
     linear-gradient(122deg, #102f27 0%, #1b4b3b 55%, #5e5a3e 100%);
-  min-height: 25rem;
+  min-height: 19rem;
   overflow: hidden;
-  padding: 5rem 0 4.5rem;
+  padding: 4.1rem 0 3.3rem;
   position: relative;
 }
 
@@ -243,7 +356,7 @@ body.report-page .quarto-title-banner .quarto-title-meta {
 body.report-page .quarto-title-banner .title {
   color: #fff;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: clamp(3.7rem, 7vw, 6.4rem);
+  font-size: clamp(3.25rem, 6.2vw, 5.45rem);
   font-weight: 700;
   letter-spacing: -0.055em;
   line-height: 0.94;

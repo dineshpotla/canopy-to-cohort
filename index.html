@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
 
 <title>Canopy to Cohort</title>
 <style>
@@ -77,6 +78,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Canopy to Cohort">
+<meta property="og:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta property="og:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta property="og:image:height" content="1984">
+<meta property="og:image:width" content="2720">
+<meta name="twitter:title" content="Canopy to Cohort">
+<meta name="twitter:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta name="twitter:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
+<meta name="twitter:image-height" content="1984">
+<meta name="twitter:image-width" content="2720">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -270,6 +283,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./docs/analysis-decisions.html"> 
 <span class="menu-text">Analysis decisions</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -291,7 +308,12 @@ ul.task-list li input[type="checkbox"] {
     <div class="quarto-title column-page">
       <h1 class="title">Canopy to Cohort</h1>
             <p class="subtitle lead">Detecting exploratory sugar maple regeneration gaps in Michigan northern hardwood forests</p>
-                      </div>
+                  <div>
+        <div class="description">
+          A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.
+        </div>
+      </div>
+                </div>
   </div>
     
   
@@ -331,6 +353,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<div class="builder-strip">
+<p><strong>What I built:</strong> reference-driven FIA extraction · audited relational joins · county-safe Daymet integration · mixed-effects modeling · sensitivity analysis · publication-ready reporting</p>
+</div>
 <section id="the-study-at-a-glance" class="level2">
 <h2 class="anchored" data-anchor-id="the-study-at-a-glance">The study at a glance</h2>
 <div class="stat-grid">
@@ -360,6 +385,49 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
+<section id="from-inventory-database-to-research-artifact" class="level2">
+<h2 class="anchored" data-anchor-id="from-inventory-database-to-research-artifact">From inventory database to research artifact</h2>
+<div class="workflow-grid">
+<div class="workflow-card">
+<p><span class="workflow-index">01 · Inspect</span></p>
+<section id="resolve-the-source" class="level3">
+<h3 class="anchored" data-anchor-id="resolve-the-source">Resolve the source</h3>
+<p>2M TREE and 198K SEEDLING rows are profiled alongside FIA evaluation and reference tables.</p>
+</section>
+</div>
+<div class="workflow-card">
+<p><span class="workflow-index">02 · Define</span></p>
+<section id="build-the-cohort" class="level3">
+<h3 class="anchored" data-anchor-id="build-the-cohort">Build the cohort</h3>
+<p>6,459 assigned visits narrow to 1,457 eligible northern-hardwood conditions.</p>
+</section>
+</div>
+<div class="workflow-card">
+<p><span class="workflow-index">03 · Integrate</span></p>
+<section id="preserve-geography" class="level3">
+<h3 class="anchored" data-anchor-id="preserve-geography">Preserve geography</h3>
+<p>83 county Daymet cells join by GEOID; protected FIA plot coordinates never enter the public analysis.</p>
+</section>
+</div>
+<div class="workflow-card">
+<p><span class="workflow-index">04 · Estimate</span></p>
+<section id="model-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="model-clustering">Model clustering</h3>
+<p>1,424 outcomes support county and plot-visit random intercepts plus eight fixed-effect terms.</p>
+</section>
+</div>
+<div class="workflow-card">
+<p><span class="workflow-index">05 · Validate</span></p>
+<section id="publish-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="publish-evidence">Publish evidence</h3>
+<p>33 full-build expectations, join audits, source hashes, diagnostics, and threshold sensitivity accompany the report.</p>
+</section>
+</div>
+</div>
+<div class="reviewer-strip">
+<p><strong>Technical reviewer?</strong> <a href="./docs/data-dictionary.html">Inspect the data dictionary</a> · <a href="./docs/analysis-decisions.html">Trace analysis decisions</a> · <a href="https://github.com/dineshpotla/canopy-to-cohort">Review the source and validation evidence</a></p>
+</div>
+</section>
 <section id="what-the-analysis-found" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-analysis-found">What the analysis found</h2>
 <p>Sugar-maple seedlings were tallied in <strong>57.2%</strong> of sampled conditions. The upper-third screen flagged <strong>8.4%</strong> as potential gaps. In the adjusted mixed-effects logistic regression, a one-standard-deviation increase in log sugar-maple basal area corresponded to <strong>OR 0.40 (95% CI 0.33–0.49)</strong> for no seedlings being tallied.</p>
@@ -385,7 +453,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="research-artifact" class="level2">
 <h2 class="anchored" data-anchor-id="research-artifact">Research artifact</h2>
-<p>The report documents the 2019–2025 FIA evaluation, cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.</p>
+<p>The report documents the pinned 2025 current evaluation (inventory window 2019–2025; assigned measurement records 2018–2025), cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.</p>
 <p><a href="./report/index.html" class="report-link">Open the complete report →</a></p>
 
 

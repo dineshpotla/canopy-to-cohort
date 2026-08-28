@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dinesh">
+<meta name="author" content="Dinesh Potla">
 <meta name="dcterms.date" content="2026-08-27">
+<meta name="description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
 
 <title>Canopy to Cohort</title>
 <style>
@@ -179,6 +180,18 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Canopy to Cohort">
+<meta property="og:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta property="og:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta property="og:image:height" content="1984">
+<meta property="og:image:width" content="2720">
+<meta name="twitter:title" content="Canopy to Cohort">
+<meta name="twitter:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta name="twitter:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
+<meta name="twitter:image-height" content="1984">
+<meta name="twitter:image-width" content="2720">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed report-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -372,6 +385,10 @@ window.Quarto = {
     <a class="nav-link" href="../docs/analysis-decisions.html"> 
 <span class="menu-text">Analysis decisions</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -393,7 +410,12 @@ window.Quarto = {
     <div class="quarto-title column-body">
       <h1 class="title">Canopy to Cohort</h1>
             <p class="subtitle lead">Exploratory evidence of sugar maple regeneration gaps in Michigan northern hardwood forests</p>
-                      </div>
+                  <div>
+        <div class="description">
+          A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.
+        </div>
+      </div>
+                </div>
   </div>
     
   
@@ -402,7 +424,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Dinesh </p>
+               <p><a href="https://github.com/dineshpotla">Dinesh Potla</a> </p>
             </div>
     </div>
       
@@ -461,7 +483,7 @@ window.Quarto = {
 
 <div class="report-opening column-page">
 <div class="report-opening-copy">
-<p><span class="report-eyebrow">Michigan · Northern hardwoods · FIA 2018–2025</span></p>
+<p><span class="report-eyebrow">Michigan · Northern hardwoods · 2025 current evaluation · measurements 2018–2025</span></p>
 <p><span class="report-deck">Canopy persistence does not guarantee a next cohort.</span></p>
 <p>This study traces established sugar maple into observed regeneration, then tests which stand and broad climate characteristics accompany seedling non-detection.</p>
 <div class="report-tags">
@@ -600,7 +622,7 @@ Table&nbsp;1: Cohort construction and retained observations.
 </figure>
 </div>
 </div>
-<p>The workflow uses the most recent complete Michigan <code>EXPCURR</code> evaluation available in the downloaded FIADB release: “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME” (EVALID 262501; inventory years 2019–2025). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement years span 2018–2025. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.</p>
+<p>Release v1.1.0 pins the Michigan <code>EXPCURR</code> evaluation “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME” (EVALID 262501; inventory window 2019–2025). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement records span 2018–2025. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.</p>
 </section>
 <section id="methods" class="level2 page-columns page-full" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="methods"><span class="header-section-number">4</span> Methods</h2>
@@ -608,7 +630,7 @@ Table&nbsp;1: Cohort construction and retained observations.
 <div class="method-card">
 <p><span class="method-label">01 · Resolve</span></p>
 <p><strong>Reference-driven cohort</strong></p>
-<p>Species, forest types, and the current evaluation resolve from FIADB reference tables rather than hidden constants.</p>
+<p>Species and forest types resolve from FIADB reference tables rather than hidden constants; the published release pins its documented evaluation identifier.</p>
 </div>
 <div class="method-card">
 <p><span class="method-label">02 · Aggregate</span></p>
@@ -648,9 +670,70 @@ BA_i = 0.005454 \times DIA_i^2 \times TPA_{i,unadj},
 </ol>
 <p>The continuous companion indicator is the percentile rank of established share minus the percentile rank of log seedling density. Neither measure is presented as a validated ecological index.</p>
 </section>
-<section id="model" class="level3" data-number="4.4">
+<section id="model" class="level3 page-columns page-full" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="model"><span class="header-section-number">4.4</span> Model</h3>
 <p>The supported model is a mixed-effects logistic regression with no-sugar-maple-seedlings-tallied as the response. Continuous predictors are standardized. Retained fixed effects were Sugar maple basal area, Non-maple basal area, Microplot condition coverage, Stand age, Recorded disturbance, Mean annual temperature, Annual precipitation, Measurement year. The fitted random-effects structure was county and plot-visit random intercepts. The model uses 1,424 complete conditions from 1,341 plot visits across 78 counties; 83 visits contributed more than one condition. There were 76.1 outcome events per fixed-effect term. Odds ratios express associations with the odds of no seedlings being tallied.</p>
+<div class="table-panel column-page">
+<div class="cell">
+<div id="tbl-model-specification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-model-specification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Release model specification and support.
+</figcaption>
+<div aria-describedby="tbl-model-specification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 86%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Formula</td>
+<td style="text-align: left;">outcome_no_seedlings ~ z_maple_ba + z_nonmaple_ba + z_microplot_coverage + z_stand_age + disturbed + z_mean_temp + z_precip + z_year + (1 | geoid) + (1 | plt_cn)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Response events</td>
+<td style="text-align: left;">609</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Response non-events</td>
+<td style="text-align: left;">815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Complete-case fraction</td>
+<td style="text-align: left;">100.0%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Counties</td>
+<td style="text-align: left;">78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Plot visits</td>
+<td style="text-align: left;">1,341</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multi-condition plot visits</td>
+<td style="text-align: left;">83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Events per fixed term</td>
+<td style="text-align: left;">76.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="results" class="level2 page-columns page-full" data-number="5">
@@ -753,7 +836,7 @@ Figure&nbsp;3: Odds ratios and 95% confidence intervals for no sugar-maple seedl
 <div id="tbl-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Model coefficients expressed as odds ratios.
+Table&nbsp;3: Model coefficients expressed as odds ratios.
 </figcaption>
 <div aria-describedby="tbl-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -874,13 +957,27 @@ Figure&nbsp;4: Simulation-based DHARMa diagnostics for the supported mixed-effec
 <img src="../outputs/figures/05_county_gap_map.png" class="img-fluid figure-img column-page" alt="Michigan county map of exploratory regeneration-gap fractions. Seventeen sufficiently sampled counties are colored and all other counties are gray.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gap-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Fraction of seedling-sampled conditions meeting the exploratory gap definition. Gray counties had fewer than 20 eligible conditions or no data; mapped fractions remain uncertain.
+Figure&nbsp;5: Exploratory gap fraction among seedling-sampled conditions. Gray counties had fewer than 20 eligible conditions or no data. This is a descriptive sample map, not a design-based county estimate.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Only 17 counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-gap-uncertainty" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Ordered interval plot of exploratory regeneration-gap fractions for seventeen Michigan counties, with Wilson 95 percent intervals and sample denominators.">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-gap-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<img src="../outputs/figures/06_county_gap_uncertainty.png" class="img-fluid figure-img column-page" alt="Ordered interval plot of exploratory regeneration-gap fractions for seventeen Michigan counties, with Wilson 95 percent intervals and sample denominators.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gap-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Wilson 95% intervals for the 17 counties meeting the support threshold. Denominators are shown beside county names; intervals remain descriptive rather than FIA design-based estimates.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Only 17 counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions. The interval panel makes clear that even supported county fractions retain substantial binomial uncertainty.</p>
 </section>
 </section>
 <section id="discussion" class="level2 page-columns page-full" data-number="6">
@@ -932,18 +1029,19 @@ Figure&nbsp;5: Fraction of seedling-sampled conditions meeting the exploratory g
 </div>
 <div class="repro-card">
 <p><span class="repro-value"><strong>33</strong></span></p>
-<p>automated checks passing</p>
+<p>full-build expectations passed</p>
 </div>
 <div class="repro-card">
 <p><span class="repro-value"><strong>renv</strong></span></p>
 <p>locked R environment</p>
 </div>
 </div>
-<p>Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county’s Daymet API response—are recorded in <code>outputs/audits/data-provenance.csv</code>. Important joins record row counts, unique keys, and unmatched keys. From a fresh clone, the full analysis runs with:</p>
+<p>Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county’s Daymet API response—are recorded in <code>outputs/audits/data-provenance.csv</code>. Important joins record row counts, unique keys, and unmatched keys. The public repository includes a curated <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/audits/release-validation.csv">release validation record</a> and <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/tables/model-support.csv">aggregate model-support evidence</a>.</p>
+<p>GitHub Actions runs the 11 data-free expectations and skips five derived-data/model tests by design. The completed v1.1.0 local build ran all 33 expectations. From a fresh clone, the full analysis runs with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> setup</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> acquire</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> all</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Package versions are recorded in <code>renv.lock</code>.</p>
+<p>Package versions are recorded in <code>renv.lock</code>. The release was tested with R 4.6.1 and Quarto 1.9.38. FIA’s state archive URL is mutable, so acquisition compares downloaded source sizes and SHA-256 hashes with the v1.0.0/v1.1.0 manifest and warns when a current-data rerun is not byte-identical to the published source snapshot.</p>
 </section>
 <section id="references" class="level2 unnumbered page-columns page-full">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>

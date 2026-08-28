@@ -112,6 +112,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Canopy to Cohort">
+<meta property="og:description" content="Reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta name="twitter:title" content="Canopy to Cohort">
+<meta name="twitter:description" content="Reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -305,6 +311,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="../docs/analysis-decisions.html" aria-current="page"> 
 <span class="menu-text">Analysis decisions</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -355,14 +365,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The exploratory gap indicator is not a validated ecological index and is not used as the primary regression response.</li>
 <li>Climate is aggregated to county and interpreted as a broad spatial gradient.</li>
 <li>Maps summarize analyzed observations; they are not design-based county or statewide population estimates.</li>
-<li>Longitudinal condition matching, formal FIA population estimation, Moran’s I, and hurdle count models are extensions rather than MVP requirements.</li>
+<li>Longitudinal condition matching, formal FIA population estimation, Moran’s I, and hurdle count models are documented future extensions.</li>
 </ol>
 </section>
 <section id="decisions-populated-during-schema-audit" class="level2">
 <h2 class="anchored" data-anchor-id="decisions-populated-during-schema-audit">Decisions populated during schema audit</h2>
 <ul>
 <li><strong>FIADB source.</strong> Michigan’s SQLite FIADB archive was retrieved from the FIA DataMart on 2026-08-27 UTC. The acquisition audit records the URL, byte size, and SHA-256 checksum.</li>
-<li><strong>Evaluation.</strong> The pipeline resolves the latest <code>EXPCURR</code> evaluation from the database rather than hard-coding a year. In this release it selected EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using post-stratification. Measurement years in assigned records span 2018–2025.</li>
+<li><strong>Evaluation.</strong> Releases v1.0.0 and v1.1.0 pin EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using post-stratification. The evaluation inventory window is 2019–2025; assigned measurement records span 2018–2025. The source archive is mutable, so exact source sizes and SHA-256 hashes are published with the release. A deliberate configuration change is required to analyze a different current evaluation.</li>
 <li><strong>Northern hardwoods.</strong> Active field codes in FIA forest-type group 800 are resolved from <code>REF_FOREST_TYPE</code>: 801 sugar maple / beech / yellow birch, 802 black cherry, 805 hard maple / basswood, and 809 red maple / upland.</li>
 <li><strong>Sugar maple.</strong> <code>REF_SPECIES</code> resolves <em>Acer saccharum</em> to SPCD 318 (species symbol ACSA3).</li>
 <li><strong>Seedling sampling opportunity.</strong> A condition is considered sampled only when <code>MICRPROP_UNADJ &gt; 0</code>. A missing sugar-maple SEEDLING row becomes zero only for those conditions; otherwise the response remains missing.</li>
@@ -862,42 +872,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Maps summarize analyzed observations; they are not design-based county or</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   statewide population estimates.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Longitudinal condition matching, formal FIA population estimation, Moran's</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>   I, and hurdle count models are extensions rather than MVP requirements.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>   I, and hurdle count models are documented future extensions.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decisions populated during schema audit</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FIADB source.** Michigan's SQLite FIADB archive was retrieved from the FIA</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  DataMart on 2026-08-27 UTC. The acquisition audit records the URL, byte size,</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  and SHA-256 checksum.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Evaluation.** The pipeline resolves the latest <span class="in">`EXPCURR`</span> evaluation from</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  the database rather than hard-coding a year. In this release it selected</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  post-stratification. Measurement years in assigned records span 2018–2025.</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Northern hardwoods.** Active field codes in FIA forest-type group 800 are</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  resolved from <span class="in">`REF_FOREST_TYPE`</span>: 801 sugar maple / beech / yellow birch, 802</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  black cherry, 805 hard maple / basswood, and 809 red maple / upland.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sugar maple.** <span class="in">`REF_SPECIES`</span> resolves *Acer saccharum* to SPCD 318 (species</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  symbol ACSA3).</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Seedling sampling opportunity.** A condition is considered sampled only</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  when <span class="in">`MICRPROP_UNADJ &gt; 0`</span>. A missing sugar-maple SEEDLING row becomes zero</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  only for those conditions; otherwise the response remains missing.</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Basal area.** Live-tree plot-basis contribution is</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="in">`0.005454 * DIA^2 * TPA_UNADJ`</span>; condition density divides by</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="in">`CONDPROP_UNADJ`</span>. The build compares derived total live basal area with</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="in">`COND.BALIVE`</span> and fails if their Pearson correlation is below 0.98.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Climate.** Each county receives a 1991–2020 normal from the Daymet cell at</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  its Census Gazetteer internal point. This is explicitly a broad proxy, not a</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  plot-level climate value or a county-wide spatial mean.</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Model grouping.** FIA county GEOID and plot visit are candidate random</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  intercepts. The plot-visit term accounts for the small number of visits that</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  contribute more than one eligible condition. Mixed-model structures are</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  retained only when group-support, convergence, and singularity checks pass;</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  the pipeline simplifies the random-effects structure before falling back to</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  ordinary logistic regression.</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Gap thresholds.** The primary high-established threshold is the upper third</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  of sugar-maple basal-area share among conditions with demonstrated seedling</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  sampling. An upper-quartile alternative is reported as a sensitivity</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  analysis.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Evaluation.** Releases v1.0.0 and v1.1.0 pin EVALID 262501,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  post-stratification. The evaluation inventory window is 2019–2025; assigned</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  measurement records span 2018–2025. The source archive is mutable, so exact</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  source sizes and SHA-256 hashes are published with the release. A deliberate</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  configuration change is required to analyze a different current evaluation.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Northern hardwoods.** Active field codes in FIA forest-type group 800 are</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  resolved from <span class="in">`REF_FOREST_TYPE`</span>: 801 sugar maple / beech / yellow birch, 802</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  black cherry, 805 hard maple / basswood, and 809 red maple / upland.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sugar maple.** <span class="in">`REF_SPECIES`</span> resolves *Acer saccharum* to SPCD 318 (species</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  symbol ACSA3).</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Seedling sampling opportunity.** A condition is considered sampled only</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  when <span class="in">`MICRPROP_UNADJ &gt; 0`</span>. A missing sugar-maple SEEDLING row becomes zero</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  only for those conditions; otherwise the response remains missing.</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Basal area.** Live-tree plot-basis contribution is</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="in">`0.005454 * DIA^2 * TPA_UNADJ`</span>; condition density divides by</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="in">`CONDPROP_UNADJ`</span>. The build compares derived total live basal area with</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="in">`COND.BALIVE`</span> and fails if their Pearson correlation is below 0.98.</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Climate.** Each county receives a 1991–2020 normal from the Daymet cell at</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  its Census Gazetteer internal point. This is explicitly a broad proxy, not a</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  plot-level climate value or a county-wide spatial mean.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Model grouping.** FIA county GEOID and plot visit are candidate random</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  intercepts. The plot-visit term accounts for the small number of visits that</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  contribute more than one eligible condition. Mixed-model structures are</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  retained only when group-support, convergence, and singularity checks pass;</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  the pipeline simplifies the random-effects structure before falling back to</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  ordinary logistic regression.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Gap thresholds.** The primary high-established threshold is the upper third</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  of sugar-maple basal-area share among conditions with demonstrated seedling</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  sampling. An upper-quartile alternative is reported as a sensitivity</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  analysis.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
