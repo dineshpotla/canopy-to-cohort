@@ -46,10 +46,14 @@ sample_map <- ggplot2::ggplot(map_data) +
   ) +
   ggplot2::scale_fill_viridis_c(option = "C", trans = "sqrt", na.value = "#E8E8E8") +
   ggplot2::labs(
-    title = "Northern-hardwood observations concentrate in northern Michigan",
+    title = "Maple/beech/birch observations concentrate in northern Michigan",
     subtitle = "Analyzed FIA plot-condition count by county; square-root color scale",
     fill = "Conditions\n(sqrt scale)",
-    caption = "Gray = no analyzed conditions. County aggregation protects FIA locations; no point coordinates are shown."
+    caption = paste(
+      "Gray = no analyzed conditions.",
+      "County aggregation uses FIA county IDs only; no plot coordinates are used or inferred.",
+      sep = "\n"
+    )
   ) +
   ggplot2::coord_quickmap() +
   theme_canopy() +
@@ -75,8 +79,8 @@ gap_map <- ggplot2::ggplot(map_data) +
     ),
     fill = "Flagged\nfraction",
     caption = paste(
-      "Exploratory sample summary—not a design-based county estimate.",
-      "Fractions are uncertain, especially near n = 20.",
+      "Exploratory sample summary; not a design-based county estimate.",
+      "Gray counties have fewer than 20 seedling-sampled conditions or no data.",
       sep = "\n"
     )
   ) +

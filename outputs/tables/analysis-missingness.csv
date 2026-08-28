@@ -18,6 +18,8 @@ forest_type,0,0
 condprop_unadj,0,0
 micrprop_unadj,0,0
 subpprop_unadj,0,0
+macrprop_unadj,1457,100
+macro_breakpoint_dia,1457,100
 stdage,0,0
 stdszcd,0,0
 balive,0,0
@@ -40,9 +42,12 @@ disturbed,0,0
 treated,0,0
 total_ba_plot_basis,0,0
 maple_ba_plot_basis,0,0
-live_tree_records,0,0
 total_ba_ft2_ac,0,0
 maple_ba_ft2_ac,0,0
+live_tree_records,0,0
+microplot_tree_records,30,2.059025394646534
+subplot_tree_records,30,2.059025394646534
+macroplot_tree_records,30,2.059025394646534
 nonmaple_ba_ft2_ac,0,0
 maple_ba_share,0,0
 all_seedling_tpa_plot_basis,33,2.264927934111187

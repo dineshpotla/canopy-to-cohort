@@ -93,6 +93,18 @@ eligible_condition_cte <- function(evalid, forest_codes) {
 
 extract_eligible_conditions <- function(con, evalid, forest_codes) {
   code_sql <- paste(as.integer(forest_codes), collapse = ",")
+  cond_columns <- DBI::dbListFields(con, "COND")
+  plot_columns <- DBI::dbListFields(con, "PLOT")
+  macrprop_sql <- if ("MACRPROP_UNADJ" %in% cond_columns) {
+    "c.MACRPROP_UNADJ"
+  } else {
+    "NULL AS MACRPROP_UNADJ"
+  }
+  macro_breakpoint_sql <- if ("MACRO_BREAKPOINT_DIA" %in% plot_columns) {
+    "p.MACRO_BREAKPOINT_DIA"
+  } else {
+    "NULL AS MACRO_BREAKPOINT_DIA"
+  }
   sql <- paste0(
     "WITH eval_plots AS (",
     " SELECT DISTINCT PLT_CN FROM POP_PLOT_STRATUM_ASSGN WHERE EVALID = ", as.integer(evalid),
@@ -104,7 +116,8 @@ extract_eligible_conditions <- function(con, evalid, forest_codes) {
     " p.MEASYEAR, p.MEASMON, p.MEASDAY, p.MANUAL, p.DESIGNCD, p.KINDCD,",
     " c.STATECD, c.UNITCD, c.COUNTYCD, cn.COUNTYNM, c.PLOT,",
     " c.COND_STATUS_CD, c.FORTYPCD, r.MEANING AS FOREST_TYPE,",
-    " c.CONDPROP_UNADJ, c.MICRPROP_UNADJ, c.SUBPPROP_UNADJ,",
+    " c.CONDPROP_UNADJ, c.MICRPROP_UNADJ, c.SUBPPROP_UNADJ, ", macrprop_sql, ",",
+    " ", macro_breakpoint_sql, ",",
     " c.STDAGE, c.STDSZCD, c.BALIVE,",
     " c.DSTRBCD1, c.DSTRBYR1, c.DSTRBCD2, c.DSTRBYR2, c.DSTRBCD3, c.DSTRBYR3,",
     " c.TRTCD1, c.TRTYR1, c.TRTCD2, c.TRTYR2, c.TRTCD3, c.TRTYR3",
@@ -144,11 +157,19 @@ extract_eligible_conditions <- function(con, evalid, forest_codes) {
 }
 
 extract_eligible_trees <- function(con, evalid, forest_codes) {
+  plot_columns <- DBI::dbListFields(con, "PLOT")
+  macro_breakpoint_sql <- if ("MACRO_BREAKPOINT_DIA" %in% plot_columns) {
+    "p.MACRO_BREAKPOINT_DIA"
+  } else {
+    "NULL AS MACRO_BREAKPOINT_DIA"
+  }
   sql <- paste0(
     eligible_condition_cte(evalid, forest_codes),
     "SELECT CAST(t.PLT_CN AS TEXT) AS PLT_CN, t.CONDID, CAST(t.CN AS TEXT) AS TREE_CN,",
-    " CAST(t.SPCD AS INTEGER) AS SPCD, t.DIA, t.TPA_UNADJ, t.STATUSCD",
+    " CAST(t.SPCD AS INTEGER) AS SPCD, t.DIA, t.TPA_UNADJ, t.STATUSCD,",
+    " p.DESIGNCD, ", macro_breakpoint_sql,
     " FROM TREE t JOIN eligible e ON e.PLT_CN = t.PLT_CN AND e.CONDID = t.CONDID",
+    " JOIN PLOT p ON p.CN = t.PLT_CN",
     " WHERE t.STATUSCD = 1 AND t.SPCD IS NOT NULL"
   )
   standardize_names(DBI::dbGetQuery(con, sql)) |>

@@ -1,7 +1,19 @@
 release,check,scope,status,evidence,verified_date
 v1.1.0,R data-free unit tests,"GitHub Actions; no raw or derived data",pass,"11 expectations pass and 5 derived-data/model tests skip by design; verified locally under the CI dependency profile",2026-08-27
 v1.1.0,R full-build tests,"Local completed pipeline",pass,"33 expectations passed with FIA, climate, derived data, and model artifacts present",2026-08-27
-v1.1.0,Basal-area concordance,"1457 eligible conditions",pass,"Pearson r = 0.99905 against FIA COND.BALIVE; MAE = 0.573 ft2/acre",2026-08-27
+v1.1.0,Basal-area concordance,"1457 eligible conditions",superseded,"Legacy frame-unaware calculation; superseded by the frame-specific v1.2.0 correction",2026-08-28
 v1.1.0,FIA join integrity,"Plot-condition analytical key",pass,"1457 condition rows retained after tree and seedling joins; zero unmatched regeneration keys",2026-08-27
 v1.1.0,Climate join integrity,"County GEOID",pass,"1457 FIA conditions joined; zero unmatched FIA county keys",2026-08-27
-v1.1.0,Model support,"1424 complete conditions",pass,"Mixed logistic model converged; non-singular; county and plot-visit random intercepts; 76.125 events per fixed term",2026-08-27
+v1.1.0,Model support,"1424 complete conditions",superseded,"Legacy county-plus-plot specification; superseded after the plot-visit variance component was found unsupported",2026-08-28
+v1.2.0,R full-build tests,"Local source-to-report pipeline",pass,"72 expectations passed; 0 failures, 0 warnings, and 0 skips with FIA, climate, model, and output artifacts present",2026-08-28
+v1.2.0,Frame-specific basal-area concordance,"1457 analytical conditions; 38593 live-tree records",pass,"Microplot/subplot/macroplot records = 6867/31726/0; Pearson r = 0.999999999999; MAE = 0.000132467, RMSE = 0.000179586, and maximum absolute error = 0.000696631 ft2/acre against FIA COND.BALIVE",2026-08-28
+v1.2.0,FIA join integrity,"Plot-condition analytical key",pass,"1457 condition rows retained; tree metrics matched 1427 conditions and the 30 conditions without live-tree records were retained as zeros; zero unmatched regeneration keys",2026-08-28
+v1.2.0,Climate join integrity,"County GEOID",pass,"1457 FIA conditions across 78 represented counties joined to the 83-county climate table with zero unmatched FIA keys",2026-08-28
+v1.2.0,Cohort and gap screen,"1457 analytical; 1424 seedling-sampled conditions",pass,"815 conditions had sugar-maple seedlings tallied; primary upper-third screen flagged 119 and upper-quartile sensitivity flagged 93",2026-08-28
+v1.2.0,Random-effect selection,"County versus county-plus-plot visit",pass,"County-only model retained; plot-visit variance = 0.00987, delta AIC = +1.999, and boundary-mixture p = 0.485",2026-08-28
+v1.2.0,Maple functional form,"Linear versus 3-df natural spline",pass,"Natural spline delta AIC = -10.748; likelihood-ratio chi-square = 14.748 on 2 df; p = 0.000627",2026-08-28
+v1.2.0,County-grouped internal validation,"10 folds; entire counties held out",pass,"1424 records predicted exactly once with fold-specific scaling and spline knots; Brier = 0.179454, ROC AUC = 0.793240, calibration intercept = -0.193179, and slope = 0.901061",2026-08-28
+v1.2.0,Inference sensitivity,"Conventional non-spline coefficients",pass,"Annual precipitation mixed-model Wald p = 0.0407, BH-adjusted p = 0.0713, and county-cluster CR1 sensitivity p = 0.1884; reported as weak and exploratory",2026-08-28
+v1.2.0,Simulation diagnostics,"500 DHARMa simulations",pass,"Uniformity p = 0.751, dispersion p = 0.888, outlier p = 1.000, and combined residual-quantile p = 0.051; borderline quantile result disclosed",2026-08-28
+v1.2.0,Spatial communication,"17 counties with at least 20 seedling-sampled conditions",pass,"Maps use FIA county IDs only; sparse counties are gray; Wilson intervals are labeled unweighted descriptive references that ignore survey design and within-county clustering",2026-08-28
+v1.2.0,Report render and desktop visual QA,"Four-page Quarto site; 1280-pixel desktop viewport",pass,"Quarto 1.9.38 rendered successfully; all seven exported figures inspected; eight report image instances loaded; no horizontal overflow and no browser console warnings or errors",2026-08-28

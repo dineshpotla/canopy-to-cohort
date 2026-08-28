@@ -16,19 +16,21 @@ to that grain before they are joined, preventing many-to-many row inflation.
 
 | Field | Type / unit | Definition |
 |---|---|---|
-| `plt_cn` | character identifier | FIA plot-visit control number. Used as a grouping factor; not a public coordinate. |
+| `plt_cn` | character identifier | FIA plot-visit control number. Used as a relational key; not a coordinate. |
 | `condid` | integer identifier | Condition number within the plot visit. |
 | `geoid` | five-character code | State and county FIPS code used for county-safe spatial joins and the county random intercept. |
 | `county_name` | character | FIA county name resolved from the database reference table. |
 | `measyear` | year | Calendar year of field measurement. Observations in this release span 2018–2025. |
-| `forest_type` | character | Northern-hardwood forest type resolved from `REF_FOREST_TYPE`, rather than interpreted from an unlabeled code. |
+| `forest_type` | character | Active type in FIA maple/beech/birch group 800 (codes 801, 802, 805, or 809), which this project uses as its operational northern-hardwood cohort. |
 
 ## Sampling and stand context
 
 | Field | Type / unit | Definition and missing-value rule |
 |---|---|---|
-| `condprop_unadj` | proportion | Unadjusted share of the plot assigned to the condition. Used to convert plot-basis tree contributions to condition density. |
+| `condprop_unadj` | proportion | Unadjusted plot-area share assigned to the condition. Retained for FIA area context; it is not used as a universal tree-frame denominator. |
 | `micrprop_unadj` | proportion | Unadjusted share of microplot sampling assigned to the condition. A value greater than zero demonstrates seedling sampling opportunity. |
+| `subpprop_unadj` | proportion | Unadjusted share of subplot sampling assigned to the condition; used for live trees measured on subplots. |
+| `macrprop_unadj` | proportion | Unadjusted share of macroplot sampling assigned to the condition; used only when a populated macroplot breakpoint applies. |
 | `seedling_sampled` | logical | `TRUE` only when `micrprop_unadj > 0`. An absent seedling record may become zero only under this condition. |
 | `stand_age` | years | FIA stand-age estimate (`STDAGE`). Missing values remain missing and are never silently imputed. |
 | `disturbed` | logical | `TRUE` when any of `DSTRBCD1`–`DSTRBCD3` contains a positive disturbance code. |
@@ -46,13 +48,14 @@ contribution is
 
 | Field | Unit | Definition |
 |---|---|---|
-| `total_ba_ft2_ac` | ft²/acre | Sum of all live-tree plot-basis contributions divided by `condprop_unadj`. |
-| `maple_ba_ft2_ac` | ft²/acre | Sugar-maple live-tree contribution divided by `condprop_unadj`. |
+| `total_ba_ft2_ac` | ft²/acre | Sum of frame-corrected live-tree contributions: microplot records divide by `micrprop_unadj`, subplot records by `subpprop_unadj`, and applicable macroplot records by `macrprop_unadj`. |
+| `maple_ba_ft2_ac` | ft²/acre | Sugar-maple component of the frame-corrected live-tree density. |
 | `nonmaple_ba_ft2_ac` | ft²/acre | `total_ba_ft2_ac - maple_ba_ft2_ac`, bounded below at zero. |
-| `maple_ba_share` | proportion | Sugar-maple plot-basis basal area divided by total live-tree plot-basis basal area. |
+| `maple_ba_share` | proportion | Frame-corrected sugar-maple basal area divided by frame-corrected total live-tree basal area. |
 
-The derived total is checked against FIA `COND.BALIVE`; the pipeline fails when
-their Pearson correlation is below 0.98. Implementation:
+The derived total is checked against FIA `COND.BALIVE`; the pipeline enforces
+strict correlation and absolute-error gates that detect use of a wrong sampling
+frame. Implementation:
 [`R/basal_area.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/basal_area.R).
 
 ## Regeneration metrics and response
@@ -85,13 +88,15 @@ Implementation: [`R/climate.R`](https://github.com/dineshpotla/canopy-to-cohort/
 
 ## Model transformations
 
-Continuous predictors are standardized within the complete analytical sample,
-so their odds ratios describe a one-standard-deviation contrast. Basal-area
-predictors are transformed with `log(1 + x)` before standardization.
+Continuous predictors are standardized after defining the final model-complete
+cohort, so one standardized unit refers to the fitted 1,424-condition cohort.
+Basal-area predictors are transformed with `log(1 + x)` before standardization.
+The scaling means, standard deviations, transformations, and cohort size are
+published as a separate audit table.
 
 | Model field | Source and transformation |
 |---|---|
-| `z_maple_ba` | standardized `log(1 + maple_ba_ft2_ac)` |
+| `z_maple_ba` | standardized `log(1 + maple_ba_ft2_ac)`; modeled with a three-degree-of-freedom natural spline |
 | `z_nonmaple_ba` | standardized `log(1 + nonmaple_ba_ft2_ac)` |
 | `z_microplot_coverage` | standardized `micrprop_unadj` |
 | `z_stand_age` | standardized `stand_age` |
@@ -100,15 +105,22 @@ predictors are transformed with `log(1 + x)` before standardization.
 | `z_precip` | standardized `mean_annual_precip_mm` |
 | `z_year` | standardized `measyear` |
 
-The supported release model is a mixed-effects logistic regression with county
-and plot-visit random intercepts. Model construction and support gates are in
+The supported release model is a mixed-effects logistic regression with a
+county random intercept. It reports the nonlinear maple association as an
+adjusted probability curve rather than interpreting spline-basis coefficients.
+Ten-fold internal grouped validation holds out whole counties, relearns
+transformations within each training fold, and predicts held-out counties with
+fixed effects only. Conventional coefficient inference is supplemented by
+Benjamini–Hochberg adjusted p-values and a county-cluster CR1 sensitivity
+analysis. Model construction and support gates are in
 [`R/models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/models.R).
 
 ## Interpretation boundaries
 
 - `TPA_UNADJ` expands records within the plot design; it is not a statewide survey weight.
 - Zeros are assigned only when the relevant sampling opportunity is demonstrated.
-- Public geography is county-scale; protected FIA plot locations are not displayed or inferred.
+- Exact FIA plot locations are confidential. Public FIADB coordinates may be approximate; this analysis neither uses nor infers them, relying only on county identifiers.
 - Gap flags and fitted associations are exploratory and are not causal or design-based prevalence estimates.
+- County Wilson intervals are unweighted binomial reference intervals. They ignore FIA survey design and within-county clustering and are descriptive rather than inferential county estimates.
 
 See [Analysis decisions](analysis-decisions.md) for the complete decision log.

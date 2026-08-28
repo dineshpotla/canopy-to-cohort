@@ -28,6 +28,8 @@ conditions <- extract_eligible_conditions(con, evalid, forest_codes)
 assert_unique_key(conditions, c("plt_cn", "condid"), "eligible conditions")
 assert_range(conditions$condprop_unadj, 0, 1, allow_na = FALSE, label = "condition proportion")
 assert_range(conditions$micrprop_unadj, 0, 1, allow_na = FALSE, label = "microplot condition proportion")
+assert_range(conditions$subpprop_unadj, 0, 1, allow_na = FALSE, label = "subplot condition proportion")
+assert_range(conditions$macrprop_unadj, 0, 1, label = "macroplot condition proportion")
 save_rds_atomic(conditions, project_path("data", "interim", "eligible_conditions.rds"))
 
 log_step("Extracting and aggregating live trees")
@@ -39,7 +41,9 @@ tree_metrics <- aggregate_tree_metrics(
   trees,
   maple_spcd,
   conditions |>
-    dplyr::select(dplyr::all_of(c("plt_cn", "condid", "condprop_unadj")))
+    dplyr::select(dplyr::all_of(c(
+      "plt_cn", "condid", "micrprop_unadj", "subpprop_unadj", "macrprop_unadj"
+    )))
 )
 assert_unique_key(tree_metrics, c("plt_cn", "condid"), "tree metrics")
 assert_range(tree_metrics$maple_ba_share, 0, 1, label = "maple basal-area share")

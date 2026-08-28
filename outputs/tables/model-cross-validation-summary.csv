@@ -1,0 +1,5 @@
+metric,value,ideal_value,validation_design,prediction_method,observations,counties,folds
+Brier score,0.1794540004589852,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
+ROC AUC,0.7932404525169492,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
+Calibration intercept,-0.19317947120554124,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
+Calibration slope,0.9010612976652473,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10

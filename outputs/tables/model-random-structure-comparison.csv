@@ -1,0 +1,3 @@
+model,random_effect_structure,converged,singular,log_likelihood,aic,bic,county_variance,plot_visit_variance,likelihood_ratio_chisq,boundary_mixture_p_value,selected,selection_note
+County only,county random intercept,TRUE,FALSE,-712.6395763791419,1449.2791527582838,1512.4138538619468,0.5394476994173926,NA,NA,NA,TRUE,Selected as the parsimonious supported structure
+County plus plot visit,county and plot-visit random intercepts,TRUE,FALSE,-712.6388517791008,1451.2777035582017,1519.6736297538366,0.541151210733884,0.009868418682588908,0.0014492000821064721,0.4848165887822925,FALSE,Not selected: the added variance component lacks support and does not improve AIC

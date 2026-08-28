@@ -4,8 +4,8 @@ project:
   state_name: "Michigan"
 
 release:
-  version: "1.1.0"
-  analysis_date: "2026-08-27"
+  version: "1.2.0"
+  analysis_date: "2026-08-28"
   evalid: 262501
   source_snapshot:
     fia_zip:
@@ -33,9 +33,11 @@ climate:
     - prcp
 
 analysis:
-  gap_established_quantile: 0.6667
+  gap_established_quantile: 0.6666666666666666
   gap_sensitivity_quantile: 0.75
   minimum_map_n: 20
   maximum_correlation: 0.70
   minimum_groups_for_random_effect: 30
   minimum_events_per_parameter: 10
+  maple_spline_df: 3
+  grouped_cv_folds: 10

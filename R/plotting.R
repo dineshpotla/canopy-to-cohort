@@ -14,6 +14,7 @@ theme_canopy <- function(base_size = 11) {
       plot.caption.position = "plot",
       plot.title = ggplot2::element_text(face = "bold", colour = project_palette[["ink"]]),
       plot.subtitle = ggplot2::element_text(colour = "#50605A"),
+      plot.caption = ggplot2::element_text(hjust = 0, lineheight = 1.05),
       panel.grid.minor = ggplot2::element_blank(),
       legend.position = "bottom"
     )
@@ -34,7 +35,7 @@ plot_species_composition <- function(composition, top_n = 12L) {
     ggplot2::geom_col(fill = project_palette[["forest"]], width = 0.72) +
     ggplot2::scale_x_continuous(labels = scales::label_number(big.mark = ","), expand = ggplot2::expansion(mult = c(0, 0.06))) +
     ggplot2::labs(
-      title = "Sugar maple anchors the sampled northern-hardwood canopy",
+      title = "Sugar maple anchors the sampled maple/beech/birch cohort",
       subtitle = "FIA unadjusted plot-basis live-tree basal-area contribution across analyzed conditions",
       x = expression("Summed basal-area contribution (ft"^2 * "/acre on FIA plot basis)"),
       y = NULL,
@@ -115,35 +116,54 @@ plot_regeneration_quadrant <- function(data) {
     theme_canopy()
 }
 
-plot_model_effects <- function(odds_ratios) {
-  shown <- odds_ratios |>
-    dplyr::mutate(
-      plot_label = dplyr::recode(
-        .data$label,
-        "Sugar maple basal area" = "Sugar maple basal area (log + 1)",
-        "Non-maple basal area" = "Non-maple basal area (log + 1)"
-      ),
-      plot_label = stats::reorder(.data$plot_label, .data$estimate)
-    )
-  ggplot2::ggplot(shown, ggplot2::aes(.data$estimate, .data$plot_label)) +
-    ggplot2::geom_vline(xintercept = 1, linetype = 2, colour = "#76817C") +
-    ggplot2::geom_errorbar(
-      ggplot2::aes(xmin = .data$conf.low, xmax = .data$conf.high),
-      orientation = "y",
-      width = 0.16,
-      colour = project_palette[["forest"]]
+plot_maple_effect_curve <- function(effect_curve) {
+  required <- c("maple_ba_ft2_ac", "predicted_probability", "conf_low", "conf_high")
+  missing <- setdiff(required, names(effect_curve))
+  if (length(missing)) stop("Maple effect curve is missing: ", paste(missing, collapse = ", "), call. = FALSE)
+  spline_df <- if ("spline_df" %in% names(effect_curve)) unique(effect_curve$spline_df) else 3L
+  if (length(spline_df) != 1L || !is.finite(spline_df)) {
+    stop("Maple effect curve must contain one finite spline_df value.", call. = FALSE)
+  }
+  x_upper <- max(effect_curve$maple_ba_ft2_ac, na.rm = TRUE)
+  x_breaks <- c(0, 1, 5, 10, 25, 50, 100, 150)
+  x_breaks <- x_breaks[x_breaks <= x_upper]
+
+  ggplot2::ggplot(
+    effect_curve,
+    ggplot2::aes(.data$maple_ba_ft2_ac, .data$predicted_probability)
+  ) +
+    ggplot2::geom_ribbon(
+      ggplot2::aes(ymin = .data$conf_low, ymax = .data$conf_high),
+      fill = project_palette[["maple"]], alpha = 0.18
     ) +
-    ggplot2::geom_point(size = 2.5, colour = project_palette[["maple"]]) +
-    ggplot2::scale_x_log10() +
+    ggplot2::geom_line(linewidth = 1.15, colour = project_palette[["maple"]]) +
+    ggplot2::scale_x_continuous(
+      trans = scales::pseudo_log_trans(base = 10, sigma = 1),
+      breaks = x_breaks,
+      labels = scales::label_number(accuracy = 1),
+      expand = ggplot2::expansion(mult = c(0, 0.02))
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, 1), labels = scales::label_percent(accuracy = 1),
+      expand = ggplot2::expansion(mult = c(0, 0.01))
+    ) +
     ggplot2::labs(
-      title = "Associations with no sugar-maple seedlings tallied",
-      subtitle = "Odds ratios with 95% CIs; continuous effects are per 1 SD",
-      x = "Odds ratio for seedling non-detection (log scale; 1 = no association)",
-      y = NULL,
-      caption = "Basal-area variables use log(x + 1) before standardization. Observational associations, not causal effects."
+      title = "Seedling non-detection changes nonlinearly with maple basal area",
+      subtitle = "Adjusted county-level mixed model; ribbon is a pointwise Wald 95% confidence interval",
+      x = expression("Sugar maple basal area (ft"^2 * "/acre; pseudo-log scale)"),
+      y = "Predicted probability of no sugar-maple seedlings tallied",
+      caption = paste(
+        sprintf("Natural spline (%d df) of standardized log(x + 1) maple basal area.", as.integer(spline_df)),
+        "Reference profile: other continuous variables at their means, no recorded disturbance, county effect = 0.",
+        "Curve ends at the observed 99th percentile. Observational association, not a causal effect.",
+        sep = "\n"
+      )
     ) +
     theme_canopy()
 }
+
+# Backward-compatible name; v1.2 expects prediction-curve data rather than odds ratios.
+plot_model_effects <- plot_maple_effect_curve
 
 wilson_interval <- function(successes, total, z = 1.96) {
   if (is.na(total) || total <= 0) {
@@ -187,12 +207,12 @@ plot_county_gap_uncertainty <- function(county_summary, minimum_n = 20L) {
     ) +
     ggplot2::labs(
       title = "County fractions remain uncertain even after support screening",
-      subtitle = "Exploratory gap fraction with Wilson 95% intervals; denominator shown in labels",
+      subtitle = "Exploratory gap fraction with unweighted Wilson 95% reference intervals; denominator shown in labels",
       x = "Flagged fraction among seedling-sampled conditions",
       y = NULL,
       caption = paste0(
         "Counties shown only when n ≥ ", minimum_n,
-        ". Descriptive sample intervals—not FIA design-based county estimates."
+        ". Descriptive, unweighted binomial intervals; they ignore FIA survey design and within-county clustering."
       )
     ) +
     theme_canopy(base_size = 10.5) +

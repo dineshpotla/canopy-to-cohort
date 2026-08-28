@@ -19,14 +19,19 @@ execute:
 #| label: setup
 summary <- readr::read_csv(here::here("outputs", "tables", "analysis-summary.csv"), show_col_types = FALSE)
 support <- readr::read_csv(here::here("outputs", "tables", "model-support.csv"), show_col_types = FALSE)
-odds <- readr::read_csv(here::here("outputs", "tables", "model-odds-ratios.csv"), show_col_types = FALSE)
+effect_curve <- readr::read_csv(here::here("outputs", "tables", "model-maple-effect-curve.csv"), show_col_types = FALSE)
+validation <- readr::read_csv(here::here("outputs", "tables", "model-cross-validation-summary.csv"), show_col_types = FALSE)
 evaluation <- readr::read_csv(here::here("outputs", "audits", "selected-evaluation.csv"), show_col_types = FALSE)
 fia_counts <- readr::read_csv(here::here("outputs", "audits", "fia-table-counts.csv"), show_col_types = FALSE)
 cohort <- readr::read_csv(here::here("outputs", "tables", "cohort-flow.csv"), show_col_types = FALSE)
-maple_effect <- odds |>
-  dplyr::filter(.data$label == "Sugar maple basal area") |>
-  dplyr::slice_head(n = 1)
-if (nrow(maple_effect) != 1L) stop("Required sugar maple model effect not found.")
+curve_probability <- function(x) {
+  stats::approx(effect_curve$maple_ba_ft2_ac, effect_curve$predicted_probability, xout = x, rule = 2)$y
+}
+cv_metric <- function(metric_name) {
+  value <- validation$value[validation$metric == metric_name]
+  if (length(value) != 1L) stop("Required validation metric not found: ", metric_name)
+  value
+}
 table_rows <- function(table_name) {
   value <- fia_counts$rows[fia_counts$table == table_name]
   if (length(value) != 1L) stop("Required FIA table count not found: ", table_name)
@@ -43,7 +48,7 @@ cohort_rows <- function(step_name) {
 ::: {.column width="46%"}
 ## A forest can keep its canopy while losing its next cohort
 
-This project asks where contemporary Michigan FIA observations combine substantial established sugar maple with no sugar-maple seedlings tallied—and which measured stand and broad climate characteristics accompany that mismatch.
+This project asks where contemporary Michigan FIA observations combine substantial established sugar maple with no sugar-maple seedlings tallied, and which measured stand and broad climate characteristics accompany that mismatch.
 
 [Read the research report](report/index.qmd){.btn .btn-primary .btn-lg}
 [Review analysis decisions](docs/analysis-decisions.md){.btn .btn-outline-secondary .btn-lg}
@@ -106,7 +111,7 @@ Michigan counties represented
 
 ### Build the cohort
 
-`r scales::comma(cohort_rows("Plot visits assigned to current evaluation"))` assigned visits narrow to `r scales::comma(summary$plot_conditions)` eligible northern-hardwood conditions.
+`r scales::comma(cohort_rows("Plot visits assigned to current evaluation"))` assigned visits narrow to `r scales::comma(summary$plot_conditions)` conditions in FIA's maple/beech/birch forest-type group, used as the operational northern-hardwood cohort.
 :::::
 
 ::::: {.workflow-card}
@@ -114,7 +119,7 @@ Michigan counties represented
 
 ### Preserve geography
 
-83 county Daymet cells join by GEOID; protected FIA plot coordinates never enter the public analysis.
+83 county Daymet cells join by GEOID. Exact FIA plot locations are confidential; public coordinates may be approximate, and this analysis neither uses nor infers them.
 :::::
 
 ::::: {.workflow-card}
@@ -122,7 +127,7 @@ Michigan counties represented
 
 ### Model clustering
 
-`r scales::comma(support$observations)` outcomes support county and plot-visit random intercepts plus eight fixed-effect terms.
+`r scales::comma(support$model_complete_n)` outcomes support a county random intercept and a nonlinear established-maple response.
 :::::
 
 ::::: {.workflow-card}
@@ -130,7 +135,7 @@ Michigan counties represented
 
 ### Publish evidence
 
-33 full-build expectations, join audits, source hashes, diagnostics, and threshold sensitivity accompany the report.
+County-held-out validation (Brier `r sprintf("%.3f", cv_metric("Brier score"))`; AUC `r sprintf("%.3f", cv_metric("ROC AUC"))`), join audits, source hashes, diagnostics, and threshold sensitivity accompany the report.
 :::::
 ::::::
 
@@ -140,7 +145,7 @@ Michigan counties represented
 
 ## What the analysis found
 
-Sugar-maple seedlings were tallied in **`r scales::percent(summary$maple_seedling_detected / summary$seedling_sampled, accuracy = 0.1)`** of sampled conditions. The upper-third screen flagged **`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`** as potential gaps. In the adjusted `r support$model_type`, a one-standard-deviation increase in log sugar-maple basal area corresponded to **`r sprintf("OR %.2f (95%% CI %.2f–%.2f)", maple_effect$estimate, maple_effect$conf.low, maple_effect$conf.high)`** for no seedlings being tallied.
+Sugar-maple seedlings were tallied in **`r scales::percent(summary$maple_seedling_detected / summary$seedling_sampled, accuracy = 0.1)`** of sampled conditions. The upper-third screen flagged **`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`** as potential gaps. In the adjusted `r support$model_type`, the established-maple relationship was nonlinear: at the stated reference profile, predicted non-detection fell from **`r scales::percent(curve_probability(0), accuracy = 1)` at 0 ft²/acre** to **`r scales::percent(curve_probability(25), accuracy = 1)` at 25 ft²/acre**, then leveled off.
 
 That is an association, not a causal effect. The screen is sample-relative, a seedling zero means “not tallied” rather than confirmed ecological absence, and county climate values are broad proxies.
 
@@ -157,7 +162,7 @@ That is an association, not a causal effect. The screen is sample-relative, a se
 ::: {.column width="50%"}
 ### Spatially responsible
 
-Protected FIA coordinates are neither displayed nor treated as exact environmental locations. Maps and climate joins use county identifiers, and sparse county estimates are suppressed.
+Exact FIA plot locations are confidential. The analysis neither uses nor infers public plot coordinates; maps and climate joins use county identifiers, and sparse county summaries are suppressed.
 :::
 ::::
 

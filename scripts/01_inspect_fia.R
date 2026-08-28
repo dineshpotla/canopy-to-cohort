@@ -35,10 +35,10 @@ forest_candidates <- find_reference_matches(
   "REF_FOREST_TYPE",
   c("northern hardwood", "maple.*beech.*birch", "sugar maple")
 )
-if (!nrow(forest_candidates)) stop("No northern-hardwood forest-type candidates found.", call. = FALSE)
+if (!nrow(forest_candidates)) stop("No maple/beech/birch forest-type candidates found.", call. = FALSE)
 write_csv_atomic(
   forest_candidates,
-  project_path("data", "interim", "northern-hardwood-forest-type-candidates.csv")
+  project_path("data", "interim", "maple-beech-birch-forest-type-candidates.csv")
 )
 
 manual_fields <- intersect(c("CN", "INVYR", "MEASYEAR", "MANUAL", "MANUAL_NATIONAL", "DESIGNCD", "KINDCD"), DBI::dbListFields(con, "PLOT"))

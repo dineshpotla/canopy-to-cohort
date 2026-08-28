@@ -33,7 +33,17 @@ outputs/tables/**
 !outputs/tables/county-sample-summary.csv
 !outputs/tables/gap-threshold-sensitivity.csv
 !outputs/tables/model-collinearity.csv
+!outputs/tables/model-cross-validation-county-folds.csv
+!outputs/tables/model-cross-validation-folds.csv
+!outputs/tables/model-cross-validation-summary.csv
+!outputs/tables/model-dharma-tests.csv
+!outputs/tables/model-diagnostics-summary.csv
+!outputs/tables/model-functional-form-comparison.csv
+!outputs/tables/model-inference-sensitivity.csv
+!outputs/tables/model-maple-effect-curve.csv
 !outputs/tables/model-odds-ratios.csv
+!outputs/tables/model-random-structure-comparison.csv
+!outputs/tables/model-scaling-audit.csv
 !outputs/tables/model-support.csv
 outputs/models/**
 !outputs/models/.gitkeep

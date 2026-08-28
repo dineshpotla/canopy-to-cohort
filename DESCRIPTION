@@ -1,6 +1,6 @@
 Package: canopytocohort
 Title: Canopy to Cohort Research Workflow
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: person(
     "Dinesh", "Potla",
     role = c("aut", "cre"),

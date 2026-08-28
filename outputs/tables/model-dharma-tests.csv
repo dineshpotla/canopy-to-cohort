@@ -1,0 +1,5 @@
+diagnostic,statistic,p_value,method,interpretation
+uniformity,0.017908210405807812,0.751078684848344,Asymptotic one-sample Kolmogorov-Smirnov test,Small p-values indicate evidence of model-data mismatch
+dispersion,1.0055161760322007,0.888,DHARMa nonparametric dispersion test via sd of residuals fitted vs. simulated,Small p-values indicate evidence of model-data mismatch
+outliers,5,1,DHARMa outlier test based on exact binomial test with approximate expectations,Small p-values indicate evidence of model-data mismatch
+residual_quantiles,NA,0.050646722486754614,Test for location of quantiles via qgam,Small p-values indicate evidence of model-data mismatch

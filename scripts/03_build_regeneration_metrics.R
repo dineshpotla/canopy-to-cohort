@@ -28,7 +28,7 @@ assert_range(regen$maple_seedling_tpa, 0, Inf, label = "maple seedling density")
 assert_range(regen$maple_seedling_share, 0, 1, label = "maple seedling share")
 
 analysis <- conditions |>
-  dplyr::left_join(tree_metrics, by = c("plt_cn", "condid", "condprop_unadj")) |>
+  dplyr::left_join(tree_metrics, by = c("plt_cn", "condid")) |>
   dplyr::left_join(
     regen |>
       dplyr::select(-dplyr::all_of("micrprop_unadj")),
@@ -59,9 +59,15 @@ ba_validation <- analysis |>
     observations = dplyr::n(),
     pearson_correlation = stats::cor(.data$total_ba_ft2_ac, .data$balive),
     mean_absolute_error_ft2_ac = mean(abs(.data$total_ba_ft2_ac - .data$balive)),
-    median_signed_error_ft2_ac = stats::median(.data$total_ba_ft2_ac - .data$balive)
+    root_mean_squared_error_ft2_ac = sqrt(mean((.data$total_ba_ft2_ac - .data$balive)^2)),
+    median_signed_error_ft2_ac = stats::median(.data$total_ba_ft2_ac - .data$balive),
+    max_absolute_error_ft2_ac = max(abs(.data$total_ba_ft2_ac - .data$balive))
   )
-if (ba_validation$pearson_correlation < 0.98) {
+if (
+  ba_validation$pearson_correlation < 0.9999 ||
+    ba_validation$mean_absolute_error_ft2_ac > 0.01 ||
+    ba_validation$max_absolute_error_ft2_ac > 0.05
+) {
   stop("Computed live-tree basal area does not agree with FIA COND.BALIVE.", call. = FALSE)
 }
 write_csv_atomic(ba_validation, project_path("outputs", "audits", "basal-area-validation.csv"))
