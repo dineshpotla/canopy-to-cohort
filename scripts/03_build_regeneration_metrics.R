@@ -8,7 +8,11 @@ config <- read_config()
 con <- connect_fia()
 on.exit(disconnect_fia(con), add = TRUE)
 
-evaluation <- latest_current_evaluation(con, config$project$state_fips)
+evaluation <- resolve_current_evaluation(
+  con,
+  config$project$state_fips,
+  config$release$evalid %||% NULL
+)
 forest_types <- current_northern_hardwood_types(con)
 maple_ref <- sugar_maple_reference(con)
 conditions <- read_required_rds(project_path("data", "interim", "eligible_conditions.rds"))

@@ -155,3 +155,50 @@ wilson_interval <- function(successes, total, z = 1.96) {
   half <- z * sqrt((p * (1 - p) + z^2 / (4 * total)) / total) / denominator
   tibble::tibble(estimate = p, conf_low = pmax(0, center - half), conf_high = pmin(1, center + half))
 }
+
+plot_county_gap_uncertainty <- function(county_summary, minimum_n = 20L) {
+  required <- c(
+    "county_name", "gap_denominator", "estimate", "conf_low", "conf_high", "map_supported"
+  )
+  missing <- setdiff(required, names(county_summary))
+  if (length(missing)) {
+    stop("County summary is missing: ", paste(missing, collapse = ", "), call. = FALSE)
+  }
+
+  shown <- county_summary |>
+    dplyr::filter(.data$map_supported, !is.na(.data$estimate)) |>
+    dplyr::mutate(
+      county_label = paste0(.data$county_name, "  (n = ", .data$gap_denominator, ")"),
+      county_label = stats::reorder(.data$county_label, .data$estimate)
+    )
+  if (!nrow(shown)) stop("No counties meet the mapping support threshold.", call. = FALSE)
+
+  ggplot2::ggplot(shown, ggplot2::aes(.data$estimate, .data$county_label)) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = .data$conf_low, xend = .data$conf_high, yend = .data$county_label),
+      linewidth = 1.05,
+      colour = project_palette[["forest"]]
+    ) +
+    ggplot2::geom_point(size = 2.8, colour = project_palette[["maple"]]) +
+    ggplot2::scale_x_continuous(
+      labels = scales::label_percent(accuracy = 1),
+      limits = c(0, max(shown$conf_high, na.rm = TRUE)),
+      expand = ggplot2::expansion(mult = c(0, 0.04))
+    ) +
+    ggplot2::labs(
+      title = "County fractions remain uncertain even after support screening",
+      subtitle = "Exploratory gap fraction with Wilson 95% intervals; denominator shown in labels",
+      x = "Flagged fraction among seedling-sampled conditions",
+      y = NULL,
+      caption = paste0(
+        "Counties shown only when n ≥ ", minimum_n,
+        ". Descriptive sample intervals—not FIA design-based county estimates."
+      )
+    ) +
+    theme_canopy(base_size = 10.5) +
+    ggplot2::theme(
+      panel.grid.major.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_text(size = 8.3),
+      legend.position = "none"
+    )
+}

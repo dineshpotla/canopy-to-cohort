@@ -86,5 +86,11 @@ gap_map <- ggplot2::ggplot(map_data) +
 
 save_figure(sample_map, "01_study_area_sample_map.png", width = 7, height = 6.8)
 save_figure(gap_map, "05_county_gap_map.png", width = 7, height = 6.8)
+save_figure(
+  plot_county_gap_uncertainty(county_summary, config$analysis$minimum_map_n),
+  "06_county_gap_uncertainty.png",
+  width = 7.2,
+  height = 6.8
+)
 
 log_step("Spatial summaries complete")

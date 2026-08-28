@@ -1,0 +1,7 @@
+release,check,scope,status,evidence,verified_date
+v1.1.0,R data-free unit tests,"GitHub Actions; no raw or derived data",pass,"11 expectations pass and 5 derived-data/model tests skip by design; verified locally under the CI dependency profile",2026-08-27
+v1.1.0,R full-build tests,"Local completed pipeline",pass,"33 expectations passed with FIA, climate, derived data, and model artifacts present",2026-08-27
+v1.1.0,Basal-area concordance,"1457 eligible conditions",pass,"Pearson r = 0.99905 against FIA COND.BALIVE; MAE = 0.573 ft2/acre",2026-08-27
+v1.1.0,FIA join integrity,"Plot-condition analytical key",pass,"1457 condition rows retained after tree and seedling joins; zero unmatched regeneration keys",2026-08-27
+v1.1.0,Climate join integrity,"County GEOID",pass,"1457 FIA conditions joined; zero unmatched FIA county keys",2026-08-27
+v1.1.0,Model support,"1424 complete conditions",pass,"Mixed logistic model converged; non-singular; county and plot-visit random intercepts; 76.125 events per fixed term",2026-08-27

@@ -27,10 +27,26 @@ outputs/figures/**
 !outputs/figures/*.png
 outputs/tables/**
 !outputs/tables/.gitkeep
+!outputs/tables/analysis-missingness.csv
+!outputs/tables/analysis-summary.csv
+!outputs/tables/cohort-flow.csv
+!outputs/tables/county-sample-summary.csv
+!outputs/tables/gap-threshold-sensitivity.csv
+!outputs/tables/model-collinearity.csv
+!outputs/tables/model-odds-ratios.csv
+!outputs/tables/model-support.csv
 outputs/models/**
 !outputs/models/.gitkeep
 outputs/audits/**
 !outputs/audits/.gitkeep
+!outputs/audits/basal-area-validation.csv
+!outputs/audits/climate-join-audit.csv
+!outputs/audits/data-provenance.csv
+!outputs/audits/fia-join-audit.csv
+!outputs/audits/fia-table-counts.csv
+!outputs/audits/release-validation.csv
+!outputs/audits/selected-evaluation.csv
+!outputs/audits/tree-extraction-summary.csv
 
 report/index.html
 report/index_files/

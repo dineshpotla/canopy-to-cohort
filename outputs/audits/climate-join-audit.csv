@@ -1,0 +1,2 @@
+join,left_rows,right_rows,result_rows,left_unique_keys,right_unique_keys,unmatched_left_keys
+FIA -> county climate,1457,83,1457,78,83,0

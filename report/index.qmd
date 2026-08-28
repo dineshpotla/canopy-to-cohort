@@ -1,8 +1,13 @@
 ---
 title: "Canopy to Cohort"
 subtitle: "Exploratory evidence of sugar maple regeneration gaps in Michigan northern hardwood forests"
-author: "Dinesh"
-date: last-modified
+author:
+  - name: "Dinesh Potla"
+    url: "https://github.com/dineshpotla"
+date: "2026-08-27"
+date-format: long
+description: "A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling."
+image: "../outputs/figures/03_regeneration_quadrant.png"
 bibliography: references.bib
 body-classes: report-page
 title-block-banner: true
@@ -109,7 +114,7 @@ cohort_n <- function(step_name) {
 
 :::: {.report-opening .column-page}
 ::: {.report-opening-copy}
-[Michigan · Northern hardwoods · FIA 2018–2025]{.report-eyebrow}
+[Michigan · Northern hardwoods · 2025 current evaluation · measurements 2018–2025]{.report-eyebrow}
 
 [Canopy persistence does not guarantee a next cohort.]{.report-deck}
 
@@ -239,7 +244,7 @@ Modeled outcomes
 knitr::kable(cohort)
 ```
 
-The workflow uses the most recent complete Michigan `EXPCURR` evaluation available in the downloaded FIADB release: “`r evaluation$eval_descr`” (EVALID `r evaluation_id`; inventory years `r evaluation$start_invyr`–`r evaluation$end_invyr`). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement years span `r summary$years_min`–`r summary$years_max`. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.
+Release v1.1.0 pins the Michigan `EXPCURR` evaluation “`r evaluation$eval_descr`” (EVALID `r evaluation_id`; inventory window `r evaluation$start_invyr`–`r evaluation$end_invyr`). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement records span `r summary$years_min`–`r summary$years_max`. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.
 
 ## Methods
 
@@ -249,7 +254,7 @@ The workflow uses the most recent complete Michigan `EXPCURR` evaluation availab
 
 **Reference-driven cohort**
 
-Species, forest types, and the current evaluation resolve from FIADB reference tables rather than hidden constants.
+Species and forest types resolve from FIADB reference tables rather than hidden constants; the published release pins its documented evaluation identifier.
 ::::
 
 :::: {.method-card}
@@ -305,6 +310,30 @@ The continuous companion indicator is the percentile rank of established share m
 ### Model
 
 The supported model is a `r support$model_type` with no-sugar-maple-seedlings-tallied as the response. Continuous predictors are standardized. Retained fixed effects were `r fixed_effect_text`. The fitted random-effects structure was `r support$random_effect_structure`. The model uses `r scales::comma(support$observations)` complete conditions from `r scales::comma(support$plot_visits)` plot visits across `r support$counties` counties; `r support$multi_condition_plot_visits` visits contributed more than one condition. There were `r round(support$events_per_term, 1)` outcome events per fixed-effect term. Odds ratios express associations with the odds of no seedlings being tallied.
+
+::: {.table-panel .column-page}
+```{r}
+#| label: tbl-model-specification
+#| tbl-cap: "Release model specification and support."
+model_specification <- tibble::tibble(
+  Item = c(
+    "Formula", "Response events", "Response non-events", "Complete-case fraction",
+    "Counties", "Plot visits", "Multi-condition plot visits", "Events per fixed term"
+  ),
+  Value = c(
+    support$model_formula,
+    scales::comma(support$events_no_seedlings),
+    scales::comma(support$events_seedlings),
+    scales::percent(support$complete_case_fraction, accuracy = 0.1),
+    scales::comma(support$counties),
+    scales::comma(support$plot_visits),
+    scales::comma(support$multi_condition_plot_visits),
+    sprintf("%.1f", support$events_per_term)
+  )
+)
+knitr::kable(model_specification, align = c("l", "l"))
+```
+:::
 
 ## Results
 
@@ -443,12 +472,20 @@ knitr::include_graphics(here::here("outputs", "figures", "model_diagnostics.png"
 ```{r}
 #| label: fig-gap-map
 #| column: page
-#| fig-cap: "Fraction of seedling-sampled conditions meeting the exploratory gap definition. Gray counties had fewer than 20 eligible conditions or no data; mapped fractions remain uncertain."
+#| fig-cap: "Exploratory gap fraction among seedling-sampled conditions. Gray counties had fewer than 20 eligible conditions or no data. This is a descriptive sample map, not a design-based county estimate."
 #| fig-alt: "Michigan county map of exploratory regeneration-gap fractions. Seventeen sufficiently sampled counties are colored and all other counties are gray."
 knitr::include_graphics(here::here("outputs", "figures", "05_county_gap_map.png"))
 ```
 
-Only `r sum(county$map_supported, na.rm = TRUE)` counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions.
+```{r}
+#| label: fig-gap-uncertainty
+#| column: page
+#| fig-cap: "Wilson 95% intervals for the 17 counties meeting the support threshold. Denominators are shown beside county names; intervals remain descriptive rather than FIA design-based estimates."
+#| fig-alt: "Ordered interval plot of exploratory regeneration-gap fractions for seventeen Michigan counties, with Wilson 95 percent intervals and sample denominators."
+knitr::include_graphics(here::here("outputs", "figures", "06_county_gap_uncertainty.png"))
+```
+
+Only `r sum(county$map_supported, na.rm = TRUE)` counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions. The interval panel makes clear that even supported county fractions retain substantial binomial uncertainty.
 
 ## Discussion
 
@@ -504,7 +541,7 @@ county Daymet responses
 :::: {.repro-card}
 [**33**]{.repro-value}
 
-automated checks passing
+full-build expectations passed
 ::::
 
 :::: {.repro-card}
@@ -514,7 +551,9 @@ locked R environment
 ::::
 :::::
 
-Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county's Daymet API response—are recorded in `outputs/audits/data-provenance.csv`. Important joins record row counts, unique keys, and unmatched keys. From a fresh clone, the full analysis runs with:
+Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county's Daymet API response—are recorded in `outputs/audits/data-provenance.csv`. Important joins record row counts, unique keys, and unmatched keys. The public repository includes a curated [release validation record](https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/audits/release-validation.csv) and [aggregate model-support evidence](https://github.com/dineshpotla/canopy-to-cohort/blob/main/outputs/tables/model-support.csv).
+
+GitHub Actions runs the 11 data-free expectations and skips five derived-data/model tests by design. The completed v1.1.0 local build ran all 33 expectations. From a fresh clone, the full analysis runs with:
 
 ```bash
 make setup
@@ -522,7 +561,7 @@ make acquire
 make all
 ```
 
-Package versions are recorded in `renv.lock`.
+Package versions are recorded in `renv.lock`. The release was tested with R 4.6.1 and Quarto 1.9.38. FIA's state archive URL is mutable, so acquisition compares downloaded source sizes and SHA-256 hashes with the v1.0.0/v1.1.0 manifest and warns when a current-data rerun is not byte-identical to the published source snapshot.
 
 ## References {.unnumbered}
 

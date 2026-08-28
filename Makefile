@@ -1,4 +1,6 @@
 .PHONY: all setup acquire inspect fia climate eda models maps report test publish clean-derived
+# Pipeline stages read artifacts written by the preceding stage.
+.NOTPARALLEL:
 
 R := Rscript
 QUARTO := $(if $(wildcard .tools/bin/quarto),.tools/bin/quarto,quarto)

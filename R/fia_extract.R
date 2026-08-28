@@ -15,6 +15,36 @@ latest_current_evaluation <- function(con, statecd = 26L) {
   tibble::as_tibble(result)
 }
 
+current_evaluation_by_id <- function(con, evalid, statecd = 26L) {
+  evalid <- as.integer(evalid)
+  if (length(evalid) != 1L || is.na(evalid)) {
+    stop("A single integer EVALID is required.", call. = FALSE)
+  }
+  sql <- sprintf(
+    paste(
+      "SELECT DISTINCT e.CN AS eval_cn, e.EVALID, e.EVAL_DESCR,",
+      "e.START_INVYR, e.END_INVYR, e.ESTN_METHOD",
+      "FROM POP_EVAL e",
+      "JOIN POP_EVAL_TYP t ON t.EVAL_CN = e.CN",
+      "WHERE e.STATECD = %d AND t.EVAL_TYP = 'EXPCURR' AND e.EVALID = %d"
+    ),
+    as.integer(statecd),
+    evalid
+  )
+  result <- standardize_names(DBI::dbGetQuery(con, sql))
+  if (nrow(result) != 1L) {
+    stop("Configured FIA EVALID ", evalid, " is not available as one current evaluation.", call. = FALSE)
+  }
+  tibble::as_tibble(result)
+}
+
+resolve_current_evaluation <- function(con, statecd = 26L, evalid = NULL) {
+  if (is.null(evalid)) {
+    return(latest_current_evaluation(con, statecd))
+  }
+  current_evaluation_by_id(con, evalid, statecd)
+}
+
 current_northern_hardwood_types <- function(con) {
   result <- standardize_names(DBI::dbGetQuery(
     con,

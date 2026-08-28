@@ -5,12 +5,16 @@ project:
     - index.qmd
     - report/index.qmd
     - docs/analysis-decisions.md
+    - docs/data-dictionary.md
 
 website:
   title: "Canopy to Cohort"
+  description: "Reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling."
   site-url: "https://dineshpotla.github.io/canopy-to-cohort/"
   repo-url: "https://github.com/dineshpotla/canopy-to-cohort"
   repo-actions: [source, issue]
+  open-graph: true
+  twitter-card: true
   navbar:
     left:
       - href: index.qmd
@@ -19,6 +23,8 @@ website:
         text: Research report
       - href: docs/analysis-decisions.md
         text: Analysis decisions
+      - href: docs/data-dictionary.md
+        text: Data dictionary
     right:
       - icon: github
         href: "https://github.com/dineshpotla/canopy-to-cohort"

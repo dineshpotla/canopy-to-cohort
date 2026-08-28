@@ -1,7 +1,7 @@
 # Canopy to Cohort
 
 [![Live research report](https://img.shields.io/badge/live-research_report-285943)](https://dineshpotla.github.io/canopy-to-cohort/report/)
-[![R unit tests](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml/badge.svg)](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml)
+[![R data-free unit tests](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml/badge.svg)](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-8B1E3F.svg)](LICENSE)
 
 **Detecting exploratory sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and statistical modeling**
@@ -11,6 +11,16 @@
 This is one research-style portfolio project built around a clear ecological question:
 
 > Where do contemporary Michigan northern-hardwood FIA observations combine substantial established sugar maple with little evidence of sugar-maple seedlings, and which measured factors are associated with that mismatch?
+
+## 60-second technical tour
+
+| Capability | What is implemented | Evidence |
+|---|---|---|
+| Large relational data | Schema-aware extraction from Michigan's approximately 5.4 GB expanded FIADB SQLite database | [`R/fia_extract.R`](R/fia_extract.R), [`scripts/01_inspect_fia.R`](scripts/01_inspect_fia.R) |
+| Data quality | Key assertions, pre-aggregation before joins, sampling-opportunity logic, provenance hashes, and hand-check samples | [`R/validation.R`](R/validation.R), [`tests/testthat/`](tests/testthat/) |
+| Statistical modeling | Supported mixed-effects logistic regression with county and plot-visit random intercepts, diagnostics, and sensitivity analysis | [`R/models.R`](R/models.R), [model results](https://dineshpotla.github.io/canopy-to-cohort/report/#model-associations) |
+| Spatial integration | County-safe FIA geography joined to 1991–2020 Daymet climate normals without exposing protected plot locations | [`R/climate.R`](R/climate.R), [spatial results](https://dineshpotla.github.io/canopy-to-cohort/report/#broad-geographic-pattern) |
+| Research communication | A manuscript-style Quarto report, decision log, analytical data dictionary, figures, and automated tests | [live report](https://dineshpotla.github.io/canopy-to-cohort/report/), [data dictionary](https://dineshpotla.github.io/canopy-to-cohort/docs/data-dictionary.html) |
 
 ## Why this project
 
@@ -28,12 +38,28 @@ It is intentionally not a machine-learning leaderboard or dashboard.
 **Technical stack:** R, DBI/RSQLite, dplyr, tidyr, ggplot2, lme4,
 broom.mixed, DHARMa, Quarto, testthat, and renv.
 
+## Analysis architecture
+
+```mermaid
+flowchart LR
+    A["Official FIA SQLite<br/>~5.4 GB expanded"] --> B["Schema and evaluation audit"]
+    C["Daymet + Census<br/>1991–2020"] --> D["County climate proxy"]
+    B --> E["Plot-condition cohort<br/>PLT_CN + CONDID"]
+    D --> E
+    E --> F["Exploratory gap screen"]
+    E --> G["Mixed logistic model<br/>county + plot-visit effects"]
+    F --> H["Sensitivity, figures, and maps"]
+    G --> H
+    H --> I["Quarto research report"]
+```
+
 ![Established sugar maple versus observed regeneration](outputs/figures/03_regeneration_quadrant.png)
 
 ## Main findings
 
-The latest complete Michigan FIA current evaluation yielded 1,457 eligible
-northern-hardwood plot-condition measurements in 78 counties. Of 1,424
+Release v1.1.0 pins the Michigan 2025 current evaluation (EVALID 262501;
+inventory window 2019–2025; assigned measurement records 2018–2025). It yielded
+1,457 eligible northern-hardwood plot-condition measurements in 78 counties. Of 1,424
 conditions with demonstrated microplot sampling, sugar-maple seedlings were
 tallied in 815 (57.2%). The transparent primary screen flagged 119 observations
 (8.4%) that combined upper-third sugar-maple basal-area share among sampled
@@ -68,17 +94,42 @@ After `make all`, the project produces:
 2. a live-tree composition figure;
 3. an established-maple versus regeneration hero figure;
 4. an odds-ratio effect plot;
-5. a supported broad-area gap map;
+5. a supported broad-area gap map and county uncertainty plot;
 6. a Quarto project website and research report under `_site/`;
-7. join, missingness, provenance, and model-support audits.
+7. join, missingness, provenance, source-snapshot, and model-support audits.
 
 The [live rendered report](https://dineshpotla.github.io/canopy-to-cohort/report/)
 is the primary research artifact; its source is
 [report/index.qmd](report/index.qmd).
 
+Curated, non-confidential release evidence is checked into the repository:
+[source provenance](outputs/audits/data-provenance.csv),
+[selected evaluation](outputs/audits/selected-evaluation.csv),
+[join audits](outputs/audits/fia-join-audit.csv),
+[model support](outputs/tables/model-support.csv),
+[sensitivity results](outputs/tables/gap-threshold-sensitivity.csv), and the
+[release validation record](outputs/audits/release-validation.csv).
+
 ## Reproduce
 
-Requirements: R 4.4 or newer, Quarto, Make, and enough disk space for the Michigan FIA SQLite archive.
+### Review without downloading FIA
+
+Use the [live report](https://dineshpotla.github.io/canopy-to-cohort/report/)
+and the checked-in aggregate evidence above. GitHub Actions installs the
+lightweight test dependencies, runs 11 data-free expectations, and skips five
+tests that require derived data or a fitted model. The v1.1.0 full local build
+passed all 33 expectations; that scope difference is recorded explicitly in
+the release validation file. After `make setup`, the same data-free subset can
+be run locally with `make test` before downloading FIA.
+
+The report source reads excluded derived files, so `make report` cannot render
+from a fresh clone until the full data pipeline has completed.
+
+### Full rebuild
+
+Requirements: R 4.4 or newer, Quarto, Make, and enough disk space for the
+Michigan FIA SQLite archive. Release v1.1.0 was tested with R 4.6.1 and Quarto
+1.9.38.
 
 ```bash
 make setup
@@ -93,6 +144,15 @@ Raw source files are downloaded into `data/raw/` and excluded from Git. The
 Michigan SQLite archive is about 1.1 GB compressed and expands to roughly
 5.4 GB, so plan for at least 8 GB of free disk space. See
 [data/README.md](data/README.md) for sources and expected locations.
+
+The published release is tied to the exact source sizes and SHA-256 checksums in
+[`outputs/audits/data-provenance.csv`](outputs/audits/data-provenance.csv) and to
+EVALID 262501 in [`config/config.yml`](config/config.yml). FIA's state archive
+URL is mutable: `make acquire` fetches the current official archive and warns if
+it differs from the v1.0.0/v1.1.0 source snapshot. The evaluation remains pinned, but
+upstream corrections can still change a rerun. Byte-for-byte reproduction
+therefore requires source files matching the published manifest; otherwise the
+commands perform a documented rerun against the current official data.
 
 ## Interpretation guardrails
 
@@ -115,14 +175,15 @@ config/             transparent analysis thresholds and paths
 ```
 
 The central scientific and implementation decisions are recorded in [docs/analysis-decisions.md](docs/analysis-decisions.md).
+The published fields, units, derivations, and interpretation boundaries are documented in [docs/data-dictionary.md](docs/data-dictionary.md).
 
 ## Data availability and licensing
 
 The analysis code is released under the [MIT License](LICENSE). Source data are
 not redistributed in this repository: FIA, Daymet, and Census artifacts remain
 governed by their respective providers. Raw, interim, and record-level processed
-files are excluded from Git; the repository publishes code, documentation, and
-derived aggregate figures only.
+files are excluded from Git; the repository publishes code, documentation,
+derived aggregate figures, and curated non-confidential validation summaries.
 
 The website is deployed from the pre-rendered `_site/` directory to the
 `gh-pages` branch. This keeps the multi-gigabyte FIA database out of GitHub while

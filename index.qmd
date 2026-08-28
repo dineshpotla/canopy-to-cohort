@@ -1,6 +1,8 @@
 ---
 title: "Canopy to Cohort"
 subtitle: "Detecting exploratory sugar maple regeneration gaps in Michigan northern hardwood forests"
+description: "A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling."
+image: "outputs/figures/03_regeneration_quadrant.png"
 page-layout: full
 title-block-banner: true
 format:
@@ -19,10 +21,22 @@ summary <- readr::read_csv(here::here("outputs", "tables", "analysis-summary.csv
 support <- readr::read_csv(here::here("outputs", "tables", "model-support.csv"), show_col_types = FALSE)
 odds <- readr::read_csv(here::here("outputs", "tables", "model-odds-ratios.csv"), show_col_types = FALSE)
 evaluation <- readr::read_csv(here::here("outputs", "audits", "selected-evaluation.csv"), show_col_types = FALSE)
+fia_counts <- readr::read_csv(here::here("outputs", "audits", "fia-table-counts.csv"), show_col_types = FALSE)
+cohort <- readr::read_csv(here::here("outputs", "tables", "cohort-flow.csv"), show_col_types = FALSE)
 maple_effect <- odds |>
   dplyr::filter(.data$label == "Sugar maple basal area") |>
   dplyr::slice_head(n = 1)
 if (nrow(maple_effect) != 1L) stop("Required sugar maple model effect not found.")
+table_rows <- function(table_name) {
+  value <- fia_counts$rows[fia_counts$table == table_name]
+  if (length(value) != 1L) stop("Required FIA table count not found: ", table_name)
+  value
+}
+cohort_rows <- function(step_name) {
+  value <- cohort$observations[cohort$step == step_name]
+  if (length(value) != 1L) stop("Required cohort step not found: ", step_name)
+  value
+}
 ```
 
 :::: {.columns .landing-hero}
@@ -39,6 +53,10 @@ This project asks where contemporary Michigan FIA observations combine substanti
 ![Established sugar-maple basal-area share versus observed seedling density.](outputs/figures/03_regeneration_quadrant.png){fig-alt="Scatterplot of sugar maple basal-area share against seedling density, highlighting sampled conditions that meet the exploratory regeneration-gap screen."}
 :::
 ::::
+
+::: {.builder-strip}
+**What I built:** reference-driven FIA extraction · audited relational joins · county-safe Daymet integration · mixed-effects modeling · sensitivity analysis · publication-ready reporting
+:::
 
 ## The study at a glance
 
@@ -72,6 +90,54 @@ Michigan counties represented
 ::::
 :::::
 
+## From inventory database to research artifact
+
+:::::: {.workflow-grid}
+::::: {.workflow-card}
+[01 · Inspect]{.workflow-index}
+
+### Resolve the source
+
+`r scales::label_number(scale_cut = scales::cut_short_scale())(table_rows("TREE"))` TREE and `r scales::label_number(scale_cut = scales::cut_short_scale())(table_rows("SEEDLING"))` SEEDLING rows are profiled alongside FIA evaluation and reference tables.
+:::::
+
+::::: {.workflow-card}
+[02 · Define]{.workflow-index}
+
+### Build the cohort
+
+`r scales::comma(cohort_rows("Plot visits assigned to current evaluation"))` assigned visits narrow to `r scales::comma(summary$plot_conditions)` eligible northern-hardwood conditions.
+:::::
+
+::::: {.workflow-card}
+[03 · Integrate]{.workflow-index}
+
+### Preserve geography
+
+83 county Daymet cells join by GEOID; protected FIA plot coordinates never enter the public analysis.
+:::::
+
+::::: {.workflow-card}
+[04 · Estimate]{.workflow-index}
+
+### Model clustering
+
+`r scales::comma(support$observations)` outcomes support county and plot-visit random intercepts plus eight fixed-effect terms.
+:::::
+
+::::: {.workflow-card}
+[05 · Validate]{.workflow-index}
+
+### Publish evidence
+
+33 full-build expectations, join audits, source hashes, diagnostics, and threshold sensitivity accompany the report.
+:::::
+::::::
+
+::: {.reviewer-strip}
+**Technical reviewer?** [Inspect the data dictionary](docs/data-dictionary.md) · [Trace analysis decisions](docs/analysis-decisions.md) · [Review the source and validation evidence](https://github.com/dineshpotla/canopy-to-cohort)
+:::
+
 ## What the analysis found
 
 Sugar-maple seedlings were tallied in **`r scales::percent(summary$maple_seedling_detected / summary$seedling_sampled, accuracy = 0.1)`** of sampled conditions. The upper-third screen flagged **`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`** as potential gaps. In the adjusted `r support$model_type`, a one-standard-deviation increase in log sugar-maple basal area corresponded to **`r sprintf("OR %.2f (95%% CI %.2f–%.2f)", maple_effect$estimate, maple_effect$conf.low, maple_effect$conf.high)`** for no seedlings being tallied.
@@ -97,6 +163,6 @@ Protected FIA coordinates are neither displayed nor treated as exact environment
 
 ## Research artifact
 
-The report documents the `r evaluation$start_invyr`–`r evaluation$end_invyr` FIA evaluation, cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.
+The report documents the pinned 2025 current evaluation (inventory window `r evaluation$start_invyr`–`r evaluation$end_invyr`; assigned measurement records `r summary$years_min`–`r summary$years_max`), cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.
 
 [Open the complete report →](report/index.qmd){.report-link}

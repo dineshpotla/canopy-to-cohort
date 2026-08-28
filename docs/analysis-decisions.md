@@ -17,17 +17,19 @@ reference-table or user-guide source.
 5. Maps summarize analyzed observations; they are not design-based county or
    statewide population estimates.
 6. Longitudinal condition matching, formal FIA population estimation, Moran's
-   I, and hurdle count models are extensions rather than MVP requirements.
+   I, and hurdle count models are documented future extensions.
 
 ## Decisions populated during schema audit
 
 - **FIADB source.** Michigan's SQLite FIADB archive was retrieved from the FIA
   DataMart on 2026-08-27 UTC. The acquisition audit records the URL, byte size,
   and SHA-256 checksum.
-- **Evaluation.** The pipeline resolves the latest `EXPCURR` evaluation from
-  the database rather than hard-coding a year. In this release it selected
-  EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using
-  post-stratification. Measurement years in assigned records span 2018–2025.
+- **Evaluation.** Releases v1.0.0 and v1.1.0 pin EVALID 262501,
+  “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using
+  post-stratification. The evaluation inventory window is 2019–2025; assigned
+  measurement records span 2018–2025. The source archive is mutable, so exact
+  source sizes and SHA-256 hashes are published with the release. A deliberate
+  configuration change is required to analyze a different current evaluation.
 - **Northern hardwoods.** Active field codes in FIA forest-type group 800 are
   resolved from `REF_FOREST_TYPE`: 801 sugar maple / beech / yellow birch, 802
   black cherry, 805 hard maple / basswood, and 809 red maple / upland.

@@ -1,4 +1,4 @@
-name: R unit tests
+name: R data-free unit tests
 
 on:
   push:

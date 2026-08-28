@@ -62,8 +62,30 @@ provenance <- data.frame(
     tz = "UTC",
     usetz = TRUE
   ),
+  release_expected_bytes = c(
+    as.numeric(config$release$source_snapshot$fia_zip$bytes),
+    as.numeric(config$release$source_snapshot$census_gazetteer$bytes)
+  ),
+  release_expected_sha256 = c(
+    as.character(config$release$source_snapshot$fia_zip$sha256),
+    as.character(config$release$source_snapshot$census_gazetteer$sha256)
+  ),
   stringsAsFactors = FALSE
 )
+provenance$release_snapshot_match <-
+  provenance$bytes == provenance$release_expected_bytes &
+  provenance$sha256 == provenance$release_expected_sha256
 write.csv(provenance, project_path("outputs", "audits", "data-provenance.csv"), row.names = FALSE)
+
+if (any(!provenance$release_snapshot_match)) {
+  changed <- paste(provenance$dataset[!provenance$release_snapshot_match], collapse = ", ")
+  warning(
+    changed,
+    " differs from the documented release source snapshot. The workflow remains pinned to EVALID ",
+    config$release$evalid,
+    ", but upstream revisions can change results; see outputs/audits/data-provenance.csv.",
+    call. = FALSE
+  )
+}
 
 log_step("Source acquisition complete")
