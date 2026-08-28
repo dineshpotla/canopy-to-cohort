@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this workflow, please cite it using the metadata below."
+title: "Canopy to Cohort: Exploratory Sugar Maple Regeneration Gaps in Michigan Northern Hardwoods"
+type: software
+authors:
+  - family-names: Potla
+    given-names: Dinesh
+repository-code: "https://github.com/dineshpotla/canopy-to-cohort"
+url: "https://dineshpotla.github.io/canopy-to-cohort/report/"
+license: MIT
+version: 1.0.0
+date-released: 2026-08-27
+keywords:
+  - Forest Inventory and Analysis
+  - northern hardwoods
+  - sugar maple
+  - mixed-effects models
+  - spatial analysis
+  - reproducible research

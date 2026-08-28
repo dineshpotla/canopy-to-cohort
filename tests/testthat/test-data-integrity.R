@@ -1,0 +1,42 @@
+testthat::test_that("processed analytical data satisfy core invariants", {
+  path <- project_path("data", "processed", "analysis_plot_condition.rds")
+  testthat::skip_if_not(file.exists(path), "Analytical data have not been built")
+  data <- readRDS(path)
+  testthat::expect_silent(assert_unique_key(data, c("plt_cn", "condid"), "analysis data"))
+  testthat::expect_true(all(data$maple_ba_share >= 0 & data$maple_ba_share <= 1, na.rm = TRUE))
+  testthat::expect_true(all(data$maple_ba_ft2_ac <= data$total_ba_ft2_ac + 1e-8, na.rm = TRUE))
+  testthat::expect_true(all(data$maple_seedling_tpa >= 0, na.rm = TRUE))
+  testthat::expect_false(anyDuplicated(data[c("plt_cn", "condid")]) > 0)
+})
+
+testthat::test_that("computed basal area agrees with FIA condition basal area", {
+  path <- project_path("outputs", "audits", "basal-area-validation.csv")
+  testthat::skip_if_not(file.exists(path), "Basal-area validation has not been built")
+  validation <- readr::read_csv(path, show_col_types = FALSE)
+  testthat::expect_gte(validation$observations, 1000)
+  testthat::expect_gte(validation$pearson_correlation, 0.98)
+  testthat::expect_lt(validation$mean_absolute_error_ft2_ac, 2)
+})
+
+testthat::test_that("county climate is complete and plausible", {
+  path <- project_path("data", "processed", "county_climate_1991_2020.csv")
+  testthat::skip_if_not(file.exists(path), "County climate has not been built")
+  climate <- readr::read_csv(path, show_col_types = FALSE)
+  testthat::expect_equal(nrow(climate), 83)
+  testthat::expect_equal(dplyr::n_distinct(climate$geoid), 83)
+  testthat::expect_true(all(climate$climate_years == 30))
+  testthat::expect_true(all(dplyr::between(climate$mean_annual_temp_c, -5, 15)))
+  testthat::expect_true(all(dplyr::between(climate$mean_annual_precip_mm, 300, 2000)))
+})
+
+testthat::test_that("model support gates passed", {
+  path <- project_path("outputs", "tables", "model-support.csv")
+  testthat::skip_if_not(file.exists(path), "Model has not been fit")
+  support <- readr::read_csv(path, show_col_types = FALSE)
+  testthat::expect_true(support$converged)
+  testthat::expect_false(support$singular)
+  testthat::expect_gte(support$events_per_term, 10)
+  testthat::expect_true(support$county_random_effect_used)
+  testthat::expect_true(support$plot_random_effect_used)
+  testthat::expect_gte(support$multi_condition_plot_visits, 30)
+})

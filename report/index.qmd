@@ -1,0 +1,534 @@
+---
+title: "Canopy to Cohort"
+subtitle: "Exploratory evidence of sugar maple regeneration gaps in Michigan northern hardwood forests"
+author: "Dinesh"
+date: last-modified
+bibliography: references.bib
+body-classes: report-page
+title-block-banner: true
+title-block-banner-color: white
+number-sections: true
+format:
+  html:
+    toc: true
+    toc-title: "In this report"
+    toc-depth: 3
+    code-fold: true
+    code-tools: false
+    fig-cap-location: bottom
+    smooth-scroll: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+source(here::here("R", "utils.R"))
+summary <- readr::read_csv(here::here("outputs", "tables", "analysis-summary.csv"), show_col_types = FALSE)
+support <- readr::read_csv(here::here("outputs", "tables", "model-support.csv"), show_col_types = FALSE)
+odds <- readr::read_csv(here::here("outputs", "tables", "model-odds-ratios.csv"), show_col_types = FALSE)
+county <- readr::read_csv(here::here("outputs", "tables", "county-sample-summary.csv"), show_col_types = FALSE)
+analysis_data <- readRDS(here::here("data", "processed", "analysis_plot_condition.rds"))
+thresholds <- readr::read_csv(here::here("outputs", "tables", "gap-threshold-sensitivity.csv"), show_col_types = FALSE)
+ba_check <- readr::read_csv(here::here("outputs", "audits", "basal-area-validation.csv"), show_col_types = FALSE)
+evaluation <- readr::read_csv(here::here("outputs", "audits", "selected-evaluation.csv"), show_col_types = FALSE)
+cohort <- readr::read_csv(here::here("outputs", "tables", "cohort-flow.csv"), show_col_types = FALSE)
+provenance <- readr::read_csv(here::here("outputs", "audits", "data-provenance.csv"), show_col_types = FALSE)
+
+if (nrow(evaluation) != 1L) stop("Expected exactly one selected FIA evaluation record.")
+evaluation_id <- format(evaluation$evalid[[1]], scientific = FALSE, trim = TRUE)
+
+effect_row <- function(effect_label, required = FALSE) {
+  result <- odds |>
+    dplyr::filter(.data$label == .env$effect_label) |>
+    dplyr::slice_head(n = 1)
+  if (required && nrow(result) != 1L) stop("Required model effect not found: ", effect_label)
+  result
+}
+format_effect <- function(effect) {
+  sprintf(
+    "OR %.2f, 95%% CI %.2f–%.2f",
+    effect$estimate[[1]], effect$conf.low[[1]], effect$conf.high[[1]]
+  )
+}
+
+maple_effect <- effect_row("Sugar maple basal area", required = TRUE)
+coverage_effect <- effect_row("Microplot condition coverage", required = TRUE)
+temperature_effect <- effect_row("Mean annual temperature")
+precipitation_effect <- effect_row("Annual precipitation")
+age_effect <- effect_row("Stand age")
+disturbance_effect <- effect_row("Recorded disturbance")
+
+climate_statements <- character()
+if (nrow(temperature_effect)) {
+  climate_statements <- c(
+    climate_statements,
+    paste0("The temperature proxy had ", format_effect(temperature_effect), ".")
+  )
+}
+if (nrow(precipitation_effect)) {
+  climate_statements <- c(
+    climate_statements,
+    paste0("The precipitation proxy had ", format_effect(precipitation_effect), ".")
+  )
+}
+climate_text <- if (length(climate_statements)) {
+  paste(
+    "The retained county-scale climate terms described a broad geographic gradient.",
+    paste(climate_statements, collapse = " "),
+    "These coefficients must not be read as plot-level climate effects."
+  )
+} else {
+  "County-scale climate terms were not retained by the pre-specified support and correlation checks."
+}
+
+other_effects <- dplyr::bind_rows(age_effect, disturbance_effect)
+null_other_effects <- other_effects |>
+  dplyr::filter(.data$conf.low <= 1, .data$conf.high >= 1) |>
+  dplyr::pull(.data$label)
+other_effects_text <- if (!nrow(other_effects)) {
+  "Stand age and recorded disturbance were not retained by the data-support checks."
+} else if (length(null_other_effects)) {
+  paste0(
+    "The 95% confidence intervals crossed one for ",
+    paste(tolower(null_other_effects), collapse = " and "), "."
+  )
+} else {
+  "The retained stand age or disturbance intervals did not cross one."
+}
+
+fixed_effect_text <- paste(odds$label, collapse = ", ")
+cohort_n <- function(step_name) {
+  value <- cohort$observations[cohort$step == step_name]
+  if (length(value) != 1L) stop("Cohort step not found: ", step_name)
+  scales::comma(value)
+}
+```
+
+:::: {.report-opening .column-page}
+::: {.report-opening-copy}
+[Michigan · Northern hardwoods · FIA 2018–2025]{.report-eyebrow}
+
+[Canopy persistence does not guarantee a next cohort.]{.report-deck}
+
+This study traces established sugar maple into observed regeneration, then tests which stand and broad climate characteristics accompany seedling non-detection.
+
+::: {.report-tags}
+[FIA relational data]{.report-tag} [Daymet climate]{.report-tag} [mixed-effects modeling]{.report-tag} [spatial safeguards]{.report-tag}
+:::
+:::
+
+::: {.report-cover-figure}
+![](../outputs/figures/03_regeneration_quadrant.png){fig-alt="Sugar-maple basal-area share against seedling density, with potential regeneration gaps highlighted."}
+
+[The central contrast: established maple share versus the observed next cohort.]{.report-cover-caption}
+:::
+::::
+
+::::: {.report-stats .column-page}
+:::: {.report-stat}
+[**`r scales::comma(summary$plot_conditions)`**]{.report-stat-value}
+
+eligible plot conditions
+::::
+
+:::: {.report-stat}
+[**`r scales::comma(summary$seedling_sampled)`**]{.report-stat-value}
+
+seedling-sampled conditions
+::::
+
+:::: {.report-stat}
+[**`r summary$counties`**]{.report-stat-value}
+
+Michigan counties
+::::
+
+:::: {.report-stat .report-stat-accent}
+[**`r scales::comma(summary$potential_gaps)`**]{.report-stat-value}
+
+potential gaps flagged
+::::
+:::::
+
+::: {.headline-result .column-page}
+[Primary adjusted association]{.headline-result-label}
+
+**`r sprintf("%.2f×", maple_effect$estimate)` the odds of no seedlings tallied** per standard-deviation increase in established sugar-maple basal area (95% CI `r sprintf("%.2f–%.2f", maple_effect$conf.low, maple_effect$conf.high)`).
+:::
+
+## Abstract {.unnumbered}
+
+This exploratory study evaluated `r scales::comma(summary$plot_conditions)` northern-hardwood plot-condition measurements from `r summary$counties` Michigan counties. It asked whether places with substantial established sugar maple also showed evidence of the next cohort. Sugar-maple seedlings were tallied in `r scales::percent(summary$maple_seedling_detected / summary$seedling_sampled, accuracy = 0.1)` of conditions with demonstrated microplot sampling opportunity. A transparent, sample-relative indicator flagged `r scales::comma(summary$potential_gaps)` observations (`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`) combining upper-third sugar-maple basal-area share with no sugar-maple seedlings tallied. Associations were evaluated with `r support$model_type`. Results describe the analyzed sample and do not constitute FIA design-based population estimates or causal effects.
+
+## Why regeneration matters
+
+Northern hardwood forests can retain a mature sugar-maple canopy even when younger cohorts are sparse. That mismatch is relevant to future composition, but it does not by itself identify a mechanism. Browsing, competition, site conditions, management history, disturbance, seed availability, and sampling variability can all contribute.
+
+This project therefore asks a deliberately bounded question:
+
+> Among contemporary Michigan FIA northern-hardwood observations, which stand and broad-scale climate characteristics are associated with whether sugar-maple seedlings were tallied?
+
+## Data
+
+:::: {.columns .source-grid .column-page}
+::: {.column width="50%"}
+### Forest Inventory and Analysis
+
+The analysis uses the Michigan SQLite release from the U.S. Forest Service FIA DataMart [@usfs_datamart]. FIA reference tables—not undocumented numeric constants—identify sugar maple and the retained forest types. The analytical key is a plot visit and condition (`PLT_CN + CONDID`). TREE and SEEDLING records are aggregated independently before they are joined, preventing a tree-by-seedling Cartesian product.
+
+FIA plot coordinates are legally protected. No public coordinates are plotted or treated as exact environmental locations. County identifiers supplied by FIA provide the spatial link used here.
+:::
+
+::: {.column width="50%"}
+### Climate
+
+Daymet Version 4 R1 provides daily 1-km temperature and precipitation estimates [@thornton2022daymet]. For each Michigan county, this analysis uses the Daymet cell at an interior representative location to construct a 1991–2020 climate normal. These values are broad county proxies, not plot-level measurements.
+:::
+::::
+
+## Study population
+
+::::::: {.cohort-flow .column-page}
+:::: {.cohort-step}
+[01]{.cohort-index}
+
+[**`r cohort_n("Plot visits assigned to current evaluation")`**]{.cohort-value}
+
+Evaluation-assigned visits
+::::
+
+:::: {.cohort-step}
+[02]{.cohort-index}
+
+[**`r cohort_n("Sampled plot visits")`**]{.cohort-value}
+
+Sampled plot visits
+::::
+
+:::: {.cohort-step}
+[03]{.cohort-index}
+
+[**`r cohort_n("Accessible forest conditions")`**]{.cohort-value}
+
+Accessible forest conditions
+::::
+
+:::: {.cohort-step}
+[04]{.cohort-index}
+
+[**`r cohort_n("Northern hardwood forest-type-group conditions")`**]{.cohort-value}
+
+Northern-hardwood conditions
+::::
+
+:::: {.cohort-step .cohort-step-final}
+[05]{.cohort-index}
+
+[**`r cohort_n("Conditions with modeled seedling detection outcome")`**]{.cohort-value}
+
+Modeled outcomes
+::::
+:::::::
+
+```{r}
+#| label: tbl-cohort
+#| tbl-cap: "Cohort construction and retained observations."
+knitr::kable(cohort)
+```
+
+The workflow uses the most recent complete Michigan `EXPCURR` evaluation available in the downloaded FIADB release: “`r evaluation$eval_descr`” (EVALID `r evaluation_id`; inventory years `r evaluation$start_invyr`–`r evaluation$end_invyr`). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement years span `r summary$years_min`–`r summary$years_max`. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero.
+
+## Methods
+
+::::: {.method-grid .column-page}
+:::: {.method-card}
+[01 · Resolve]{.method-label}
+
+**Reference-driven cohort**
+
+Species, forest types, and the current evaluation resolve from FIADB reference tables rather than hidden constants.
+::::
+
+:::: {.method-card}
+[02 · Aggregate]{.method-label}
+
+**Condition-level ecology**
+
+TREE and SEEDLING records aggregate independently before joining at `PLT_CN + CONDID`.
+::::
+
+:::: {.method-card}
+[03 · Enrich]{.method-label}
+
+**Protected spatial link**
+
+County identifiers connect 1991–2020 Daymet proxies without exposing or approximating protected plot locations.
+::::
+
+:::: {.method-card}
+[04 · Estimate]{.method-label}
+
+**Cluster-aware inference**
+
+The supported logistic model carries county and plot-visit random intercepts plus transparent support gates.
+::::
+:::::
+
+### Established sugar maple
+
+For every live TREE record, basal-area contribution on the FIA plot basis is calculated as
+
+$$
+BA_i = 0.005454 \times DIA_i^2 \times TPA_{i,unadj},
+$$
+
+where diameter is in inches and the resulting contribution is in square feet per acre on the unadjusted sample basis. Condition-level densities use the recorded condition proportion. Sugar-maple basal-area share divides its live-tree contribution by the total live-tree contribution within the same condition.
+
+As a calculation check, derived live-tree basal area agreed closely with FIA's condition-level `BALIVE` field across `r scales::comma(ba_check$observations)` conditions (Pearson *r* = `r round(ba_check$pearson_correlation, 3)`; mean absolute error `r round(ba_check$mean_absolute_error_ft2_ac, 2)` ft²/ac).
+
+### Regeneration
+
+SEEDLING `TPA_UNADJ` values are aggregated by species and plot-condition. The primary response is binary detection. A zero means no sugar-maple seedlings were tallied on sampled microplots; it is not proof that the entire condition lacked seedlings.
+
+### Exploratory regeneration-gap indicator
+
+The hero figure flags a **potential regeneration gap** when a condition has:
+
+1. sugar-maple basal-area share in the upper third among conditions with demonstrated seedling sampling; and
+2. no sugar-maple seedlings tallied.
+
+The continuous companion indicator is the percentile rank of established share minus the percentile rank of log seedling density. Neither measure is presented as a validated ecological index.
+
+### Model
+
+The supported model is a `r support$model_type` with no-sugar-maple-seedlings-tallied as the response. Continuous predictors are standardized. Retained fixed effects were `r fixed_effect_text`. The fitted random-effects structure was `r support$random_effect_structure`. The model uses `r scales::comma(support$observations)` complete conditions from `r scales::comma(support$plot_visits)` plot visits across `r support$counties` counties; `r support$multi_condition_plot_visits` visits contributed more than one condition. There were `r round(support$events_per_term, 1)` outcome events per fixed-effect term. Odds ratios express associations with the odds of no seedlings being tallied.
+
+## Results
+
+::::: {.finding-grid .column-page}
+:::: {.finding-card .finding-card-primary}
+[Screened mismatch]{.finding-label}
+
+[**`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`**]{.finding-value}
+
+of sampled conditions combined upper-third maple share with no seedlings tallied.
+::::
+
+:::: {.finding-card}
+[Established maple]{.finding-label}
+
+[**`r sprintf("%.2f", maple_effect$estimate)`**]{.finding-value}
+
+adjusted odds ratio for no seedlings per SD of log basal area.
+::::
+
+:::: {.finding-card}
+[Sampling opportunity]{.finding-label}
+
+[**`r sprintf("%.2f", coverage_effect$estimate)`**]{.finding-value}
+
+adjusted odds ratio as microplot condition coverage increases by one SD.
+::::
+
+:::: {.finding-card}
+[Mapping support]{.finding-label}
+
+[**`r sum(county$map_supported, na.rm = TRUE)`**]{.finding-value}
+
+counties met the configured minimum of 20 seedling-sampled conditions.
+::::
+:::::
+
+### Study context
+
+```{r}
+#| label: fig-study-context
+#| column: page
+#| layout-ncol: 2
+#| fig-subcap:
+#|   - "Analyzed plot-condition measurements by county. Aggregation protects FIA locations."
+#|   - "FIA unadjusted plot-basis live-tree basal-area contribution in the analyzed sample."
+#| fig-cap: "Study context: geographic coverage and sampled live-tree composition. These are sample summaries, not design-based statewide estimates."
+#| fig-alt: "Two Michigan study-context panels: county counts of analyzed plot conditions and a ranked bar chart of live-tree basal-area contribution by species."
+knitr::include_graphics(c(
+  here::here("outputs", "figures", "01_study_area_sample_map.png"),
+  here::here("outputs", "figures", "02_species_composition.png")
+))
+```
+
+### Canopy–cohort mismatch
+
+```{r}
+#| label: fig-quadrant
+#| column: page
+#| fig-cap: "Established sugar-maple share versus observed seedling density. Highlighted observations meet the exploratory potential-gap definition; the dashed line marks the 50.6% sample cutoff. Points are displayed at their exact values."
+#| fig-alt: "Scatterplot of sugar-maple live-tree basal-area share against seedling density. One hundred nineteen zero-seedling observations above the 50.6 percent canopy-share cutoff are highlighted."
+knitr::include_graphics(here::here("outputs", "figures", "03_regeneration_quadrant.png"))
+```
+
+### Model associations
+
+```{r}
+#| label: fig-effects
+#| column: page
+#| fig-cap: "Odds ratios and 95% confidence intervals for no sugar-maple seedlings tallied. Continuous effects are per one standard deviation; basal-area variables are log-transformed before standardization."
+#| fig-alt: "Forest plot of eight adjusted odds ratios with 95 percent confidence intervals. Sugar-maple basal area and microplot coverage have the strongest associations with lower seedling non-detection."
+knitr::include_graphics(here::here("outputs", "figures", "04_model_effects.png"))
+```
+
+::: {.table-panel .column-page}
+```{r}
+#| label: tbl-effects
+#| tbl-cap: "Model coefficients expressed as odds ratios."
+effect_table <- odds |>
+  dplyr::transmute(
+    Predictor = .data$label,
+    `Odds ratio` = sprintf("%.2f", .data$estimate),
+    `95% CI` = sprintf("%.2f–%.2f", .data$conf.low, .data$conf.high),
+    `p-value` = dplyr::if_else(.data$p.value < 0.001, "<0.001", sprintf("%.3f", .data$p.value))
+  )
+knitr::kable(effect_table, align = c("l", "r", "r", "r"))
+```
+:::
+
+::: {.result-interpretation .column-page}
+[Reading the model]{.result-interpretation-label}
+
+Higher established sugar-maple basal area was associated with lower odds of no seedlings being tallied: a one-standard-deviation increase in log basal area corresponded to an odds ratio of `r sprintf("%.2f", maple_effect$estimate)` (95% CI `r sprintf("%.2f", maple_effect$conf.low)`–`r sprintf("%.2f", maple_effect$conf.high)`). Greater microplot condition coverage was also associated with lower non-detection odds (OR `r sprintf("%.2f", coverage_effect$estimate)`, 95% CI `r sprintf("%.2f", coverage_effect$conf.low)`–`r sprintf("%.2f", coverage_effect$conf.high)`), reinforcing why sampling opportunity belongs in the model.
+
+`r climate_text` `r other_effects_text`
+:::
+
+### Model adequacy
+
+::::: {.model-audit-grid .column-page}
+:::: {.model-audit-card}
+[**Converged**]{.model-audit-value}
+
+optimizer criterion
+::::
+
+:::: {.model-audit-card}
+[**Non-singular**]{.model-audit-value}
+
+random-effects structure
+::::
+
+:::: {.model-audit-card}
+[**`r sprintf("%.1f", support$events_per_term)`**]{.model-audit-value}
+
+events per fixed-effect term
+::::
+
+:::: {.model-audit-card}
+[**`r sprintf("%.3f", support$brier_score)`**]{.model-audit-value}
+
+in-sample Brier score
+::::
+:::::
+
+```{r}
+#| label: fig-model-diagnostics
+#| column: page
+#| fig-cap: "Simulation-based DHARMa diagnostics for the supported mixed-effects logistic model. The displayed checks did not flag residual-uniformity, dispersion, outlier, or residual-versus-predicted problems."
+#| fig-alt: "Two-panel DHARMa model diagnostic showing residual uniformity and residuals versus predictions, with no significant displayed problems."
+knitr::include_graphics(here::here("outputs", "figures", "model_diagnostics.png"))
+```
+
+### Broad geographic pattern
+
+```{r}
+#| label: fig-gap-map
+#| column: page
+#| fig-cap: "Fraction of seedling-sampled conditions meeting the exploratory gap definition. Gray counties had fewer than 20 eligible conditions or no data; mapped fractions remain uncertain."
+#| fig-alt: "Michigan county map of exploratory regeneration-gap fractions. Seventeen sufficiently sampled counties are colored and all other counties are gray."
+knitr::include_graphics(here::here("outputs", "figures", "05_county_gap_map.png"))
+```
+
+Only `r sum(county$map_supported, na.rm = TRUE)` counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions.
+
+## Discussion
+
+:::: {.interpretation-grid .column-page}
+::: {.interpretation-card .interpretation-supported}
+[What the evidence supports]{.interpretation-kicker}
+
+- A transparent screen for canopy–cohort mismatch in the analyzed sample.
+- Adjusted associations with seedling non-detection under the supported model.
+- Reproducible hypotheses for field or design-based follow-up.
+:::
+
+::: {.interpretation-card .interpretation-boundary}
+[What it does not establish]{.interpretation-kicker}
+
+- Statewide prevalence or formal FIA population estimates.
+- A causal effect of canopy, climate, browsing, or disturbance.
+- Exact plot-level climate exposure or long-term cohort survival.
+:::
+::::
+
+The analysis makes the distinction between established live-tree basal area and observed seedling recruitment visible. Under the primary rule, `r summary$potential_gaps` of `r summary$seedling_sampled` sampled conditions were flagged. Raising the established-maple threshold from an upper-third share of `r scales::percent(thresholds$primary_established_threshold, accuracy = 0.1)` to an upper-quartile share of `r scales::percent(thresholds$sensitivity_established_threshold, accuracy = 0.1)` reduced the flag count to `r thresholds$sensitivity_gap_n` (`r scales::percent(thresholds$sensitivity_gap_fraction, accuracy = 0.1)`). This sensitivity is a reason to treat the flag as a screening device rather than a fixed ecological category.
+
+The model estimates which measured stand and broad climate attributes covary with seedling detection after adjustment for the other retained terms. Confidence intervals—not prediction accuracy—are the primary evidence.
+
+The results should be interpreted as hypotheses and patterns worthy of follow-up. A seedling tally is an imperfect window into recruitment, and seedlings do not guarantee survival into sapling or canopy cohorts.
+
+## Limitations
+
+1. **Protected locations.** County-scale climate and maps avoid treating public FIA coordinates as exact.
+2. **Sampling opportunity.** A zero means no seedlings were tallied on sampled microplots, not ecological absence across the condition.
+3. **Observational design.** Associations are not causal effects.
+4. **Sample versus population.** `TPA_UNADJ` expands records within the plot design; it is not a statewide survey weight. Formal statewide estimates require FIA evaluation, stratum, adjustment, and sampling-error procedures [@bechtold2005sampling].
+5. **Exploratory indicator.** The gap flag is sample-relative and threshold-dependent.
+6. **Unmeasured drivers.** Deer browsing, soils, management history, competition, and other factors are incompletely represented.
+7. **Temporal alignment.** Climate normals summarize 1991–2020 and do not reproduce weather immediately preceding each measurement.
+
+## Reproducibility
+
+::::: {.repro-grid .column-page}
+:::: {.repro-card}
+[**`r nrow(provenance)`**]{.repro-value}
+
+hashed source artifacts
+::::
+
+:::: {.repro-card}
+[**83**]{.repro-value}
+
+county Daymet responses
+::::
+
+:::: {.repro-card}
+[**33**]{.repro-value}
+
+automated checks passing
+::::
+
+:::: {.repro-card}
+[**renv**]{.repro-value}
+
+locked R environment
+::::
+:::::
+
+Raw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county's Daymet API response—are recorded in `outputs/audits/data-provenance.csv`. Important joins record row counts, unique keys, and unmatched keys. From a fresh clone, the full analysis runs with:
+
+```bash
+make setup
+make acquire
+make all
+```
+
+Package versions are recorded in `renv.lock`.
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
+
+::: {.report-footer .column-page}
+**Canopy to Cohort** · Reproducible ecological data analysis · Michigan FIA + Daymet
+:::

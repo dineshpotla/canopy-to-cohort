@@ -1,0 +1,6 @@
+project_root <- here::here()
+source(file.path(project_root, "R", "utils.R"))
+source(file.path(project_root, "R", "validation.R"))
+source(file.path(project_root, "R", "basal_area.R"))
+source(file.path(project_root, "R", "regeneration.R"))
+source(file.path(project_root, "R", "features.R"))

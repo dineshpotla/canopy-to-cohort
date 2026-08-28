@@ -1,0 +1,41 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - report/index.qmd
+    - docs/analysis-decisions.md
+
+website:
+  title: "Canopy to Cohort"
+  site-url: "https://dineshpotla.github.io/canopy-to-cohort/"
+  repo-url: "https://github.com/dineshpotla/canopy-to-cohort"
+  repo-actions: [source, issue]
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: report/index.qmd
+        text: Research report
+      - href: docs/analysis-decisions.md
+        text: Analysis decisions
+    right:
+      - icon: github
+        href: "https://github.com/dineshpotla/canopy-to-cohort"
+        aria-label: GitHub repository
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    toc: true
+    code-fold: true
+    code-tools: true
+    embed-resources: false
+
+execute:
+  freeze: false
+  warning: false
+  message: false

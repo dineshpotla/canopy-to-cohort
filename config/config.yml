@@ -1,0 +1,29 @@
+project:
+  title: "Canopy to Cohort"
+  state_fips: 26
+  state_name: "Michigan"
+
+files:
+  fia_zip: "data/raw/fia/SQLite_FIADB_MI.zip"
+  fia_sqlite: "data/raw/fia/SQLite_FIADB_MI.db"
+  fia_download_url: "https://apps.fs.usda.gov/fia/datamart/Databases/SQLite_FIADB_MI.zip"
+  county_climate: "data/processed/county_climate_1991_2020.csv"
+  analysis_data: "data/processed/analysis_plot_condition.rds"
+  model_data: "data/processed/model_data.rds"
+
+climate:
+  start_year: 1991
+  end_year: 2020
+  spatial_method: "Daymet cell at Census county internal point"
+  variables:
+    - tmin
+    - tmax
+    - prcp
+
+analysis:
+  gap_established_quantile: 0.6667
+  gap_sensitivity_quantile: 0.75
+  minimum_map_n: 20
+  maximum_correlation: 0.70
+  minimum_groups_for_random_effect: 30
+  minimum_events_per_parameter: 10

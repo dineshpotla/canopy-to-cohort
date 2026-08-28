@@ -1,0 +1,39 @@
+Package: canopytocohort
+Title: Canopy to Cohort Research Workflow
+Version: 0.1.0
+Authors@R: person(
+    "Dinesh", "Potla",
+    role = c("aut", "cre"),
+    email = "29446671+dineshpotla@users.noreply.github.com"
+  )
+Description: Reproducible analysis of sugar maple regeneration signals in
+    Michigan northern hardwood Forest Inventory and Analysis observations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends:
+    R (>= 4.4)
+Imports:
+    DBI,
+    RSQLite,
+    dplyr,
+    tidyr,
+    purrr,
+    readr,
+    stringr,
+    ggplot2,
+    maps,
+    lme4,
+    broom,
+    broom.mixed,
+    performance,
+    DHARMa,
+    testthat,
+    here,
+    renv,
+    yaml,
+    scales,
+    patchwork
+Suggests:
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
