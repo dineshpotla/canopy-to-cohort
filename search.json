@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "docs/analysis-decisions.html",
+    "href": "docs/analysis-decisions.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "docs/analysis-decisions.html#pre-specified-analysis-decisions",
+    "href": "docs/analysis-decisions.html#pre-specified-analysis-decisions",
+    "title": "",
+    "section": "Pre-specified analysis decisions",
+    "text": "Pre-specified analysis decisions\n\nThe analytical key is a plot visit plus condition: PLT_CN + CONDID.\nThe primary response is whether sugar-maple seedlings were tallied on sampled microplots. The inverse is described as “no seedlings tallied,” not confirmed ecological absence.\nThe exploratory gap indicator is not a validated ecological index and is not used as the primary regression response.\nClimate is aggregated to county and interpreted as a broad spatial gradient.\nMaps summarize analyzed observations; they are not design-based county or statewide population estimates.\nLongitudinal condition matching, formal FIA population estimation, Moran’s I, and hurdle count models are extensions rather than MVP requirements."
+  },
+  {
+    "objectID": "docs/analysis-decisions.html#decisions-populated-during-schema-audit",
+    "href": "docs/analysis-decisions.html#decisions-populated-during-schema-audit",
+    "title": "",
+    "section": "Decisions populated during schema audit",
+    "text": "Decisions populated during schema audit\n\nFIADB source. Michigan’s SQLite FIADB archive was retrieved from the FIA DataMart on 2026-08-27 UTC. The acquisition audit records the URL, byte size, and SHA-256 checksum.\nEvaluation. The pipeline resolves the latest EXPCURR evaluation from the database rather than hard-coding a year. In this release it selected EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME,” using post-stratification. Measurement years in assigned records span 2018–2025.\nNorthern hardwoods. Active field codes in FIA forest-type group 800 are resolved from REF_FOREST_TYPE: 801 sugar maple / beech / yellow birch, 802 black cherry, 805 hard maple / basswood, and 809 red maple / upland.\nSugar maple. REF_SPECIES resolves Acer saccharum to SPCD 318 (species symbol ACSA3).\nSeedling sampling opportunity. A condition is considered sampled only when MICRPROP_UNADJ &gt; 0. A missing sugar-maple SEEDLING row becomes zero only for those conditions; otherwise the response remains missing.\nBasal area. Live-tree plot-basis contribution is 0.005454 * DIA^2 * TPA_UNADJ; condition density divides by CONDPROP_UNADJ. The build compares derived total live basal area with COND.BALIVE and fails if their Pearson correlation is below 0.98.\nClimate. Each county receives a 1991–2020 normal from the Daymet cell at its Census Gazetteer internal point. This is explicitly a broad proxy, not a plot-level climate value or a county-wide spatial mean.\nModel grouping. FIA county GEOID and plot visit are candidate random intercepts. The plot-visit term accounts for the small number of visits that contribute more than one eligible condition. Mixed-model structures are retained only when group-support, convergence, and singularity checks pass; the pipeline simplifies the random-effects structure before falling back to ordinary logistic regression.\nGap thresholds. The primary high-established threshold is the upper third of sugar-maple basal-area share among conditions with demonstrated seedling sampling. An upper-quartile alternative is reported as a sensitivity analysis."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Canopy to Cohort",
+    "section": "",
+    "text": "This project asks where contemporary Michigan FIA observations combine substantial established sugar maple with no sugar-maple seedlings tallied—and which measured stand and broad climate characteristics accompany that mismatch.\nRead the research report Review analysis decisions\n\n\n\n\n\nEstablished sugar-maple basal-area share versus observed seedling density."
+  },
+  {
+    "objectID": "index.html#a-forest-can-keep-its-canopy-while-losing-its-next-cohort",
+    "href": "index.html#a-forest-can-keep-its-canopy-while-losing-its-next-cohort",
+    "title": "Canopy to Cohort",
+    "section": "",
+    "text": "This project asks where contemporary Michigan FIA observations combine substantial established sugar maple with no sugar-maple seedlings tallied—and which measured stand and broad climate characteristics accompany that mismatch.\nRead the research report Review analysis decisions"
+  },
+  {
+    "objectID": "index.html#the-study-at-a-glance",
+    "href": "index.html#the-study-at-a-glance",
+    "title": "Canopy to Cohort",
+    "section": "The study at a glance",
+    "text": "The study at a glance\n\n\n\n1,457\n\nEligible plot-condition measurements\n\n\n\n1,424\n\nConditions with seedling sampling\n\n\n\n119\n\nExploratory potential gaps\n\n\n\n78\n\nMichigan counties represented"
+  },
+  {
+    "objectID": "index.html#what-the-analysis-found",
+    "href": "index.html#what-the-analysis-found",
+    "title": "Canopy to Cohort",
+    "section": "What the analysis found",
+    "text": "What the analysis found\nSugar-maple seedlings were tallied in 57.2% of sampled conditions. The upper-third screen flagged 8.4% as potential gaps. In the adjusted mixed-effects logistic regression, a one-standard-deviation increase in log sugar-maple basal area corresponded to OR 0.40 (95% CI 0.33–0.49) for no seedlings being tallied.\nThat is an association, not a causal effect. The screen is sample-relative, a seedling zero means “not tallied” rather than confirmed ecological absence, and county climate values are broad proxies.\n\n\n\nBuilt for auditability\n\nFIA species and forest types resolve from reference tables.\nTrees and seedlings aggregate before joining.\nSampling opportunity controls whether a missing seedling record can become zero.\nChecksums, join audits, support gates, and tests travel with the analysis.\n\n\n\n\nSpatially responsible\nProtected FIA coordinates are neither displayed nor treated as exact environmental locations. Maps and climate joins use county identifiers, and sparse county estimates are suppressed."
+  },
+  {
+    "objectID": "index.html#research-artifact",
+    "href": "index.html#research-artifact",
+    "title": "Canopy to Cohort",
+    "section": "Research artifact",
+    "text": "Research artifact\nThe report documents the 2019–2025 FIA evaluation, cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.\nOpen the complete report →"
+  },
+  {
+    "objectID": "report/index.html",
+    "href": "report/index.html",
+    "title": "Canopy to Cohort",
+    "section": "",
+    "text": "Michigan · Northern hardwoods · FIA 2018–2025\nCanopy persistence does not guarantee a next cohort.\nThis study traces established sugar maple into observed regeneration, then tests which stand and broad climate characteristics accompany seedling non-detection.\n\nFIA relational data Daymet climate mixed-effects modeling spatial safeguards\n\n\n\n\nThe central contrast: established maple share versus the observed next cohort."
+  },
+  {
+    "objectID": "report/index.html#abstract",
+    "href": "report/index.html#abstract",
+    "title": "Canopy to Cohort",
+    "section": "Abstract",
+    "text": "Abstract\nThis exploratory study evaluated 1,457 northern-hardwood plot-condition measurements from 78 Michigan counties. It asked whether places with substantial established sugar maple also showed evidence of the next cohort. Sugar-maple seedlings were tallied in 57.2% of conditions with demonstrated microplot sampling opportunity. A transparent, sample-relative indicator flagged 119 observations (8.4%) combining upper-third sugar-maple basal-area share with no sugar-maple seedlings tallied. Associations were evaluated with mixed-effects logistic regression. Results describe the analyzed sample and do not constitute FIA design-based population estimates or causal effects."
+  },
+  {
+    "objectID": "report/index.html#why-regeneration-matters",
+    "href": "report/index.html#why-regeneration-matters",
+    "title": "Canopy to Cohort",
+    "section": "1 Why regeneration matters",
+    "text": "1 Why regeneration matters\nNorthern hardwood forests can retain a mature sugar-maple canopy even when younger cohorts are sparse. That mismatch is relevant to future composition, but it does not by itself identify a mechanism. Browsing, competition, site conditions, management history, disturbance, seed availability, and sampling variability can all contribute.\nThis project therefore asks a deliberately bounded question:\n\nAmong contemporary Michigan FIA northern-hardwood observations, which stand and broad-scale climate characteristics are associated with whether sugar-maple seedlings were tallied?"
+  },
+  {
+    "objectID": "report/index.html#data",
+    "href": "report/index.html#data",
+    "title": "Canopy to Cohort",
+    "section": "2 Data",
+    "text": "2 Data\n\n\n\n2.1 Forest Inventory and Analysis\nThe analysis uses the Michigan SQLite release from the U.S. Forest Service FIA DataMart (U.S. Forest Service 2026). FIA reference tables—not undocumented numeric constants—identify sugar maple and the retained forest types. The analytical key is a plot visit and condition (PLT_CN + CONDID). TREE and SEEDLING records are aggregated independently before they are joined, preventing a tree-by-seedling Cartesian product.\nFIA plot coordinates are legally protected. No public coordinates are plotted or treated as exact environmental locations. County identifiers supplied by FIA provide the spatial link used here.\n\n\n\n2.2 Climate\nDaymet Version 4 R1 provides daily 1-km temperature and precipitation estimates (Thornton et al. 2022). For each Michigan county, this analysis uses the Daymet cell at an interior representative location to construct a 1991–2020 climate normal. These values are broad county proxies, not plot-level measurements."
+  },
+  {
+    "objectID": "report/index.html#study-population",
+    "href": "report/index.html#study-population",
+    "title": "Canopy to Cohort",
+    "section": "3 Study population",
+    "text": "3 Study population\n\n\n01\n6,459\nEvaluation-assigned visits\n\n\n02\n4,134\nSampled plot visits\n\n\n03\n5,179\nAccessible forest conditions\n\n\n04\n1,457\nNorthern-hardwood conditions\n\n\n05\n1,424\nModeled outcomes\n\n\n\n\n\n\nTable 1: Cohort construction and retained observations.\n\n\n\n\n\n\nstep\nobservations\n\n\n\n\nPlot visits assigned to current evaluation\n6459\n\n\nSampled plot visits\n4134\n\n\nAccessible forest conditions\n5179\n\n\nNorthern hardwood forest-type-group conditions\n1457\n\n\nConditions with demonstrated microplot sampling\n1424\n\n\nConditions with modeled seedling detection outcome\n1424\n\n\n\n\n\n\n\n\nThe workflow uses the most recent complete Michigan EXPCURR evaluation available in the downloaded FIADB release: “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME” (EVALID 262501; inventory years 2019–2025). It then filters assigned visits to sampled, accessible northern-hardwood conditions. The assigned measurement years span 2018–2025. Conditions without demonstrated microplot sampling opportunity do not receive an inferred seedling zero."
+  },
+  {
+    "objectID": "report/index.html#methods",
+    "href": "report/index.html#methods",
+    "title": "Canopy to Cohort",
+    "section": "4 Methods",
+    "text": "4 Methods\n\n\n01 · Resolve\nReference-driven cohort\nSpecies, forest types, and the current evaluation resolve from FIADB reference tables rather than hidden constants.\n\n\n02 · Aggregate\nCondition-level ecology\nTREE and SEEDLING records aggregate independently before joining at PLT_CN + CONDID.\n\n\n03 · Enrich\nProtected spatial link\nCounty identifiers connect 1991–2020 Daymet proxies without exposing or approximating protected plot locations.\n\n\n04 · Estimate\nCluster-aware inference\nThe supported logistic model carries county and plot-visit random intercepts plus transparent support gates.\n\n\n\n4.1 Established sugar maple\nFor every live TREE record, basal-area contribution on the FIA plot basis is calculated as\n\\[\nBA_i = 0.005454 \\times DIA_i^2 \\times TPA_{i,unadj},\n\\]\nwhere diameter is in inches and the resulting contribution is in square feet per acre on the unadjusted sample basis. Condition-level densities use the recorded condition proportion. Sugar-maple basal-area share divides its live-tree contribution by the total live-tree contribution within the same condition.\nAs a calculation check, derived live-tree basal area agreed closely with FIA’s condition-level BALIVE field across 1,457 conditions (Pearson r = 0.999; mean absolute error 0.57 ft²/ac).\n\n\n4.2 Regeneration\nSEEDLING TPA_UNADJ values are aggregated by species and plot-condition. The primary response is binary detection. A zero means no sugar-maple seedlings were tallied on sampled microplots; it is not proof that the entire condition lacked seedlings.\n\n\n4.3 Exploratory regeneration-gap indicator\nThe hero figure flags a potential regeneration gap when a condition has:\n\nsugar-maple basal-area share in the upper third among conditions with demonstrated seedling sampling; and\nno sugar-maple seedlings tallied.\n\nThe continuous companion indicator is the percentile rank of established share minus the percentile rank of log seedling density. Neither measure is presented as a validated ecological index.\n\n\n4.4 Model\nThe supported model is a mixed-effects logistic regression with no-sugar-maple-seedlings-tallied as the response. Continuous predictors are standardized. Retained fixed effects were Sugar maple basal area, Non-maple basal area, Microplot condition coverage, Stand age, Recorded disturbance, Mean annual temperature, Annual precipitation, Measurement year. The fitted random-effects structure was county and plot-visit random intercepts. The model uses 1,424 complete conditions from 1,341 plot visits across 78 counties; 83 visits contributed more than one condition. There were 76.1 outcome events per fixed-effect term. Odds ratios express associations with the odds of no seedlings being tallied."
+  },
+  {
+    "objectID": "report/index.html#results",
+    "href": "report/index.html#results",
+    "title": "Canopy to Cohort",
+    "section": "5 Results",
+    "text": "5 Results\n\n\nScreened mismatch\n8.4%\nof sampled conditions combined upper-third maple share with no seedlings tallied.\n\n\nEstablished maple\n0.40\nadjusted odds ratio for no seedlings per SD of log basal area.\n\n\nSampling opportunity\n0.61\nadjusted odds ratio as microplot condition coverage increases by one SD.\n\n\nMapping support\n17\ncounties met the configured minimum of 20 seedling-sampled conditions.\n\n\n\n5.1 Study context\n\n\n\n\n\n\n\n\n\n\n\n(a) Analyzed plot-condition measurements by county. Aggregation protects FIA locations.\n\n\n\n\n\n\n\n\n\n\n\n(b) FIA unadjusted plot-basis live-tree basal-area contribution in the analyzed sample.\n\n\n\n\n\n\n\nFigure 1: Study context: geographic coverage and sampled live-tree composition. These are sample summaries, not design-based statewide estimates.\n\n\n\n\n\n5.2 Canopy–cohort mismatch\n\n\n\n\n\n\n\n\nFigure 2: Established sugar-maple share versus observed seedling density. Highlighted observations meet the exploratory potential-gap definition; the dashed line marks the 50.6% sample cutoff. Points are displayed at their exact values.\n\n\n\n\n\n\n\n5.3 Model associations\n\n\n\n\n\n\n\n\nFigure 3: Odds ratios and 95% confidence intervals for no sugar-maple seedlings tallied. Continuous effects are per one standard deviation; basal-area variables are log-transformed before standardization.\n\n\n\n\n\n\n\n\n\n\nTable 2: Model coefficients expressed as odds ratios.\n\n\n\n\n\n\nPredictor\nOdds ratio\n95% CI\np-value\n\n\n\n\nSugar maple basal area\n0.40\n0.33–0.49\n&lt;0.001\n\n\nNon-maple basal area\n1.13\n0.97–1.32\n0.122\n\n\nMicroplot condition coverage\n0.61\n0.52–0.71\n&lt;0.001\n\n\nStand age\n1.01\n0.86–1.18\n0.918\n\n\nRecorded disturbance\n1.19\n0.86–1.65\n0.283\n\n\nMean annual temperature\n1.91\n1.47–2.48\n&lt;0.001\n\n\nAnnual precipitation\n0.77\n0.60–0.99\n0.042\n\n\nMeasurement year\n0.93\n0.81–1.07\n0.307\n\n\n\n\n\n\n\n\n\n\nReading the model\nHigher established sugar-maple basal area was associated with lower odds of no seedlings being tallied: a one-standard-deviation increase in log basal area corresponded to an odds ratio of 0.40 (95% CI 0.33–0.49). Greater microplot condition coverage was also associated with lower non-detection odds (OR 0.61, 95% CI 0.52–0.71), reinforcing why sampling opportunity belongs in the model.\nThe retained county-scale climate terms described a broad geographic gradient. The temperature proxy had OR 1.91, 95% CI 1.47–2.48. The precipitation proxy had OR 0.77, 95% CI 0.60–0.99. These coefficients must not be read as plot-level climate effects. The 95% confidence intervals crossed one for stand age and recorded disturbance.\n\n\n\n5.4 Model adequacy\n\n\nConverged\noptimizer criterion\n\n\nNon-singular\nrandom-effects structure\n\n\n76.1\nevents per fixed-effect term\n\n\n0.155\nin-sample Brier score\n\n\n\n\n\n\n\n\n\n\nFigure 4: Simulation-based DHARMa diagnostics for the supported mixed-effects logistic model. The displayed checks did not flag residual-uniformity, dispersion, outlier, or residual-versus-predicted problems.\n\n\n\n\n\n\n\n5.5 Broad geographic pattern\n\n\n\n\n\n\n\n\nFigure 5: Fraction of seedling-sampled conditions meeting the exploratory gap definition. Gray counties had fewer than 20 eligible conditions or no data; mapped fractions remain uncertain.\n\n\n\n\n\nOnly 17 counties met the configured mapping support threshold of at least 20 seedling-sampled conditions. Gray counties are deliberately suppressed rather than assigned unstable fractions."
+  },
+  {
+    "objectID": "report/index.html#discussion",
+    "href": "report/index.html#discussion",
+    "title": "Canopy to Cohort",
+    "section": "6 Discussion",
+    "text": "6 Discussion\n\n\nWhat the evidence supports\n\nA transparent screen for canopy–cohort mismatch in the analyzed sample.\nAdjusted associations with seedling non-detection under the supported model.\nReproducible hypotheses for field or design-based follow-up.\n\n\n\nWhat it does not establish\n\nStatewide prevalence or formal FIA population estimates.\nA causal effect of canopy, climate, browsing, or disturbance.\nExact plot-level climate exposure or long-term cohort survival.\n\n\n\nThe analysis makes the distinction between established live-tree basal area and observed seedling recruitment visible. Under the primary rule, 119 of 1424 sampled conditions were flagged. Raising the established-maple threshold from an upper-third share of 50.6% to an upper-quartile share of 62.3% reduced the flag count to 93 (6.5%). This sensitivity is a reason to treat the flag as a screening device rather than a fixed ecological category.\nThe model estimates which measured stand and broad climate attributes covary with seedling detection after adjustment for the other retained terms. Confidence intervals—not prediction accuracy—are the primary evidence.\nThe results should be interpreted as hypotheses and patterns worthy of follow-up. A seedling tally is an imperfect window into recruitment, and seedlings do not guarantee survival into sapling or canopy cohorts."
+  },
+  {
+    "objectID": "report/index.html#limitations",
+    "href": "report/index.html#limitations",
+    "title": "Canopy to Cohort",
+    "section": "7 Limitations",
+    "text": "7 Limitations\n\nProtected locations. County-scale climate and maps avoid treating public FIA coordinates as exact.\nSampling opportunity. A zero means no seedlings were tallied on sampled microplots, not ecological absence across the condition.\nObservational design. Associations are not causal effects.\nSample versus population. TPA_UNADJ expands records within the plot design; it is not a statewide survey weight. Formal statewide estimates require FIA evaluation, stratum, adjustment, and sampling-error procedures (Bechtold and Patterson 2005).\nExploratory indicator. The gap flag is sample-relative and threshold-dependent.\nUnmeasured drivers. Deer browsing, soils, management history, competition, and other factors are incompletely represented.\nTemporal alignment. Climate normals summarize 1991–2020 and do not reproduce weather immediately preceding each measurement."
+  },
+  {
+    "objectID": "report/index.html#reproducibility",
+    "href": "report/index.html#reproducibility",
+    "title": "Canopy to Cohort",
+    "section": "8 Reproducibility",
+    "text": "8 Reproducibility\n\n\n85\nhashed source artifacts\n\n\n83\ncounty Daymet responses\n\n\n33\nautomated checks passing\n\n\nrenv\nlocked R environment\n\n\nRaw data are excluded from version control. Source URLs, cached-file retrieval timestamps, file sizes, and checksums—including each county’s Daymet API response—are recorded in outputs/audits/data-provenance.csv. Important joins record row counts, unique keys, and unmatched keys. From a fresh clone, the full analysis runs with:\nmake setup\nmake acquire\nmake all\nPackage versions are recorded in renv.lock."
+  },
+  {
+    "objectID": "report/index.html#references",
+    "href": "report/index.html#references",
+    "title": "Canopy to Cohort",
+    "section": "References",
+    "text": "References\n\n\nBechtold, William A., and Paul L. Patterson, eds. 2005. The Enhanced Forest Inventory and Analysis Program: National Sampling Design and Estimation Procedures. GTR-SRS-80. U.S. Department of Agriculture, Forest Service. https://doi.org/10.2737/SRS-GTR-80.\n\n\nThornton, M. M., R. Shrestha, Y. Wei, P. E. Thornton, S.-C. Kao, and B. E. Wilson. 2022. “Daymet: Daily Surface Weather Data on a 1-Km Grid for North America, Version 4 R1.” ORNL Distributed Active Archive Center. https://doi.org/10.3334/ORNLDAAC/2129.\n\n\nU.S. Forest Service. 2026. FIA DataMart. https://research.fs.usda.gov/products/dataandtools/fia-datamart.\n\n\n\nCanopy to Cohort · Reproducible ecological data analysis · Michigan FIA + Daymet"
+  }
+]
