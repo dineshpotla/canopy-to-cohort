@@ -4,7 +4,16 @@ testthat::test_that("processed analytical data satisfy core invariants", {
   data <- readRDS(path)
   testthat::expect_silent(assert_unique_key(data, c("plt_cn", "condid"), "analysis data"))
   testthat::expect_true(all(data$maple_ba_share >= 0 & data$maple_ba_share <= 1, na.rm = TRUE))
+  testthat::expect_true(all(data$established_maple_ba_share >= 0 & data$established_maple_ba_share <= 1, na.rm = TRUE))
   testthat::expect_true(all(data$maple_ba_ft2_ac <= data$total_ba_ft2_ac + 1e-8, na.rm = TRUE))
+  testthat::expect_true(all(data$established_maple_ba_ft2_ac <= data$overstory_total_ba_ft2_ac + 1e-8, na.rm = TRUE))
+  testthat::expect_true(all(data$overstory_total_ba_ft2_ac <= data$total_ba_ft2_ac + 1e-8, na.rm = TRUE))
+  testthat::expect_equal(
+    data$maple_ba_ft2_ac,
+    data$maple_sapling_ba_ft2_ac + data$established_maple_ba_ft2_ac,
+    tolerance = 1e-8
+  )
+  testthat::expect_equal(data$maple_sapling_present, data$maple_sapling_records > 0)
   testthat::expect_true(all(data$maple_seedling_tpa >= 0, na.rm = TRUE))
   testthat::expect_false(anyDuplicated(data[c("plt_cn", "condid")]) > 0)
 })
@@ -40,8 +49,9 @@ testthat::test_that("model support gates passed", {
   testthat::expect_gte(support$events_per_parameter, 10)
   testthat::expect_true(support$county_random_effect_used)
   testthat::expect_false(support$plot_random_effect_used)
-  testthat::expect_equal(support$analytical_cohort_n, 1457)
-  testthat::expect_equal(support$model_complete_n, 1424)
+  testthat::expect_equal(support$source_cohort_n, 1457)
+  testthat::expect_equal(support$analytical_cohort_n, 1072)
+  testthat::expect_equal(support$model_complete_n, 1072)
   testthat::expect_equal(
     support$model_complete_fraction_of_cohort,
     support$model_complete_n / support$analytical_cohort_n,
@@ -50,14 +60,14 @@ testthat::test_that("model support gates passed", {
   testthat::expect_gte(support$multi_condition_plot_visits, 30)
 })
 
-testthat::test_that("v1.2 model evidence artifacts are internally consistent", {
+testthat::test_that("v1.3 model evidence artifacts are internally consistent", {
   curve_path <- project_path("outputs", "tables", "model-maple-effect-curve.csv")
   cv_path <- project_path("outputs", "tables", "model-cross-validation-summary.csv")
   random_path <- project_path("outputs", "tables", "model-random-structure-comparison.csv")
   scaling_path <- project_path("outputs", "tables", "model-scaling-audit.csv")
   testthat::skip_if_not(
     all(file.exists(c(curve_path, cv_path, random_path, scaling_path))),
-    "v1.2 model evidence has not been built"
+    "v1.3 model evidence has not been built"
   )
   curve <- readr::read_csv(curve_path, show_col_types = FALSE)
   validation <- readr::read_csv(cv_path, show_col_types = FALSE)
@@ -66,9 +76,10 @@ testthat::test_that("v1.2 model evidence artifacts are internally consistent", {
   testthat::expect_true(all(dplyr::between(curve$predicted_probability, 0, 1)))
   testthat::expect_true(all(curve$conf_low <= curve$predicted_probability))
   testthat::expect_true(all(curve$conf_high >= curve$predicted_probability))
+  testthat::expect_setequal(curve$maple_sapling_present, c(FALSE, TRUE))
   testthat::expect_setequal(validation$metric, c("Brier score", "ROC AUC", "Calibration intercept", "Calibration slope"))
   testthat::expect_equal(sum(random$selected), 1)
   testthat::expect_equal(random$random_effect_structure[random$selected], "county random intercept")
-  testthat::expect_true(all(scaling$cohort_definition == "final model-complete cohort"))
-  testthat::expect_true(all(scaling$observations == 1424))
+  testthat::expect_true(all(grepl("at least 5 inches DBH", scaling$cohort_definition)))
+  testthat::expect_true(all(scaling$observations == 1072))
 })

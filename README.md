@@ -4,13 +4,13 @@
 [![R data-free unit tests](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml/badge.svg)](https://github.com/dineshpotla/canopy-to-cohort/actions/workflows/r-unit-tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-8B1E3F.svg)](LICENSE)
 
-**Detecting exploratory sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and statistical modeling**
+**Tracing established trees, saplings, and seedlings in Michigan northern hardwood forests using FIA, Daymet, GIS, and statistical modeling**
 
 **[Explore the live research report →](https://dineshpotla.github.io/canopy-to-cohort/report/)**
 
 This is one research-style portfolio project built around a clear ecological question:
 
-> Where do contemporary Michigan northern-hardwood FIA observations combine substantial established sugar maple with little evidence of sugar-maple seedlings, and which measured factors are associated with that mismatch?
+> Among seedling-sampled northern-hardwood conditions with established sugar maple, which stand, cohort, management, and broad climate characteristics are associated with a zero sugar-maple seedling tally?
 
 ## 60-second technical tour
 
@@ -18,7 +18,7 @@ This is one research-style portfolio project built around a clear ecological que
 |---|---|---|
 | Large relational data | Schema-aware extraction from Michigan's approximately 5.4 GB expanded FIADB SQLite database | [`R/fia_extract.R`](R/fia_extract.R), [`scripts/01_inspect_fia.R`](scripts/01_inspect_fia.R) |
 | Data quality | Key assertions, pre-aggregation before joins, sampling-opportunity logic, provenance hashes, and hand-check samples | [`R/validation.R`](R/validation.R), [`tests/testthat/`](tests/testthat/) |
-| Statistical modeling | County mixed-effects logistic regression, a prespecified nonlinear maple response, diagnostics, and county-grouped cross-validation | [`R/models.R`](R/models.R), [model results](https://dineshpotla.github.io/canopy-to-cohort/report/#model-associations) |
+| Statistical modeling | Size-class-aware county mixed-effects logistic regression, candidate-form comparison, diagnostics, robust inference, and county-grouped cross-validation | [`R/models.R`](R/models.R), [model results](https://dineshpotla.github.io/canopy-to-cohort/report/#adjusted-associations) |
 | Spatial integration | County-level FIA geography joined to 1991–2020 Daymet climate normals without using or inferring plot coordinates | [`R/climate.R`](R/climate.R), [spatial results](https://dineshpotla.github.io/canopy-to-cohort/report/#broad-geographic-pattern) |
 | Research communication | A manuscript-style Quarto report, decision log, analytical data dictionary, figures, and automated tests | [live report](https://dineshpotla.github.io/canopy-to-cohort/report/), [data dictionary](https://dineshpotla.github.io/canopy-to-cohort/docs/data-dictionary.html) |
 
@@ -46,8 +46,8 @@ flowchart LR
     C["Daymet + Census<br/>1991–2020"] --> D["County climate proxy"]
     B --> E["Plot-condition cohort<br/>PLT_CN + CONDID"]
     D --> E
-    E --> F["Exploratory gap screen"]
-    E --> G["Nonlinear mixed logistic model<br/>county effects"]
+    E --> F["Exploratory gap screen<br/>established-tree share"]
+    E --> G["Tree → sapling → seedling model<br/>county effects"]
     F --> H["Sensitivity, figures, and maps"]
     G --> H
     H --> I["Quarto research report"]
@@ -57,29 +57,30 @@ flowchart LR
 
 ## Main findings
 
-Release v1.2.0 pins the Michigan 2025 current evaluation (EVALID 262501;
+Release v1.3.0 pins the Michigan 2025 current evaluation (EVALID 262501;
 inventory window 2019–2025; assigned measurement records 2018–2025). It yielded
 1,457 plot-condition measurements in FIA's maple/beech/birch forest-type group,
 used here as the operational northern-hardwood cohort, across 78 counties. Of 1,424
 conditions with demonstrated microplot sampling, sugar-maple seedlings were
-tallied in 815 (57.2%). The transparent primary screen flagged 119 observations
-(8.4%) that combined upper-third sugar-maple basal-area share among sampled
-conditions with no seedlings tallied; an upper-quartile sensitivity rule
-flagged 93 (6.5%).
+tallied in 815 (57.2%). The descriptive screen uses established-tree basal-area
+share (DBH ≥ 5 inches) and flagged 131 observations (9.2%); an upper-quartile
+sensitivity rule flagged 102 (7.2%). The screen is separate from model-cohort
+selection and is not treated as a validated ecological index.
 
 Tree records are expanded with the FIA condition proportion for their actual
 sampling frame (microplot, subplot, or applicable macroplot). The resulting
 condition basal area reproduces FIA `COND.BALIVE` with MAE 0.00013 ft²/acre
 and maximum absolute error 0.00070 ft²/acre across all 1,457 conditions.
 
-The supported mixed-effects logistic model uses a county random intercept. A
-natural-spline response shows that the adjusted probability of no seedlings
-falls most sharply from zero to moderate established sugar-maple basal area and
-then levels off; a single constant odds ratio would misstate that relationship.
-Ten-fold cross-validation holds out entire counties to assess geographic
-generalization (Brier score 0.179; ROC AUC 0.793). County-scale climate variables remain broad spatial proxies;
-the precipitation signal is weak under multiplicity and county-robust checks
-and is treated as exploratory rather than causal evidence.
+The primary model restricts inference to 1,072 sampled conditions with at least
+one live sugar-maple TREE record at DBH ≥ 5 inches. It separates established-tree
+basal area from sugar-maple sapling presence (DBH 1–4.9 inches). Raw seedling
+non-detection was 45.7% without saplings and 18.1% with them. In the adjusted
+county random-intercept model, sapling presence had OR 0.33 (95% CI 0.24–0.45),
+while established-tree basal area alone had OR 0.90 (95% CI 0.75–1.08). Ten-fold
+validation holds out entire counties (Brier score 0.177; ROC AUC 0.749;
+calibration slope 0.889). A full-cohort nonlinear curve is retained only to show
+why mixing FIA tree size classes changes the scientific interpretation.
 
 ![Adjusted model associations](outputs/figures/04_model_effects.png)
 
@@ -103,7 +104,7 @@ After `make all`, the project produces:
 1. a study-area sample map;
 2. a live-tree composition figure;
 3. an established-maple versus regeneration hero figure;
-4. a nonlinear maple response curve and an interpretable covariate effect plot;
+4. a primary sapling-continuity profile plus a clearly labeled full-cohort baseline;
 5. a supported broad-area gap map and county uncertainty plot;
 6. a Quarto project website and research report under `_site/`;
 7. join, missingness, provenance, source-snapshot, and model-support audits.
@@ -118,7 +119,8 @@ Curated, non-confidential release evidence is checked into the repository:
 [join audits](outputs/audits/fia-join-audit.csv),
 [frame-specific basal-area validation](outputs/audits/basal-area-validation.csv),
 [model support](outputs/tables/model-support.csv),
-[nonlinear maple response](outputs/tables/model-maple-effect-curve.csv),
+[primary model profile](outputs/tables/model-maple-effect-curve.csv),
+[sapling-form comparison](outputs/tables/model-sapling-form-comparison.csv),
 [county-grouped validation](outputs/tables/model-cross-validation-summary.csv),
 [sensitivity results](outputs/tables/gap-threshold-sensitivity.csv), and the
 [release validation record](outputs/audits/release-validation.csv).
@@ -130,7 +132,7 @@ Curated, non-confidential release evidence is checked into the repository:
 Use the [live report](https://dineshpotla.github.io/canopy-to-cohort/report/)
 and the checked-in aggregate evidence above. GitHub Actions installs the
 lightweight test dependencies and runs the data-free subset; tests requiring
-derived data or a fitted model skip cleanly. The v1.2.0 full local build and
+derived data or a fitted model skip cleanly. The v1.3.0 full local build and
 exact expectation counts are recorded in the release-validation file. After
 `make setup`, the same data-free subset can
 be run locally with `make test` before downloading FIA.
@@ -141,7 +143,7 @@ from a fresh clone until the full data pipeline has completed.
 ### Full rebuild
 
 Requirements: R 4.4 or newer, Quarto, Make, and enough disk space for the
-Michigan FIA SQLite archive. Release v1.2.0 was tested with R 4.6.1 and Quarto
+Michigan FIA SQLite archive. Release v1.3.0 was tested with R 4.6.1 and Quarto
 1.9.38.
 
 ```bash
@@ -162,7 +164,7 @@ The published release is tied to the exact source sizes and SHA-256 checksums in
 [`outputs/audits/data-provenance.csv`](outputs/audits/data-provenance.csv) and to
 EVALID 262501 in [`config/config.yml`](config/config.yml). FIA's state archive
 URL is mutable: `make acquire` fetches the current official archive and warns if
-it differs from the v1.0.0–v1.2.0 source snapshot. The evaluation remains pinned, but
+it differs from the v1.0.0–v1.3.0 source snapshot. The evaluation remains pinned, but
 upstream corrections can still change a rerun. Byte-for-byte reproduction
 therefore requires source files matching the published manifest; otherwise the
 commands perform a documented rerun against the current official data.
@@ -170,6 +172,8 @@ commands perform a documented rerun against the current official data.
 ## Interpretation guardrails
 
 - “No seedlings tallied” is not proof of ecological absence.
+- The primary result is cross-sectional cohort association, not an observed transition.
+- Treatment is observational and is not interpreted as a management effect.
 - The regeneration-gap indicator is exploratory and sample-relative.
 - Associations are not causal effects.
 - County maps summarize analyzed observations, not design-based prevalence.

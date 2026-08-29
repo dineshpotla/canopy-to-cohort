@@ -1,8 +1,8 @@
 model_variable,source_variable,transformation,center,scale,observations,cohort_definition
-z_maple_ba,maple_ba_ft2_ac,log1p,2.841985104403771,1.731035796191861,1424,final model-complete cohort
-z_nonmaple_ba,nonmaple_ba_ft2_ac,log1p,3.8798073485942823,1.1788176333815337,1424,final model-complete cohort
-z_microplot_coverage,microplot_coverage,identity,0.7843426502808989,0.29678113980551063,1424,final model-complete cohort
-z_stand_age,stand_age,identity,78.0814606741573,26.035120754334184,1424,final model-complete cohort
-z_mean_temp,mean_annual_temp_c,identity,5.854513900646452,1.3515783303684923,1424,final model-complete cohort
-z_precip,mean_annual_precip_mm,identity,913.1154183052435,65.94068518762532,1424,final model-complete cohort
-z_year,measyear,identity,2021.871488764045,1.9988546340546576,1424,final model-complete cohort
+z_maple_ba,focal_maple_ba_ft2_ac,log1p,3.5730187491006045,0.9681228918115896,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_nonmaple_ba,nonmaple_ba_ft2_ac,log1p,3.8288312060485485,1.1106352333406329,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_microplot_coverage,microplot_coverage,identity,0.8474122080223881,0.25364583610817265,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_stand_age,stand_age,identity,84.4776119402985,20.131998181529536,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_mean_temp,mean_annual_temp_c,identity,5.6692353553295165,1.2268677926925753,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_precip,mean_annual_precip_mm,identity,912.5406815920397,62.78756716173651,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH
+z_year,measyear,identity,2021.8283582089553,1.9949558029892036,1072,seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH

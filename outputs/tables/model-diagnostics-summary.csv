@@ -1,2 +1,2 @@
 model_class,converged,singular,log_likelihood,aic,bic,county_random_intercept_variance,county_latent_scale_icc,max_absolute_optimizer_gradient,random_effect_structure,maple_function
-glmerMod,TRUE,FALSE,-712.6395763791419,1449.2791527582838,1512.4138538619468,0.5394476994173926,0.14087312797564036,7.575408744742163e-5,county random intercept,natural spline of standardized log1p basal area (df = 3)
+glmerMod,TRUE,FALSE,-531.5205145821067,1087.0410291642133,1146.7684052637824,0.499924912256433,0.13191351247802358,3.334434950374998e-5,county random intercept,linear standardized log1p basal area

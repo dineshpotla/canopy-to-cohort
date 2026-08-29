@@ -5,20 +5,41 @@ source("R/plotting.R")
 
 config <- read_config()
 analysis_data <- read_required_rds(project_path(config$files$analysis_data))
-model_data <- prepare_model_data(analysis_data)
+primary_model_data <- prepare_model_data(analysis_data, established_only = TRUE)
+baseline_model_data <- prepare_model_data(analysis_data, established_only = FALSE)
 
 fit <- fit_regeneration_model(
-  model_data,
+  primary_model_data,
   config,
-  spline_df = config$analysis$maple_spline_df
+  spline_df = config$analysis$primary_spline_comparison_df,
+  nonlinear_maple = FALSE,
+  include_sapling = TRUE,
+  include_treatment = TRUE,
+  cohort_label = "Primary established-tree cohort"
+)
+baseline_fit <- fit_regeneration_model(
+  baseline_model_data,
+  config,
+  spline_df = config$analysis$maple_spline_df,
+  nonlinear_maple = TRUE,
+  include_sapling = FALSE,
+  include_treatment = FALSE,
+  cohort_label = "Full-cohort baseline"
 )
 save_rds_atomic(fit$data, project_path(config$files$model_data))
 save_rds_atomic(fit$model, project_path("outputs", "models", "regeneration-occurrence-model.rds"))
+save_rds_atomic(baseline_fit$model, project_path("outputs", "models", "baseline-regeneration-occurrence-model.rds"))
 write_csv_atomic(fit$support, project_path("outputs", "tables", "model-support.csv"))
+write_csv_atomic(baseline_fit$support, project_path("outputs", "tables", "baseline-model-support.csv"))
 write_csv_atomic(fit$diagnostics, project_path("outputs", "tables", "model-diagnostics-summary.csv"))
+write_csv_atomic(baseline_fit$diagnostics, project_path("outputs", "tables", "baseline-model-diagnostics-summary.csv"))
 write_csv_atomic(
   fit$functional_form_comparison,
   project_path("outputs", "tables", "model-functional-form-comparison.csv")
+)
+write_csv_atomic(
+  baseline_fit$functional_form_comparison,
+  project_path("outputs", "tables", "baseline-model-functional-form-comparison.csv")
 )
 write_csv_atomic(
   fit$random_structure_comparison,
@@ -28,17 +49,120 @@ write_csv_atomic(
   fit$scaling_audit,
   project_path("outputs", "tables", "model-scaling-audit.csv")
 )
+write_csv_atomic(
+  baseline_fit$scaling_audit,
+  project_path("outputs", "tables", "baseline-model-scaling-audit.csv")
+)
 
-odds_ratios <- tidy_odds_ratios(fit$model)
+odds_ratios <- tidy_odds_ratios(fit$model, maple_label = "Established sugar-maple basal area")
 write_csv_atomic(odds_ratios, project_path("outputs", "tables", "model-odds-ratios.csv"))
+write_csv_atomic(
+  tidy_odds_ratios(baseline_fit$model, maple_label = "All-size sugar-maple basal area"),
+  project_path("outputs", "tables", "baseline-model-odds-ratios.csv")
+)
 inference_sensitivity <- fixed_effect_inference_sensitivity(fit, odds_ratios)
 write_csv_atomic(
   inference_sensitivity,
   project_path("outputs", "tables", "model-inference-sensitivity.csv")
 )
 effect_curve <- maple_effect_curve(fit)
+baseline_effect_curve <- maple_effect_curve(baseline_fit, vary_sapling = FALSE)
 write_csv_atomic(effect_curve, project_path("outputs", "tables", "model-maple-effect-curve.csv"))
-save_figure(plot_maple_effect_curve(effect_curve), "04_model_effects.png", width = 8.4, height = 5.8)
+write_csv_atomic(
+  baseline_effect_curve,
+  project_path("outputs", "tables", "baseline-model-maple-effect-curve.csv")
+)
+save_figure(
+  plot_model_effects(effect_curve, fit$data, baseline_effect_curve, baseline_fit$data),
+  "04_model_effects.png",
+  width = 9.2,
+  height = 10.4
+)
+
+write_csv_atomic(
+  cohort_continuity_summary(fit$data),
+  project_path("outputs", "tables", "model-cohort-continuity.csv")
+)
+write_csv_atomic(
+  sapling_form_comparison(fit),
+  project_path("outputs", "tables", "model-sapling-form-comparison.csv")
+)
+write_csv_atomic(
+  forest_type_sensitivity(fit),
+  project_path("outputs", "tables", "model-forest-type-sensitivity.csv")
+)
+treatment_summary <- fit$data |>
+  dplyr::group_by(.data$treated) |>
+  dplyr::summarise(
+    observations = dplyr::n(),
+    no_seedlings = sum(.data$outcome_no_seedlings == 1L),
+    seedlings_detected = sum(.data$outcome_no_seedlings == 0L),
+    no_seedling_fraction = mean(.data$outcome_no_seedlings == 1L),
+    .groups = "drop"
+  ) |>
+  dplyr::mutate(
+    treated = as.character(.data$treated),
+    interpretation = "Observed FIA treatment indicator; descriptive association without an untreated counterfactual or before-after design"
+  )
+write_csv_atomic(treatment_summary, project_path("outputs", "tables", "model-treatment-summary.csv"))
+
+treatment_code_summary <- analysis_data |>
+  dplyr::semi_join(fit$data, by = c("plt_cn", "condid")) |>
+  dplyr::select(dplyr::all_of(c("plt_cn", "condid", "trtcd1", "trtcd2", "trtcd3"))) |>
+  tidyr::pivot_longer(
+    dplyr::starts_with("trtcd"),
+    names_to = "treatment_field",
+    values_to = "treatment_code"
+  ) |>
+  dplyr::filter(!is.na(.data$treatment_code), .data$treatment_code > 0) |>
+  dplyr::mutate(
+    treatment_label = dplyr::recode(
+      as.character(.data$treatment_code),
+      `10` = "Cutting",
+      `20` = "Site preparation",
+      `30` = "Artificial regeneration",
+      `40` = "Natural regeneration",
+      `50` = "Other treatment",
+      .default = "Other documented FIA treatment code"
+    ),
+    condition_key = paste(.data$plt_cn, .data$condid, sep = ":")
+  ) |>
+  dplyr::group_by(.data$treatment_code, .data$treatment_label) |>
+  dplyr::summarise(
+    condition_count = dplyr::n_distinct(.data$condition_key),
+    recorded_slots = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::arrange(dplyr::desc(.data$condition_count), .data$treatment_code)
+write_csv_atomic(
+  treatment_code_summary,
+  project_path("outputs", "tables", "model-treatment-code-summary.csv")
+)
+
+cohort_audit <- tibble::tibble(
+  cohort_step = c(
+    "All northern-hardwood conditions",
+    "Seedling-sampled conditions",
+    "Primary established-tree cohort",
+    "Primary cohort with maple saplings",
+    "Primary cohort without maple saplings"
+  ),
+  observations = c(
+    nrow(analysis_data),
+    nrow(baseline_model_data),
+    nrow(primary_model_data),
+    sum(primary_model_data$maple_sapling_present == "TRUE"),
+    sum(primary_model_data$maple_sapling_present == "FALSE")
+  ),
+  rule = c(
+    "FIA maple/beech/birch forest-type group",
+    "demonstrated microplot sampling opportunity",
+    "at least one live sugar-maple TREE record with DBH at least 5 inches",
+    "at least one live sugar-maple TREE record with DBH 1 to 4.9 inches",
+    "no live sugar-maple TREE record with DBH 1 to 4.9 inches"
+  )
+)
+write_csv_atomic(cohort_audit, project_path("outputs", "tables", "model-cohort-audit.csv"))
 
 cross_validation <- county_grouped_cross_validation(fit, k = config$analysis$grouped_cv_folds)
 write_csv_atomic(

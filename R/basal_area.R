@@ -36,7 +36,10 @@ aggregate_tree_metrics <- function(trees, sugar_maple_spcd, condition_proportion
     ) |>
     dplyr::mutate(
       ba_plot_basis = tree_basal_area_contribution(.data$dia, .data$tpa_unadj),
-      is_sugar_maple = .data$spcd == sugar_maple_spcd
+      is_sugar_maple = .data$spcd == sugar_maple_spcd,
+      is_maple_sapling = .data$is_sugar_maple & .data$dia >= 1 & .data$dia < 5,
+      is_overstory_tree = .data$dia >= 5,
+      is_established_maple = .data$is_sugar_maple & .data$is_overstory_tree
     )
 
   if (!is.null(condition_proportions)) {
@@ -98,9 +101,18 @@ aggregate_tree_metrics <- function(trees, sugar_maple_spcd, condition_proportion
     dplyr::summarise(
       total_ba_plot_basis = sum(.data$ba_plot_basis, na.rm = TRUE),
       maple_ba_plot_basis = sum(.data$ba_plot_basis[.data$is_sugar_maple], na.rm = TRUE),
+      maple_sapling_ba_plot_basis = sum(.data$ba_plot_basis[.data$is_maple_sapling], na.rm = TRUE),
+      overstory_total_ba_plot_basis = sum(.data$ba_plot_basis[.data$is_overstory_tree], na.rm = TRUE),
+      established_maple_ba_plot_basis = sum(.data$ba_plot_basis[.data$is_established_maple], na.rm = TRUE),
       total_ba_ft2_ac = sum(.data$ba_ft2_ac_contribution, na.rm = TRUE),
       maple_ba_ft2_ac = sum(.data$ba_ft2_ac_contribution[.data$is_sugar_maple], na.rm = TRUE),
+      maple_sapling_ba_ft2_ac = sum(.data$ba_ft2_ac_contribution[.data$is_maple_sapling], na.rm = TRUE),
+      overstory_total_ba_ft2_ac = sum(.data$ba_ft2_ac_contribution[.data$is_overstory_tree], na.rm = TRUE),
+      established_maple_ba_ft2_ac = sum(.data$ba_ft2_ac_contribution[.data$is_established_maple], na.rm = TRUE),
       live_tree_records = dplyr::n(),
+      maple_sapling_records = sum(.data$is_maple_sapling),
+      overstory_tree_records = sum(.data$is_overstory_tree),
+      established_maple_records = sum(.data$is_established_maple),
       microplot_tree_records = sum(.data$sampling_basis == "microplot"),
       subplot_tree_records = sum(.data$sampling_basis == "subplot"),
       macroplot_tree_records = sum(.data$sampling_basis == "macroplot"),
@@ -108,9 +120,16 @@ aggregate_tree_metrics <- function(trees, sugar_maple_spcd, condition_proportion
     ) |>
     dplyr::mutate(
       nonmaple_ba_ft2_ac = pmax(0, .data$total_ba_ft2_ac - .data$maple_ba_ft2_ac),
+      other_live_ba_ft2_ac = pmax(0, .data$total_ba_ft2_ac - .data$established_maple_ba_ft2_ac),
+      maple_sapling_present = .data$maple_sapling_records > 0,
       maple_ba_share = dplyr::if_else(
         .data$total_ba_ft2_ac > 0,
         .data$maple_ba_ft2_ac / .data$total_ba_ft2_ac,
+        0
+      ),
+      established_maple_ba_share = dplyr::if_else(
+        .data$overstory_total_ba_ft2_ac > 0,
+        .data$established_maple_ba_ft2_ac / .data$overstory_total_ba_ft2_ac,
         0
       )
     )

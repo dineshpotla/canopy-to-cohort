@@ -1,0 +1,8 @@
+model_variable,source_variable,transformation,center,scale,observations,cohort_definition
+z_maple_ba,focal_maple_ba_ft2_ac,log1p,2.841985104403771,1.731035796191861,1424,all seedling-sampled northern-hardwood conditions
+z_nonmaple_ba,nonmaple_ba_ft2_ac,log1p,3.8798073485942823,1.1788176333815337,1424,all seedling-sampled northern-hardwood conditions
+z_microplot_coverage,microplot_coverage,identity,0.7843426502808989,0.29678113980551063,1424,all seedling-sampled northern-hardwood conditions
+z_stand_age,stand_age,identity,78.0814606741573,26.035120754334184,1424,all seedling-sampled northern-hardwood conditions
+z_mean_temp,mean_annual_temp_c,identity,5.854513900646452,1.3515783303684923,1424,all seedling-sampled northern-hardwood conditions
+z_precip,mean_annual_precip_mm,identity,913.1154183052435,65.94068518762532,1424,all seedling-sampled northern-hardwood conditions
+z_year,measyear,identity,2021.871488764045,1.9988546340546576,1424,all seedling-sampled northern-hardwood conditions

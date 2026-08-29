@@ -13,7 +13,7 @@ testthat::test_that("missing seedling rows become zero only for sampled conditio
 
 testthat::test_that("gap thresholds are derived only from seedling-sampled conditions", {
   data <- tibble::tibble(
-    maple_ba_share = c(0.10, 0.20, 0.30, 0.99),
+    established_maple_ba_share = c(0.10, 0.20, 0.30, 0.99),
     maple_seedling_tpa = c(50, 0, 0, NA_real_),
     maple_seedling_detected = c(1L, 0L, 0L, NA_integer_)
   )

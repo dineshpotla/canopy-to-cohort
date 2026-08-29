@@ -9,7 +9,7 @@ project:
 
 website:
   title: "Canopy to Cohort"
-  description: "Reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling."
+  description: "Size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation."
   site-url: "https://dineshpotla.github.io/canopy-to-cohort/"
   repo-url: "https://github.com/dineshpotla/canopy-to-cohort"
   repo-actions: [source, issue]

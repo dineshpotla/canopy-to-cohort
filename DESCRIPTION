@@ -1,13 +1,13 @@
 Package: canopytocohort
 Title: Canopy to Cohort Research Workflow
-Version: 1.2.0
+Version: 1.3.0
 Authors@R: person(
     "Dinesh", "Potla",
     role = c("aut", "cre"),
     email = "29446671+dineshpotla@users.noreply.github.com"
   )
-Description: Reproducible analysis of sugar maple regeneration signals in
-    Michigan northern hardwood Forest Inventory and Analysis observations.
+Description: Reproducible size-class-aware analysis of sugar maple regeneration
+    continuity in Michigan northern hardwood Forest Inventory and Analysis observations.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:

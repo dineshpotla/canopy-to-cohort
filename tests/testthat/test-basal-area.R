@@ -43,6 +43,13 @@ testthat::test_that("design-1 trees use the FIA sampling-unit condition proporti
     result$maple_ba_ft2_ac,
     expected_micro + tree_basal_area_contribution(5, 6) / 0.5
   )
+  testthat::expect_equal(result$maple_sapling_ba_ft2_ac, expected_micro)
+  testthat::expect_true(result$maple_sapling_present)
+  testthat::expect_equal(result$established_maple_records, 1L)
+  testthat::expect_equal(
+    result$established_maple_ba_ft2_ac,
+    tree_basal_area_contribution(5, 6) / 0.5
+  )
   testthat::expect_equal(
     result$maple_ba_share,
     result$maple_ba_ft2_ac / result$total_ba_ft2_ac

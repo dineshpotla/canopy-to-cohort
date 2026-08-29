@@ -11,6 +11,7 @@ analysis_data <- assembled$data
 
 assert_unique_key(analysis_data, c("plt_cn", "condid"), "analysis data")
 assert_range(analysis_data$maple_ba_share, 0, 1, label = "sugar maple basal-area share")
+assert_range(analysis_data$established_maple_ba_share, 0, 1, label = "established sugar-maple basal-area share")
 assert_range(analysis_data$maple_seedling_tpa, 0, Inf, label = "sugar maple seedling density")
 save_rds_atomic(analysis_data, project_path(config$files$analysis_data))
 write_csv_atomic(assembled$audit, project_path("outputs", "audits", "climate-join-audit.csv"))

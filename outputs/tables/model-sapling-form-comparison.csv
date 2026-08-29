@@ -1,0 +1,5 @@
+model,observations,aic,delta_aic,reported_term,odds_ratio,conf_low,conf_high,wald_p_value,binary_vs_none_lrt_p_value,selected,selection_note
+No sapling-stage term,1072,1133.075386534957,46.03435737074369,NA,NA,NA,NA,NA,NA,FALSE,Comparison candidate
+Continuous sapling basal area,1072,1093.2928636148285,6.251834450615206,z_maple_sapling_ba,0.5904287293028971,0.5009388596046407,0.6959054537341473,3.3168625559961463e-10,NA,FALSE,Comparison candidate
+Binary sapling presence,1072,1087.0410291642133,0,maple_sapling_presentTRUE,0.3255679555539225,0.23635729128982677,0.44845028095024136,6.487433368834569e-12,4.188156208033884e-12,TRUE,Selected: best AIC and direct ecological interpretation; positive amount adds no useful fit
+Presence plus positive amount,1072,1088.5366369744359,1.4956078102225092,maple_sapling_presentTRUE,0.32740592948210845,0.2376462632128298,0.45106807576453517,8.492326918285994e-12,NA,FALSE,Comparison candidate

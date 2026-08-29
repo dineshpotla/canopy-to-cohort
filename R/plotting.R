@@ -28,18 +28,33 @@ save_figure <- function(plot, filename, width = 8, height = 5.5) {
 
 plot_species_composition <- function(composition, top_n = 12L) {
   shown <- composition |>
-    dplyr::slice_max(.data$ba_ft2_ac_sum, n = top_n, with_ties = FALSE) |>
-    dplyr::mutate(species_name = stats::reorder(.data$species_name, .data$ba_ft2_ac_sum))
+    dplyr::mutate(share = .data$ba_ft2_ac_sum / sum(.data$ba_ft2_ac_sum)) |>
+    dplyr::slice_max(.data$share, n = top_n, with_ties = FALSE) |>
+    dplyr::mutate(
+      species_name = stats::reorder(.data$species_name, .data$share),
+      focal = .data$species_name == "sugar maple"
+    )
+  displayed_share <- sum(shown$share)
 
-  ggplot2::ggplot(shown, ggplot2::aes(.data$ba_ft2_ac_sum, .data$species_name)) +
-    ggplot2::geom_col(fill = project_palette[["forest"]], width = 0.72) +
-    ggplot2::scale_x_continuous(labels = scales::label_number(big.mark = ","), expand = ggplot2::expansion(mult = c(0, 0.06))) +
+  ggplot2::ggplot(shown, ggplot2::aes(.data$share, .data$species_name)) +
+    ggplot2::geom_col(ggplot2::aes(fill = .data$focal), width = 0.72, show.legend = FALSE) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = scales::percent(.data$share, accuracy = 0.1)),
+      hjust = -0.12,
+      size = 3.2,
+      colour = project_palette[["ink"]]
+    ) +
+    ggplot2::scale_fill_manual(values = c(`FALSE` = project_palette[["forest"]], `TRUE` = project_palette[["maple"]])) +
+    ggplot2::scale_x_continuous(labels = scales::label_percent(accuracy = 1), expand = ggplot2::expansion(mult = c(0, 0.12))) +
     ggplot2::labs(
       title = "Sugar maple anchors the sampled maple/beech/birch cohort",
-      subtitle = "FIA unadjusted plot-basis live-tree basal-area contribution across analyzed conditions",
-      x = expression("Summed basal-area contribution (ft"^2 * "/acre on FIA plot basis)"),
+      subtitle = "Share of all live-tree basal-area contribution in the analyzed sample",
+      x = "Share of all-species basal-area contribution",
       y = NULL,
-      caption = "TPA_UNADJ expands sampled trees to a plot-acre basis; it is not an FIA population weight. Descriptive sample totals only."
+      caption = sprintf(
+        "Top %d species shown (%.1f%% of the all-species denominator). TPA_UNADJ is not an FIA population weight; descriptive sample composition only.",
+        top_n, 100 * displayed_share
+      )
     ) +
     theme_canopy()
 }
@@ -47,20 +62,28 @@ plot_species_composition <- function(composition, top_n = 12L) {
 plot_regeneration_quadrant <- function(data) {
   threshold <- unique(stats::na.omit(data$established_threshold))[[1]]
   plotted <- data |>
-    dplyr::filter(!is.na(.data$maple_ba_share), !is.na(.data$maple_seedling_tpa)) |>
+    dplyr::filter(!is.na(.data$established_maple_ba_share), !is.na(.data$maple_seedling_tpa)) |>
     dplyr::arrange(.data$potential_gap)
+  detected <- plotted |>
+    dplyr::filter(.data$maple_seedling_tpa > 0)
+  zero_bins <- plotted |>
+    dplyr::filter(.data$maple_seedling_tpa == 0) |>
+    dplyr::mutate(
+      share_bin = pmin(0.975, floor(.data$established_maple_ba_share / 0.05) * 0.05 + 0.025)
+    ) |>
+    dplyr::count(.data$share_bin, .data$potential_gap)
   y_transformation <- scales::pseudo_log_trans(base = 10, sigma = 50)
-  y_breaks <- c(0, 100, 300, 1e3, 3e3, 1e4, 2e4)
-  y_breaks <- y_breaks[y_breaks <= max(plotted$maple_seedling_tpa, na.rm = TRUE)]
+  y_breaks <- c(100, 300, 1e3, 3e3, 1e4, 2e4)
+  y_breaks <- y_breaks[y_breaks <= max(detected$maple_seedling_tpa, na.rm = TRUE)]
 
-  ggplot2::ggplot(
-    plotted,
-    ggplot2::aes(.data$maple_ba_share, .data$maple_seedling_tpa)
+  upper <- ggplot2::ggplot(
+    detected,
+    ggplot2::aes(.data$established_maple_ba_share, .data$maple_seedling_tpa)
   ) +
     ggplot2::geom_point(
-      ggplot2::aes(colour = .data$potential_gap),
-      alpha = 0.55,
-      size = 1.7
+      colour = project_palette[["forest"]],
+      alpha = 0.42,
+      size = 1.6
     ) +
     ggplot2::geom_vline(xintercept = threshold, linetype = 2, colour = "#6C757D") +
     ggplot2::scale_y_continuous(
@@ -74,69 +97,79 @@ plot_regeneration_quadrant <- function(data) {
       labels = scales::label_percent(accuracy = 1),
       expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
-    ggplot2::scale_colour_manual(
-      values = c(`FALSE` = "#A8B2AD", `TRUE` = project_palette[["maple"]]),
-      breaks = c(FALSE, TRUE),
-      labels = c("Other observation", "Potential gap"),
-      na.value = "#E0E0E0",
-      name = NULL
-    ) +
     ggplot2::annotate(
       "text",
       x = threshold,
-      y = max(plotted$maple_seedling_tpa, na.rm = TRUE),
-      label = sprintf("Upper-third cutoff\n%.1f%% maple share", 100 * threshold),
+      y = max(detected$maple_seedling_tpa, na.rm = TRUE),
+      label = sprintf("Upper-third cutoff\n%.1f%% established-tree share", 100 * threshold),
       hjust = 1.08,
       vjust = 1.05,
       colour = "#59645F",
       fontface = "bold",
       size = 3.2
     ) +
-    ggplot2::annotate(
-      "text",
-      x = 0.98,
-      y = 0,
-      label = "High established maple\nNo seedlings tallied",
-      hjust = 1,
-      vjust = -0.8,
-      colour = project_palette[["maple"]],
-      fontface = "bold",
-      size = 3.5
+    ggplot2::labs(
+      title = "Established trees do not always coincide with the seedling cohort",
+      subtitle = "Positive seedling tallies are shown exactly; zero tallies are counted in the lower strip",
+      x = NULL,
+      y = "Seedlings per acre\n(pseudo-log scale)"
+    ) +
+    theme_canopy() +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank(),
+      legend.position = "none"
+    )
+
+  lower <- ggplot2::ggplot(zero_bins, ggplot2::aes(.data$share_bin, .data$n, fill = .data$potential_gap)) +
+    ggplot2::geom_col(width = 0.046) +
+    ggplot2::geom_vline(xintercept = threshold, linetype = 2, colour = "#6C757D") +
+    ggplot2::scale_fill_manual(values = c(`FALSE` = "#A8B2AD", `TRUE` = project_palette[["maple"]]), guide = "none") +
+    ggplot2::scale_y_sqrt(expand = ggplot2::expansion(mult = c(0, 0.08))) +
+    ggplot2::scale_x_continuous(
+      limits = c(0, 1),
+      breaks = seq(0, 1, by = 0.25),
+      labels = scales::label_percent(accuracy = 1),
+      expand = ggplot2::expansion(mult = c(0.01, 0.01))
     ) +
     ggplot2::labs(
-      title = "Where canopy presence does not coincide with observed seedlings",
-      subtitle = "Potential gaps combine upper-third sugar-maple basal-area share with zero seedlings tallied",
-      x = "Sugar maple share of live-tree basal area",
-      y = "Sugar maple seedlings per acre (pseudo-log scale; exact values)",
+      x = "Sugar maple share of live established-tree basal area (DBH ≥ 5 in)",
+      y = "Zero-tally\nconditions",
       caption = sprintf(
-        "Dashed line = %.1f%% sample cutoff. Points are not jittered; zero means no seedlings tallied on sampled microplots.",
+        "Bars count true zero tallies in 5-percentage-point bins; burgundy meets the %.1f%% sample cutoff.\nSquare-root count scale. Descriptive screen, not a population estimate.",
         100 * threshold
       )
     ) +
-    theme_canopy()
+    theme_canopy() +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(), legend.position = "none")
+
+  patchwork::wrap_plots(upper, lower, ncol = 1, heights = c(4.2, 1.35))
 }
 
-plot_maple_effect_curve <- function(effect_curve) {
+plot_maple_effect_curve <- function(effect_curve, rug_data = NULL) {
   required <- c("maple_ba_ft2_ac", "predicted_probability", "conf_low", "conf_high")
   missing <- setdiff(required, names(effect_curve))
   if (length(missing)) stop("Maple effect curve is missing: ", paste(missing, collapse = ", "), call. = FALSE)
-  spline_df <- if ("spline_df" %in% names(effect_curve)) unique(effect_curve$spline_df) else 3L
-  if (length(spline_df) != 1L || !is.finite(spline_df)) {
-    stop("Maple effect curve must contain one finite spline_df value.", call. = FALSE)
-  }
   x_upper <- max(effect_curve$maple_ba_ft2_ac, na.rm = TRUE)
   x_breaks <- c(0, 1, 5, 10, 25, 50, 100, 150)
   x_breaks <- x_breaks[x_breaks <= x_upper]
 
-  ggplot2::ggplot(
+  plot <- ggplot2::ggplot(
     effect_curve,
-    ggplot2::aes(.data$maple_ba_ft2_ac, .data$predicted_probability)
+    ggplot2::aes(
+      .data$maple_ba_ft2_ac,
+      .data$predicted_probability,
+      colour = .data$maple_sapling_present,
+      fill = .data$maple_sapling_present
+    )
   ) +
     ggplot2::geom_ribbon(
       ggplot2::aes(ymin = .data$conf_low, ymax = .data$conf_high),
-      fill = project_palette[["maple"]], alpha = 0.18
+      alpha = 0.15,
+      colour = NA
     ) +
-    ggplot2::geom_line(linewidth = 1.15, colour = project_palette[["maple"]]) +
+    ggplot2::geom_line(linewidth = 1.15) +
     ggplot2::scale_x_continuous(
       trans = scales::pseudo_log_trans(base = 10, sigma = 1),
       breaks = x_breaks,
@@ -147,23 +180,90 @@ plot_maple_effect_curve <- function(effect_curve) {
       limits = c(0, 1), labels = scales::label_percent(accuracy = 1),
       expand = ggplot2::expansion(mult = c(0, 0.01))
     ) +
+    ggplot2::scale_colour_manual(
+      values = c(`FALSE` = project_palette[["maple"]], `TRUE` = project_palette[["forest"]]),
+      breaks = c("FALSE", "TRUE"),
+      labels = c("Saplings absent", "Saplings present"),
+      name = NULL
+    ) +
+    ggplot2::scale_fill_manual(
+      values = c(`FALSE` = project_palette[["maple"]], `TRUE` = project_palette[["forest"]]),
+      breaks = c("FALSE", "TRUE"),
+      labels = c("Saplings absent", "Saplings present"),
+      name = NULL
+    ) +
     ggplot2::labs(
-      title = "Seedling non-detection changes nonlinearly with maple basal area",
-      subtitle = "Adjusted county-level mixed model; ribbon is a pointwise Wald 95% confidence interval",
-      x = expression("Sugar maple basal area (ft"^2 * "/acre; pseudo-log scale)"),
+      title = "Sapling-stage continuity separates seedling outcomes",
+      subtitle = "Primary established-tree cohort; adjusted county mixed model with pointwise Wald 95% intervals",
+      x = expression("Established sugar maple basal area (ft"^2 * "/acre; pseudo-log scale)"),
       y = "Predicted probability of no sugar-maple seedlings tallied",
       caption = paste(
-        sprintf("Natural spline (%d df) of standardized log(x + 1) maple basal area.", as.integer(spline_df)),
-        "Reference profile: other continuous variables at their means, no recorded disturbance, county effect = 0.",
-        "Curve ends at the observed 99th percentile. Observational association, not a causal effect.",
+        "Established-tree basal area uses live sugar-maple TREE records with DBH ≥ 5 inches; lines differ by sugar-maple sapling presence (1–4.9 inches).",
+        "Reference profile: continuous adjusters at their means, no recorded disturbance or treatment, county effect = 0.",
+        "Curves span observed support through the 99th percentile. Cross-sectional association, not a transition estimate or causal effect.",
         sep = "\n"
       )
     ) +
     theme_canopy()
+  if (!is.null(rug_data)) {
+    plot <- plot + ggplot2::geom_rug(
+      data = rug_data,
+      ggplot2::aes(x = .data$focal_maple_ba_ft2_ac, colour = as.character(.data$maple_sapling_present)),
+      inherit.aes = FALSE,
+      sides = "b",
+      alpha = 0.09,
+      linewidth = 0.22
+    )
+  }
+  plot
 }
 
-# Backward-compatible name; v1.2 expects prediction-curve data rather than odds ratios.
-plot_model_effects <- plot_maple_effect_curve
+plot_model_effects <- function(primary_curve, primary_data, baseline_curve, baseline_data) {
+  primary <- plot_maple_effect_curve(primary_curve, primary_data)
+  x_upper <- max(baseline_curve$maple_ba_ft2_ac, na.rm = TRUE)
+  x_breaks <- c(0, 1, 5, 10, 25, 50, 100, 150)
+  x_breaks <- x_breaks[x_breaks <= x_upper]
+  baseline <- ggplot2::ggplot(
+    baseline_curve,
+    ggplot2::aes(.data$maple_ba_ft2_ac, .data$predicted_probability)
+  ) +
+    ggplot2::geom_ribbon(
+      ggplot2::aes(ymin = .data$conf_low, ymax = .data$conf_high),
+      fill = "#75827C",
+      alpha = 0.14
+    ) +
+    ggplot2::geom_line(colour = project_palette[["ink"]], linewidth = 0.95, linetype = 2) +
+    ggplot2::geom_rug(
+      data = baseline_data,
+      ggplot2::aes(x = .data$focal_maple_ba_ft2_ac),
+      inherit.aes = FALSE,
+      sides = "b",
+      alpha = 0.06,
+      linewidth = 0.2,
+      colour = project_palette[["ink"]]
+    ) +
+    ggplot2::scale_x_continuous(
+      trans = scales::pseudo_log_trans(base = 10, sigma = 1),
+      breaks = x_breaks,
+      labels = scales::label_number(accuracy = 1),
+      expand = ggplot2::expansion(mult = c(0, 0.02))
+    ) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, 1),
+      labels = scales::label_percent(accuracy = 1),
+      expand = ggplot2::expansion(mult = c(0, 0.01))
+    ) +
+    ggplot2::labs(
+      title = "Context only: the full-cohort baseline mixes species absence with regeneration continuity",
+      subtitle = "All-size sugar-maple basal area, including 1–4.9-inch saplings; nonlinear fixed-effect profile",
+      x = expression("All-size sugar maple basal area (ft"^2 * "/acre; pseudo-log scale)"),
+      y = "Predicted non-detection probability",
+      caption = "This baseline is retained to show why separating FIA size classes changes the scientific interpretation; it is not the primary model."
+    ) +
+    theme_canopy(base_size = 10.5) +
+    ggplot2::theme(legend.position = "none")
+  patchwork::wrap_plots(primary, baseline, ncol = 1, heights = c(1.65, 1))
+}
 
 wilson_interval <- function(successes, total, z = 1.96) {
   if (is.na(total) || total <= 0) {

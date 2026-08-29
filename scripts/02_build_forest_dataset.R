@@ -47,6 +47,7 @@ tree_metrics <- aggregate_tree_metrics(
 )
 assert_unique_key(tree_metrics, c("plt_cn", "condid"), "tree metrics")
 assert_range(tree_metrics$maple_ba_share, 0, 1, label = "maple basal-area share")
+assert_range(tree_metrics$established_maple_ba_share, 0, 1, label = "established maple basal-area share")
 save_rds_atomic(tree_metrics, project_path("data", "interim", "tree_metrics.rds"))
 
 composition <- extract_species_composition(con, evalid, forest_codes)

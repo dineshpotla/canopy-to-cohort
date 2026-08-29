@@ -4,8 +4,8 @@ project:
   state_name: "Michigan"
 
 release:
-  version: "1.2.0"
-  analysis_date: "2026-08-28"
+  version: "1.3.0"
+  analysis_date: "2026-08-29"
   evalid: 262501
   source_snapshot:
     fia_zip:
@@ -40,4 +40,5 @@ analysis:
   minimum_groups_for_random_effect: 30
   minimum_events_per_parameter: 10
   maple_spline_df: 3
+  primary_spline_comparison_df: 2
   grouped_cv_folds: 10

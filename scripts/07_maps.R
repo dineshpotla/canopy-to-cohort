@@ -66,9 +66,16 @@ gap_map <- ggplot2::ggplot(map_data) +
   ) +
   ggplot2::scale_fill_gradientn(
     colours = c("#F1EEE7", "#D7A45B", project_palette[["maple"]]),
+    breaks = scales::breaks_width(0.1),
     labels = scales::label_percent(accuracy = 1),
     limits = c(0, max(county_summary$mapped_gap_fraction, na.rm = TRUE)),
-    na.value = "#D7D9D8"
+    na.value = "#D7D9D8",
+    guide = ggplot2::guide_colorbar(
+      title.position = "top",
+      title.hjust = 0.5,
+      barwidth = grid::unit(3.2, "in"),
+      barheight = grid::unit(0.28, "in")
+    )
   ) +
   ggplot2::labs(
     title = "Potential regeneration gaps vary across the analyzed sample",
@@ -77,7 +84,7 @@ gap_map <- ggplot2::ggplot(map_data) +
       config$analysis$minimum_map_n,
       " or no data"
     ),
-    fill = "Flagged\nfraction",
+    fill = "Flagged fraction",
     caption = paste(
       "Exploratory sample summary; not a design-based county estimate.",
       "Gray counties have fewer than 20 seedling-sampled conditions or no data.",

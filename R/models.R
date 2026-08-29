@@ -5,8 +5,8 @@ scale_predictor <- function(x) {
   as.numeric((x - mean(x, na.rm = TRUE)) / spread)
 }
 
-prepare_model_data <- function(data) {
-  analytical_cohort_n <- nrow(data)
+prepare_model_data <- function(data, established_only = FALSE) {
+  source_cohort_n <- nrow(data)
   prepared <- data |>
     dplyr::transmute(
       plt_cn = .data$plt_cn,
@@ -14,22 +14,31 @@ prepare_model_data <- function(data) {
       geoid = factor(.data$geoid),
       county_name = .data$county_name,
       outcome_no_seedlings = ifelse(is.na(.data$maple_seedling_detected), NA_integer_, 1L - .data$maple_seedling_detected),
-      maple_ba_ft2_ac = .data$maple_ba_ft2_ac,
-      log_maple_ba = log1p(.data$maple_ba_ft2_ac),
+      focal_maple_ba_ft2_ac = if (established_only) .data$established_maple_ba_ft2_ac else .data$maple_ba_ft2_ac,
+      all_size_maple_ba_ft2_ac = .data$maple_ba_ft2_ac,
+      established_maple_ba_ft2_ac = .data$established_maple_ba_ft2_ac,
+      established_maple_records = .data$established_maple_records,
+      maple_sapling_ba_ft2_ac = .data$maple_sapling_ba_ft2_ac,
+      maple_sapling_present = factor(.data$maple_sapling_present, levels = c(FALSE, TRUE)),
       nonmaple_ba_ft2_ac = .data$nonmaple_ba_ft2_ac,
       stand_age = .data$stand_age,
       disturbed = factor(.data$disturbed, levels = c(FALSE, TRUE)),
+      treated = factor(.data$treated, levels = c(FALSE, TRUE)),
+      forest_type_code = factor(.data$fortypcd),
+      forest_type = .data$forest_type,
       mean_annual_temp_c = .data$mean_annual_temp_c,
       mean_annual_precip_mm = .data$mean_annual_precip_mm,
       measyear = .data$measyear,
       microplot_coverage = .data$micrprop_unadj
     ) |>
     dplyr::filter(
-      !is.na(.data$outcome_no_seedlings), !is.na(.data$maple_ba_ft2_ac),
+      !is.na(.data$outcome_no_seedlings), !is.na(.data$focal_maple_ba_ft2_ac),
       !is.na(.data$nonmaple_ba_ft2_ac), !is.na(.data$microplot_coverage),
-      .data$microplot_coverage > 0
+      .data$microplot_coverage > 0,
+      !.env$established_only | .data$established_maple_records > 0
     ) |>
     dplyr::mutate(
+      log_maple_ba = log1p(.data$focal_maple_ba_ft2_ac),
       z_maple_ba = scale_predictor(.data$log_maple_ba),
       z_nonmaple_ba = scale_predictor(log1p(.data$nonmaple_ba_ft2_ac)),
       z_stand_age = scale_predictor(.data$stand_age),
@@ -39,14 +48,25 @@ prepare_model_data <- function(data) {
       z_microplot_coverage = scale_predictor(.data$microplot_coverage)
     ) |>
     droplevels()
-  attr(prepared, "analytical_cohort_n") <- analytical_cohort_n
+  attr(prepared, "source_cohort_n") <- source_cohort_n
+  attr(prepared, "analytical_cohort_n") <- nrow(prepared)
   attr(prepared, "outcome_eligible_n") <- nrow(prepared)
+  attr(prepared, "cohort_definition") <- if (established_only) {
+    "seedling-sampled conditions with at least one live sugar-maple TREE record at least 5 inches DBH"
+  } else {
+    "all seedling-sampled northern-hardwood conditions"
+  }
+  attr(prepared, "maple_exposure_definition") <- if (established_only) {
+    "frame-corrected basal area of live sugar-maple TREE records at least 5 inches DBH"
+  } else {
+    "frame-corrected basal area of all live sugar-maple TREE records at least 1 inch DBH"
+  }
   prepared
 }
 
 model_scaling_specifications <- function() {
   list(
-    z_maple_ba = list(raw = "maple_ba_ft2_ac", transformation = "log1p", transform = log1p),
+    z_maple_ba = list(raw = "focal_maple_ba_ft2_ac", transformation = "log1p", transform = log1p),
     z_nonmaple_ba = list(raw = "nonmaple_ba_ft2_ac", transformation = "log1p", transform = log1p),
     z_microplot_coverage = list(raw = "microplot_coverage", transformation = "identity", transform = identity),
     z_stand_age = list(raw = "stand_age", transformation = "identity", transform = identity),
@@ -82,8 +102,10 @@ scale_model_predictors <- function(data, terms, cohort_definition = "final model
   list(data = data, audit = dplyr::bind_rows(audit))
 }
 
-choose_model_terms <- function(data, config) {
+choose_model_terms <- function(data, config, include_sapling = FALSE, include_treatment = FALSE) {
   candidate_terms <- c("z_maple_ba", "z_nonmaple_ba", "z_microplot_coverage")
+  if (include_sapling) candidate_terms <- append(candidate_terms, "maple_sapling_present", after = 1L)
+  if (include_treatment) candidate_terms <- c(candidate_terms, "treated")
   optional <- c("z_stand_age", "disturbed", "z_mean_temp", "z_precip", "z_year")
   for (term in optional) {
     x <- data[[term]]
@@ -234,7 +256,7 @@ model_functional_form_comparison <- function(linear_model, spline_model, spline_
   )
 }
 
-summarize_model_diagnostics <- function(model, spline_df = 3L) {
+summarize_model_diagnostics <- function(model, nonlinear_maple = TRUE, spline_df = 3L) {
   variance_table <- as.data.frame(lme4::VarCorr(model))
   county_variance <- variance_table$vcov[variance_table$grp == "geoid"][[1]]
   gradient <- model@optinfo$derivs$gradient %||% NA_real_
@@ -247,24 +269,35 @@ summarize_model_diagnostics <- function(model, spline_df = 3L) {
     county_latent_scale_icc = county_variance / (county_variance + pi^2 / 3),
     max_absolute_optimizer_gradient = max(abs(gradient), na.rm = TRUE),
     random_effect_structure = "county random intercept",
-    maple_function = sprintf(
-      "natural spline of standardized log1p basal area (df = %d)",
-      as.integer(spline_df)
-    )
+    maple_function = if (nonlinear_maple) {
+      sprintf("natural spline of standardized log1p basal area (df = %d)", as.integer(spline_df))
+    } else {
+      "linear standardized log1p basal area"
+    }
   )
 }
 
-fit_regeneration_model <- function(data, config, spline_df = 3L) {
+fit_regeneration_model <- function(
+    data,
+    config,
+    spline_df = 3L,
+    nonlinear_maple = TRUE,
+    include_sapling = FALSE,
+    include_treatment = FALSE,
+    cohort_label = "Full seedling-sampled cohort") {
   analytical_cohort_n <- attr(data, "analytical_cohort_n") %||% nrow(data)
   outcome_eligible_n <- attr(data, "outcome_eligible_n") %||% nrow(data)
-  terms <- choose_model_terms(data, config)
+  source_cohort_n <- attr(data, "source_cohort_n") %||% analytical_cohort_n
+  cohort_definition <- attr(data, "cohort_definition") %||% cohort_label
+  maple_exposure_definition <- attr(data, "maple_exposure_definition") %||% "frame-corrected sugar-maple basal area"
+  terms <- choose_model_terms(data, config, include_sapling, include_treatment)
   repeat {
-    parameter_count <- length(terms) + spline_df - 1L
+    parameter_count <- length(terms) + if (nonlinear_maple) spline_df - 1L else 0L
     complete_unscaled <- data[
       stats::complete.cases(data[c("outcome_no_seedlings", terms, "geoid")]),
       , drop = FALSE
     ]
-    scaled <- scale_model_predictors(complete_unscaled, terms)
+    scaled <- scale_model_predictors(complete_unscaled, terms, cohort_definition)
     complete <- scaled$data
     support <- model_support_summary(
       complete,
@@ -284,14 +317,16 @@ fit_regeneration_model <- function(data, config, spline_df = 3L) {
   linear_formula <- paste("outcome_no_seedlings ~", fixed_effect_rhs(terms, FALSE, spline_df))
   spline_attempt <- fit_mixed_logistic(spline_formula, complete)
   linear_attempt <- fit_mixed_logistic(linear_formula, complete)
-  if (is.null(spline_attempt) || !isTRUE(spline_attempt$converged)) stop("The prespecified county-level nonlinear mixed model did not converge.", call. = FALSE)
-  if (isTRUE(spline_attempt$singular)) stop("The prespecified county random intercept was singular.", call. = FALSE)
+  if (is.null(spline_attempt) || !isTRUE(spline_attempt$converged)) stop("The nonlinear functional-form comparison model did not converge.", call. = FALSE)
   if (is.null(linear_attempt) || !isTRUE(linear_attempt$converged)) stop("The linear functional-form comparison model did not converge.", call. = FALSE)
 
-  fit <- spline_attempt$model
+  selected_attempt <- if (nonlinear_maple) spline_attempt else linear_attempt
+  if (isTRUE(selected_attempt$singular)) stop("The prespecified county random intercept was singular.", call. = FALSE)
+  fit <- selected_attempt$model
+  selected_formula <- if (nonlinear_maple) spline_formula else linear_formula
   plot_candidate_supported <- support$multi_condition_plot_visits >= config$analysis$minimum_groups_for_random_effect
   county_plot_attempt <- if (plot_candidate_supported) {
-    fit_mixed_logistic(spline_formula, complete, c("(1 | geoid)", "(1 | plt_cn)"))
+    fit_mixed_logistic(selected_formula, complete, c("(1 | geoid)", "(1 | plt_cn)"))
   } else {
     NULL
   }
@@ -302,18 +337,27 @@ fit_regeneration_model <- function(data, config, spline_df = 3L) {
   }
   conditional_predictions <- stats::predict(fit, type = "response")
   population_predictions <- stats::predict(fit, type = "response", re.form = NA)
-  diagnostics <- summarize_model_diagnostics(fit, spline_df)
-  comparison <- model_functional_form_comparison(linear_attempt$model, fit, spline_df)
+  diagnostics <- summarize_model_diagnostics(fit, nonlinear_maple, spline_df)
+  comparison <- model_functional_form_comparison(linear_attempt$model, spline_attempt$model, spline_df) |>
+    dplyr::mutate(selected = if (nonlinear_maple) grepl("Natural spline", .data$model) else .data$model == "Linear maple term")
   support$model_type <- "mixed-effects logistic regression"
+  support$source_cohort_n <- source_cohort_n
+  support$cohort_label <- cohort_label
+  support$cohort_definition <- cohort_definition
+  support$maple_exposure_definition <- maple_exposure_definition
   support$random_effect_used <- TRUE
   support$county_random_effect_used <- TRUE
   support$plot_random_effect_used <- FALSE
   support$random_effect_structure <- "county random intercept"
-  support$model_formula <- paste(spline_formula, "+ (1 | geoid)")
-  support$maple_function <- sprintf("natural spline of standardized log1p basal area (df = %d)", spline_df)
-  support$maple_spline_df <- spline_df
-  support$converged <- spline_attempt$converged
-  support$singular <- spline_attempt$singular
+  support$model_formula <- paste(selected_formula, "+ (1 | geoid)")
+  support$maple_function <- if (nonlinear_maple) {
+    sprintf("natural spline of standardized log1p basal area (df = %d)", spline_df)
+  } else {
+    "linear standardized log1p basal area"
+  }
+  support$maple_spline_df <- if (nonlinear_maple) spline_df else NA_integer_
+  support$converged <- selected_attempt$converged
+  support$singular <- selected_attempt$singular
   support$in_sample_brier_conditional <- mean((complete$outcome_no_seedlings - conditional_predictions)^2)
   support$in_sample_brier_fixed_effects_only <- mean((complete$outcome_no_seedlings - population_predictions)^2)
   support$brier_score <- support$in_sample_brier_conditional
@@ -335,11 +379,14 @@ fit_regeneration_model <- function(data, config, spline_df = 3L) {
     functional_form_comparison = comparison,
     random_structure_comparison = random_comparison,
     scaling_audit = scaled$audit,
-    terms = terms, spline_df = spline_df
+    terms = terms, spline_df = spline_df, nonlinear_maple = nonlinear_maple,
+    include_sapling = include_sapling, include_treatment = include_treatment,
+    cohort_label = cohort_label, cohort_definition = cohort_definition,
+    maple_exposure_definition = maple_exposure_definition
   )
 }
 
-tidy_odds_ratios <- function(model, level = 0.95) {
+tidy_odds_ratios <- function(model, level = 0.95, maple_label = "Sugar-maple basal area") {
   coefficients <- as.data.frame(stats::coef(summary(model)))
   coefficients$term <- rownames(coefficients)
   rownames(coefficients) <- NULL
@@ -347,10 +394,13 @@ tidy_odds_ratios <- function(model, level = 0.95) {
   p_value_name <- intersect(c("Pr(>|z|)", "Pr(>|t|)"), names(coefficients))[[1]]
   critical <- stats::qnorm(1 - (1 - level) / 2)
   labels <- c(
+    z_maple_ba = maple_label,
+    maple_sapling_presentTRUE = "Sugar-maple saplings present",
     z_nonmaple_ba = "Non-maple basal area",
     z_microplot_coverage = "Microplot condition coverage",
     z_stand_age = "Stand age",
     disturbedTRUE = "Recorded disturbance",
+    treatedTRUE = "Recorded treatment",
     z_mean_temp = "Mean annual temperature",
     z_precip = "Annual precipitation",
     z_year = "Measurement year"
@@ -368,13 +418,17 @@ tidy_odds_ratios <- function(model, level = 0.95) {
       label = dplyr::coalesce(unname(labels[.data$term]), .data$term),
       interpretation = "Adjusted odds ratio for no sugar-maple seedlings tallied; continuous effects are per 1 SD",
       inference_method = "Wald 95% confidence interval",
-      maple_effect_note = "The nonlinear sugar-maple association is reported as a prediction curve, not a single odds ratio"
+      maple_effect_note = ifelse(
+        grepl("ns\\(z_maple_ba", .data$term),
+        "The nonlinear sugar-maple association is reported as a prediction curve, not a single odds ratio",
+        NA_character_
+      )
     )
 }
 
 fixed_effect_inference_sensitivity <- function(fit, odds_ratios, level = 0.95) {
   formula <- stats::as.formula(
-    paste("outcome_no_seedlings ~", fixed_effect_rhs(fit$terms, TRUE, fit$spline_df))
+    paste("outcome_no_seedlings ~", fixed_effect_rhs(fit$terms, fit$nonlinear_maple, fit$spline_df))
   )
   sensitivity_model <- stats::glm(formula, family = stats::binomial(), data = fit$data)
   design <- stats::model.matrix(sensitivity_model)
@@ -422,24 +476,31 @@ fixed_effect_inference_sensitivity <- function(fit, odds_ratios, level = 0.95) {
     )
 }
 
-maple_effect_curve <- function(fit, points = 160L, level = 0.95) {
+maple_effect_curve <- function(fit, points = 160L, level = 0.95, vary_sapling = fit$include_sapling) {
   model <- fit$model
   data <- fit$data
-  observed <- data$maple_ba_ft2_ac[is.finite(data$maple_ba_ft2_ac)]
+  observed <- data$focal_maple_ba_ft2_ac[is.finite(data$focal_maple_ba_ft2_ac)]
+  lower <- if (min(observed, na.rm = TRUE) > 0) min(observed, na.rm = TRUE) else 0
   upper <- as.numeric(stats::quantile(observed, 0.99, names = FALSE, type = 8))
-  grid <- expm1(seq(0, log1p(upper), length.out = points))
+  grid <- expm1(seq(log1p(lower), log1p(upper), length.out = points))
   log_center <- mean(data$log_maple_ba, na.rm = TRUE)
   log_scale <- stats::sd(data$log_maple_ba, na.rm = TRUE)
 
-  newdata <- data[rep(1L, length(grid)), , drop = FALSE]
+  sapling_values <- if (isTRUE(vary_sapling) && "maple_sapling_present" %in% fit$terms) c(FALSE, TRUE) else FALSE
+  newdata <- data[rep(1L, length(grid) * length(sapling_values)), , drop = FALSE]
+  newdata$focal_maple_ba_ft2_ac <- rep(grid, times = length(sapling_values))
+  newdata$maple_sapling_present <- factor(
+    rep(sapling_values, each = length(grid)),
+    levels = levels(data$maple_sapling_present)
+  )
   numeric_adjusters <- intersect(
     c("z_nonmaple_ba", "z_microplot_coverage", "z_stand_age", "z_mean_temp", "z_precip", "z_year"),
     fit$terms
   )
   for (term in numeric_adjusters) newdata[[term]] <- 0
   if ("disturbed" %in% fit$terms) newdata$disturbed <- factor(FALSE, levels = levels(data$disturbed))
-  newdata$maple_ba_ft2_ac <- grid
-  newdata$log_maple_ba <- log1p(grid)
+  if ("treated" %in% fit$terms) newdata$treated <- factor(FALSE, levels = levels(data$treated))
+  newdata$log_maple_ba <- log1p(newdata$focal_maple_ba_ft2_ac)
   newdata$z_maple_ba <- (newdata$log_maple_ba - log_center) / log_scale
 
   design <- stats::model.matrix(stats::delete.response(stats::terms(model)), newdata)
@@ -450,16 +511,166 @@ maple_effect_curve <- function(fit, points = 160L, level = 0.95) {
   standard_error <- sqrt(rowSums((design %*% covariance) * design))
   critical <- stats::qnorm(1 - (1 - level) / 2)
   tibble::tibble(
-    maple_ba_ft2_ac = grid, log1p_maple_ba = log1p(grid), z_maple_ba = newdata$z_maple_ba,
-    spline_df = fit$spline_df,
+    focal_maple_ba_ft2_ac = newdata$focal_maple_ba_ft2_ac,
+    maple_ba_ft2_ac = newdata$focal_maple_ba_ft2_ac,
+    log1p_maple_ba = newdata$log_maple_ba,
+    z_maple_ba = newdata$z_maple_ba,
+    maple_sapling_present = as.character(newdata$maple_sapling_present),
+    spline_df = if (fit$nonlinear_maple) fit$spline_df else NA_integer_,
+    nonlinear_maple = fit$nonlinear_maple,
+    cohort_label = fit$cohort_label,
+    maple_exposure_definition = fit$maple_exposure_definition,
     predicted_probability = stats::plogis(linear_predictor),
     conf_low = stats::plogis(linear_predictor - critical * standard_error),
     conf_high = stats::plogis(linear_predictor + critical * standard_error),
     prediction_scale = "probability of no sugar-maple seedlings tallied",
-    covariate_profile = "continuous adjusters at their means; no recorded disturbance; county random effect set to zero",
+    covariate_profile = "continuous adjusters at their means; no recorded disturbance or treatment; county random effect set to zero",
     inference_method = "pointwise Wald 95% confidence interval",
-    observed_range_note = "curve restricted to zero through the observed 99th percentile of sugar-maple basal area"
+    observed_range_note = "curve restricted to the observed minimum through the observed 99th percentile of the cohort-specific sugar-maple exposure"
   )
+}
+
+sapling_form_comparison <- function(fit) {
+  data <- fit$data
+  base_terms <- setdiff(fit$terms, "maple_sapling_present")
+  positive <- data$maple_sapling_ba_ft2_ac > 0
+  log_amount <- log1p(data$maple_sapling_ba_ft2_ac)
+  positive_center <- mean(log_amount[positive])
+  positive_scale <- stats::sd(log_amount[positive])
+  data$z_maple_sapling_ba <- scale_predictor(log_amount)
+  data$z_positive_sapling_ba <- ifelse(
+    positive,
+    (log_amount - positive_center) / positive_scale,
+    0
+  )
+  specifications <- list(
+    "No sapling-stage term" = base_terms,
+    "Continuous sapling basal area" = append(base_terms, "z_maple_sapling_ba", after = 1L),
+    "Binary sapling presence" = append(base_terms, "maple_sapling_present", after = 1L),
+    "Presence plus positive amount" = append(
+      append(base_terms, "maple_sapling_present", after = 1L),
+      "z_positive_sapling_ba",
+      after = 2L
+    )
+  )
+  attempts <- lapply(specifications, function(terms) {
+    fixed <- paste("outcome_no_seedlings ~", fixed_effect_rhs(terms, fit$nonlinear_maple, fit$spline_df))
+    fit_mixed_logistic(fixed, data)
+  })
+  if (any(vapply(attempts, is.null, logical(1)))) {
+    stop("At least one sapling-stage candidate model failed.", call. = FALSE)
+  }
+  no_sapling <- attempts[["No sapling-stage term"]]$model
+  binary <- attempts[["Binary sapling presence"]]$model
+  binary_lrt <- stats::anova(no_sapling, binary, test = "Chisq")
+  binary_lrt_row <- binary_lrt[nrow(binary_lrt), , drop = FALSE]
+  dplyr::bind_rows(lapply(names(attempts), function(name) {
+    candidate_model <- attempts[[name]]$model
+    coefficients <- as.data.frame(stats::coef(summary(candidate_model)))
+    reported_term <- if (name == "Continuous sapling basal area") {
+      "z_maple_sapling_ba"
+    } else if (name %in% c("Binary sapling presence", "Presence plus positive amount")) {
+      "maple_sapling_presentTRUE"
+    } else {
+      NA_character_
+    }
+    estimate <- if (!is.na(reported_term) && reported_term %in% rownames(coefficients)) coefficients[reported_term, "Estimate"] else NA_real_
+    standard_error <- if (!is.na(reported_term) && reported_term %in% rownames(coefficients)) coefficients[reported_term, "Std. Error"] else NA_real_
+    p_column <- intersect(c("Pr(>|z|)", "Pr(>|t|)"), names(coefficients))[[1]]
+    p_value <- if (!is.na(reported_term) && reported_term %in% rownames(coefficients)) coefficients[reported_term, p_column] else NA_real_
+    tibble::tibble(
+      model = name,
+      observations = stats::nobs(candidate_model),
+      aic = stats::AIC(candidate_model),
+      delta_aic = stats::AIC(candidate_model) - min(vapply(attempts, function(x) stats::AIC(x$model), numeric(1))),
+      reported_term = reported_term,
+      odds_ratio = exp(estimate),
+      conf_low = exp(estimate - 1.96 * standard_error),
+      conf_high = exp(estimate + 1.96 * standard_error),
+      wald_p_value = p_value,
+      binary_vs_none_lrt_p_value = if (name == "Binary sapling presence") {
+        as.numeric(binary_lrt_row[["Pr(>Chisq)"]])
+      } else {
+        NA_real_
+      },
+      selected = name == "Binary sapling presence",
+      selection_note = if (name == "Binary sapling presence") {
+        "Selected: best AIC and direct ecological interpretation; positive amount adds no useful fit"
+      } else {
+        "Comparison candidate"
+      }
+    )
+  }))
+}
+
+forest_type_sensitivity <- function(fit, core_type = "801", level = 0.95) {
+  fixed_rhs <- fixed_effect_rhs(fit$terms, fit$nonlinear_maple, fit$spline_df)
+  type_attempt <- fit_mixed_logistic(
+    paste("outcome_no_seedlings ~", fixed_rhs, "+ forest_type_code"),
+    fit$data
+  )
+  if (is.null(type_attempt) || !isTRUE(type_attempt$converged)) {
+    stop("The forest-type sensitivity model did not converge.", call. = FALSE)
+  }
+  type_lrt <- stats::anova(fit$model, type_attempt$model, test = "Chisq")
+  type_lrt_row <- type_lrt[nrow(type_lrt), , drop = FALSE]
+
+  core_data <- droplevels(fit$data[as.character(fit$data$forest_type_code) == core_type, , drop = FALSE])
+  core_attempt <- fit_mixed_logistic(paste("outcome_no_seedlings ~", fixed_rhs), core_data)
+  if (is.null(core_attempt) || !isTRUE(core_attempt$converged)) {
+    stop("The core forest-type sensitivity model did not converge.", call. = FALSE)
+  }
+  extract_maple <- function(model) {
+    coefficients <- as.data.frame(stats::coef(summary(model)))
+    if (!"z_maple_ba" %in% rownames(coefficients)) return(c(NA_real_, NA_real_, NA_real_, NA_real_))
+    estimate <- coefficients["z_maple_ba", "Estimate"]
+    standard_error <- coefficients["z_maple_ba", "Std. Error"]
+    p_column <- intersect(c("Pr(>|z|)", "Pr(>|t|)"), names(coefficients))[[1]]
+    c(
+      odds_ratio = exp(estimate),
+      conf_low = exp(estimate - stats::qnorm(1 - (1 - level) / 2) * standard_error),
+      conf_high = exp(estimate + stats::qnorm(1 - (1 - level) / 2) * standard_error),
+      p_value = coefficients["z_maple_ba", p_column]
+    )
+  }
+  main_maple <- extract_maple(fit$model)
+  core_maple <- extract_maple(core_attempt$model)
+  tibble::tibble(
+    analysis = c("Primary established-tree cohort", "Add forest-type indicators", paste("Restrict to forest type", core_type)),
+    observations = c(stats::nobs(fit$model), stats::nobs(type_attempt$model), stats::nobs(core_attempt$model)),
+    events_no_seedlings = c(
+      sum(fit$data$outcome_no_seedlings == 1L),
+      sum(fit$data$outcome_no_seedlings == 1L),
+      sum(core_data$outcome_no_seedlings == 1L)
+    ),
+    aic = c(stats::AIC(fit$model), stats::AIC(type_attempt$model), stats::AIC(core_attempt$model)),
+    omnibus_lrt_p_value = c(NA_real_, as.numeric(type_lrt_row[["Pr(>Chisq)"]]), NA_real_),
+    maple_odds_ratio = c(main_maple[["odds_ratio"]], NA_real_, core_maple[["odds_ratio"]]),
+    maple_conf_low = c(main_maple[["conf_low"]], NA_real_, core_maple[["conf_low"]]),
+    maple_conf_high = c(main_maple[["conf_high"]], NA_real_, core_maple[["conf_high"]]),
+    maple_wald_p_value = c(main_maple[["p_value"]], NA_real_, core_maple[["p_value"]]),
+    interpretation = c(
+      "Primary specification",
+      "Omnibus adjustment sensitivity; sparse forest-type cells limit coefficient interpretation",
+      "Direction and precision check in the dominant sugar maple/beech/yellow birch type"
+    )
+  )
+}
+
+cohort_continuity_summary <- function(primary_data) {
+  primary_data |>
+    dplyr::group_by(.data$maple_sapling_present) |>
+    dplyr::summarise(
+      observations = dplyr::n(),
+      no_seedlings = sum(.data$outcome_no_seedlings == 1L),
+      seedlings_detected = sum(.data$outcome_no_seedlings == 0L),
+      no_seedling_fraction = mean(.data$outcome_no_seedlings == 1L),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      maple_sapling_present = as.character(.data$maple_sapling_present),
+      denominator_note = "conditions with demonstrated seedling sampling and at least one live sugar-maple tree at least 5 inches DBH"
+    )
 }
 
 binary_auc <- function(observed, predicted) {
@@ -532,7 +743,7 @@ county_grouped_cross_validation <- function(fit, k = 10L) {
   record_fold <- unname(fold_lookup[as.character(data$geoid)])
   predictions <- vector("list", max(assignments$fold))
   fold_metrics <- vector("list", max(assignments$fold))
-  fixed_formula <- paste("outcome_no_seedlings ~", fixed_effect_rhs(fit$terms, TRUE, fit$spline_df))
+  fixed_formula <- paste("outcome_no_seedlings ~", fixed_effect_rhs(fit$terms, fit$nonlinear_maple, fit$spline_df))
 
   for (fold in seq_len(max(assignments$fold))) {
     training <- data[record_fold != fold, , drop = FALSE]
@@ -550,7 +761,7 @@ county_grouped_cross_validation <- function(fit, k = 10L) {
       plt_cn = testing$plt_cn, condid = testing$condid, geoid = as.character(testing$geoid),
       fold = fold, observed = testing$outcome_no_seedlings,
       predicted_probability = as.numeric(predicted),
-      prediction_method = "held-out county; training-fold scaling and spline; fixed effects only (county random effect set to zero)"
+      prediction_method = "held-out county; training-fold transformations; fixed effects only (county random effect set to zero)"
     )
     fold_metrics[[fold]] <- tibble::tibble(
       fold = fold, observations = nrow(testing), events = sum(testing$outcome_no_seedlings == 1L),

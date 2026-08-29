@@ -1,0 +1,4 @@
+analysis,observations,events_no_seedlings,aic,omnibus_lrt_p_value,maple_odds_ratio,maple_conf_low,maple_conf_high,maple_wald_p_value,interpretation
+Primary established-tree cohort,1072,333,1087.0410291642133,NA,0.9012670465910811,0.7499198370774001,1.083158824597373,0.2677303638063777,Primary specification
+Add forest-type indicators,1072,333,1090.9077698053416,0.5452135278620142,NA,NA,NA,NA,Omnibus adjustment sensitivity; sparse forest-type cells limit coefficient interpretation
+Restrict to forest type 801,728,207,726.8356766168406,NA,0.931105058513161,0.7355211389682006,1.1786970952391334,0.5529448140332414,Direction and precision check in the dominant sugar maple/beech/yellow birch type

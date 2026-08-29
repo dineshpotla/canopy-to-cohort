@@ -1,5 +1,5 @@
 metric,value,ideal_value,validation_design,prediction_method,observations,counties,folds
-Brier score,0.1794540004589852,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
-ROC AUC,0.7932404525169492,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
-Calibration intercept,-0.19317947120554124,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
-Calibration slope,0.9010612976652473,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1424,78,10
+Brier score,0.1769861397082108,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1072,66,10
+ROC AUC,0.7492431538439658,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1072,66,10
+Calibration intercept,-0.10622671560226139,0,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1072,66,10
+Calibration slope,0.8885211592826473,1,deterministic 10-fold cross-validation grouped by county,transformations learned in each training fold; held-out counties predicted with fixed effects only; no county effect transferred,1072,66,10

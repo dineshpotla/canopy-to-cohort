@@ -1,0 +1,6 @@
+cohort_step,observations,rule
+All northern-hardwood conditions,1457,FIA maple/beech/birch forest-type group
+Seedling-sampled conditions,1424,demonstrated microplot sampling opportunity
+Primary established-tree cohort,1072,at least one live sugar-maple TREE record with DBH at least 5 inches
+Primary cohort with maple saplings,569,at least one live sugar-maple TREE record with DBH 1 to 4.9 inches
+Primary cohort without maple saplings,503,no live sugar-maple TREE record with DBH 1 to 4.9 inches

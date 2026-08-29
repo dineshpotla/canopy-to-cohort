@@ -34,9 +34,9 @@ to that grain before they are joined, preventing many-to-many row inflation.
 | `seedling_sampled` | logical | `TRUE` only when `micrprop_unadj > 0`. An absent seedling record may become zero only under this condition. |
 | `stand_age` | years | FIA stand-age estimate (`STDAGE`). Missing values remain missing and are never silently imputed. |
 | `disturbed` | logical | `TRUE` when any of `DSTRBCD1`–`DSTRBCD3` contains a positive disturbance code. |
-| `treated` | logical | `TRUE` when any of `TRTCD1`–`TRTCD3` contains a positive treatment code. Retained for context but not used in the supported primary model. |
+| `treated` | logical | `TRUE` when any of `TRTCD1`–`TRTCD3` contains a positive treatment code. Included as an observational primary-model covariate; it is not a causal management effect. |
 
-## Established-tree metrics
+## Live-tree and size-class metrics
 
 Live trees have `STATUSCD = 1`. Sugar maple is resolved from `REF_SPECIES` as
 *Acer saccharum*, FIA species code 318. For tree \(i\), the plot-basis basal-area
@@ -50,8 +50,14 @@ contribution is
 |---|---|---|
 | `total_ba_ft2_ac` | ft²/acre | Sum of frame-corrected live-tree contributions: microplot records divide by `micrprop_unadj`, subplot records by `subpprop_unadj`, and applicable macroplot records by `macrprop_unadj`. |
 | `maple_ba_ft2_ac` | ft²/acre | Sugar-maple component of the frame-corrected live-tree density. |
+| `maple_sapling_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of live sugar-maple TREE records with DBH 1–4.9 inches. |
+| `maple_sapling_present` | logical | `TRUE` when at least one live sugar-maple TREE record has DBH 1–4.9 inches. The primary model uses this intermediate-cohort indicator. |
+| `overstory_total_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of all live TREE records with DBH ≥ 5 inches. |
+| `established_maple_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of live sugar-maple TREE records with DBH ≥ 5 inches. This is the primary continuous maple exposure. |
 | `nonmaple_ba_ft2_ac` | ft²/acre | `total_ba_ft2_ac - maple_ba_ft2_ac`, bounded below at zero. |
 | `maple_ba_share` | proportion | Frame-corrected sugar-maple basal area divided by frame-corrected total live-tree basal area. |
+| `established_maple_ba_share` | proportion | `established_maple_ba_ft2_ac / overstory_total_ba_ft2_ac`, with zero assigned when no live DBH ≥ 5-inch tree basal area is present. Used only for the descriptive gap screen. |
+| `established_maple_records` | count | Number of live sugar-maple TREE records with DBH ≥ 5 inches. The primary cohort requires at least one. |
 
 The derived total is checked against FIA `COND.BALIVE`; the pipeline enforces
 strict correlation and absolute-error gates that detect use of a wrong sampling
@@ -65,9 +71,9 @@ frame. Implementation:
 | `maple_seedling_tpa` | trees/acre | Sugar-maple seedling `TPA_UNADJ` summed on the plot basis and divided by `micrprop_unadj`. `NA` when seedling sampling was not demonstrated. |
 | `maple_seedling_detected` | 0 / 1 / `NA` | `1` when a sampled condition has positive sugar-maple seedling density; `0` when sampled but none were tallied; `NA` when sampling opportunity is unknown. |
 | `outcome_no_seedlings` | 0 / 1 | Primary model response: `1 - maple_seedling_detected`. It means “no seedlings tallied,” not confirmed ecological absence. |
-| `established_percentile` | 0–1 | Sample percentile of `maple_ba_share` among conditions with usable seedling sampling. |
+| `established_percentile` | 0–1 | Sample percentile of `established_maple_ba_share` among conditions with usable seedling sampling. |
 | `regeneration_percentile` | 0–1 | Sample percentile of `log(1 + maple_seedling_tpa)` among usable conditions. |
-| `potential_gap` | logical | `TRUE` when `maple_ba_share` is at or above the sample upper-third threshold and no sugar-maple seedlings were tallied. Exploratory, not a validated ecological index. |
+| `potential_gap` | logical | `TRUE` when `established_maple_ba_share` is at or above the sample upper-third threshold and no sugar-maple seedlings were tallied. Exploratory, not a validated ecological index. |
 | `potential_gap_sensitivity` | logical | Alternative flag using the upper-quartile established-share threshold. |
 
 Implementation: [`R/regeneration.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/regeneration.R)
@@ -89,16 +95,18 @@ Implementation: [`R/climate.R`](https://github.com/dineshpotla/canopy-to-cohort/
 ## Model transformations
 
 Continuous predictors are standardized after defining the final model-complete
-cohort, so one standardized unit refers to the fitted 1,424-condition cohort.
+cohort, so one standardized unit refers to the fitted 1,072-condition primary cohort.
 Basal-area predictors are transformed with `log(1 + x)` before standardization.
 The scaling means, standard deviations, transformations, and cohort size are
 published as a separate audit table.
 
 | Model field | Source and transformation |
 |---|---|
-| `z_maple_ba` | standardized `log(1 + maple_ba_ft2_ac)`; modeled with a three-degree-of-freedom natural spline |
+| `z_maple_ba` | standardized `log(1 + established_maple_ba_ft2_ac)` in the primary model; retained as a linear term after functional-form comparison |
+| `maple_sapling_present` | factor with `FALSE` as the reference level |
 | `z_nonmaple_ba` | standardized `log(1 + nonmaple_ba_ft2_ac)` |
 | `z_microplot_coverage` | standardized `micrprop_unadj` |
+| `treated` | factor with `FALSE` as the reference level |
 | `z_stand_age` | standardized `stand_age` |
 | `disturbed` | factor with `FALSE` as the reference level |
 | `z_mean_temp` | standardized `mean_annual_temp_c` |
@@ -106,14 +114,18 @@ published as a separate audit table.
 | `z_year` | standardized `measyear` |
 
 The supported release model is a mixed-effects logistic regression with a
-county random intercept. It reports the nonlinear maple association as an
-adjusted probability curve rather than interpreting spline-basis coefficients.
-Ten-fold internal grouped validation holds out whole counties, relearns
+county random intercept. It separates established-tree basal area from
+sugar-maple sapling presence and reports adjusted probability profiles by
+sapling state. Ten-fold internal grouped validation holds out whole counties, relearns
 transformations within each training fold, and predicts held-out counties with
 fixed effects only. Conventional coefficient inference is supplemented by
 Benjamini–Hochberg adjusted p-values and a county-cluster CR1 sensitivity
 analysis. Model construction and support gates are in
 [`R/models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/models.R).
+
+The contextual full-cohort baseline uses standardized `log(1 + maple_ba_ft2_ac)`
+with a three-degree-of-freedom natural spline. It is not the primary inferential
+model because the exposure combines saplings and established trees.
 
 ## Interpretation boundaries
 
@@ -121,6 +133,7 @@ analysis. Model construction and support gates are in
 - Zeros are assigned only when the relevant sampling opportunity is demonstrated.
 - Exact FIA plot locations are confidential. Public FIADB coordinates may be approximate; this analysis neither uses nor infers them, relying only on county identifiers.
 - Gap flags and fitted associations are exploratory and are not causal or design-based prevalence estimates.
+- The primary size classes are observed at one measurement; they do not estimate longitudinal transition probabilities.
 - County Wilson intervals are unweighted binomial reference intervals. They ignore FIA survey design and within-county clustering and are descriptive rather than inferential county estimates.
 
 See [Analysis decisions](analysis-decisions.md) for the complete decision log.

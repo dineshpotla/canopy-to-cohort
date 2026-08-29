@@ -1,3 +1,3 @@
-model,maple_function,fixed_effect_parameters,estimated_fixed_coefficients_including_intercept,log_likelihood,aic,bic,likelihood_ratio_chisq,likelihood_ratio_df,likelihood_ratio_p_value,comparison_note
-Linear maple term,linear standardized log1p basal area,8,9,-720.0137338921623,1460.0274677843247,1512.6397187040438,NA,NA,NA,Reference model
-Natural spline maple term (df = 3),natural spline of standardized log1p basal area,10,11,-712.6395763791419,1449.2791527582838,1512.4138538619468,14.748315026040927,2,6.272549300144922e-4,Likelihood-ratio test against the nested linear maple specification
+model,maple_function,fixed_effect_parameters,estimated_fixed_coefficients_including_intercept,log_likelihood,aic,bic,likelihood_ratio_chisq,likelihood_ratio_df,likelihood_ratio_p_value,comparison_note,selected
+Linear maple term,linear standardized log1p basal area,10,11,-531.5205145821067,1087.0410291642133,1146.7684052637824,NA,NA,NA,Reference model,TRUE
+Natural spline maple term (df = 2),natural spline of standardized log1p basal area,11,12,-531.3073641934741,1088.6147283869482,1153.319385828148,0.426300777265169,1,0.5138097055627423,Likelihood-ratio test against the nested linear maple specification,FALSE

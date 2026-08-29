@@ -38,14 +38,21 @@ analysis <- conditions |>
     dplyr::across(
       dplyr::any_of(c(
         "total_ba_plot_basis", "maple_ba_plot_basis", "total_ba_ft2_ac",
-        "maple_ba_ft2_ac", "nonmaple_ba_ft2_ac", "maple_ba_share", "live_tree_records"
+        "maple_ba_ft2_ac", "nonmaple_ba_ft2_ac", "maple_ba_share", "live_tree_records",
+        "maple_sapling_ba_plot_basis", "maple_sapling_ba_ft2_ac", "maple_sapling_records",
+        "overstory_total_ba_plot_basis", "established_maple_ba_plot_basis",
+        "overstory_total_ba_ft2_ac", "established_maple_ba_ft2_ac",
+        "other_live_ba_ft2_ac", "established_maple_ba_share",
+        "overstory_tree_records", "established_maple_records"
       )),
       ~ dplyr::coalesce(.x, 0)
-    )
+    ),
+    maple_sapling_present = .data$maple_sapling_records > 0
   )
 
 assert_unique_key(analysis, c("plt_cn", "condid"), "FIA analytical data")
 assert_range(analysis$maple_ba_share, 0, 1, label = "maple basal-area share")
+assert_range(analysis$established_maple_ba_share, 0, 1, label = "established maple basal-area share")
 assert_range(analysis$maple_seedling_tpa, 0, Inf, label = "maple seedling density")
 save_rds_atomic(analysis, project_path("data", "processed", "fia_plot_condition.rds"))
 
@@ -101,6 +108,8 @@ check_sample <- analysis |>
   dplyr::select(dplyr::all_of(c(
     "plt_cn", "condid", "forest_type", "condprop_unadj", "micrprop_unadj",
     "total_ba_ft2_ac", "maple_ba_ft2_ac", "maple_ba_share",
+    "maple_sapling_ba_ft2_ac", "maple_sapling_present",
+    "overstory_total_ba_ft2_ac", "established_maple_ba_ft2_ac", "established_maple_ba_share",
     "maple_seedling_tpa", "maple_seedling_detected"
   ))) |>
   dplyr::arrange(.data$plt_cn, .data$condid)

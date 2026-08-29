@@ -1,12 +1,13 @@
 source(project_path("R", "models.R"))
 
-testthat::test_that("the v1.2 fixed-effect specification uses a nonlinear maple term", {
-  terms <- c("z_maple_ba", "z_nonmaple_ba", "z_stand_age")
+testthat::test_that("model formulas support selected linear and contextual nonlinear maple terms", {
+  terms <- c("z_maple_ba", "maple_sapling_present", "z_nonmaple_ba")
   nonlinear <- fixed_effect_rhs(terms, nonlinear_maple = TRUE, spline_df = 3L)
-  linear <- fixed_effect_rhs(terms, nonlinear_maple = FALSE, spline_df = 3L)
+  linear <- fixed_effect_rhs(terms, nonlinear_maple = FALSE, spline_df = 2L)
   testthat::expect_match(nonlinear, "splines::ns\\(z_maple_ba, df = 3\\)")
   testthat::expect_false(grepl("splines::ns", linear, fixed = TRUE))
   testthat::expect_match(linear, "z_maple_ba")
+  testthat::expect_match(linear, "maple_sapling_present")
 })
 
 testthat::test_that("county fold allocation is deterministic and prevents county leakage", {
@@ -33,20 +34,20 @@ testthat::test_that("binary AUC handles exact separation and tied rankings", {
 
 testthat::test_that("held-out records use training-fold transformations", {
   training <- tibble::tibble(
-    maple_ba_ft2_ac = c(0, 1, 3, 7),
+    focal_maple_ba_ft2_ac = c(1, 3, 7, 15),
     nonmaple_ba_ft2_ac = c(1, 2, 4, 8),
     z_maple_ba = NA_real_, z_nonmaple_ba = NA_real_,
     log_maple_ba = NA_real_
   )
   testing <- tibble::tibble(
-    maple_ba_ft2_ac = 15, nonmaple_ba_ft2_ac = 16,
+    focal_maple_ba_ft2_ac = 31, nonmaple_ba_ft2_ac = 16,
     z_maple_ba = NA_real_, z_nonmaple_ba = NA_real_, log_maple_ba = NA_real_
   )
   scaled <- apply_training_fold_scaling(training, testing, c("z_maple_ba", "z_nonmaple_ba"))
   testthat::expect_equal(mean(scaled$training$z_maple_ba), 0, tolerance = 1e-12)
   testthat::expect_equal(stats::sd(scaled$training$z_maple_ba), 1, tolerance = 1e-12)
-  expected <- (log1p(15) - mean(log1p(training$maple_ba_ft2_ac))) /
-    stats::sd(log1p(training$maple_ba_ft2_ac))
+  expected <- (log1p(31) - mean(log1p(training$focal_maple_ba_ft2_ac))) /
+    stats::sd(log1p(training$focal_maple_ba_ft2_ac))
   testthat::expect_equal(scaled$testing$z_maple_ba, expected)
 })
 
