@@ -812,6 +812,11 @@ body.report-page div[id^="fig-"] > figure {
   padding: clamp(0.75rem, 2vw, 1.25rem);
 }
 
+body.report-page [id^="fig-"],
+body.report-page [id^="tbl-"] {
+  scroll-margin-top: 5rem;
+}
+
 body.report-page figure img {
   border-radius: 0.55rem;
 }

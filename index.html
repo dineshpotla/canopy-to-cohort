@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta name="description" content="A size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation.">
 
 <title>Canopy to Cohort</title>
 <style>
@@ -79,13 +79,13 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Canopy to Cohort">
-<meta property="og:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta property="og:description" content="A size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation.">
 <meta property="og:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
 <meta property="og:site_name" content="Canopy to Cohort">
 <meta property="og:image:height" content="1984">
 <meta property="og:image:width" content="2720">
 <meta name="twitter:title" content="Canopy to Cohort">
-<meta name="twitter:description" content="A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.">
+<meta name="twitter:description" content="A size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation.">
 <meta name="twitter:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/03_regeneration_quadrant.png">
 <meta name="twitter:image-height" content="1984">
 <meta name="twitter:image-width" content="2720">
@@ -307,10 +307,10 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page">
       <h1 class="title">Canopy to Cohort</h1>
-            <p class="subtitle lead">Detecting exploratory sugar maple regeneration gaps in Michigan northern hardwood forests</p>
+            <p class="subtitle lead">Tracing established trees, saplings, and seedlings in Michigan northern hardwood forests</p>
                   <div>
         <div class="description">
-          A reproducible R analysis of sugar maple regeneration gaps in Michigan northern hardwood forests using FIA, Daymet, GIS, and mixed-effects modeling.
+          A size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation.
         </div>
       </div>
                 </div>
@@ -339,16 +339,16 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="columns landing-hero">
 <div class="column" style="width:46%;">
-<section id="a-forest-can-keep-its-canopy-while-losing-its-next-cohort" class="level2">
-<h2 class="anchored" data-anchor-id="a-forest-can-keep-its-canopy-while-losing-its-next-cohort">A forest can keep its canopy while losing its next cohort</h2>
-<p>This project asks where contemporary Michigan FIA observations combine substantial established sugar maple with no sugar-maple seedlings tallied, and which measured stand and broad climate characteristics accompany that mismatch.</p>
+<section id="a-forest-can-keep-mature-trees-while-losing-continuity-between-cohorts" class="level2">
+<h2 class="anchored" data-anchor-id="a-forest-can-keep-mature-trees-while-losing-continuity-between-cohorts">A forest can keep mature trees while losing continuity between cohorts</h2>
+<p>This project separates FIA’s established trees, saplings, and seedlings, then tests which stand, management, and broad climate characteristics accompany seedling non-detection.</p>
 <p><a href="./report/index.html" class="btn btn-primary btn-lg">Read the research report</a> <a href="./docs/analysis-decisions.html" class="btn btn-outline-secondary btn-lg">Review analysis decisions</a></p>
 </section>
 </div><div class="column" style="width:54%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="outputs/figures/03_regeneration_quadrant.png" class="img-fluid figure-img" alt="Scatterplot of sugar maple basal-area share against seedling density, highlighting sampled conditions that meet the exploratory regeneration-gap screen."></p>
-<figcaption>Established sugar-maple basal-area share versus observed seedling density.</figcaption>
+<p><img src="outputs/figures/03_regeneration_quadrant.png" class="img-fluid figure-img" alt="Positive sugar-maple seedling tallies appear above a lower strip that counts zero tallies by established-tree-share bins."></p>
+<figcaption>Established-tree share, positive seedling tallies, and a count-aware strip of zero tallies.</figcaption>
 </figure>
 </div>
 </div>
@@ -373,15 +373,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="stat-card">
 <div class="stat-number">
-<p>119</p>
+<p>1,072</p>
 </div>
-<p>Exploratory potential gaps</p>
+<p>Primary cohort conditions</p>
 </div>
 <div class="stat-card">
 <div class="stat-number">
-<p>78</p>
+<p>0.749</p>
 </div>
-<p>Michigan counties represented</p>
+<p>County-held-out ROC AUC</p>
 </div>
 </div>
 </section>
@@ -413,14 +413,14 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="workflow-index">04 · Estimate</span></p>
 <section id="model-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="model-clustering">Model clustering</h3>
-<p>1,424 outcomes support a county random intercept and a nonlinear established-maple response.</p>
+<p>1,072 outcomes support a county random intercept, an established-tree term, and a separate sapling-stage indicator.</p>
 </section>
 </div>
 <div class="workflow-card">
 <p><span class="workflow-index">05 · Validate</span></p>
 <section id="publish-evidence" class="level3">
 <h3 class="anchored" data-anchor-id="publish-evidence">Publish evidence</h3>
-<p>County-held-out validation (Brier 0.179; AUC 0.793), join audits, source hashes, diagnostics, and threshold sensitivity accompany the report.</p>
+<p>County-held-out validation (Brier 0.177; AUC 0.749), join audits, source hashes, diagnostics, functional-form comparisons, and sensitivity analyses accompany the report.</p>
 </section>
 </div>
 </div>
@@ -430,8 +430,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="what-the-analysis-found" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-analysis-found">What the analysis found</h2>
-<p>Sugar-maple seedlings were tallied in <strong>57.2%</strong> of sampled conditions. The upper-third screen flagged <strong>8.4%</strong> as potential gaps. In the adjusted mixed-effects logistic regression, the established-maple relationship was nonlinear: at the stated reference profile, predicted non-detection fell from <strong>82% at 0 ft²/acre</strong> to <strong>35% at 25 ft²/acre</strong>, then leveled off.</p>
-<p>That is an association, not a causal effect. The screen is sample-relative, a seedling zero means “not tallied” rather than confirmed ecological absence, and county climate values are broad proxies.</p>
+<p>Within the established-tree cohort, raw seedling non-detection was <strong>45.7% without sugar-maple saplings</strong> and <strong>18.1% with them</strong>. After adjustment, sapling presence was associated with <strong>67% lower odds</strong> of a zero seedling tally (OR 0.33, 95% CI 0.24–0.45).</p>
+<p>That is a cross-sectional association, not a transition or causal effect. A seedling zero means “not tallied” rather than confirmed ecological absence, and county climate values are broad proxies.</p>
 <div class="columns feature-row">
 <div class="column" style="width:50%;">
 <section id="built-for-auditability" class="level3">
@@ -453,7 +453,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="research-artifact" class="level2">
 <h2 class="anchored" data-anchor-id="research-artifact">Research artifact</h2>
-<p>The report documents the pinned 2025 current evaluation (inventory window 2019–2025; assigned measurement records 2018–2025), cohort construction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.</p>
+<p>The report documents the pinned 2025 current evaluation (inventory window 2019–2025; assigned measurement records 2018–2025), cohort construction, size-class correction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.</p>
 <p><a href="./report/index.html" class="report-link">Open the complete report →</a></p>
 
 
