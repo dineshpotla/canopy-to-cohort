@@ -109,9 +109,9 @@ curve_with_saplings <- curve_at(reference_ba, TRUE)
 ::: {.report-opening-copy}
 [Michigan · Northern hardwoods · 2025 current evaluation · measurements 2018–2025]{.report-eyebrow}
 
-[A mature tree is only one stage of forest continuity.]{.report-deck}
+[Mature sugar maples do not guarantee the next generation.]{.report-deck}
 
-This study separates FIA size classes to ask whether established sugar maple, the sapling stage, management records, and environmental context accompany seedling detection.
+In Michigan northern hardwoods where larger sugar-maple trees are already present, this study asks a simple question: what distinguishes places where survey crews recorded maple seedlings from places where they recorded none?
 
 ::: {.report-tags}
 [FIA relational data]{.report-tag} [size-class ecology]{.report-tag} [mixed-effects modeling]{.report-tag} [county-held-out validation]{.report-tag}
@@ -145,29 +145,29 @@ counties in the primary model
 ::::
 
 :::: {.report-stat .report-stat-accent}
-[**`r sprintf("%.3f", cv_metric("ROC AUC"))`**]{.report-stat-value}
+[**`r scales::percent(1 - with_saplings$no_seedling_fraction, accuracy = 0.1)`**]{.report-stat-value}
 
-county-held-out ROC AUC
+seedlings recorded when saplings were present
 ::::
 :::::
 
 ::: {.headline-result .column-page}
-[Primary adjusted finding]{.headline-result-label}
+[Bottom line]{.headline-result-label}
 
-**Conditions with sugar-maple saplings had `r scales::percent(1 - sapling_effect$estimate, accuracy = 1)` lower adjusted odds of a zero seedling tally** than conditions without sugar-maple saplings (OR `r sprintf("%.2f", sapling_effect$estimate)`, 95% CI `r sprintf("%.2f", sapling_effect$conf.low)`–`r sprintf("%.2f", sapling_effect$conf.high)`). Established-tree basal area alone had a smaller, uncertain association after the size classes were separated.
+**Survey crews recorded sugar-maple seedlings in `r scales::percent(1 - with_saplings$no_seedling_fraction, accuracy = 0.1)` of sampled forest areas with maple saplings, compared with `r scales::percent(1 - without_saplings$no_seedling_fraction, accuracy = 0.1)` where saplings were missing.** The difference remained strong after accounting for other measured stand and county characteristics. The amount of larger sugar maple alone did not clearly predict whether seedlings were recorded.
 :::
 
 ## Abstract {.unnumbered}
 
-This reproducible study analyzes `r scales::comma(summary$plot_conditions)` plot-condition measurements from Michigan FIA's maple/beech/birch forest-type group. The primary inferential cohort requires demonstrated seedling sampling and at least one live sugar-maple TREE record with diameter at breast height (DBH) of 5 inches or more, leaving `r scales::comma(support$model_complete_n)` conditions across `r support$counties` counties. It separates established-tree basal area (DBH ≥ 5 inches), sapling presence (DBH 1–4.9 inches), and seedling detection. In raw comparisons, seedling non-detection was `r scales::percent(without_saplings$no_seedling_fraction, accuracy = 0.1)` without sugar-maple saplings and `r scales::percent(with_saplings$no_seedling_fraction, accuracy = 0.1)` with them. In a county random-intercept logistic model, sapling presence remained strongly associated with lower non-detection odds, whereas established-tree basal area alone was not independently precise. Deterministic 10-fold validation held out entire counties and produced a Brier score of `r sprintf("%.3f", cv_metric("Brier score"))` and ROC AUC of `r sprintf("%.3f", cv_metric("ROC AUC"))`. A full-cohort nonlinear model is retained only as context because it combines sapling basal area with established trees and therefore mixes species absence with regeneration continuity. Results are cross-sectional sample associations, not FIA population estimates, transitions, or causal effects.
+This reproducible study examines `r scales::comma(summary$plot_conditions)` Michigan FIA measurements from northern-hardwood forest types. Among the `r scales::comma(support$model_complete_n)` eligible forest areas with larger sugar-maple trees, survey crews recorded maple seedlings in `r scales::percent(1 - with_saplings$no_seedling_fraction, accuracy = 0.1)` of areas with maple saplings and `r scales::percent(1 - without_saplings$no_seedling_fraction, accuracy = 0.1)` of areas without them. After accounting for other measured stand and county characteristics, sapling presence remained the clearest signal that seedlings would also be recorded. The amount of larger sugar maple alone was inconclusive once the sapling stage was considered separately. A model tested on entirely held-out counties captured a useful but imperfect broad pattern (Brier score `r sprintf("%.3f", cv_metric("Brier score"))`; ROC AUC `r sprintf("%.3f", cv_metric("ROC AUC"))`). These are associations observed at one measurement, not statewide estimates, changes through time, or proof that management, climate, or competition caused the differences.
 
 ## Research question
 
-Northern hardwood stands may retain established sugar maple while younger size classes are sparse. A single all-size basal-area variable can hide that structure because FIA TREE records include both 1–4.9-inch saplings and trees at least 5 inches DBH. The analysis therefore asks:
+Northern hardwood forests can retain large sugar-maple trees even when younger generations are sparse. Here, “saplings” are young trees 1–4.9 inches in diameter, while “larger trees” are at least 5 inches in diameter. The analysis therefore asks:
 
-> Among seedling-sampled Michigan northern-hardwood conditions with established sugar maple, which stand, cohort, management, and broad climate characteristics are associated with a zero sugar-maple seedling tally?
+> Among surveyed Michigan northern-hardwood areas that already contain larger sugar-maple trees, what characteristics distinguish places where crews recorded maple seedlings from places where they recorded none?
 
-The direction is deliberately bounded. It studies contemporary cohort continuity, not seedling-to-canopy survival through time.
+This is a snapshot of which size classes occur together. It does not follow individual seedlings as they grow into saplings or mature trees.
 
 ## Data and population
 
@@ -317,35 +317,35 @@ Model-based Wald intervals are accompanied by a fixed-effect logistic sensitivit
 
 ::::: {.finding-grid .column-page}
 :::: {.finding-card .finding-card-primary}
-[Sapling continuity]{.finding-label}
+[Seedlings recorded]{.finding-label}
 
-[**`r sprintf("OR %.2f", sapling_effect$estimate)`**]{.finding-value}
+[**`r scales::percent(1 - with_saplings$no_seedling_fraction, accuracy = 0.1)` vs `r scales::percent(1 - without_saplings$no_seedling_fraction, accuracy = 0.1)`**]{.finding-value}
 
-adjusted non-detection odds with sugar-maple saplings present; 95% CI `r sprintf("%.2f–%.2f", sapling_effect$conf.low, sapling_effect$conf.high)`.
+with versus without sugar-maple saplings, before accounting for other differences.
 ::::
 
 :::: {.finding-card}
-[Established trees]{.finding-label}
+[Larger trees alone]{.finding-label}
 
-[**`r sprintf("OR %.2f", established_effect$estimate)`**]{.finding-value}
+[**No clear link**]{.finding-value .finding-value-text}
 
-per SD of log established-tree basal area; the 95% CI crosses one.
+Having more large sugar maple did not clearly indicate whether seedlings would be recorded.
 ::::
 
 :::: {.finding-card}
-[Recorded treatment]{.finding-label}
+[Potential warning areas]{.finding-label}
 
-[**`r sprintf("OR %.2f", treatment_effect$estimate)`**]{.finding-value}
+[**About 1 in 11**]{.finding-value .finding-value-text}
 
-observational association; no counterfactual or before-and-after design.
+sampled areas combined a high share of larger sugar maple with no seedlings recorded.
 ::::
 
 :::: {.finding-card}
-[County validation]{.finding-label}
+[Recorded management]{.finding-label}
 
-[**`r sprintf("AUC %.3f", cv_metric("ROC AUC"))`**]{.finding-value}
+[**A promising lead**]{.finding-value .finding-value-text}
 
-with Brier score `r sprintf("%.3f", cv_metric("Brier score"))` in held-out counties.
+This pattern suggests a follow-up question, not proof that management caused better regeneration.
 ::::
 :::::
 
@@ -366,7 +366,7 @@ knitr::include_graphics(c(
 ))
 ```
 
-### Descriptive canopy-to-seedling mismatch
+### Where larger maple is abundant but seedlings are missing
 
 ```{r}
 #| label: fig-quadrant
@@ -376,9 +376,9 @@ knitr::include_graphics(c(
 knitr::include_graphics(here::here("outputs", "figures", "03_regeneration_quadrant.png"))
 ```
 
-The primary cutoff flagged `r summary$potential_gaps` of `r summary$seedling_sampled` sampled conditions (`r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`). Raising the established-tree-share cutoff to the upper quartile reduced the count to `r thresholds$sensitivity_gap_n` (`r scales::percent(thresholds$sensitivity_gap_fraction, accuracy = 0.1)`), confirming that the flag is useful for triage but not a fixed ecological category.
+Survey crews recorded no sugar-maple seedlings in `r scales::comma(summary$potential_gaps)` of `r scales::comma(summary$seedling_sampled)` sampled forest areas that also had a high share of larger sugar maple. That is `r scales::percent(summary$potential_gap_fraction, accuracy = 0.1)`, or approximately 1 in 11 areas. These are useful places for closer follow-up, but the flag does not prove that regeneration has failed. A stricter definition reduced the count to `r scales::comma(thresholds$sensitivity_gap_n)` (`r scales::percent(thresholds$sensitivity_gap_fraction, accuracy = 0.1)`), showing that the total depends on where the screening threshold is set.
 
-### Cohort continuity
+### Seedlings and saplings occur together
 
 ```{r}
 #| label: tbl-continuity
@@ -386,17 +386,17 @@ The primary cutoff flagged `r summary$potential_gaps` of `r summary$seedling_sam
 continuity_table <- continuity |>
   dplyr::transmute(
     `Sugar-maple saplings` = dplyr::if_else(.data$maple_sapling_present, "Present", "Absent"),
-    Conditions = scales::comma(.data$observations),
-    `Zero tallies` = scales::comma(.data$no_seedlings),
-    `Seedling detections` = scales::comma(.data$seedlings_detected),
-    `Zero-tally fraction` = scales::percent(.data$no_seedling_fraction, accuracy = 0.1)
+    `Surveyed areas` = scales::comma(.data$observations),
+    `No seedlings recorded` = scales::comma(.data$no_seedlings),
+    `Seedlings recorded` = scales::comma(.data$seedlings_detected),
+    `Share with no seedlings` = scales::percent(.data$no_seedling_fraction, accuracy = 0.1)
   )
 knitr::kable(continuity_table, align = c("l", "r", "r", "r", "r"))
 ```
 
-The raw contrast is substantial: `r scales::percent(without_saplings$no_seedling_fraction, accuracy = 0.1)` non-detection without sugar-maple saplings versus `r scales::percent(with_saplings$no_seedling_fraction, accuracy = 0.1)` with them. This is a same-measurement cohort pattern, not an observed transition through time.
+Seedlings were recorded in `r scales::percent(1 - with_saplings$no_seedling_fraction, accuracy = 0.1)` of areas with sugar-maple saplings, compared with `r scales::percent(1 - without_saplings$no_seedling_fraction, accuracy = 0.1)` of areas without them. Seedlings and saplings were measured at the same visit, so this is evidence that the two life stages occur together, not proof that observed seedlings later grew into saplings.
 
-### Adjusted associations
+### What remained after accounting for other differences
 
 ```{r}
 #| label: fig-effects
@@ -406,7 +406,7 @@ The raw contrast is substantial: `r scales::percent(without_saplings$no_seedling
 knitr::include_graphics(here::here("outputs", "figures", "04_model_effects.png"))
 ```
 
-At 25 ft²/acre of established sugar-maple basal area and the stated reference profile, predicted non-detection was `r scales::percent(curve_without_saplings, accuracy = 1)` without saplings and `r scales::percent(curve_with_saplings, accuracy = 1)` with saplings. The line separation represents the model's sapling-presence coefficient. The gradual within-line slope represents established-tree basal area, whose interval includes no independent association.
+At a representative level of larger sugar-maple abundance, the model estimated that crews would record seedlings in `r scales::percent(1 - curve_with_saplings, accuracy = 1)` of areas with saplings, compared with `r scales::percent(1 - curve_without_saplings, accuracy = 1)` without saplings. The large separation between the lines shows the sapling signal. Their gentle slopes show that adding more large sugar maple did not clearly change the chance of recording seedlings.
 
 ::: {.table-panel .column-page}
 ```{r}
@@ -431,11 +431,11 @@ knitr::kable(effect_table, align = c("l", "r", "r", "r"))
 ```
 :::
 
-Sapling presence remained the clearest continuity signal (OR `r sprintf("%.2f", sapling_effect$estimate)`, 95% CI `r sprintf("%.2f–%.2f", sapling_effect$conf.low, sapling_effect$conf.high)`). Established-tree basal area was weaker after size-class decomposition (OR `r sprintf("%.2f", established_effect$estimate)`, 95% CI `r sprintf("%.2f–%.2f", established_effect$conf.low, established_effect$conf.high)`). Higher non-maple basal area accompanied greater non-detection odds (OR `r sprintf("%.2f", nonmaple_effect$estimate)`), while greater microplot condition coverage accompanied lower odds (OR `r sprintf("%.2f", coverage_effect$estimate)`), reinforcing the importance of sampling opportunity.
+After accounting for the other measured stand and county differences, the main conclusion did not change: areas with sugar-maple saplings were much less likely to have zero seedlings recorded. By contrast, the amount of larger sugar maple remained inconclusive. Areas with more non-maple trees were more likely to have no maple seedlings recorded, although this association does not prove that competition caused the pattern. Sampling coverage also mattered: crews were more likely to encounter seedlings when more of the forest area was represented by sampled microplots.
 
-Recorded treatment was associated with lower non-detection odds (OR `r sprintf("%.2f", treatment_effect$estimate)`, 95% CI `r sprintf("%.2f–%.2f", treatment_effect$conf.low, treatment_effect$conf.high)`). Of `r sum(treatment_summary$observations)` primary-cohort conditions, `r treatment_summary$observations[treatment_summary$treated]` were treatment-flagged. FIA treatment codes summarize heterogeneous recent practices; the most common recorded code was `r tolower(treatment_codes$treatment_label[[1]])` (`r treatment_codes$condition_count[[1]]` conditions). Without a before-and-after design or untreated counterfactual, the coefficient must not be interpreted as a management effect.
+Areas with a recorded management treatment were also less likely to have zero seedlings recorded. Treatment was flagged in `r scales::comma(treatment_summary$observations[treatment_summary$treated])` of the `r scales::comma(sum(treatment_summary$observations))` areas in the primary analysis, and most of those records were broadly classified as `r tolower(treatment_codes$treatment_label[[1]])`. Because this label combines different practices and the same places were not compared before and after treatment, the result is a lead for future research, not evidence that cutting improved regeneration.
 
-The Daymet coefficients describe broad county gradients, not plot-level climate responses. Mean annual temperature had OR `r sprintf("%.2f", temperature_effect$estimate)` (95% CI `r sprintf("%.2f–%.2f", temperature_effect$conf.low, temperature_effect$conf.high)`); precipitation had OR `r sprintf("%.2f", precipitation_effect$estimate)` (95% CI `r sprintf("%.2f–%.2f", precipitation_effect$conf.low, precipitation_effect$conf.high)`).
+In this sample, warmer counties were more likely to have no seedlings recorded after the other measured differences were considered, while the precipitation result was inconclusive. The climate values are broad county averages, so they provide geographic context rather than evidence of a plot-level climate effect.
 
 ### Robustness checks
 
@@ -457,6 +457,8 @@ The binary sapling term outperformed a continuous amount term. Adding positive s
 The county-cluster CR1 sensitivity gave a sapling-presence OR of `r sprintf("%.2f", inference_sensitivity$cluster_robust_odds_ratio[inference_sensitivity$label == "Sugar-maple saplings present"])` (95% CI `r sprintf("%.2f–%.2f", inference_sensitivity$cluster_robust_conf_low[inference_sensitivity$label == "Sugar-maple saplings present"], inference_sensitivity$cluster_robust_conf_high[inference_sensitivity$label == "Sugar-maple saplings present"])`). Forest-type indicators did not improve the primary model in an omnibus test (*p* = `r sprintf("%.3f", forest_omnibus$omnibus_lrt_p_value)`). Restricting to the dominant type 801 left the established-tree direction similar but imprecise (OR `r sprintf("%.2f", forest_core$maple_odds_ratio)`, 95% CI `r sprintf("%.2f–%.2f", forest_core$maple_conf_low, forest_core$maple_conf_high)`). Sparse forest-type cells are not interpreted individually.
 
 ### Model adequacy
+
+The model separated seedling-recorded areas from zero-seedling areas reasonably well when tested on counties that were completely excluded during fitting. That supports the broad pattern, but the model is not accurate enough to predict the outcome of an individual forest stand.
 
 ::::: {.model-audit-grid .column-page}
 :::: {.model-audit-card}
@@ -514,7 +516,7 @@ knitr::include_graphics(here::here("outputs", "figures", "05_county_gap_map.png"
 knitr::include_graphics(here::here("outputs", "figures", "06_county_gap_uncertainty.png"))
 ```
 
-Only `r sum(county$map_supported, na.rm = TRUE)` counties met the minimum of 20 seedling-sampled conditions. Unsupported counties are suppressed rather than assigned unstable fractions. Because only county identifiers are available, the project does not claim a plot-level residual spatial-autocorrelation test.
+Only `r sum(county$map_supported, na.rm = TRUE)` counties had at least 20 seedling-sampled areas, the minimum used for display. The apparent differences should not be treated as county rankings because uncertainty is wide and the summaries are not formal statewide estimates. Counties with less information are shown in gray rather than assigned unstable percentages. Because public FIA data identify only the county, this project does not claim to test fine-scale spatial patterns at actual plot locations.
 
 ## Discussion
 
@@ -522,25 +524,25 @@ Only `r sum(county$map_supported, na.rm = TRUE)` counties met the minimum of 20 
 ::: {.interpretation-card .interpretation-supported}
 [What the evidence supports]{.interpretation-kicker}
 
-- Sugar-maple sapling presence is a strong marker of seedling-stage continuity in the established-tree cohort.
-- Established-tree abundance alone carries limited independent information after the sapling stage is separated.
-- Competition, sampling opportunity, treatment records, and broad county climate add contextual association.
-- The model discriminates reasonably when entire counties are held out.
+- Where larger sugar maples already grow, finding saplings is the clearest sign that seedlings are also being recorded.
+- More large sugar maples alone did not clearly indicate whether seedlings were present.
+- Other trees, sampling coverage, recorded management, and broad climate patterns added secondary clues.
+- The main pattern remained useful when the model was tested on counties it had not seen before.
 :::
 
 ::: {.interpretation-card .interpretation-boundary}
 [What it does not establish]{.interpretation-kicker}
 
-- Seedling-to-sapling or sapling-to-canopy transition probabilities.
-- A causal treatment, climate, canopy, browsing, or competition effect.
-- Statewide prevalence or formal FIA population estimates.
-- Fine-scale spatial mechanisms at confidential FIA plot locations.
+- Which seedlings will survive to become saplings or mature trees.
+- That management, climate, canopy, browsing, or competition caused the observed differences.
+- How common these patterns are across every Michigan forest.
+- Precise local patterns at confidential FIA plot locations.
 :::
 ::::
 
-The most important analytical lesson is the size-class correction. The full-cohort baseline reproduced a steep relationship between all-size sugar-maple basal area and seedling non-detection. That curve looked compelling but partly reflected sugar-maple saplings inside the predictor and conditions with no established sugar maple at all. Separating established trees from the intermediate cohort changed the scientific story: sapling presence, not a steep mature-tree curve, is the clearest cross-sectional signal.
+The most important ecological message is that a mature sugar-maple canopy does not, by itself, demonstrate renewal. An initial analysis appeared to show a strong relationship between total sugar-maple abundance and seedlings, but that measure mixed young saplings with larger trees. Separating the life stages changed the story: sapling presence, not simply having more mature maple, was the clearest sign that seedlings were also present.
 
-That is a more useful resilience result. It identifies a measurable cohort bottleneck and shows how data-engineering choices can alter ecological interpretation. It also suggests a direct next study: repeated FIA condition measurements or field follow-up that observes movement from seedlings to saplings while incorporating browsing, soils, and treatment timing.
+For forest resilience, the practical insight is straightforward: look beyond the canopy and check whether both seedlings and saplings are present. A next study should revisit the same places through time to learn which seedlings survive, while also measuring browsing, soils, competing vegetation, and the timing and type of management.
 
 ## Limitations
 
