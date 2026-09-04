@@ -801,6 +801,11 @@ body.report-page #abstract h2 {
   margin-bottom: 1rem;
 }
 
+.finding-value-text {
+  font-size: 1.72rem;
+  line-height: 1.08;
+}
+
 body.report-page figure.quarto-float-fig,
 body.report-page div[id^="fig-"] > figure {
   background: var(--report-card);

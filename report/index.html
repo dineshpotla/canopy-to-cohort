@@ -463,9 +463,9 @@ window.Quarto = {
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4</span> Results</a>
   <ul class="collapse">
   <li><a href="#study-context" id="toc-study-context" class="nav-link" data-scroll-target="#study-context"><span class="header-section-number">4.1</span> Study context</a></li>
-  <li><a href="#descriptive-canopy-to-seedling-mismatch" id="toc-descriptive-canopy-to-seedling-mismatch" class="nav-link" data-scroll-target="#descriptive-canopy-to-seedling-mismatch"><span class="header-section-number">4.2</span> Descriptive canopy-to-seedling mismatch</a></li>
-  <li><a href="#cohort-continuity" id="toc-cohort-continuity" class="nav-link" data-scroll-target="#cohort-continuity"><span class="header-section-number">4.3</span> Cohort continuity</a></li>
-  <li><a href="#adjusted-associations" id="toc-adjusted-associations" class="nav-link" data-scroll-target="#adjusted-associations"><span class="header-section-number">4.4</span> Adjusted associations</a></li>
+  <li><a href="#where-larger-maple-is-abundant-but-seedlings-are-missing" id="toc-where-larger-maple-is-abundant-but-seedlings-are-missing" class="nav-link" data-scroll-target="#where-larger-maple-is-abundant-but-seedlings-are-missing"><span class="header-section-number">4.2</span> Where larger maple is abundant but seedlings are missing</a></li>
+  <li><a href="#seedlings-and-saplings-occur-together" id="toc-seedlings-and-saplings-occur-together" class="nav-link" data-scroll-target="#seedlings-and-saplings-occur-together"><span class="header-section-number">4.3</span> Seedlings and saplings occur together</a></li>
+  <li><a href="#what-remained-after-accounting-for-other-differences" id="toc-what-remained-after-accounting-for-other-differences" class="nav-link" data-scroll-target="#what-remained-after-accounting-for-other-differences"><span class="header-section-number">4.4</span> What remained after accounting for other differences</a></li>
   <li><a href="#robustness-checks" id="toc-robustness-checks" class="nav-link" data-scroll-target="#robustness-checks"><span class="header-section-number">4.5</span> Robustness checks</a></li>
   <li><a href="#model-adequacy" id="toc-model-adequacy" class="nav-link" data-scroll-target="#model-adequacy"><span class="header-section-number">4.6</span> Model adequacy</a></li>
   <li><a href="#broad-geographic-pattern" id="toc-broad-geographic-pattern" class="nav-link" data-scroll-target="#broad-geographic-pattern"><span class="header-section-number">4.7</span> Broad geographic pattern</a></li>
@@ -488,8 +488,8 @@ window.Quarto = {
 <div class="report-opening column-page">
 <div class="report-opening-copy">
 <p><span class="report-eyebrow">Michigan · Northern hardwoods · 2025 current evaluation · measurements 2018–2025</span></p>
-<p><span class="report-deck">A mature tree is only one stage of forest continuity.</span></p>
-<p>This study separates FIA size classes to ask whether established sugar maple, the sapling stage, management records, and environmental context accompany seedling detection.</p>
+<p><span class="report-deck">Mature sugar maples do not guarantee the next generation.</span></p>
+<p>In Michigan northern hardwoods where larger sugar-maple trees are already present, this study asks a simple question: what distinguishes places where survey crews recorded maple seedlings from places where they recorded none?</p>
 <div class="report-tags">
 <p><span class="report-tag">FIA relational data</span> <span class="report-tag">size-class ecology</span> <span class="report-tag">mixed-effects modeling</span> <span class="report-tag">county-held-out validation</span></p>
 </div>
@@ -513,25 +513,25 @@ window.Quarto = {
 <p>counties in the primary model</p>
 </div>
 <div class="report-stat report-stat-accent">
-<p><span class="report-stat-value"><strong>0.749</strong></span></p>
-<p>county-held-out ROC AUC</p>
+<p><span class="report-stat-value"><strong>81.9%</strong></span></p>
+<p>seedlings recorded when saplings were present</p>
 </div>
 </div>
 <div class="headline-result column-page">
-<p><span class="headline-result-label">Primary adjusted finding</span></p>
-<p><strong>Conditions with sugar-maple saplings had 67% lower adjusted odds of a zero seedling tally</strong> than conditions without sugar-maple saplings (OR 0.33, 95% CI 0.24–0.45). Established-tree basal area alone had a smaller, uncertain association after the size classes were separated.</p>
+<p><span class="headline-result-label">Bottom line</span></p>
+<p><strong>Survey crews recorded sugar-maple seedlings in 81.9% of sampled forest areas with maple saplings, compared with 54.3% where saplings were missing.</strong> The difference remained strong after accounting for other measured stand and county characteristics. The amount of larger sugar maple alone did not clearly predict whether seedlings were recorded.</p>
 </div>
 <section id="abstract" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="abstract">Abstract</h2>
-<p>This reproducible study analyzes 1,457 plot-condition measurements from Michigan FIA’s maple/beech/birch forest-type group. The primary inferential cohort requires demonstrated seedling sampling and at least one live sugar-maple TREE record with diameter at breast height (DBH) of 5 inches or more, leaving 1,072 conditions across 66 counties. It separates established-tree basal area (DBH ≥ 5 inches), sapling presence (DBH 1–4.9 inches), and seedling detection. In raw comparisons, seedling non-detection was 45.7% without sugar-maple saplings and 18.1% with them. In a county random-intercept logistic model, sapling presence remained strongly associated with lower non-detection odds, whereas established-tree basal area alone was not independently precise. Deterministic 10-fold validation held out entire counties and produced a Brier score of 0.177 and ROC AUC of 0.749. A full-cohort nonlinear model is retained only as context because it combines sapling basal area with established trees and therefore mixes species absence with regeneration continuity. Results are cross-sectional sample associations, not FIA population estimates, transitions, or causal effects.</p>
+<p>This reproducible study examines 1,457 Michigan FIA measurements from northern-hardwood forest types. Among the 1,072 eligible forest areas with larger sugar-maple trees, survey crews recorded maple seedlings in 81.9% of areas with maple saplings and 54.3% of areas without them. After accounting for other measured stand and county characteristics, sapling presence remained the clearest signal that seedlings would also be recorded. The amount of larger sugar maple alone was inconclusive once the sapling stage was considered separately. A model tested on entirely held-out counties captured a useful but imperfect broad pattern (Brier score 0.177; ROC AUC 0.749). These are associations observed at one measurement, not statewide estimates, changes through time, or proof that management, climate, or competition caused the differences.</p>
 </section>
 <section id="research-question" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="research-question"><span class="header-section-number">1</span> Research question</h2>
-<p>Northern hardwood stands may retain established sugar maple while younger size classes are sparse. A single all-size basal-area variable can hide that structure because FIA TREE records include both 1–4.9-inch saplings and trees at least 5 inches DBH. The analysis therefore asks:</p>
+<p>Northern hardwood forests can retain large sugar-maple trees even when younger generations are sparse. Here, “saplings” are young trees 1–4.9 inches in diameter, while “larger trees” are at least 5 inches in diameter. The analysis therefore asks:</p>
 <blockquote class="blockquote">
-<p>Among seedling-sampled Michigan northern-hardwood conditions with established sugar maple, which stand, cohort, management, and broad climate characteristics are associated with a zero sugar-maple seedling tally?</p>
+<p>Among surveyed Michigan northern-hardwood areas that already contain larger sugar-maple trees, what characteristics distinguish places where crews recorded maple seedlings from places where they recorded none?</p>
 </blockquote>
-<p>The direction is deliberately bounded. It studies contemporary cohort continuity, not seedling-to-canopy survival through time.</p>
+<p>This is a snapshot of which size classes occur together. It does not follow individual seedlings as they grow into saplings or mature trees.</p>
 </section>
 <section id="data-and-population" class="level2 page-columns page-full" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="data-and-population"><span class="header-section-number">2</span> Data and population</h2>
@@ -746,24 +746,24 @@ Table&nbsp;2: Primary model specification and support.
 <h2 data-number="4" class="anchored" data-anchor-id="results"><span class="header-section-number">4</span> Results</h2>
 <div class="finding-grid column-page">
 <div class="finding-card finding-card-primary">
-<p><span class="finding-label">Sapling continuity</span></p>
-<p><span class="finding-value"><strong>OR 0.33</strong></span></p>
-<p>adjusted non-detection odds with sugar-maple saplings present; 95% CI 0.24–0.45.</p>
+<p><span class="finding-label">Seedlings recorded</span></p>
+<p><span class="finding-value"><strong>81.9% vs 54.3%</strong></span></p>
+<p>with versus without sugar-maple saplings, before accounting for other differences.</p>
 </div>
 <div class="finding-card">
-<p><span class="finding-label">Established trees</span></p>
-<p><span class="finding-value"><strong>OR 0.90</strong></span></p>
-<p>per SD of log established-tree basal area; the 95% CI crosses one.</p>
+<p><span class="finding-label">Larger trees alone</span></p>
+<p><span class="finding-value finding-value-text"><strong>No clear link</strong></span></p>
+<p>Having more large sugar maple did not clearly indicate whether seedlings would be recorded.</p>
 </div>
 <div class="finding-card">
-<p><span class="finding-label">Recorded treatment</span></p>
-<p><span class="finding-value"><strong>OR 0.52</strong></span></p>
-<p>observational association; no counterfactual or before-and-after design.</p>
+<p><span class="finding-label">Potential warning areas</span></p>
+<p><span class="finding-value finding-value-text"><strong>About 1 in 11</strong></span></p>
+<p>sampled areas combined a high share of larger sugar maple with no seedlings recorded.</p>
 </div>
 <div class="finding-card">
-<p><span class="finding-label">County validation</span></p>
-<p><span class="finding-value"><strong>AUC 0.749</strong></span></p>
-<p>with Brier score 0.177 in held-out counties.</p>
+<p><span class="finding-label">Recorded management</span></p>
+<p><span class="finding-value finding-value-text"><strong>A promising lead</strong></span></p>
+<p>This pattern suggests a follow-up question, not proof that management caused better regeneration.</p>
 </div>
 </div>
 <section id="study-context" class="level3 page-columns page-full" data-number="4.1">
@@ -806,8 +806,8 @@ Figure&nbsp;1: Geographic coverage and sampled live-tree composition. Both panel
 </figure>
 </div>
 </section>
-<section id="descriptive-canopy-to-seedling-mismatch" class="level3 page-columns page-full" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="descriptive-canopy-to-seedling-mismatch"><span class="header-section-number">4.2</span> Descriptive canopy-to-seedling mismatch</h3>
+<section id="where-larger-maple-is-abundant-but-seedlings-are-missing" class="level3 page-columns page-full" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="where-larger-maple-is-abundant-but-seedlings-are-missing"><span class="header-section-number">4.2</span> Where larger maple is abundant but seedlings are missing</h3>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-quadrant" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Positive sugar-maple seedling densities rise above a lower count strip of zero tallies. The lower strip highlights high established-tree-share zero tallies in burgundy.">
@@ -822,10 +822,10 @@ Figure&nbsp;2: Established sugar-maple share versus observed seedling density. P
 </div>
 </div>
 </div>
-<p>The primary cutoff flagged 131 of 1424 sampled conditions (9.2%). Raising the established-tree-share cutoff to the upper quartile reduced the count to 102 (7.2%), confirming that the flag is useful for triage but not a fixed ecological category.</p>
+<p>Survey crews recorded no sugar-maple seedlings in 131 of 1,424 sampled forest areas that also had a high share of larger sugar maple. That is 9.2%, or approximately 1 in 11 areas. These are useful places for closer follow-up, but the flag does not prove that regeneration has failed. A stricter definition reduced the count to 102 (7.2%), showing that the total depends on where the screening threshold is set.</p>
 </section>
-<section id="cohort-continuity" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="cohort-continuity"><span class="header-section-number">4.3</span> Cohort continuity</h3>
+<section id="seedlings-and-saplings-occur-together" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="seedlings-and-saplings-occur-together"><span class="header-section-number">4.3</span> Seedlings and saplings occur together</h3>
 <div class="cell">
 <div id="tbl-continuity" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -836,19 +836,19 @@ Table&nbsp;3: Observed seedling outcomes within the established-tree cohort, bef
 <div class="cell-output-display">
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 14%">
+<col style="width: 21%">
+<col style="width: 18%">
 <col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Sugar-maple saplings</th>
-<th style="text-align: right;">Conditions</th>
-<th style="text-align: right;">Zero tallies</th>
-<th style="text-align: right;">Seedling detections</th>
-<th style="text-align: right;">Zero-tally fraction</th>
+<th style="text-align: right;">Surveyed areas</th>
+<th style="text-align: right;">No seedlings recorded</th>
+<th style="text-align: right;">Seedlings recorded</th>
+<th style="text-align: right;">Share with no seedlings</th>
 </tr>
 </thead>
 <tbody>
@@ -873,10 +873,10 @@ Table&nbsp;3: Observed seedling outcomes within the established-tree cohort, bef
 </figure>
 </div>
 </div>
-<p>The raw contrast is substantial: 45.7% non-detection without sugar-maple saplings versus 18.1% with them. This is a same-measurement cohort pattern, not an observed transition through time.</p>
+<p>Seedlings were recorded in 81.9% of areas with sugar-maple saplings, compared with 54.3% of areas without them. Seedlings and saplings were measured at the same visit, so this is evidence that the two life stages occur together, not proof that observed seedlings later grew into saplings.</p>
 </section>
-<section id="adjusted-associations" class="level3 page-columns page-full" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="adjusted-associations"><span class="header-section-number">4.4</span> Adjusted associations</h3>
+<section id="what-remained-after-accounting-for-other-differences" class="level3 page-columns page-full" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="what-remained-after-accounting-for-other-differences"><span class="header-section-number">4.4</span> What remained after accounting for other differences</h3>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-effects" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="The primary panel shows two gently declining adjusted curves, with much lower seedling non-detection when saplings are present. A smaller contextual panel shows a steep nonlinear full-cohort curve that mixes tree size classes.">
@@ -891,7 +891,7 @@ Figure&nbsp;3: Primary and baseline model profiles. The primary panel separates 
 </div>
 </div>
 </div>
-<p>At 25 ft²/acre of established sugar-maple basal area and the stated reference profile, predicted non-detection was 45% without saplings and 21% with saplings. The line separation represents the model’s sapling-presence coefficient. The gradual within-line slope represents established-tree basal area, whose interval includes no independent association.</p>
+<p>At a representative level of larger sugar-maple abundance, the model estimated that crews would record seedlings in 79% of areas with saplings, compared with 55% without saplings. The large separation between the lines shows the sapling signal. Their gentle slopes show that adding more large sugar maple did not clearly change the chance of recording seedlings.</p>
 <div class="table-panel column-page">
 <div class="cell">
 <div id="tbl-effects" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -979,9 +979,9 @@ Table&nbsp;4: Primary mixed-model fixed effects as adjusted odds ratios with mod
 </div>
 </div>
 </div>
-<p>Sapling presence remained the clearest continuity signal (OR 0.33, 95% CI 0.24–0.45). Established-tree basal area was weaker after size-class decomposition (OR 0.90, 95% CI 0.75–1.08). Higher non-maple basal area accompanied greater non-detection odds (OR 1.29), while greater microplot condition coverage accompanied lower odds (OR 0.64), reinforcing the importance of sampling opportunity.</p>
-<p>Recorded treatment was associated with lower non-detection odds (OR 0.52, 95% CI 0.32–0.86). Of 1072 primary-cohort conditions, 151 were treatment-flagged. FIA treatment codes summarize heterogeneous recent practices; the most common recorded code was cutting (149 conditions). Without a before-and-after design or untreated counterfactual, the coefficient must not be interpreted as a management effect.</p>
-<p>The Daymet coefficients describe broad county gradients, not plot-level climate responses. Mean annual temperature had OR 1.73 (95% CI 1.35–2.20); precipitation had OR 0.80 (95% CI 0.62–1.02).</p>
+<p>After accounting for the other measured stand and county differences, the main conclusion did not change: areas with sugar-maple saplings were much less likely to have zero seedlings recorded. By contrast, the amount of larger sugar maple remained inconclusive. Areas with more non-maple trees were more likely to have no maple seedlings recorded, although this association does not prove that competition caused the pattern. Sampling coverage also mattered: crews were more likely to encounter seedlings when more of the forest area was represented by sampled microplots.</p>
+<p>Areas with a recorded management treatment were also less likely to have zero seedlings recorded. Treatment was flagged in 151 of the 1,072 areas in the primary analysis, and most of those records were broadly classified as cutting. Because this label combines different practices and the same places were not compared before and after treatment, the result is a lead for future research, not evidence that cutting improved regeneration.</p>
+<p>In this sample, warmer counties were more likely to have no seedlings recorded after the other measured differences were considered, while the precipitation result was inconclusive. The climate values are broad county averages, so they provide geographic context rather than evidence of a plot-level climate effect.</p>
 </section>
 <section id="robustness-checks" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="robustness-checks"><span class="header-section-number">4.5</span> Robustness checks</h3>
@@ -1039,6 +1039,7 @@ Table&nbsp;5: Alternative representations of the sugar-maple sapling stage. Lowe
 </section>
 <section id="model-adequacy" class="level3 page-columns page-full" data-number="4.6">
 <h3 data-number="4.6" class="anchored" data-anchor-id="model-adequacy"><span class="header-section-number">4.6</span> Model adequacy</h3>
+<p>The model separated seedling-recorded areas from zero-seedling areas reasonably well when tested on counties that were completely excluded during fitting. That supports the broad pattern, but the model is not accurate enough to predict the outcome of an individual forest stand.</p>
 <div class="model-audit-grid column-page">
 <div class="model-audit-card">
 <p><span class="model-audit-value"><strong>Converged</strong></span></p>
@@ -1104,7 +1105,7 @@ Figure&nbsp;6: Unweighted Wilson 95% reference intervals for counties meeting th
 </div>
 </div>
 </div>
-<p>Only 17 counties met the minimum of 20 seedling-sampled conditions. Unsupported counties are suppressed rather than assigned unstable fractions. Because only county identifiers are available, the project does not claim a plot-level residual spatial-autocorrelation test.</p>
+<p>Only 17 counties had at least 20 seedling-sampled areas, the minimum used for display. The apparent differences should not be treated as county rankings because uncertainty is wide and the summaries are not formal statewide estimates. Counties with less information are shown in gray rather than assigned unstable percentages. Because public FIA data identify only the county, this project does not claim to test fine-scale spatial patterns at actual plot locations.</p>
 </section>
 </section>
 <section id="discussion" class="level2 page-columns page-full" data-number="5">
@@ -1113,24 +1114,24 @@ Figure&nbsp;6: Unweighted Wilson 95% reference intervals for counties meeting th
 <div class="interpretation-card interpretation-supported">
 <p><span class="interpretation-kicker">What the evidence supports</span></p>
 <ul>
-<li>Sugar-maple sapling presence is a strong marker of seedling-stage continuity in the established-tree cohort.</li>
-<li>Established-tree abundance alone carries limited independent information after the sapling stage is separated.</li>
-<li>Competition, sampling opportunity, treatment records, and broad county climate add contextual association.</li>
-<li>The model discriminates reasonably when entire counties are held out.</li>
+<li>Where larger sugar maples already grow, finding saplings is the clearest sign that seedlings are also being recorded.</li>
+<li>More large sugar maples alone did not clearly indicate whether seedlings were present.</li>
+<li>Other trees, sampling coverage, recorded management, and broad climate patterns added secondary clues.</li>
+<li>The main pattern remained useful when the model was tested on counties it had not seen before.</li>
 </ul>
 </div>
 <div class="interpretation-card interpretation-boundary">
 <p><span class="interpretation-kicker">What it does not establish</span></p>
 <ul>
-<li>Seedling-to-sapling or sapling-to-canopy transition probabilities.</li>
-<li>A causal treatment, climate, canopy, browsing, or competition effect.</li>
-<li>Statewide prevalence or formal FIA population estimates.</li>
-<li>Fine-scale spatial mechanisms at confidential FIA plot locations.</li>
+<li>Which seedlings will survive to become saplings or mature trees.</li>
+<li>That management, climate, canopy, browsing, or competition caused the observed differences.</li>
+<li>How common these patterns are across every Michigan forest.</li>
+<li>Precise local patterns at confidential FIA plot locations.</li>
 </ul>
 </div>
 </div>
-<p>The most important analytical lesson is the size-class correction. The full-cohort baseline reproduced a steep relationship between all-size sugar-maple basal area and seedling non-detection. That curve looked compelling but partly reflected sugar-maple saplings inside the predictor and conditions with no established sugar maple at all. Separating established trees from the intermediate cohort changed the scientific story: sapling presence, not a steep mature-tree curve, is the clearest cross-sectional signal.</p>
-<p>That is a more useful resilience result. It identifies a measurable cohort bottleneck and shows how data-engineering choices can alter ecological interpretation. It also suggests a direct next study: repeated FIA condition measurements or field follow-up that observes movement from seedlings to saplings while incorporating browsing, soils, and treatment timing.</p>
+<p>The most important ecological message is that a mature sugar-maple canopy does not, by itself, demonstrate renewal. An initial analysis appeared to show a strong relationship between total sugar-maple abundance and seedlings, but that measure mixed young saplings with larger trees. Separating the life stages changed the story: sapling presence, not simply having more mature maple, was the clearest sign that seedlings were also present.</p>
+<p>For forest resilience, the practical insight is straightforward: look beyond the canopy and check whether both seedlings and saplings are present. A next study should revisit the same places through time to learn which seedlings survive, while also measuring browsing, soils, competing vegetation, and the timing and type of management.</p>
 </section>
 <section id="limitations" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="limitations"><span class="header-section-number">6</span> Limitations</h2>
