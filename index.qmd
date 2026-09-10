@@ -116,6 +116,8 @@ It does not claim to follow individual seedlings into individual saplings.
 The [research direction](docs/research-direction.md) explains this progression.
 The [full report](report/recruitment.qmd) places the analysis alongside existing
 FIA research and provides the statistical comparisons, uncertainty, and limitations.
+The [maps and exploratory visuals](report/spatial-context.qmd) preserve the
+county context, earlier size-class figures, and detection-pilot charts.
 
 ## What remains to be tested
 

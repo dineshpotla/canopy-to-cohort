@@ -103,6 +103,7 @@ seedling. These sample results do not establish statewide regeneration rates,
 diagnose why entry was absent, or identify a forest treatment.
 
 [Project overview](../index.qmd) ·
+[Maps and exploratory visuals](spatial-context.qmd) ·
 [Code and aggregate evidence](https://github.com/dineshpotla/canopy-to-cohort)
 :::
 

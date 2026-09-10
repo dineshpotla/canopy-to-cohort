@@ -5,6 +5,7 @@ Michigan northern hardwoods?
 
 [Live project](https://dineshpotla.github.io/canopy-to-cohort/) ·
 [Research report](https://dineshpotla.github.io/canopy-to-cohort/report/recruitment.html) ·
+[Maps and exploratory visuals](https://dineshpotla.github.io/canopy-to-cohort/report/spatial-context.html) ·
 [Research direction and goals](docs/research-direction.md) ·
 [Research evidence](research/README.md)
 

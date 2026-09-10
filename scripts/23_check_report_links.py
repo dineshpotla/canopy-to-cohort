@@ -6,6 +6,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1] / "_site"
 PAGES = ["index.html", "report/index.html", "report/recruitment.html",
+         "report/spatial-context.html",
          "report/ri-audit.html", "report/length-study.html",
          "docs/research-direction.html", "docs/survey-validation-plan.html",
          "docs/analysis-decisions.html", "docs/data-dictionary.html"]

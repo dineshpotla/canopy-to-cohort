@@ -9,6 +9,7 @@ project:
     - index.qmd
     - report/index.qmd
     - report/recruitment.qmd
+    - report/spatial-context.qmd
     - report/ri-audit.qmd
     - report/length-study.qmd
     - docs/research-direction.md
@@ -30,6 +31,8 @@ website:
         text: Overview
       - href: report/recruitment.qmd
         text: Recruitment study
+      - href: report/spatial-context.qmd
+        text: Maps and visuals
       - href: report/index.qmd
         text: Detection pilot
       - href: docs/research-direction.md

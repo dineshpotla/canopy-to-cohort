@@ -104,4 +104,65 @@ save_figure(
   height = 6.8
 )
 
+# The recruitment analysis uses the same county-safe geography, but a different
+# analytical cohort. Keep its map separate from the earlier cross-sectional
+# sample map so the two denominators are never confused.
+recruitment_pairs <- read_required_rds(project_path(
+  "data", "processed", "recruitment_condition_pairs.rds"
+))
+recruitment_summary <- recruitment_pairs |>
+  dplyr::filter(.data$recruitment_eligible) |>
+  dplyr::group_by(.data$geoid, .data$county_name) |>
+  dplyr::summarise(
+    eligible_conditions = dplyr::n(),
+    physical_plots = dplyr::n_distinct(.data$physical_plot_key),
+    recruit_conditions = sum(.data$outcome_recruitment == 1L),
+    .groups = "drop"
+  )
+recruitment_attributes <- counties |>
+  dplyr::left_join(recruitment_summary, by = c("geoid", "county_name")) |>
+  dplyr::mutate(county_key = normalize_county(.data$county_name))
+n_recruitment_counties <- dplyr::n_distinct(recruitment_summary$geoid)
+recruitment_map_data <- ggplot2::map_data("county", region = "michigan") |>
+  dplyr::mutate(county_key = normalize_county(.data$subregion)) |>
+  dplyr::left_join(recruitment_attributes, by = "county_key")
+if (dplyr::n_distinct(recruitment_map_data$county_key[!is.na(recruitment_map_data$geoid)]) != 83L) {
+  stop("Recruitment county polygon join did not match all 83 Michigan counties.", call. = FALSE)
+}
+
+recruitment_map <- ggplot2::ggplot(recruitment_map_data) +
+  ggplot2::geom_polygon(
+    ggplot2::aes(.data$long, .data$lat, group = .data$group, fill = .data$eligible_conditions),
+    colour = "white", linewidth = 0.15
+  ) +
+  ggplot2::scale_fill_viridis_c(option = "C", trans = "sqrt", na.value = "#E8E8E8") +
+  ggplot2::labs(
+    title = paste0(
+      "The recruitment cohort spans ",
+      n_recruitment_counties,
+      " Michigan counties"
+    ),
+    subtitle = paste0(
+      "Eligible condition intervals by county; ",
+      sum(recruitment_summary$eligible_conditions),
+      " intervals on ",
+      dplyr::n_distinct(recruitment_pairs$physical_plot_key[recruitment_pairs$recruitment_eligible]),
+      " physical plots"
+    ),
+    fill = "Eligible\nconditions\n(sqrt scale)",
+    caption = paste(
+      "Gray = no retained recruitment intervals.",
+      "County aggregation uses FIA identifiers only; exact FIA plot coordinates are not used or inferred.",
+      sep = "\n"
+    )
+  ) +
+  ggplot2::coord_quickmap() +
+  theme_canopy() +
+  ggplot2::theme(
+    axis.text = ggplot2::element_blank(),
+    axis.title = ggplot2::element_blank(),
+    panel.grid = ggplot2::element_blank()
+  )
+save_figure(recruitment_map, "07_recruitment_cohort_map.png", width = 7, height = 6.8)
+
 log_step("Spatial summaries complete")
