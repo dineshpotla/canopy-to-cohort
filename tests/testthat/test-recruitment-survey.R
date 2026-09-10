@@ -72,13 +72,22 @@ testthat::test_that("exported survey results reconcile without favoring any poli
   testthat::expect_true(all(result$lower <= result$upper))
   random <- result[result$policy == "Random expectation", ]
   testthat::expect_equal(random$expected_targets, random$random_expected_targets)
-  bundle <- readRDS(file.path(project_root, "outputs", "models", "recruitment-analysis.rds"))
+})
+
+testthat::test_that("survey exports reproduce local held-out predictions", {
+  model_path <- file.path(project_root, "outputs", "models", "recruitment-analysis.rds")
+  summary_path <- file.path(project_root, "outputs", "tables", "recruitment-survey-summary.csv")
+  paired_path <- file.path(project_root, "outputs", "tables", "recruitment-survey-paired-differences.csv")
+  testthat::skip_if_not(all(file.exists(c(model_path, summary_path, paired_path))),
+    "Run recruitment models and survey audit for local prediction checks")
+  result <- readr::read_csv(summary_path, show_col_types = FALSE)
+  paired <- readr::read_csv(paired_path, show_col_types = FALSE)
+  bundle <- readRDS(model_path)
   for (population in names(bundle)) {
     entry <- bundle[[population]]
     actual <- recruitment_survey_evaluate(entry$data, entry$crossfit$predictions)
     exported <- result[result$population == population, ]
     testthat::expect_equal(exported$expected_targets, actual$expected_targets)
-    paired <- readr::read_csv(file.path(project_root, "outputs", "tables", "recruitment-survey-paired-differences.csv"), show_col_types = FALSE)
     selected <- paired[paired$population == population, ]
     calculated <- recruitment_survey_comparisons(actual)
     testthat::expect_equal(selected$target_fraction_difference, calculated$target_fraction_difference)

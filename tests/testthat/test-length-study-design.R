@@ -81,14 +81,21 @@ testthat::test_that("RI opportunity SQL is outcome-free and distinguishes missin
   testthat::expect_error(extract_ri_opportunity_metadata(con, numeric()), "Invalid")
 })
 
-testthat::test_that("planning exports reconcile without changing the audited recruitment cohort", {
+testthat::test_that("planning precision exports retain complete scenario support", {
   f <- file.path(project_root, "outputs", "tables", "recruitment-length-paired-precision.csv")
   testthat::skip_if_not(file.exists(f), "Run make length-plan first")
   x <- readr::read_csv(f, show_col_types = FALSE)
   testthat::expect_equal(nrow(x), 54)
   testthat::expect_true(all(x$candidate_plots_at_assumed_retention >= x$complete_evaluation_plots))
-  d <- readRDS(file.path(project_root, "data", "processed", "length_study_opportunity_metadata.rds"))
-  flow <- readr::read_csv(file.path(project_root, "outputs", "tables", "recruitment-length-opportunity-flow.csv"), show_col_types = FALSE)
+})
+
+testthat::test_that("planning exports reconcile with local opportunity metadata", {
+  metadata_path <- file.path(project_root, "data", "processed", "length_study_opportunity_metadata.rds")
+  flow_path <- file.path(project_root, "outputs", "tables", "recruitment-length-opportunity-flow.csv")
+  testthat::skip_if_not(all(file.exists(c(metadata_path, flow_path))),
+    "Run make length-plan to build local opportunity metadata")
+  d <- readRDS(metadata_path)
+  flow <- readr::read_csv(flow_path, show_col_types = FALSE)
   testthat::expect_equal(flow$baseline_condition_visits[1], dplyr::n_distinct(d$baseline_condition_key))
   testthat::expect_equal(flow$physical_plots[1], dplyr::n_distinct(d$physical_plot_key))
   testthat::expect_false(any(grepl("outcome|new_sapling|reconcile", names(d))))
