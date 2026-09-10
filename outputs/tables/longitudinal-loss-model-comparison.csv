@@ -1,0 +1,5 @@
+model,added_after,observations,slopes,log_likelihood,aic,brier_score,roc_auc,likelihood_ratio_chisq,likelihood_ratio_df,likelihood_ratio_p_value,role,delta_aic
+Prevalence benchmark,NA,677,0,-235.69686117047792,473.39372234095583,0.09851002227657425,0.5,NA,NA,NA,Reference prediction,120.51650765012585
+Starting abundance and observation,Prevalence benchmark,677,3,-175.2278795698721,358.4557591397442,0.07901755691056625,0.8563344407530454,120.93796320121174,3,4.846451697361714e-26,"Starting abundance, sampling opportunity, and elapsed time",5.578544448914215
+Stage structure,Starting abundance and observation,677,6,-171.4859340283908,356.9718680567816,0.07772639662230477,0.8656035437430786,7.483891082962543,3,0.05797380679066168,Adds baseline saplings and stand basal-area structure,4.094653365951615
+Beech hypothesis,Stage structure,677,7,-168.438607345415,352.87721469083,0.07633325159465408,0.8740642303433002,6.094653365951558,1,0.013559152272176732,Primary model; adds the v2 American beech hypothesis specified before final fitting,0

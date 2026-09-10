@@ -4,7 +4,7 @@ required <- c(
   "DBI", "RSQLite", "dplyr", "tidyr", "purrr", "readr", "stringr",
   "ggplot2", "maps", "lme4", "broom", "broom.mixed", "performance",
   "DHARMa", "testthat", "here", "renv", "yaml", "scales", "patchwork",
-  "knitr", "rmarkdown"
+  "knitr", "rmarkdown", "jsonlite"
 )
 
 installed <- rownames(utils::installed.packages())

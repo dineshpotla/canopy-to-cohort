@@ -1,0 +1,12 @@
+season_year,report_number,pdf_pages,appendix_pdf_pages,figure2_mention_pages,dmu_rows,unique_dmu_codes,nonzero_component_differences,component_difference_max_abs,component_differences_above_one,all_zero_rows,numeric_crosscheck_matched_rows,secondary_reader_missing_page_dmu,visually_checked_rows,numeric_transcription_crosscheck,combination_note_conflicts,spatial_join_approved,status
+2008,3499,50,48;49;50,11,98,98,0,0,0,2,98,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2009,3513,50,48;49;50,12,100,100,0,0,0,0,100,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2010,3526,53,51;52;53,12,100,100,0,0,0,2,100,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2011,3548,54,52;53;54,12,100,100,0,0,0,1,100,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2012,3566,56,54;55;56,13,100,100,0,0,0,1,99,55:069,1,secondary_reader_plus_hash_pinned_visual_check,0,False,parsed_not_spatially_harmonized
+2013,3585,55,53;54;55,12,84,84,0,0,0,3,84,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2014,3609,56,54;55;56,13,83,83,43,4,14,2,83,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2015,3621,61,55;56;57,12,86,86,0,0,0,2,86,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2016,3639,63,61;62;63,13,85,85,0,0,0,1,85,,0,all_rows_match,1,False,parsed_not_spatially_harmonized
+2017,3656,73,71;72;73,13,85,85,0,0,0,0,85,,0,all_rows_match,0,False,parsed_not_spatially_harmonized
+2018,3673,74,72;73;74,14,91,91,0,0,0,0,91,,0,all_rows_match,0,False,parsed_not_spatially_harmonized

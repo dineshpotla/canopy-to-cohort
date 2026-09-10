@@ -1,0 +1,6 @@
+screen,conditions,physical_plots,counties,baseline_standard_seedling_detections,conditions_with_recorded_entry,new_saplings,interpretation
+All recruitment-eligible pairs,922,903,66,672,100,169,"Record-presence screen only; RI frame, protocol, measurement timing, and valid zeros not audited"
+Baseline RI plot record,90,87,32,71,14,30,"Record-presence screen only; RI frame, protocol, measurement timing, and valid zeros not audited"
+RI plot records at both visits,90,87,32,71,14,30,"Record-presence screen only; RI frame, protocol, measurement timing, and valid zeros not audited"
+Baseline any-species RI seedling condition record,89,86,32,71,14,30,"Record-presence screen only; RI frame, protocol, measurement timing, and valid zeros not audited"
+Baseline maple RI seedling condition record,81,79,30,71,14,30,"Record-presence screen only; RI frame, protocol, measurement timing, and valid zeros not audited"

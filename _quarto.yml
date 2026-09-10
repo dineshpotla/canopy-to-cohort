@@ -1,15 +1,24 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - research/**
+    - "!research/notes/browse-data-request-draft.md"
+    - docs/recruitment-reproducibility.md
   render:
     - index.qmd
     - report/index.qmd
+    - report/recruitment.qmd
+    - report/ri-audit.qmd
+    - report/length-study.qmd
+    - docs/research-direction.md
+    - docs/survey-validation-plan.md
     - docs/analysis-decisions.md
     - docs/data-dictionary.md
 
 website:
   title: "Canopy to Cohort"
-  description: "Size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation."
+  description: "Sugar-maple recruitment in Michigan FIA: audited sapling entry, linked-stem fates, and held-out comparisons of regeneration indicators."
   site-url: "https://dineshpotla.github.io/canopy-to-cohort/"
   repo-url: "https://github.com/dineshpotla/canopy-to-cohort"
   repo-actions: [source, issue]
@@ -19,8 +28,12 @@ website:
     left:
       - href: index.qmd
         text: Overview
+      - href: report/recruitment.qmd
+        text: Recruitment study
       - href: report/index.qmd
-        text: Research report
+        text: Detection pilot
+      - href: docs/research-direction.md
+        text: Research direction
       - href: docs/analysis-decisions.md
         text: Analysis decisions
       - href: docs/data-dictionary.md

@@ -322,3 +322,161 @@ plot_county_gap_uncertainty <- function(county_summary, minimum_n = 20L) {
       legend.position = "none"
     )
 }
+
+plot_longitudinal_transitions <- function(transition_summary) {
+  required <- c(
+    "seedling_transition", "conditions", "baseline_state",
+    "baseline_state_total", "fraction_within_baseline_state"
+  )
+  missing <- setdiff(required, names(transition_summary))
+  if (length(missing)) {
+    stop("Longitudinal transition summary is missing: ", paste(missing, collapse = ", "), call. = FALSE)
+  }
+  plotted <- transition_summary |>
+    dplyr::mutate(
+      baseline_state = factor(.data$baseline_state, levels = c("Not detected", "Detected")),
+      followup_state = dplyr::if_else(
+        .data$seedling_transition %in% c("Appearance", "Persistence"),
+        "Detected at follow-up",
+        "Not detected at follow-up"
+      ),
+      followup_state = factor(
+        .data$followup_state,
+        levels = c("Detected at follow-up", "Not detected at follow-up")
+      ),
+      count_label = paste0(
+        .data$conditions,
+        "\n(",
+        scales::percent(.data$fraction_within_baseline_state, accuracy = 0.1),
+        ")"
+      )
+    )
+
+  ggplot2::ggplot(
+    plotted,
+    ggplot2::aes(.data$baseline_state, .data$fraction_within_baseline_state, fill = .data$followup_state)
+  ) +
+    ggplot2::geom_col(width = 0.68, colour = "white", linewidth = 0.5) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = .data$count_label),
+      position = ggplot2::position_stack(vjust = 0.5),
+      colour = "white",
+      fontface = "bold",
+      size = 3.6,
+      lineheight = 0.95
+    ) +
+    ggplot2::scale_fill_manual(
+      values = c(
+        "Detected at follow-up" = project_palette[["forest"]],
+        "Not detected at follow-up" = project_palette[["maple"]]
+      ),
+      name = NULL
+    ) +
+    ggplot2::scale_y_continuous(
+      labels = scales::label_percent(accuracy = 1),
+      limits = c(0, 1),
+      expand = ggplot2::expansion(mult = c(0, 0.01))
+    ) +
+    ggplot2::labs(
+      title = "Most seedling-detection states persist across FIA visits",
+      subtitle = "Yet 75 of 677 initially detected conditions became non-detections at follow-up",
+      x = "Sugar-maple seedling state at baseline",
+      y = "Share within baseline state",
+      caption = paste(
+        "932 Michigan northern-hardwood condition pairs; visits separated by approximately 5–8 years.",
+        "Pairs require established sugar maple at baseline, accessible-forest sampling at both visits,",
+        "a bidirectional one-to-one condition link, and at least 90% shared microplot footprint.",
+        "Transitions represent FIA tally detection, not tracked individual seedlings or verified local extinction.",
+        sep = "\n"
+      )
+    ) +
+    theme_canopy()
+}
+
+plot_longitudinal_loss_effects <- function(odds_ratios) {
+  required <- c("label", "odds_ratio", "conf_low", "conf_high")
+  missing <- setdiff(required, names(odds_ratios))
+  if (length(missing)) {
+    stop("Longitudinal odds-ratio table is missing: ", paste(missing, collapse = ", "), call. = FALSE)
+  }
+  plotted <- odds_ratios |>
+    dplyr::mutate(label = stats::reorder(.data$label, .data$odds_ratio))
+  ggplot2::ggplot(plotted, ggplot2::aes(.data$odds_ratio, .data$label)) +
+    ggplot2::geom_vline(xintercept = 1, linetype = 2, colour = "#7A8580") +
+    ggplot2::geom_errorbar(
+      ggplot2::aes(xmin = .data$conf_low, xmax = .data$conf_high),
+      width = 0.16,
+      orientation = "y",
+      linewidth = 0.8,
+      colour = project_palette[["forest"]]
+    ) +
+    ggplot2::geom_point(size = 2.7, colour = project_palette[["maple"]]) +
+    ggplot2::scale_x_log10(
+      breaks = c(0.1, 0.25, 0.5, 1, 2, 4, 8),
+      labels = scales::label_number(accuracy = 0.01)
+    ) +
+    ggplot2::labs(
+      title = "Early-warning signals of seedling non-detection at the next visit",
+      subtitle = "Adjusted odds ratios from the baseline-defined loss model",
+      x = "Odds ratio for loss of detected seedlings (log scale)",
+      y = NULL,
+      caption = paste(
+        "Intervals use county-cluster CR1 uncertainty. Continuous effects are per one standard deviation",
+        "after the stated transformation; sapling presence compares present with absent.",
+        "Associations are prognostic, not causal effects of changing stand structure.",
+        sep = "\n"
+      )
+    ) +
+    theme_canopy(base_size = 10.5) +
+    ggplot2::theme(panel.grid.major.y = ggplot2::element_blank())
+}
+
+plot_longitudinal_risk_strata <- function(risk_strata) {
+  required <- c(
+    "risk_quartile", "conditions", "observed_loss_fraction",
+    "mean_predicted_probability"
+  )
+  missing <- setdiff(required, names(risk_strata))
+  if (length(missing)) {
+    stop("Longitudinal risk-strata table is missing: ", paste(missing, collapse = ", "), call. = FALSE)
+  }
+  plotted <- risk_strata |>
+    dplyr::mutate(
+      risk_quartile = factor(.data$risk_quartile, levels = paste("Quartile", 1:4)),
+      label = paste0(
+        scales::percent(.data$observed_loss_fraction, accuracy = 0.1),
+        "\n(n = ", .data$conditions, ")"
+      )
+    )
+  ggplot2::ggplot(plotted, ggplot2::aes(.data$risk_quartile, .data$observed_loss_fraction)) +
+    ggplot2::geom_col(fill = project_palette[["forest"]], width = 0.66) +
+    ggplot2::geom_point(
+      ggplot2::aes(y = .data$mean_predicted_probability),
+      colour = project_palette[["maple"]],
+      size = 3
+    ) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = .data$label),
+      vjust = -0.35,
+      size = 3.3,
+      colour = project_palette[["ink"]]
+    ) +
+    ggplot2::scale_y_continuous(
+      labels = scales::label_percent(accuracy = 1),
+      limits = c(0, max(plotted$observed_loss_fraction) * 1.25),
+      expand = ggplot2::expansion(mult = c(0, 0.02))
+    ) +
+    ggplot2::labs(
+      title = "Geographically held-out predictions separate low- and high-risk conditions",
+      subtitle = "Bars are observed losses; burgundy points are mean predicted probabilities",
+      x = "Cross-validated predicted-risk quartile",
+      y = "Observed fraction losing seedling detection",
+      caption = paste(
+        "Each county is predicted only by models trained outside that county.",
+        "Quartiles summarize internal validation and are not management intervention thresholds.",
+        sep = "\n"
+      )
+    ) +
+    theme_canopy() +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
+}

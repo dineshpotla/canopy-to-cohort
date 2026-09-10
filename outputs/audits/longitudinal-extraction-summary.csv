@@ -1,0 +1,9 @@
+metric,value,interpretation
+Analytical condition pairs,932,Strict bidirectional one-to-one pairs with at least 90% shared microplot footprint
+Physical plots,913,Stable FIA plot identities represented in the condition-pair cohort
+Counties,66,County identifiers used for geographically grouped validation
+Minimum interval years,5.416666666666667,Elapsed time based on measurement year and month
+Mean interval years,6.983011444921316,Elapsed time based on measurement year and month
+Maximum interval years,8.083333333333334,Elapsed time based on measurement year and month
+Baseline seedling detections,677,Presence of a positive sugar-maple SEEDLING tally at baseline
+Follow-up seedling detections,661,Presence of a positive sugar-maple SEEDLING tally at follow-up

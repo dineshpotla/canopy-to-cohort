@@ -4,6 +4,7 @@
 .Ruserdata
 Rplots.pdf
 *.log
+__pycache__/
 .env
 .env.*
 !.env.example
@@ -57,6 +58,34 @@ outputs/tables/**
 !outputs/tables/model-support.csv
 !outputs/tables/model-treatment-summary.csv
 !outputs/tables/model-treatment-code-summary.csv
+!outputs/tables/longitudinal-cohort-flow.csv
+!outputs/tables/longitudinal-followup-forest-type-sensitivity.csv
+!outputs/tables/longitudinal-transition-summary.csv
+!outputs/tables/longitudinal-loss-scaling-audit.csv
+!outputs/tables/longitudinal-loss-model-support.csv
+!outputs/tables/longitudinal-loss-odds-ratios.csv
+!outputs/tables/longitudinal-loss-model-comparison.csv
+!outputs/tables/longitudinal-loss-diagnostics.csv
+!outputs/tables/longitudinal-loss-random-effect-sensitivity.csv
+!outputs/tables/longitudinal-loss-cross-validation-summary.csv
+!outputs/tables/longitudinal-loss-cross-validation-folds.csv
+!outputs/tables/longitudinal-loss-cross-validation-county-folds.csv
+!outputs/tables/longitudinal-loss-risk-strata.csv
+!outputs/tables/longitudinal-appearance-scaling-audit.csv
+!outputs/tables/longitudinal-appearance-model-support.csv
+!outputs/tables/longitudinal-appearance-odds-ratios.csv
+!outputs/tables/longitudinal-appearance-model-comparison.csv
+!outputs/tables/longitudinal-appearance-diagnostics.csv
+!outputs/tables/longitudinal-appearance-cross-validation-summary.csv
+!outputs/tables/longitudinal-appearance-cross-validation-folds.csv
+!outputs/tables/longitudinal-appearance-cross-validation-county-folds.csv
+!outputs/tables/longitudinal-appearance-risk-strata.csv
+!outputs/tables/recruitment-cohort-flow.csv
+!outputs/tables/recruitment-model-*.csv
+!outputs/tables/recruitment-survey-*.csv
+!outputs/tables/recruitment-ri-*.csv
+!outputs/tables/recruitment-length-*.csv
+!outputs/tables/recruitment-paper-*.csv
 outputs/models/**
 !outputs/models/.gitkeep
 outputs/audits/**
@@ -69,9 +98,20 @@ outputs/audits/**
 !outputs/audits/release-validation.csv
 !outputs/audits/selected-evaluation.csv
 !outputs/audits/tree-extraction-summary.csv
+!outputs/audits/longitudinal-extraction-summary.csv
+!outputs/audits/longitudinal-mapping-audit.csv
+!outputs/audits/research-direction-*.csv
+!outputs/audits/recruitment-feasibility-*.csv
+!outputs/audits/recruitment-*.csv
 
 report/index.html
 report/index_files/
 
 /.quarto/
 **/*.quarto_ipynb
+
+# Manuscript build and page-image QA intermediates remain local.
+outputs/paper/**
+
+# Unsent correspondence is not part of the public research record.
+research/notes/browse-data-request-draft.md

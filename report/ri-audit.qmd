@@ -1,0 +1,296 @@
+---
+title: "Regeneration length classes and measurement feasibility"
+description: "Michigan FIA regeneration-indicator sampling, count reconciliation, and support for a height-information comparison."
+bibliography: references.bib
+toc: true
+format:
+  html:
+    code-tools: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: ri-setup
+read_ri <- function(name) readr::read_csv(here::here("outputs", "tables", paste0("recruitment-ri-", name, ".csv")), show_col_types = FALSE)
+flow <- read_ri("eligibility")
+reconciliation <- read_ri("count-reconciliation")
+zeros <- read_ri("zero-accounting")
+height <- read_ri("height-support")
+classes <- read_ri("length-classes")
+split <- read_ri("split-support")
+precision <- read_ri("precision-reference")
+main <- flow[flow$screen == "Baseline RI available, including date screen", ]
+all_height <- height[height$population == "All RI-available intervals", ]
+tall <- all_height[all_height$group == "RI maple at least five feet present", ]
+short <- all_height[all_height$group == "No RI maple at least five feet recorded", ]
+pct <- function(x) scales::percent(x, accuracy = 0.1)
+```
+
+## Findings and direction
+
+The Michigan regeneration-indicator (RI) records support a descriptive
+measurement study, but not a strong new forecasting claim. The baseline
+sampling and record checks retain `r main$conditions` condition intervals on
+`r main$physical_plots` physical plots, with `r main$events` recruit-bearing
+conditions. The appropriate next scientific question is whether seedling
+length distribution adds information beyond ordinary counts on the same
+sampled area, not whether another stand variable can improve a headline metric.
+
+Taller seedlings provide a plausible lead. Among `r tall$conditions` conditions
+with RI maple seedlings at least five feet long, `r tall$events` had recorded
+new saplings at follow-up; among `r short$conditions` without such seedlings,
+`r short$events` did. This is a retrospective association in an already explored
+sample. It is not a held-out comparison with seedling abundance, proof of
+individual survival, or a management threshold.
+
+The information constraint remains decisive: the existing later-year split
+would provide `r split$events[1]` development events and
+`r split$events[2]` assessment events. No height-class model is fitted. The
+current contribution is a reconciled measurement audit and a more specific
+testable hypothesis; evidence for an operational survey tool remains absent.
+
+## Endpoint and population
+
+The source population is the 922 eligible intervals from the
+[recruitment study](recruitment.qmd#source-and-cohort), not all Michigan forest
+conditions. The outcome remains a new live sugar-maple sapling tally at
+follow-up, using the existing species, diameter, reconciliation, predecessor,
+and shared-sampling checks. No eligibility rule is relaxed to obtain more
+RI records or events.
+
+Baseline RI is a potential predictor. Follow-up RI is a different measurement
+and is not needed to establish baseline length structure when the follow-up
+TREE endpoint is otherwise valid. Requiring RI at both visits would answer a
+narrower question and could discard valid baseline observations. Neither
+condition intervals nor sampled microplots are whole management stands, and
+these results are not statewide, survey-weighted population estimates.
+
+## Sampling and protocol definitions
+
+The database dictionary retires `REGEN_SUBP_STATUS_CD` from inventory year
+2015 and identifies `REGEN_MICR_STATUS_CD` as the status field populated across
+years. Code 1 identifies sampled RI on accessible forest; code 2 is sampled
+but without accessible forest on the microplot. Codes 3-5 are nonsampled and
+code 9 is historically ambiguous. A blank retired field is therefore not a
+reason to reject an otherwise valid code-1 forest sample. Conversely, code 2
+cannot verify RI coverage of a positive forest-condition area.
+[@burrill2025fiadb, sec. 6.2.10 and 6.2.22]
+
+The baseline screen requires RI plot presence, code-1 coverage of every
+contributing condition-microplot slice, consistent subplot identifiers,
+compatible core sampling, and a reconstructed condition area matching the
+existing microplot proportion. RI seedling records must have valid condition
+and subplot-condition foreign keys, species/source/length codes, and counts.
+Duplicate keys stop the calculation; invalid records make the affected plot's
+RI measurements unavailable. Missing species tallies are not zero-filled until
+the measurement frame passes.
+
+The inspected annual supplements specify a May-September RI window and
+established seedlings at least two inches long, below one inch DBH. Length is
+measured along the seedling from base to terminal bud, not necessarily vertical
+height. Counts above five may be estimated. Stump sprouts and suckers from one
+origin are not independent stems; only the tallest qualifying stump sprout is
+tallied. These details limit biological interpretations of the count totals.
+[@nrsri2016, sec. 6.0 and 6.4; @nrsri2018, pp. 18-22]
+
+| RI class | Recorded length | Role in this audit |
+|---|---|---|
+| 1 | 2 to less than 6 inches | Below the ordinary hardwood minimum |
+| 2 | 6 to less than 12 inches | Below the ordinary hardwood minimum |
+| 3 | 1 to less than 3 feet | Ordinary-size comparison |
+| 4 | 3 to less than 5 feet | Ordinary-size comparison |
+| 5 | 5 to less than 10 feet | Prespecified taller group |
+| 6 | At least 10 feet | Prespecified taller group |
+
+The codes agree in the inspected 2016-2018 supplements and the v9.4
+dictionary. Source code 1 denotes other seedlings and code 2 stump sprouts;
+code 3 is reserved for selected large-seeded species, not sugar maple.
+[@nrsri2017, pp. 21-22; @burrill2025fiadb, sec. 6.3.14-16]
+
+The earlier RI technical report documents the same length schema and the
+regional inventory's development. It does not substitute for reading every
+annual field supplement. [@mcwilliams2015ri, pp. 18-23 and 72]
+
+### Historical coverage and date limitations
+
+The full relevant sections of the 2016, 2017, and 2018 annual supplements were
+inspected. These years cover 37 available baseline intervals with four events.
+The 53 older intervals have dictionary and historical technical-report support,
+but their individual 2012-2015 annual supplements were not recovered. Full
+version-by-version protocol equivalence is not certified.
+
+The official archive's 2016 copy is marked DRAFT. Its length boundaries agree
+with the inspected 2017/2018 supplements and dictionary, but a final deployed
+2016 edition is not certified. Older generic cross-references also retain
+inconsistent subplot/status wording; the audit uses the explicit microplot
+status table and dictionary. These qualifications are retained in the
+[protocol note](../research/notes/ri-protocol-evidence.md).
+
+`PLOT.MANUAL` is not treated as a precise P2+ supplement edition: for example,
+baseline records store 7.0 while the available annual supplements include 7.1
+and 7.2. Year-specific documentary coverage is recorded separately. Plot
+measurement dates provide a plausibility screen, not proof of the exact RI
+measurement day or leaf condition; the RI tables expose no separate field date.
+
+## Eligibility and valid zeros
+
+```{r}
+#| label: tbl-ri-flow
+#| tbl-cap: "Baseline RI eligibility and narrower sensitivity populations. Rows after the primary available cohort are separate restrictions, not a single sequential funnel."
+flow |> dplyr::transmute(Screen = .data$screen, Conditions = .data$conditions,
+  Plots = .data$physical_plots, Counties = .data$counties, `Recruit-bearing` = .data$events) |>
+  knitr::kable(align = c("l", "r", "r", "r", "r"))
+```
+
+All 90 baseline records pass the implemented frame, record, and date checks.
+They cover 311 contributing microplot-condition intervals and have exact mapped
+overlap in the existing recruitment frame. This is a qualified local
+eligibility finding, not independent certification of all field measurements.
+The other 832 eligible recruitment intervals have no baseline RI plot record;
+their length-class values remain unavailable, not zero.
+
+At follow-up, two intervals fail the RI frame checks and two more have plot
+dates outside the RI window, leaving 86 under a both-visit restriction. These
+four flags do not invalidate their baseline RI or the existing TREE endpoint.
+The date flags require clarification before using follow-up RI to estimate
+length-class changes.
+
+```{r}
+#| label: tbl-ri-zeros
+#| tbl-cap: "Maple tally states on the 90 baseline RI-available intervals."
+zeros |> dplyr::transmute(`Baseline state` = .data$screen, Conditions = .data$conditions,
+  Plots = .data$physical_plots, `Recruit-bearing` = .data$events) |> knitr::kable()
+```
+
+The 19 conditions without ordinary baseline seedling detections split into nine
+with no qualifying RI maple tally and ten containing only smaller RI seedlings.
+Thus an ordinary zero is not equivalent to an all-size RI zero. None of those
+19 had the defined recorded entry in this snapshot; that does not imply that
+small seedlings can never advance or that recruitment cannot follow a zero.
+
+## Count reconciliation
+
+The ordinary maple count equals the sum of RI classes 3-6 in every one of the
+311 matched microplot-condition intervals and all 90 condition intervals.
+Both totals are 2,658. Including the two smaller RI classes raises the recorded
+total to 9,489; four of those tallies use the stump-source category.
+
+```{r}
+#| label: tbl-ri-reconciliation
+#| tbl-cap: "Same-area comparison of ordinary counts and RI counts at least one foot long."
+reconciliation |> dplyr::transmute(Unit = .data$unit, Comparisons = .data$observations,
+  `Exact matches` = .data$exact_count_agreements, `Ordinary total` = .data$ordinary_count,
+  `RI >=1 ft total` = .data$ri_at_least_one_foot) |> knitr::kable()
+```
+
+This establishes numerical redundancy of the collapsed counts in this sample,
+not independence of the two measurements. Shared or derived tally information
+is a plausible explanation for exact agreement; the database-generation code
+has not been audited, so a specific derivation mechanism is not asserted.
+It would be misleading to count agreement as independent field validation.
+
+The candidate additional information is the distribution among length classes
+and the smaller-size counts. Comparing all 9,489 RI tallies with the 2,658
+ordinary tallies as though they measured the same size range would confound
+measurement definition with information gain. Neither denominator supports an
+individual seedling-to-sapling survival rate.
+
+## Descriptive length support
+
+The at-least-five-foot grouping was fixed before calculating these associations,
+based on the published RI schema and the recruitment literature's emphasis on
+taller seedlings. Harris and colleagues already showed that length classes can
+improve recruitment prediction in a larger regional FIA sample; the present
+Michigan result is not a novel demonstration of that general idea.
+[@harris2022]
+
+```{r}
+#| label: tbl-ri-height
+#| tbl-cap: "Recorded recruitment by baseline taller-seedling presence. Intervals are descriptive 95% county-bootstrap intervals, not forecast-validation intervals."
+height |> dplyr::transmute(Population = .data$population,
+  `Maple >=5 ft` = ifelse(.data$group == "RI maple at least five feet present", "Present", "Not recorded"),
+  Conditions = .data$conditions, `Recruit-bearing` = .data$events,
+  `Entry fraction` = pct(.data$event_fraction),
+  `95% interval` = paste0(pct(.data$lower), " to ", pct(.data$upper))) |> knitr::kable()
+```
+
+The primary contrast is `r pct(tall$event_fraction)` versus
+`r pct(short$event_fraction)`. Restricting to the 71 ordinary-detected conditions
+removes the easiest ordinary-zero group, but still does not adjust for
+differences in counts, interval length, site, or existing maple stages. A tall
+seedling is already closer in size to the recorded sapling boundary; this
+association must not be reinterpreted as a causal effect of height or browsing.
+
+The intervals resample whole counties 2,000 times without fitting a prediction
+model. The one-event group is particularly fragile: its bootstrap distribution
+can contain no events, so a zero lower bound is not evidence of zero underlying
+risk. The intervals omit question selection, historical-protocol uncertainty,
+measurement error, and uncertainty about the intended survey decision.
+
+```{r}
+#| label: tbl-ri-classes
+#| tbl-cap: "Support for the six RI classes. Conditions can occur in several rows; event counts must not be summed across classes."
+classes |> dplyr::transmute(Class = .data$length_class, `Recorded tally` = .data$recorded_count,
+  `Conditions with class` = .data$conditions_with_class,
+  `Recruit-bearing among those` = .data$events_among_conditions_with_class) |> knitr::kable()
+```
+
+## Forecasting feasibility and next decision
+
+A development/assessment split following the existing calendar boundary has
+53 development intervals with ten events and 37 later intervals with four
+events, with no shared physical plots across the split. One missed assessment
+event would change observed event recall by 25 percentage points. These already
+explored outcomes are not an untouched validation set even if their length
+predictors were previously unused.
+
+As a precision illustration only, even a hypothetical rule finding all 14 event
+plots would have an exact two-sided binomial 95% lower recall bound of
+`r pct(precision$exact_two_sided_95_lower_if_all_found)` under independent-event
+sampling. This is not the observed rule's recall, a clustered confidence interval,
+or a sample-size justification. Geographic dependence and a held-out sample
+would further constrain what can be learned.
+
+The evidence supports retaining length structure as the next measurement
+hypothesis. It does not support a six-class fitted forecasting model or an
+operational score from this subset. A useful next study would fix a single
+supportable length representation, retain ordinary counts and sampling area as
+comparators on identical cases, and evaluate the paired gain in a separate,
+adequately supported inventory sample. A meaningful gain, forecasting horizon,
+decision target, action unit, and measurement cost must be specified first.
+
+Within the existing Michigan snapshot, the baseline measurement milestone is
+complete with the historical-access qualifications above. The defensible
+contribution is the distinction between seedling abundance, length structure,
+and recorded sapling entry, together with explicit limits on usefulness.
+Acquiring other inventories or coordinating field work requires a separate
+scope decision; neither has occurred. The
+[survey validation plan](../docs/survey-validation-plan.md) records these gates.
+
+The subsequent [count-versus-length design](length-study.qmd) fixes a one-term
+comparison and planning scenarios. Its outcome-free historical opportunity
+screen finds only six physical plots beyond the current recruitment cohort
+among positive-seedling opportunities, before full eligibility checks. It does
+not establish a new independent Michigan test sample.
+
+## Reproducibility
+
+Run `make ri-audit` after the recruitment dataset exists. The
+[eligibility table](../outputs/tables/recruitment-ri-eligibility.csv),
+[matched-count results](../outputs/tables/recruitment-ri-count-reconciliation.csv),
+[length support](../outputs/tables/recruitment-ri-height-support.csv), and
+[split support](../outputs/tables/recruitment-ri-split-support.csv) contain the
+aggregate evidence. Record-level joins remain local and Git-ignored.
+
+The [audit contract](../research/runs/recruitment-2026-09-08/ri-contract.md),
+[protocol evidence note](../research/notes/ri-protocol-evidence.md), and
+[claim review](../research/runs/recruitment-2026-09-08/ri-review.md) distinguish
+declared analytical rules, documentary access, local results, and limitations.
+
+## References
+
+::: {#refs}
+:::

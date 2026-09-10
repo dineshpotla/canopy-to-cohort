@@ -1,0 +1,5 @@
+assumed_recall,target_half_total_width,independent_event_units,confidence,lower,upper,limitation
+0.5,0.05,381,0.95,0.450045206365018,0.549954793634982,"Wilson width evaluated at an assumed proportion, not expected interval width or guaranteed precision; fixed-rule independent-event illustration, not paired-policy, calibration, or training sample size"
+0.8,0.05,245,0.95,0.7454545805454669,0.8452829946827942,"Wilson width evaluated at an assumed proportion, not expected interval width or guaranteed precision; fixed-rule independent-event illustration, not paired-policy, calibration, or training sample size"
+0.5,0.1,93,0.95,0.40041648905097904,0.599583510949021,"Wilson width evaluated at an assumed proportion, not expected interval width or guaranteed precision; fixed-rule independent-event illustration, not paired-policy, calibration, or training sample size"
+0.8,0.1,60,0.95,0.6821819419437212,0.881714946771025,"Wilson width evaluated at an assumed proportion, not expected interval width or guaranteed precision; fixed-rule independent-event illustration, not paired-policy, calibration, or training sample size"

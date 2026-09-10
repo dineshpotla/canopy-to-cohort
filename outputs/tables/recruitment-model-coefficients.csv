@@ -1,0 +1,29 @@
+model,term,penalized_log_odds_coefficient,lambda,converged,max_gradient,interpretation,population
+Prevalence,(Intercept),-2.1065702090680887,1,TRUE,2.7255975254547593e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Observation design,(Intercept),-2.2046723591311257,1,TRUE,1.0252609872196672e-10,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Observation design,z_coverage,0.5364007028308794,1,TRUE,1.0252609872196672e-10,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Observation design,z_interval,0.129722147673657,1,TRUE,1.0252609872196672e-10,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Seedling count and design,(Intercept),-2.661852981032641,1,TRUE,7.105427357601002e-15,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Seedling count and design,z_coverage,0.15178843274703036,1,TRUE,7.105427357601002e-15,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Seedling count and design,z_interval,0.09890711505809736,1,TRUE,7.105427357601002e-15,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Seedling count and design,z_seedling_count,1.1739320070329975,1,TRUE,7.105427357601002e-15,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,(Intercept),-2.8087768444588783,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,z_coverage,0.09117508586107043,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,z_interval,0.11371984194350818,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,z_seedling_count,1.1731414799552884,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,z_sapling_tpa,0.524414022993604,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Maple stages and design,z_established_ba,-0.0020934670533381563,1,TRUE,6.802891583390647e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,All eligible pairs
+Prevalence,(Intercept),-1.7439688053917066,1,TRUE,2.0872192862952943e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Observation design,(Intercept),-1.7783662038787156,1,TRUE,1.3239409568654992e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Observation design,z_coverage,0.29316463137916293,1,TRUE,1.3239409568654992e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Observation design,z_interval,0.14584598042802507,1,TRUE,1.3239409568654992e-14,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Seedling count and design,(Intercept),-1.969736276717868,1,TRUE,1.0421385976400188e-12,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Seedling count and design,z_coverage,0.10718863305503365,1,TRUE,1.0421385976400188e-12,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Seedling count and design,z_interval,0.10836601869586884,1,TRUE,1.0421385976400188e-12,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Seedling count and design,z_seedling_count,0.7797294643299026,1,TRUE,1.0421385976400188e-12,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,(Intercept),-2.0571853700826797,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,z_coverage,0.06584258712131112,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,z_interval,0.12220513659587809,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,z_seedling_count,0.8007716330807702,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,z_sapling_tpa,0.47159120499606527,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected
+Maple stages and design,z_established_ba,0.003932538849214297,1,TRUE,5.7607099646084237e-11,Descriptive penalized model coefficient; no causal interpretation or ordinary GLM p-value,Baseline seedlings detected

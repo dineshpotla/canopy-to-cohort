@@ -1,0 +1,11 @@
+previous_season,season_year,added_codes,removed_codes,limitation
+2008,2009,162;249;262;349,049;062,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2009,2010,,,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2010,2011,,,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2011,2012,,,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2012,2013,308;311;319;332;339;341;354;361,008;011;013;014;019;023;029;032;033;039;041;054;059;061;064;070;075;076;078;079;080;162;173;262,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2013,2014,,012,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2014,2015,019;033;078;312;329;333,319;339;354,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2015,2016,008;013;029;354;419,019;033;034;078;308;329,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2016,2017,359,135,Code-set changes only; unchanged codes do not guarantee unchanged boundaries
+2017,2018,019;023;033;034;041;054;059;061;062;064;070;078,333;341;354;359;361;419,Code-set changes only; unchanged codes do not guarantee unchanged boundaries

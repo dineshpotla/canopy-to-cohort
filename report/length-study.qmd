@@ -1,0 +1,343 @@
+---
+title: "Count-versus-length study design"
+bibliography: references.bib
+toc: true
+format:
+  html:
+    code-tools: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: length-design-setup
+read_design <- function(name) readr::read_csv(here::here("outputs", "tables", paste0("recruitment-length-", name, ".csv")), show_col_types = FALSE)
+flow <- read_design("opportunity-flow")
+precision <- read_design("paired-precision")
+recall <- read_design("recall-precision")
+example_precision <- precision[precision$half_width == .01 & precision$variance_inflation == 1.5 & precision$retention == .8, ]
+```
+
+## Research objective
+
+This is an optional follow-on design. The Michigan ordinary-count and
+linked-fate core study is complete in the [revised paper](recruitment.qmd).
+Regional acquisition is deferred under the user's core-paper priority; it
+does not block those results. The access history below is retained, not a
+request to keep retrying downloads.
+
+Determine whether the length distribution of established sugar-maple seedlings
+improves predictions of recorded sapling entry beyond ordinary seedling counts
+on the same sampled area. The immediate scientific product is a paired
+measurement comparison with a credible assessment sample. A survey-ranking
+tool, a treatment prescription, and a forecast of canopy replacement are
+different products requiring additional evidence.
+
+The Michigan [measurement audit](ri-audit.qmd) supplies a useful pilot: 90
+baseline intervals on 87 physical plots contain 14 recruit-bearing conditions.
+The 71 intervals with ordinary baseline seedling detections contain all 14
+events. Taller-seedling presence is associated with subsequent entry, but its
+added value after accounting for abundance has not been estimated. The current
+later-year partition supplies only four assessment events.
+
+Regional research already compared ordinary counts with six RI length classes
+and found that taller seedlings were important predictors. The proposed
+one-term comparison is therefore a parsimonious regional assessment, not the
+discovery that height matters or an exact replication of the published boosted
+tree models. [@harris2022]
+
+## Local sampling opportunities
+
+The existing Michigan database was screened across baseline RI visits, rather
+than only the current evaluation cohort. Baselines require a sampled national-design
+plot, accessible northern-hardwood forest type, positive microplot area,
+and a live sugar maple at least five inches DBH. The active forest codes are
+801, 802, 805, and 809. Successor plot records, measurement dates, and ordinary
+baseline seedling-record presence then define the following opportunity screen.
+
+```{r}
+#| label: tbl-length-opportunities
+#| tbl-cap: "RI record and visit-date opportunities in the existing Michigan snapshot. These are not validated recruitment intervals or event counts. The final row is a separate branch."
+flow |> dplyr::transmute(Screen = .data$screen,
+  `Condition visits` = .data$baseline_condition_visits,
+  `Physical plots` = .data$physical_plots, Counties = .data$counties) |> knitr::kable()
+```
+
+There are 234 qualifying baseline condition visits on 116 physical plots.
+Of those, 128 have exactly one linked successor; 114 also have a sampled
+national-design successor and a recorded interval of 4.5-8.5 years. Requiring
+a positive ordinary seedling record leaves 88 opportunities on 79 plots.
+
+Those 88 comprise 71 already included in the current RI cohort, ten additional
+condition visits on plots represented in the current recruitment cohort, and
+seven visits on six plots outside that cohort. Physical-plot counts cannot be
+added across these groups because a plot can supply several historical visits.
+This is a small potential extension, not a new independent evaluation sample.
+
+The screen does not establish RI microplot status, source/count validity,
+condition continuity, shared-area eligibility, or sapling-entry events for the
+additional visits. It queries no new recruitment outcomes. The wider historical
+Michigan source was already explored in earlier feasibility work; unused rows
+or predictors do not make it untouched validation. The 106 baseline condition
+visits without a linked successor are unresolved opportunities in this snapshot,
+not guaranteed future observations or a scheduled data release.
+
+As of September 9, 2026, the official Michigan update history lists addition
+of the 2025 evaluation on April 27, followed by soil and down-wood table updates.
+It does not identify a newer recruitment inventory cycle. This is release-note
+evidence, not a bytewise comparison of a freshly downloaded database; refreshing
+the file cannot be assumed to create an independent cohort. [@fiaupdates2026mi]
+
+## Primary population and endpoint
+
+The primary comparison is among conditions with ordinary baseline sugar-maple
+seedlings, not the easier mixture of detected and undetected seedlings. Retain
+the northern-hardwood/adult-maple scope and verified common sampling opportunity
+from the recruitment study. A regional extension must use harmonized definitions
+and report each geography separately; a result outside Michigan is a transport
+assessment, not independent validation of Michigan-specific performance.
+
+The outcome remains at least one new live sugar-maple sapling recorded at the
+next visit: species 318, live status, diameter at least one and below five
+inches, reconciliation code 1, no predecessor TREE identifier, and the audited
+common microplot frame. It excludes ambiguous procedure changes and missed-tree
+tallies. It is not an individual seedling conversion rate: intervening entrants
+that die before remeasurement are not observed.
+
+Apply the existing baseline RI frame and count checks before assigning any tally
+zero. Preserve invalid or inaccessible observations as unavailable. Historical
+manual access remains qualified, including the 2016 archived draft and the
+unrecovered 2012-2015 annual supplements. A broader cohort needs its own
+year-specific review rather than inheriting blanket approval from the 90 cases.
+
+## Fixed comparison
+
+Let N denote the ordinary baseline maple count, H the RI count in classes 5-6
+(at least five feet long), A the sampled microplot coverage, and T the elapsed
+interval. The proposed length feature is Q = H/N. It is undefined when N is
+zero; those conditions are outside the primary comparison, not assigned Q = 0.
+
+| Component | Count model | Count-plus-length model |
+|---|---|---|
+| Abundance | log(1 + N) | log(1 + N) |
+| Sampling opportunity | A | A |
+| Recorded timing | T | T |
+| Length structure | None | Q = H/N |
+| Model family | Ridge logistic regression | Same |
+| Penalty | 1 on standardized slopes; intercept unpenalized | Same |
+| Non-intercept terms | 3 | 4 |
+
+Both models use identical cases and development-only standardization. Do not
+add beech, browse score, six separate classes, interactions, alternative cutoffs,
+or a favorable model family after inspecting evaluation results. This choice
+limits the question to one candidate length representation; a negative result
+would not prove that no length-based method could help.
+
+A required, predeclared sensitivity replaces the single log-count slope with
+a three-degree-of-freedom natural spline of log(1 + N) in both models, while
+retaining A, T, and the same single Q addition. Set knots and boundary knots
+from development data only, standardize the resulting basis there, and use
+the same fixed ridge penalty. This gives five versus six slopes and must be
+included in development-support planning. Report it alongside the primary
+linear-log-count comparison, not as a replacement chosen after seeing results.
+If the length gain disappears against flexible counts, limit the conclusion to
+the original model forms; do not claim established added measurement value.
+
+Ordinary counts must be reconciled with RI classes 3-6 on the same sampled area.
+Unresolved differences stop the comparison before fitting: silently retaining
+only agreements could create a selected sample. RI seedlings below one foot
+are excluded from N and Q. Their potential information is a separate question
+and is not mixed into this one-term length comparison.
+
+For each physical plot, choose the latest completed eligible visit interval
+within the declared development or assessment period using dates and protocol
+eligibility, not outcome values. Retain eligible conditions from that interval.
+Keep every visit and condition of a physical plot on the same side of the
+development/assessment boundary. Give each plot total training weight one,
+divided across its included conditions. Freeze this interval-selection and
+weighting rule before any new outcome comparison.
+
+## Timing and the claim being tested
+
+The primary estimand is a retrospective next-visit probability comparison
+conditional on the realized interval within 4.5-8.5 years. Realized T is shared
+by both models, so the comparison can test added length information after
+adjusting for observation duration. However, the actual next-visit date is not
+known at baseline. This estimand is not an operational forecast made at baseline.
+
+A future forecast must instead specify a genuinely planned horizon and collect
+or identify outcomes at that horizon. Merely setting T = 7 when scoring existing
+variable-duration outcomes does not validate seven-year risks. There is no
+observed exact crossing date from which to reconstruct an exact seven-year
+recruitment event. The current study should retain the narrower conditional
+claim until suitable timing evidence exists.
+
+## Evaluation and meaningful improvement
+
+The primary metric is paired Brier gain: count-model squared probability error
+minus length-model squared error. Average the condition-level differences
+within each physical plot, then average across plots:
+
+$$
+D_j = \frac{1}{m_j}\sum_{i=1}^{m_j}
+\left[(y_{ij}-p_{0,ij})^2-(y_{ij}-p_{1,ij})^2\right],
+\qquad \Delta = \frac{1}{J}\sum_{j=1}^{J}D_j.
+$$
+
+Positive gain favors length. Equal plot weighting prevents plots with more
+conditions from automatically dominating the evaluation. It differs from the
+earlier condition-average results, which must not be substituted as the new
+benchmark. This is a selected-cohort comparison, not a statewide design-weighted
+estimate of forest condition.
+
+Evaluate the frozen models once on the reserved sample. Resample whole counties
+for paired uncertainty, retaining all selected plot/condition records within
+each county. Such evaluation intervals are conditional on the frozen training
+fits; they do not include every source of model-development uncertainty. Report
+geographic event support, calibration curves/intercept/slope, and discrimination
+alongside Brier gain. With too few independent county clusters, a nominal
+bootstrap interval is not a sufficient precision guarantee.
+
+A lower confidence limit above zero supports a statistical improvement for
+these models and this target. To claim a *meaningful* improvement, first declare
+a minimum gain delta and require the lower limit to exceed it. An interval
+spanning zero is inconclusive, not proof of equivalence. Neither an arbitrary
+Brier threshold nor a small P value supplies field utility. The necessary
+measurement costs and error consequences remain unspecified.
+
+## Precision scenarios
+
+External-assessment sample sizes depend on the target population, anticipated
+predictions, calibration, and desired precision; an event-count rule alone
+cannot establish adequacy. The published guidance concerns clinical models;
+its design principles transfer, but its clinical thresholds and numerical
+examples are not forestry sample-size recommendations. [@riley2024validation]
+
+The following calculation is a transparent planning approximation for the
+mean of frozen plot-level paired losses. With assumed SD s, variance inflation
+V, and target 95% interval half-width h, use
+
+$$
+J_{\mathrm{complete}} = \left\lceil V(1.96s/h)^2\right\rceil.
+$$
+
+The implementation uses the exact normal quantile rather than rounded 1.96.
+Candidate plot numbers are complete plots divided by an assumed retention
+fraction, rounded upward. This scales expected yield; it does not guarantee
+the required number will be retained, remove attrition bias, or certify power.
+
+```{r}
+#| label: tbl-length-precision
+#| tbl-cap: "Hypothetical evaluation precision: half-width 0.01 Brier units, variance inflation 1.5, and 80% retention. No SD or inflation factor was estimated from a fitted RI model."
+example_precision |> dplyr::transmute(`Assumed plot-loss SD` = .data$loss_difference_sd,
+  `Complete evaluation plots` = .data$complete_evaluation_plots,
+  `Candidates at 80% retention` = .data$candidate_plots_at_assumed_retention) |> knitr::kable()
+```
+
+For the middle SD assumption, this gives 577 complete evaluation plots and 722
+candidates at 80% retention. The range is 145-2,305 complete plots across the
+three SD assumptions. These are not estimates of the number available in any
+state, not training sample sizes, and not proof of calibration precision. The
+[full scenario table](../outputs/tables/recruitment-length-paired-precision.csv)
+varies h, V, retention, and s. A smaller target gain typically demands greater
+precision; h itself is not a minimum useful gain.
+
+A separate fixed-rule illustration asks how many independent event units would
+give a Wilson interval of a chosen width at an assumed recall. It uses the
+score-interval formula documented by NIST. [@nistwilson]
+
+```{r}
+#| label: tbl-length-recall
+#| tbl-cap: "Fixed-rule recall illustration. Widths are evaluated at an assumed proportion, not guaranteed or expected widths; these are event units, not total plots."
+recall |> dplyr::transmute(`Assumed recall` = scales::percent(.data$assumed_recall),
+  `Target half total width` = scales::percent(.data$target_half_total_width),
+  `Independent event units` = .data$independent_event_units,
+  `Plug-in interval` = paste0(scales::percent(.data$lower, accuracy = .1), " to ", scales::percent(.data$upper, accuracy = .1))) |> knitr::kable()
+```
+
+At assumed 80% recall, the half-total-width targets 0.10 and 0.05 require 60 and
+245 independent event units, respectively. Wilson intervals are not symmetric
+around the assumed proportion. These are not calculations for a paired gain in
+recall, a data-selected capacity rule, or dependent conditions on the same plot.
+They illustrate why four or fourteen events do not settle a forecasting claim.
+
+Before recruitment or model fitting, replace the planning inputs with defensible
+development/external-pilot ranges, assess training complexity and calibration
+precision separately, and simulate the proposed cluster structure. Do not add
+the planning sample counts together or automatically treat their maximum as a
+fully justified study size: they address different quantities and assumptions.
+
+## Next-stage decision
+
+The local opportunity census does not reveal a sufficiently large independent
+Michigan assessment cohort. More historical Michigan rows may inform development
+or sensitivity analysis after full eligibility checks, but do not solve that
+evaluation problem. Two distinct research routes remain:
+
+| Route | Contribution and boundary |
+|---|---|
+| Michigan-only | Complete the measurement paper now; reserve genuinely new, adequately supported observations for a future conditional or planned-horizon assessment. A database refresh must be checked for new visits and plot overlap. |
+| Regional extension | Screen Wisconsin and Minnesota as candidate Great Lakes sources under the same definitions, then fix development and geographically separate evaluation roles from protocol/metadata support before outcome-driven model selection. This changes the target geography and tests transport, not Michigan-specific validation. |
+
+The recommended next action is a scoped regional **feasibility screen**, not
+immediate model fitting. Neither state's usable RI sample or event support has
+been established here. The official DataMart is the acquisition route; files
+must be pinned with source dates and hashes, with measurement inventories
+separated from evaluation-outcome access. [@fiadatamart]
+
+Proceed to fitting only after source/geography approval, a documented eligible
+cohort, a declared assessment set, separate development/evaluation precision
+work, and a frozen analysis specification. If support is insufficient, retain
+the descriptive study. Changing the population or adding predictors solely to
+obtain a favorable result would not complete this research objective.
+
+## Regional acquisition status
+
+On September 9, 2026, the user authorized downloading and screening Wisconsin
+and Minnesota under the same scientific definitions. Acquisition was attempted,
+but neither ZIP could be retrieved: the archive endpoints return an empty
+response in repeated HTTP checks, and the DataMart landing page also fails in
+the browser. **Regional sample size and validation feasibility remain unknown.**
+This is an access blocker, not evidence of inadequate samples.
+
+The separate live update-history service lists addition of the 2025 inventories
+on May 4 for Wisconsin and May 11 for Minnesota, followed by soil-laboratory
+updates on July 6. Those release notes do not establish usable RI/repeat-visit
+support or the contents of a retrieved archive.
+[Wisconsin history](https://apps.fs.usda.gov/fiadb-api/fiadb_update_history?statecd=55),
+[Minnesota history](https://apps.fs.usda.gov/fiadb-api/fiadb_update_history?statecd=27).
+
+The [acquisition audit](../outputs/audits/recruitment-regional-acquisition.csv)
+records failed transfers with missing sizes and hashes, not zero observations.
+`make regional-acquire` provides the bounded retry and source-pinning step;
+it is intentionally separate from the Michigan pipeline. A successful transfer
+must pass archive, state, table, integrity, and disk-space guards. The success
+path is not yet exercised on the actual regional archives.
+
+The [regional contract](../research/runs/recruitment-2026-09-08/regional-feasibility-contract.md)
+keeps recruitment outcomes unopened during scientific feasibility screening.
+The [access review](../research/runs/recruitment-2026-09-08/regional-access-review.md)
+documents alternative-route checks and the distinction between reachable
+release notes and inaccessible inventory files. Retry acquisition when the
+endpoint is reachable; the WI/MN scope decision is already made. No additional
+model, outcome comparison, or regional validation result is supplied here.
+
+## Reproducibility
+
+`make length-plan` regenerates the metadata and hypothetical precision tables.
+The helpers also implement the defined length fraction and plot-balanced paired
+score for future use; they have not scored a new RI model. Record-level metadata
+remain local and Git-ignored. No additional inventory was downloaded and no
+model was fitted for this design.
+
+The [design contract](../research/runs/recruitment-2026-09-08/length-study-contract.md),
+[source and claim review](../research/runs/recruitment-2026-09-08/length-study-review.md),
+and [survey validation plan](../docs/survey-validation-plan.md) retain the
+scientific and operational boundaries.
+
+## References
+
+::: {#refs}
+:::

@@ -75,6 +75,20 @@ sugar_maple_reference <- function(con) {
   tibble::as_tibble(result)
 }
 
+american_beech_reference <- function(con) {
+  result <- standardize_names(DBI::dbGetQuery(
+    con,
+    paste(
+      "SELECT SPCD, COMMON_NAME, SCIENTIFIC_NAME, SPECIES_SYMBOL",
+      "FROM REF_SPECIES",
+      "WHERE lower(COMMON_NAME) = 'american beech'",
+      "OR lower(SCIENTIFIC_NAME) = 'fagus grandifolia'"
+    )
+  ))
+  if (nrow(result) != 1L) stop("Expected one American beech reference row; found ", nrow(result), call. = FALSE)
+  tibble::as_tibble(result)
+}
+
 eligible_condition_cte <- function(evalid, forest_codes) {
   code_sql <- paste(as.integer(forest_codes), collapse = ",")
   paste0(

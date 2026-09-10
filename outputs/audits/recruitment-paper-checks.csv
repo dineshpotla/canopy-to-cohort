@@ -1,0 +1,51 @@
+check,passed,detail
+Uncertain outcomes remain missing,TRUE,Excluded intervals are not biological zeros
+Entrant outcome reconciles,TRUE,Condition outcomes agree with qualifying entrant counts
+All eligible pairs matched rows,TRUE,Model rows equal the audited population
+All eligible pairs matched outcomes,TRUE,Stored model outcomes agree in row order with rebuilt records
+All eligible pairs prediction matrix,TRUE,All four models predict every identical case
+All eligible pairs physical_plot_key folds,TRUE,No plot or county crosses evaluation folds
+All eligible pairs geoid folds,TRUE,No plot or county crosses evaluation folds
+All eligible pairs convergence,TRUE,Every original held-out fit converged
+All eligible pairs Prevalence metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+All eligible pairs Prevalence temporal metrics,TRUE,Recomputed from stored later-year predictions
+All eligible pairs Observation design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+All eligible pairs Observation design temporal metrics,TRUE,Recomputed from stored later-year predictions
+All eligible pairs Seedling count and design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+All eligible pairs Seedling count and design temporal metrics,TRUE,Recomputed from stored later-year predictions
+All eligible pairs Maple stages and design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+All eligible pairs Maple stages and design temporal metrics,TRUE,Recomputed from stored later-year predictions
+All eligible pairs temporal separation,TRUE,Training and testing share no physical plot
+All eligible pairs paired differences,TRUE,Contrasts use named model minus matched reference
+Baseline seedlings detected matched rows,TRUE,Model rows equal the audited population
+Baseline seedlings detected matched outcomes,TRUE,Stored model outcomes agree in row order with rebuilt records
+Baseline seedlings detected prediction matrix,TRUE,All four models predict every identical case
+Baseline seedlings detected physical_plot_key folds,TRUE,No plot or county crosses evaluation folds
+Baseline seedlings detected geoid folds,TRUE,No plot or county crosses evaluation folds
+Baseline seedlings detected convergence,TRUE,Every original held-out fit converged
+Baseline seedlings detected Prevalence metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+Baseline seedlings detected Prevalence temporal metrics,TRUE,Recomputed from stored later-year predictions
+Baseline seedlings detected Observation design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+Baseline seedlings detected Observation design temporal metrics,TRUE,Recomputed from stored later-year predictions
+Baseline seedlings detected Seedling count and design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+Baseline seedlings detected Seedling count and design temporal metrics,TRUE,Recomputed from stored later-year predictions
+Baseline seedlings detected Maple stages and design metrics,TRUE,Recomputed from local held-out predictions with equal condition weights
+Baseline seedlings detected Maple stages and design temporal metrics,TRUE,Recomputed from stored later-year predictions
+Baseline seedlings detected temporal separation,TRUE,Training and testing share no physical plot
+Baseline seedlings detected paired differences,TRUE,Contrasts use named model minus matched reference
+Models bootstrap completion,TRUE,300 full-refit county resamples per population; 600 successful draws in this analysis
+Survey diagnostics bootstrap completion,TRUE,300 full-refit county resamples per population; 600 successful draws in this analysis
+Fate accounting,TRUE,Source stems and comparable-fate denominator reconcile
+Fate Alive; remains sapling,TRUE,Published fate category matches source-linked stems
+Fate Recorded dead,TRUE,Published fate category matches source-linked stems
+Fate Alive; reached 5 inches,TRUE,Published fate category matches source-linked stems
+Fate No longer sampled,TRUE,Published fate category matches source-linked stems
+Fate Species reidentified,TRUE,Published fate category matches source-linked stems
+Surviving growth summary,TRUE,"Survivor denominator, zero and negative differences, median, and tail quantiles reconcile"
+All eligible pairs appendix coefficients,TRUE,All full-population coefficients match the saved model bundle
+All eligible pairs appendix fold diagnostics,TRUE,Fold denominators and optimization diagnostics match saved held-out fits
+All eligible pairs appendix interval point estimates,TRUE,"Interval-table points match saved predictions; bounds and recorded bootstrap counts checked, not replayed"
+Baseline seedlings detected appendix coefficients,TRUE,All full-population coefficients match the saved model bundle
+Baseline seedlings detected appendix fold diagnostics,TRUE,Fold denominators and optimization diagnostics match saved held-out fits
+Baseline seedlings detected appendix interval point estimates,TRUE,"Interval-table points match saved predictions; bounds and recorded bootstrap counts checked, not replayed"
+Appendix joint strata,TRUE,Joint count and sapling cells recomputed from saved analysis rows

@@ -4,8 +4,8 @@ project:
   state_name: "Michigan"
 
 release:
-  version: "1.3.0"
-  analysis_date: "2026-08-29"
+  version: "2.0.0"
+  analysis_date: "2026-09-10"
   evalid: 262501
   source_snapshot:
     fia_zip:
@@ -22,6 +22,9 @@ files:
   county_climate: "data/processed/county_climate_1991_2020.csv"
   analysis_data: "data/processed/analysis_plot_condition.rds"
   model_data: "data/processed/model_data.rds"
+  longitudinal_data: "data/processed/longitudinal_plot_condition.rds"
+  longitudinal_model_data: "data/processed/longitudinal_loss_model_data.rds"
+  longitudinal_appearance_model_data: "data/processed/longitudinal_appearance_model_data.rds"
 
 climate:
   start_year: 1991
@@ -42,3 +45,5 @@ analysis:
   maple_spline_df: 3
   primary_spline_comparison_df: 2
   grouped_cv_folds: 10
+  longitudinal_minimum_overlap: 0.90
+  longitudinal_grouped_cv_folds: 5

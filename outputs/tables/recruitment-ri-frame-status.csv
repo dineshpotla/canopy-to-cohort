@@ -1,0 +1,5 @@
+visit,regen_subp_status_cd,regen_micr_status_cd,regen_nonsample_reasn_cd,ri_slice_valid,microplot_condition_intervals
+baseline,1,1,NA,TRUE,131
+baseline,NA,1,NA,TRUE,180
+followup,NA,1,NA,TRUE,304
+followup,NA,3,10,FALSE,7

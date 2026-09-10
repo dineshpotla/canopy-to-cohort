@@ -1,0 +1,6 @@
+fate,followup_statuscd,followup_reconcilecd,followup_spcd,species_reidentified,tree_records
+Alive; grew to at least 5 inches,1,NA,318,FALSE,59
+Alive; still 1 to less than 5 inches,1,NA,316,TRUE,3
+Alive; still 1 to less than 5 inches,1,NA,318,FALSE,1193
+No longer in sample; reconcile separately,0,7,318,FALSE,1
+Recorded dead,2,NA,318,FALSE,337

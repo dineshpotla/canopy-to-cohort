@@ -1,0 +1,6 @@
+group,conditions,physical_plots,counties,conditions_with_recorded_recruitment,event_plots,limitation
+core,922,903,66,100,100,Availability only; no browse-outcome association estimated
+baseline_browse_observed,90,87,32,14,14,Availability only; no browse-outcome association estimated
+baseline_browse_and_valid_RI,90,87,32,14,14,Availability only; no browse-outcome association estimated
+followup_browse_observed,88,85,31,13,13,Availability only; no browse-outcome association estimated
+baseline_positive_seedlings_and_browse,71,69,27,14,14,Availability only; no browse-outcome association estimated

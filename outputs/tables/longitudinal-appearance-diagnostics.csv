@@ -1,0 +1,9 @@
+metric,value,interpretation
+Residual deviance / residual df,1.0711565712970086,Descriptive dispersion check for the fitted logistic model
+In-sample Brier score,0.1729878430640156,Apparent performance; geographically held-out performance is primary
+In-sample ROC AUC,0.6181252161881702,Apparent discrimination; geographically held-out performance is primary
+Calibration intercept,-4.863581390164928e-13,Apparent calibration; ideal value is zero
+Calibration slope,1.0000000000003226,Apparent calibration; ideal value is one
+Maximum Cook distance,0.04190614628115845,Case-influence diagnostic
+Maximum leverage,0.0574285776167743,Design-matrix influence diagnostic
+Influential rows by any influence.measures flag,12,Rows crossing at least one conventional influence.measures threshold

@@ -1,0 +1,6 @@
+count_group,conditions,conditions_with_new_tally,recruitment_fraction,no_new_tally_fraction,lower,upper,uncertainty
+0,250,0,0,1,0,0,"2000 county-cluster percentile resamples; zero observed events yields degenerate empirical interval, not proof of zero probability"
+1,82,1,0.012195121951219513,0.9878048780487805,0,0.034482758620689655,"2000 county-cluster percentile resamples; zero observed events yields degenerate empirical interval, not proof of zero probability"
+2-5,129,8,0.06201550387596899,0.937984496124031,0.02097902097902098,0.11821234735413823,"2000 county-cluster percentile resamples; zero observed events yields degenerate empirical interval, not proof of zero probability"
+6-20,181,19,0.10497237569060773,0.8950276243093923,0.07470757268424612,0.14142045454545452,"2000 county-cluster percentile resamples; zero observed events yields degenerate empirical interval, not proof of zero probability"
+>20,280,72,0.2571428571428571,0.7428571428571429,0.20407992628489524,0.3227611423026269,"2000 county-cluster percentile resamples; zero observed events yields degenerate empirical interval, not proof of zero probability"

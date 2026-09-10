@@ -1,0 +1,5 @@
+model,observations,losses,counties,folds,brier_score,roc_auc,calibration_intercept,calibration_slope,brier_skill_vs_prevalence,validation_design,interpretation
+Beech hypothesis,677,75,49,5,0.0815080795194968,0.8556810631229236,-0.002919816856569728,0.8816640198292484,0.17728208278062385,5-fold cross-validation grouped by county,Internal geographic validation; county effects are not transferred to held-out counties
+Prevalence benchmark,677,75,49,5,0.09907172046887953,NA,NA,NA,0,5-fold cross-validation grouped by county,Internal geographic validation; county effects are not transferred to held-out counties
+Stage structure,677,75,49,5,0.0832613239448406,0.8450055370985603,-0.011108110059818857,0.8678100392023305,0.1595853635044654,5-fold cross-validation grouped by county,Internal geographic validation; county effects are not transferred to held-out counties
+Starting abundance and observation,677,75,49,5,0.08253092089034283,0.8447065337763012,-0.007474325700248406,0.9147864305611477,0.16695783115760576,5-fold cross-validation grouped by county,Internal geographic validation; county effects are not transferred to held-out counties

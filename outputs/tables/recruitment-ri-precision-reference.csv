@@ -1,0 +1,2 @@
+event_plots,observed_recall_assumed,exact_two_sided_95_lower_if_all_found,interpretation
+14,1,0.7683642383498834,"Illustrative independent-event-plot binomial calculation, assuming all events captured; not actual recall, a clustered interval, or sample-size justification"

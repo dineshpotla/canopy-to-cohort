@@ -1,0 +1,7 @@
+topic,definition,limitation
+Outcome,New live maple 1<=DIA<5; RECONCILECD=1; no PREV_TRE_CN; comparable shared microplots.,"Surviving new tally at follow-up, not individual seedling conversion or all arrivals during interval."
+Seedlings,Sum raw TREECOUNT for maple; zero only on the source verified sampled forest frame; TREECOUNT_CALC agreement audited.,Species tallies contain no individual seedling links; seedling count is measured over varying microplot area.
+Frame,Both shared SUBPLOT records sampled; plot predecessor plus matrix SUBP linkage; populated subplot predecessors must agree; matrix proportions <= both SUBP_COND proportions.,PREV_SBP_CN is entirely missing in this snapshot; no direct subplot predecessor claim. Partial-footprint pairs retained under >=90% rule; exact-overlap sensitivity identifies unchanged mapped fractions.
+QA,Keep PLOT QA_STATUS 1 and 7 (standard production or supervised production hot check).,QA7 is not an independent duplicate or an invalid production visit; remaining statuses require exclusion or review.
+Fates,"Baseline maple saplings linked by expected successor PLOT and PREV_TRE_CN; recorded death separated from removals, no-sample codes, reidentification, and growth>=5.",Recorded dead does not establish cause; >=5 inches does not prove canopy recruitment.
+Source,FIADB snapshot configured in config/config.yml; USDA FIADB User Guide v9.4 RECONCILECD section.,https://research.fs.usda.gov/sites/default/files/2025-08/wo-v9-4_Aug2025_UG_FIADB_database_description_NFI.pdf

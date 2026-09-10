@@ -1,0 +1,5 @@
+group,conditions,physical_plots,counties,events,event_plots,recorded_new_saplings,event_fraction,lower,upper,estimable_resamples,resamples,limitation,population
+RI maple at least five feet present,44,43,19,13,13,29,0.29545454545454547,0.18867924528301888,0.42857142857142855,2000,2000,Descriptive county bootstrap; no model fitted; sparse groups or boundary estimates can understate uncertainty,All RI-available intervals
+No RI maple at least five feet recorded,46,45,22,1,1,1,0.021739130434782608,0,0.0851063829787234,2000,2000,Descriptive county bootstrap; no model fitted; sparse groups or boundary estimates can understate uncertainty,All RI-available intervals
+RI maple at least five feet present,44,43,19,13,13,29,0.29545454545454547,0.19443407960199005,0.4375,2000,2000,Descriptive county bootstrap; no model fitted; sparse groups or boundary estimates can understate uncertainty,Standard baseline seedlings detected
+No RI maple at least five feet recorded,27,27,16,1,1,1,0.037037037037037035,0,0.13636363636363635,2000,2000,Descriptive county bootstrap; no model fitted; sparse groups or boundary estimates can understate uncertainty,Standard baseline seedlings detected

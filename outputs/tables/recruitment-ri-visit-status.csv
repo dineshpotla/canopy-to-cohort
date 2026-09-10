@@ -1,0 +1,7 @@
+visit,has_ri_plot,ri_reason,condition_intervals
+baseline,FALSE,No RI plot record,832
+baseline,TRUE,RI measurement available,90
+followup,FALSE,No RI plot record,832
+followup,TRUE,Incomplete or contradictory RI microplot frame,2
+followup,TRUE,Plot date outside May-September or missing,2
+followup,TRUE,RI measurement available,86

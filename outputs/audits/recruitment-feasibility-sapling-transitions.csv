@@ -1,0 +1,5 @@
+baseline_maple_sapling_present,audited_followup_sapling_present,conditions
+FALSE,FALSE,345
+FALSE,TRUE,14
+TRUE,FALSE,76
+TRUE,TRUE,497

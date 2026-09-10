@@ -1,14 +1,8 @@
 ---
 title: "Canopy to Cohort"
-subtitle: "Tracing established trees, saplings, and seedlings in Michigan northern hardwood forests"
-description: "A size-class-aware R analysis of sugar maple regeneration continuity using FIA, Daymet, GIS, mixed-effects modeling, and county-held-out validation."
-image: "outputs/figures/03_regeneration_quadrant.png"
-page-layout: full
-title-block-banner: true
-format:
-  html:
-    toc: false
-    code-tools: false
+description: "Do today's maple seedlings signal tomorrow's saplings? A repeated-visit study of Michigan forests using public USDA FIA observations."
+image: outputs/figures/10_recruitment_counts.png
+toc: false
 execute:
   echo: false
   warning: false
@@ -16,159 +10,145 @@ execute:
 ---
 
 ```{r}
-#| label: setup
-summary <- readr::read_csv(here::here("outputs", "tables", "analysis-summary.csv"), show_col_types = FALSE)
-support <- readr::read_csv(here::here("outputs", "tables", "model-support.csv"), show_col_types = FALSE)
-odds <- readr::read_csv(here::here("outputs", "tables", "model-odds-ratios.csv"), show_col_types = FALSE)
-continuity <- readr::read_csv(here::here("outputs", "tables", "model-cohort-continuity.csv"), show_col_types = FALSE)
-validation <- readr::read_csv(here::here("outputs", "tables", "model-cross-validation-summary.csv"), show_col_types = FALSE)
-evaluation <- readr::read_csv(here::here("outputs", "audits", "selected-evaluation.csv"), show_col_types = FALSE)
-fia_counts <- readr::read_csv(here::here("outputs", "audits", "fia-table-counts.csv"), show_col_types = FALSE)
-cohort <- readr::read_csv(here::here("outputs", "tables", "cohort-flow.csv"), show_col_types = FALSE)
-sapling_effect <- odds |> dplyr::filter(.data$label == "Sugar-maple saplings present") |> dplyr::slice_head(n = 1)
-without_saplings <- continuity |> dplyr::filter(!.data$maple_sapling_present) |> dplyr::slice_head(n = 1)
-with_saplings <- continuity |> dplyr::filter(.data$maple_sapling_present) |> dplyr::slice_head(n = 1)
-cv_metric <- function(metric_name) {
-  value <- validation$value[validation$metric == metric_name]
-  if (length(value) != 1L) stop("Required validation metric not found: ", metric_name)
-  value
-}
-table_rows <- function(table_name) {
-  value <- fia_counts$rows[fia_counts$table == table_name]
-  if (length(value) != 1L) stop("Required FIA table count not found: ", table_name)
-  value
-}
-cohort_rows <- function(step_name) {
-  value <- cohort$observations[cohort$step == step_name]
-  if (length(value) != 1L) stop("Required cohort step not found: ", step_name)
-  value
-}
+flow <- readr::read_csv(here::here("outputs", "tables", "recruitment-cohort-flow.csv"), show_col_types = FALSE)
+cohort <- dplyr::filter(flow, .data$cohort == "Reconciled recruitment cohort")
+strata <- readr::read_csv(here::here("outputs", "tables", "recruitment-model-count-strata.csv"), show_col_types = FALSE)
+high <- dplyr::filter(strata, .data$count_group == ">20")
+stopifnot(nrow(cohort) == 1, nrow(high) == 1)
 ```
 
-:::: {.columns .landing-hero}
-::: {.column width="46%"}
-## A forest can keep mature trees while losing continuity between cohorts
+::: {.landing-hero}
+## Do today's maple seedlings signal tomorrow's saplings?
 
-This project separates FIA's established trees, saplings, and seedlings, then tests which stand, management, and broad climate characteristics accompany seedling non-detection.
+A forest can contain many seedlings without those seedlings becoming the next
+generation of larger trees. This study compares repeated public USDA Forest
+Inventory and Analysis (FIA) observations in Michigan to ask what early maple
+counts tell us about new saplings recorded several years later.
 
-[Read the research report](report/index.qmd){.btn .btn-primary .btn-lg}
-[Review analysis decisions](docs/analysis-decisions.md){.btn .btn-outline-secondary .btn-lg}
+[Read the research report](report/recruitment.qmd){.btn .btn-primary}
+[Explore the code](https://github.com/dineshpotla/canopy-to-cohort){.btn .btn-outline-secondary}
 :::
 
-::: {.column width="54%"}
-![Established-tree share, positive seedling tallies, and a count-aware strip of zero tallies.](outputs/figures/03_regeneration_quadrant.png){fig-alt="Positive sugar-maple seedling tallies appear above a lower strip that counts zero tallies by established-tree-share bins."}
-:::
-::::
-
-::: {.builder-strip}
-**What I built:** reference-driven FIA extraction · audited relational joins · county-safe Daymet integration · mixed-effects modeling · sensitivity analysis · publication-ready reporting
-:::
-
-## The study at a glance
-
-::::: {.stat-grid}
-:::: {.stat-card}
+::: {.stat-grid}
+::: {.stat-card}
 ::: {.stat-number}
-`r scales::comma(summary$plot_conditions)`
+`r cohort$conditions`
 :::
-Eligible plot-condition measurements
-::::
-
-:::: {.stat-card}
+paired forest-condition observations
+:::
+::: {.stat-card}
 ::: {.stat-number}
-`r scales::comma(summary$seedling_sampled)`
+`r cohort$physical_plots`
 :::
-Conditions with seedling sampling
-::::
-
-:::: {.stat-card}
+physical plots in `r cohort$counties` Michigan counties
+:::
+::: {.stat-card}
 ::: {.stat-number}
-`r scales::comma(support$model_complete_n)`
+`r cohort$new_saplings`
 :::
-Primary cohort conditions
-::::
-
-:::: {.stat-card}
+new live maple saplings recorded
+:::
+::: {.stat-card}
 ::: {.stat-number}
-`r sprintf("%.3f", cv_metric("ROC AUC"))`
+`r cohort$recruit_conditions`
 :::
-County-held-out ROC AUC
-::::
-:::::
-
-## From inventory database to research artifact
-
-:::::: {.workflow-grid}
-::::: {.workflow-card}
-[01 · Inspect]{.workflow-index}
-
-### Resolve the source
-
-`r scales::label_number(scale_cut = scales::cut_short_scale())(table_rows("TREE"))` TREE and `r scales::label_number(scale_cut = scales::cut_short_scale())(table_rows("SEEDLING"))` SEEDLING rows are profiled alongside FIA evaluation and reference tables.
-:::::
-
-::::: {.workflow-card}
-[02 · Define]{.workflow-index}
-
-### Build the cohort
-
-`r scales::comma(cohort_rows("Plot visits assigned to current evaluation"))` assigned visits narrow to `r scales::comma(summary$plot_conditions)` conditions in FIA's maple/beech/birch forest-type group, used as the operational northern-hardwood cohort.
-:::::
-
-::::: {.workflow-card}
-[03 · Integrate]{.workflow-index}
-
-### Preserve geography
-
-83 county Daymet cells join by GEOID. Exact FIA plot locations are confidential; public coordinates may be approximate, and this analysis neither uses nor infers them.
-:::::
-
-::::: {.workflow-card}
-[04 · Estimate]{.workflow-index}
-
-### Model clustering
-
-`r scales::comma(support$model_complete_n)` outcomes support a county random intercept, an established-tree term, and a separate sapling-stage indicator.
-:::::
-
-::::: {.workflow-card}
-[05 · Validate]{.workflow-index}
-
-### Publish evidence
-
-County-held-out validation (Brier `r sprintf("%.3f", cv_metric("Brier score"))`; AUC `r sprintf("%.3f", cv_metric("ROC AUC"))`), join audits, source hashes, diagnostics, functional-form comparisons, and sensitivity analyses accompany the report.
-:::::
-::::::
-
-::: {.reviewer-strip}
-**Technical reviewer?** [Inspect the data dictionary](docs/data-dictionary.md) · [Trace analysis decisions](docs/analysis-decisions.md) · [Review the source and validation evidence](https://github.com/dineshpotla/canopy-to-cohort)
+forest conditions with at least one new sapling
+:::
 :::
 
-## What the analysis found
+A forest condition is a mapped part of a plot with similar forest characteristics.
+Each paired observation links that area across two visits, typically seven years apart.
+Here, a sapling is a tree with a trunk at least 1 inch but less than 5 inches in
+diameter at breast height. It is not a mature canopy tree.
 
-Within the established-tree cohort, raw seedling non-detection was **`r scales::percent(without_saplings$no_seedling_fraction, accuracy = 0.1)` without sugar-maple saplings** and **`r scales::percent(with_saplings$no_seedling_fraction, accuracy = 0.1)` with them**. After adjustment, sapling presence was associated with **`r scales::percent(1 - sapling_effect$estimate, accuracy = 1)` lower odds** of a zero seedling tally (OR `r sprintf("%.2f", sapling_effect$estimate)`, 95% CI `r sprintf("%.2f–%.2f", sapling_effect$conf.low, sapling_effect$conf.high)`).
+## Three findings to take away
 
-That is a cross-sectional association, not a transition or causal effect. A seedling zero means “not tallied” rather than confirmed ecological absence, and county climate values are broad proxies.
+### More seedlings were a useful clue, not a guarantee
 
-:::: {.columns .feature-row}
-::: {.column width="50%"}
-### Built for auditability
+Conditions with higher starting counts more often had new maple saplings at
+the next visit. But even among the `r high$conditions` conditions with more than
+20 seedlings recorded initially, only `r high$conditions_with_new_tally`
+(`r scales::percent(high$recruitment_fraction, accuracy = 0.1)`) had a qualifying
+new sapling recorded later. Seedling abundance alone does not establish that
+the future forest is secure.
 
-- FIA species and forest types resolve from reference tables.
-- Trees and seedlings aggregate before joining.
-- Sampling opportunity controls whether a missing seedling record can become zero.
-- Checksums, join audits, support gates, and tests travel with the analysis.
+![New saplings were recorded more often where the starting seedling count was higher. Bars show the percentage of sampled forest conditions with entry; vertical lines show county-resampling uncertainty. The zero-count group's zero-width interval reflects no observed events, not proof that entry is impossible.](outputs/figures/10_recruitment_counts.png){fig-alt="Recorded entry rises from 0 of 250 conditions without baseline seedlings to 72 of 280 conditions with more than 20 seedlings, or 25.7 percent."}
+
+### Adding more maple measurements did not clearly improve prediction
+
+The study compared models on the same observations, testing each on counties
+excluded from its training data. Adding the abundance of existing maple saplings
+and larger maples produced small improvements in probability error, but the
+uncertainty included both improvement and worsening. These results do not yet
+show a dependable advantage over the simpler seedling-count model.
+
+The models account for the area sampled and the time between visits. They are
+retrospective comparisons, not a validated tool for prescribing forest treatment.
+
+### Leaving the sapling size class does not always mean dying
+
+A separate check followed 1,580 comparable, previously tagged maple saplings:
+1,188 remained live saplings, 334 were recorded dead, and 58 remained alive
+after growing to at least 5 inches in trunk diameter. Keeping these outcomes
+separate prevents healthy growth from being mistaken for loss.
+
+::: {.feature-row}
+## What this means for forest assessment
+
+Seedling counts are worth measuring, but they are one part of the picture.
+Repeated visits help distinguish new sapling entry, continued survival,
+growth into a larger size class, and recorded death.
+
+No new sapling recorded does **not** by itself mean regeneration has failed.
+The inventory samples small areas, seedlings are not individually tagged,
+and some entrants may die or grow beyond the studied size class between visits.
+These are unweighted results for the study sample, not statewide rates.
 :::
 
-::: {.column width="50%"}
-### Spatially responsible
+## How the question developed
 
-Exact FIA plot locations are confidential. The analysis neither uses nor infers public plot coordinates; maps and climate joins use county identifiers, and sparse county summaries are suppressed.
-:::
-::::
+The [earlier detection study](report/index.qmd) examined whether seedlings were
+recorded at one visit and not at the next. That is a different question from
+whether young trees entered the sapling class. The new study audits repeated
+FIA visits and newly recorded stems to examine that transition directly.
+It does not claim to follow individual seedlings into individual saplings.
 
-## Research artifact
+The [research direction](docs/research-direction.md) explains this progression.
+The [full report](report/recruitment.qmd) places the analysis alongside existing
+FIA research and provides the statistical comparisons, uncertainty, and limitations.
 
-The report documents the pinned 2025 current evaluation (inventory window `r evaluation$start_invyr`–`r evaluation$end_invyr`; assigned measurement records `r summary$years_min`–`r summary$years_max`), cohort construction, size-class correction, equations, model support, sensitivity analysis, limitations, and reproducibility workflow.
+## What remains to be tested
 
-[Open the complete report →](report/index.qmd){.report-link}
+Two possible extensions are documented separately from the completed findings:
+
+- **Seedling length:** a smaller measurement audit suggests a reason to test
+  whether taller seedlings add information beyond counts. Only 14 conditions
+  in that subset had new saplings, so no added-length prediction claim is made.
+  See the [measurement audit](report/ri-audit.qmd) and
+  [follow-up study design](report/length-study.qmd).
+- **Deer and browsing:** public sources have been assessed, but a suitable
+  geographic match and exposure measure remain unresolved. No deer effect has
+  been estimated in this study. See the
+  [source-feasibility assessment](research/notes/external-factor-feasibility.md).
+
+A [survey-priority comparison](report/recruitment.qmd#survey-priority-comparison)
+also tests simple rules against the models. It does not establish fieldwork
+benefit or a treatment recommendation.
+
+## Inspect and reproduce
+
+The project includes R code, aggregate evidence, automated checks, and explicit
+[analysis decisions](docs/analysis-decisions.md). After obtaining the pinned FIA
+snapshot and building the linked cohort, the main analysis runs with:
+
+```bash
+make recruitment-core
+make test
+make report
+```
+
+Start with the [reproducibility guide](docs/recruitment-reproducibility.md),
+[data dictionary](docs/data-dictionary.md), or
+[research evidence](research/README.md). Source data and record-level predictions
+are not redistributed. This is a public research draft, not a peer-reviewed
+publication or an independently validated management tool.

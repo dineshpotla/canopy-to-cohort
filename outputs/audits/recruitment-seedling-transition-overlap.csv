@@ -1,0 +1,7 @@
+recruitment_eligible,seedling_transition,conditions,recruit_conditions,new_saplings
+FALSE,Persistent non-detection,5,0,0
+FALSE,Persistence,5,1,2
+TRUE,Persistent non-detection,191,0,0
+TRUE,Appearance,59,0,0
+TRUE,Loss,75,1,1
+TRUE,Persistence,597,99,168

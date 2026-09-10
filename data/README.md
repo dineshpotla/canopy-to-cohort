@@ -14,12 +14,25 @@ Run `Rscript scripts/00_acquire_data.R` to download the archive when it is not
 already present. The script extracts the SQLite database and discovers its
 actual filename rather than assuming the archive layout.
 
-The DataMart state URL is mutable. Releases v1.0.0 through v1.3.0 used a 1,180,933,421-byte
+The DataMart state URL is mutable. Releases v1.0.0 through v2.0.0 used a 1,180,933,421-byte
 archive with SHA-256
 `2c1eb908a47436d4edd0f3ba9e3d647b79a4f36cef972c5ba83277300817aee1`
 and pins EVALID 262501. Acquisition compares current files with the release
 snapshot and warns on a mismatch. A current-data rerun is still supported, but
 it is not described as byte-for-byte reproduction of these releases.
+
+## Local recruitment products
+
+The recruitment reanalysis uses the same pinned FIA snapshot. Run
+`make recruitment` after building the common and longitudinal data products.
+It creates local condition-pair and linked-sapling RDS files under
+`data/processed/`, plus a local model/prediction bundle under `outputs/models/`.
+These contain record identifiers and are excluded from Git. Only aggregate
+recruitment tables, audits, and figures are exported for reporting.
+
+The final cohort excludes unresolved sampling opportunities rather than
+treating them as biological zero outcomes. Preliminary historical feasibility
+intervals are not used as additional observations in the fitted recruitment models.
 
 ## Climate
 

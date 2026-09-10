@@ -1,0 +1,4 @@
+model_variable,source_variable,transformation,center,scale,observations,scaling_population
+z_established_maple_ba,established_maple_ba_ft2_ac,log1p,3.3192333481738845,1.056775318076875,255,final complete baseline-nondetected appearance cohort
+z_microplot_coverage,baseline_microplot_coverage,identity,0.7763945333333333,0.2882192033627955,255,final complete baseline-nondetected appearance cohort
+z_interval_years,interval_years,identity,6.984313725490196,0.44173180528799905,255,final complete baseline-nondetected appearance cohort

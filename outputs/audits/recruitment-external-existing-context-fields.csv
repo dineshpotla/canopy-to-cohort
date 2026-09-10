@@ -1,0 +1,18 @@
+variable,conditions,nonmissing,missing,distinct_nonmissing_values,limitation
+baseline_beech_sapling_ba_ft2_ac,922,922,0,111,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_overstory_total_ba_ft2_ac,922,922,0,921,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_stand_age,922,922,0,99,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_site_class_cd,922,922,0,6,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_physclcd,922,922,0,9,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbcd1,922,922,0,11,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbcd2,922,922,0,6,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbcd3,922,922,0,1,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbyr1,922,200,722,7,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbyr2,922,23,899,2,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_dstrbyr3,922,0,922,0,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtcd1,922,922,0,4,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtcd2,922,922,0,2,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtcd3,922,922,0,1,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtyr1,922,131,791,12,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtyr2,922,29,893,8,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation
+baseline_trtyr3,922,0,922,0,Recorded availability only; zeros and disturbance/treatment codes require protocol interpretation

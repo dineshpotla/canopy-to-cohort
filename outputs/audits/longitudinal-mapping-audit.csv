@@ -1,0 +1,12 @@
+metric,value,note
+Candidate pair rows,8454,Aggregated positive SUBPTYP=2 links; one row per condition pair
+Bidirectional one-to-one pair rows,7245,Both baseline and follow-up conditions have exactly one linked condition
+Baseline split pair rows,881,A baseline condition links to multiple follow-up conditions
+Follow-up merge pair rows,551,A follow-up condition links to multiple baseline conditions
+Broken baseline condition references,0,Matrix baseline keys without a matching COND record
+Broken follow-up condition references,0,Matrix follow-up keys without a matching COND record
+Plot predecessor-link mismatches,0,Matrix PREV_PLT_CN differs from the predecessor declared on PLOT
+Minimum baseline overlap fraction among strict pairs,0.9910215144841605,Relative overlap is (sum SUBPTYP_PROP_CHNG / 4) / baseline MICRPROP_UNADJ
+Median baseline overlap fraction among strict pairs,1,Strict-pair footprint diagnostic
+Minimum follow-up overlap fraction among strict pairs,0.9910215144841605,Relative overlap is (sum SUBPTYP_PROP_CHNG / 4) / follow-up MICRPROP_UNADJ
+Median follow-up overlap fraction among strict pairs,1,Strict-pair footprint diagnostic

@@ -1,0 +1,5 @@
+seedling_transition,conditions,baseline_state,baseline_state_total,fraction_within_baseline_state
+Persistent non-detection,196,Not detected,255,0.7686274509803922
+Appearance,59,Not detected,255,0.23137254901960785
+Loss,75,Detected,677,0.11078286558345643
+Persistence,602,Detected,677,0.8892171344165436

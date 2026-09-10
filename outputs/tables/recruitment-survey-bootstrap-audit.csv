@@ -1,0 +1,3 @@
+resamples_requested,resamples_succeeded,resamples_failed,seed,uncertainty_scope,population
+300,300,0,20260908,"300 whole-county resamples with all training scaling and county-held-out model fits repeated; fixed original folds, policies and model set; tie expectations recomputed; not survey-design uncertainty or external validation",All eligible pairs
+300,300,0,20260908,"300 whole-county resamples with all training scaling and county-held-out model fits repeated; fixed original folds, policies and model set; tie expectations recomputed; not survey-design uncertainty or external validation",Baseline seedlings detected

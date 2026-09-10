@@ -1,0 +1,3 @@
+cohort,conditions,fraction,role
+Primary strict-pair cohort,932,1,Primary transition cohort; follow-up forest type is not an eligibility condition
+Still classified in forest-type group 800 at follow-up,915,0.9817596566523605,"Post-baseline classification sensitivity, not a primary eligibility filter"

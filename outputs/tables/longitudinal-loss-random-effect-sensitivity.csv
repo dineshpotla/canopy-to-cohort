@@ -1,0 +1,3 @@
+model,converged,singular,aic,county_variance,note
+Fixed-effect logistic,TRUE,NA,352.87721469083,NA,Primary prognostic model with county-cluster robust uncertainty
+County random-intercept sensitivity,TRUE,FALSE,353.79986891052545,0.17761761461739337,Sensitivity only; singularity does not invalidate the declared fixed-effect model

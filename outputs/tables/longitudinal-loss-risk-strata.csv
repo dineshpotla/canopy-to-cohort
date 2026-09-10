@@ -1,0 +1,5 @@
+risk_quartile,conditions,losses,observed_loss_fraction,mean_predicted_probability,minimum_predicted_probability,maximum_predicted_probability,model,note
+Quartile 1,170,1,0.0058823529411764705,0.0060126149971707005,0.0010233023540192924,0.011316021634386173,Beech hypothesis,"Quartiles use geographically held-out predicted probabilities; descriptive risk stratification, not an intervention threshold"
+Quartile 2,169,5,0.029585798816568046,0.020817039629481966,0.011346165467814756,0.036092481815775644,Beech hypothesis,"Quartiles use geographically held-out predicted probabilities; descriptive risk stratification, not an intervention threshold"
+Quartile 3,169,14,0.08284023668639054,0.07923617890920741,0.03661686928478224,0.14823835792552503,Beech hypothesis,"Quartiles use geographically held-out predicted probabilities; descriptive risk stratification, not an intervention threshold"
+Quartile 4,169,55,0.3254437869822485,0.338561082438404,0.15432300679849204,0.9190088832221279,Beech hypothesis,"Quartiles use geographically held-out predicted probabilities; descriptive risk stratification, not an intervention threshold"

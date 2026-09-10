@@ -1,0 +1,3 @@
+population,conditions,physical_plots,counties,events,new_saplings,baseline_year_min,baseline_year_max,followup_year_min,followup_year_max,interval_years_min,interval_years_median,interval_years_max,coverage_min,coverage_median,coverage_max,scoring_unit
+All eligible pairs,922,903,66,100,169,2011,2018,2018,2025,5.416666666666667,7,8.083333333333334,0.153842,1,1,Condition interval; equal condition weight; not a survey-weighted population estimate
+Baseline seedlings detected,672,667,49,100,169,2011,2018,2018,2025,5.416666666666667,7,8.083333333333334,0.15785,1,1,Condition interval; equal condition weight; not a survey-weighted population estimate

@@ -1,4 +1,4 @@
-name: R data-free unit tests
+name: Research workflow tests
 
 on:
   push:
@@ -29,10 +29,22 @@ jobs:
         shell: Rscript {0}
         run: |
           install.packages(c(
-            "testthat", "dplyr", "tibble", "readr", "here", "yaml"
+            "testthat", "dplyr", "tibble", "readr", "here", "yaml",
+            "tidyr", "purrr", "DBI", "RSQLite", "jsonlite"
           ))
 
       - name: Run data-free unit tests
         run: >-
           Rscript --vanilla -e
           'testthat::test_dir("tests/testthat", reporter = "summary")'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install source-audit dependencies
+        run: python -m pip install pandas pdfplumber pypdf
+
+      - name: Run offline source-audit tests
+        run: python -m unittest discover -s tests -p 'test_external_sources.py' -v

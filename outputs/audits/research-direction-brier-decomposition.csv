@@ -1,0 +1,8 @@
+metric,value,interpretation
+Prevalence Brier,0.09907172046887955,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Strong benchmark Brier,0.08253092089034282,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Current full model Brier,0.08150807951949682,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Full improvement over prevalence,0.01756364094938273,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Strong benchmark improvement over prevalence,0.016540799578536727,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Additional full-model improvement over strong benchmark,0.0010228413708460032,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"
+Fraction of full improvement already obtained by strong benchmark,0.9417637052708054,"Descriptive decomposition of pooled held-out Brier differences, not causal attribution"

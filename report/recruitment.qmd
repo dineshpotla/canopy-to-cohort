@@ -1,0 +1,1034 @@
+---
+title: "Ordinary seedling counts and recorded sugar maple sapling recruitment in Michigan northern hardwoods"
+description: "Seedling abundance, sapling recruitment, and the fate of tagged sugar maples in Michigan FIA plots."
+date: "2026-09-10"
+date-format: "MMMM D, YYYY"
+bibliography: references.bib
+image: "../outputs/figures/10_recruitment_counts.png"
+toc: true
+format-links: false
+format:
+  html:
+    code-tools: false
+    code-fold: true
+  docx:
+    toc: false
+    number-sections: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+read_table <- function(name, folder = "tables") readr::read_csv(here::here("outputs", folder, paste0(name, ".csv")), show_col_types = FALSE)
+flow <- read_table("recruitment-cohort-flow")
+support <- read_table("recruitment-paper-support")
+paper_checks <- read_table("recruitment-paper-checks", "audits")
+stopifnot(all(paper_checks$passed))
+cv <- read_table("recruitment-model-validation")
+paired <- read_table("recruitment-model-paired-differences")
+counts <- read_table("recruitment-model-count-strata")
+saplings <- read_table("recruitment-model-sapling-strata")
+temporal <- read_table("recruitment-model-temporal")
+sensitivity <- read_table("recruitment-model-sensitivities")
+fates <- read_table("recruitment-sapling-fates", "audits")
+growth <- read_table("recruitment-sapling-growth", "audits")
+bootstrap <- read_table("recruitment-model-bootstrap-audit")
+fold_diagnostics <- read_table("recruitment-model-fold-diagnostics")
+coefficients <- read_table("recruitment-model-coefficients")
+model_intervals <- read_table("recruitment-model-intervals")
+joint_strata <- read_table("recruitment-model-joint-strata")
+count_intervals <- read_table("recruitment-model-count-strata-intervals")
+survey <- read_table("recruitment-survey-summary")
+survey_paired <- read_table("recruitment-survey-paired-differences")
+survey_primary <- survey |> dplyr::filter(.data$population == "Baseline seedlings detected",
+  .data$objective == "No recorded entry", .data$requested_fraction == 0.25)
+cohort <- flow |> dplyr::filter(.data$cohort == "Reconciled recruitment cohort")
+calendar <- support |> dplyr::filter(.data$population == "All eligible pairs")
+high <- counts |> dplyr::filter(.data$count_group == ">20")
+row <- function(population, model) {
+  result <- cv |> dplyr::filter(.data$population == .env$population, .data$model == .env$model)
+  stopifnot(nrow(result) == 1)
+  result
+}
+all_count <- row("All eligible pairs", "Seedling count and design")
+all_stage <- row("All eligible pairs", "Maple stages and design")
+positive_count <- row("Baseline seedlings detected", "Seedling count and design")
+positive_stage <- row("Baseline seedlings detected", "Maple stages and design")
+percent <- function(x) scales::percent(x, accuracy = 0.1)
+short_population <- function(x) ifelse(x == "All eligible pairs", "All eligible", "Seedlings detected")
+population_code <- function(x) ifelse(x == "All eligible pairs", "All", "Detected")
+short_model <- function(x) dplyr::recode(x, "Observation design" = "Design",
+  "Seedling count and design" = "Count + design", "Maple stages and design" = "Stages + design")
+contrast <- function(population, model, metric = "brier_score") {
+  result <- paired |> dplyr::filter(.data$population == .env$population,
+    .data$model == .env$model, .data$metric == .env$metric)
+  stopifnot(nrow(result) == 1)
+  sprintf("%.5f (95%% interval %.5f to %.5f)", result$difference, result$lower, result$upper)
+}
+model_interval <- function(population, model, metric, digits = 3) {
+  result <- model_intervals |> dplyr::filter(.data$population == .env$population,
+    .data$model == .env$model, .data$metric == .env$metric)
+  stopifnot(nrow(result) == 1)
+  if (is.na(result$estimate)) return("Not ranked")
+  sprintf(paste0("%.", digits, "f (%.", digits, "f to %.", digits, "f)"),
+    result$estimate, result$lower, result$upper)
+}
+model_table <- function(population) {
+  cv |> dplyr::filter(.data$population == .env$population) |>
+    dplyr::transmute(Model = short_model(.data$model), Brier = sprintf("%.5f", .data$brier_score),
+      `Log loss` = sprintf("%.3f", .data$log_loss),
+      AUC = ifelse(is.na(.data$roc_auc), "—", sprintf("%.3f", .data$roc_auc)),
+      AP = ifelse(is.na(.data$average_precision), "—", sprintf("%.3f", .data$average_precision)),
+      `Calibration slope` = ifelse(is.na(.data$calibration_slope), "—", sprintf("%.3f", .data$calibration_slope))) |>
+    knitr::kable(align = c("l", rep("r", 5)))
+}
+```
+
+::: {.content-visible when-format="html"}
+## Findings in plain language
+
+More seedlings were a useful clue to later sapling entry, but not a guarantee:
+only `r high$conditions_with_new_tally` of `r high$conditions` sampled forest
+conditions with more than 20 seedlings initially had a new live maple sapling
+recorded at the next visit. Adding measurements of existing maple saplings and
+larger maples did not clearly improve prediction. Separately, following tagged
+saplings showed that some left the size class by growing, not dying.
+
+Here, a sapling has a trunk at least 1 inch but less than 5 inches in diameter
+at breast height. A new recorded sapling is not an individually tracked baseline
+seedling. These sample results do not establish statewide regeneration rates,
+diagnose why entry was absent, or identify a forest treatment.
+
+[Project overview](../index.qmd) ·
+[Code and aggregate evidence](https://github.com/dineshpotla/canopy-to-cohort)
+:::
+
+## Abstract
+
+We examined whether ordinary Forest Inventory and Analysis (FIA) seedling
+counts predict recorded sugar-maple (*Acer saccharum*) sapling recruitment
+in Michigan northern hardwoods and whether existing maple size structure
+improves prediction. The cohort contained `r cohort$conditions` intervals on
+`r cohort$physical_plots` physical plots across `r cohort$counties` counties,
+with baseline visits in 2011–2018 and follow-ups in 2018–2025;
+`r cohort$new_saplings` new live saplings occurred in `r cohort$recruit_conditions`
+conditions. We compared four prespecified logistic models using county-level
+cross-validation and 300 county-bootstrap resamples per population with model
+refitting. After accounting for sampled coverage and elapsed time, count-model
+AUC was `r sprintf("%.3f", all_count$roc_auc)` overall and
+`r sprintf("%.3f", positive_count$roc_auc)` among 672 conditions with baseline
+seedlings. Counts improved Brier score relative to observation design alone,
+although the improvement among conditions with seedlings was uncertain. Adding maple sapling
+density and established-maple basal area changed Brier score by
+`r contrast("All eligible pairs", "Maple stages and design")` overall; the
+corresponding interval among conditions with seedlings also crossed zero.
+Separately, 1,580 comparable tagged
+saplings included 334 recorded deaths, 1,188 live saplings, and 58 live stems
+reaching 12.7 cm diameter. Seedling counts were informative about recorded
+entry, but the additional value of maple size structure was uncertain.
+These retrospective, unweighted comparisons do not establish regeneration
+adequacy or justify an operational management rule.
+
+## Study implications
+
+Seedling counts were associated with new sugar-maple saplings recorded at the
+next inventory, but abundant seedlings do not establish successful replacement
+of canopy trees. In this Michigan sample, adding the
+abundance of existing maple saplings and larger maples did not clearly improve
+prediction over counts alone. Managers should distinguish recorded sapling
+entry from adequate regeneration and retain simple benchmarks when evaluating
+more elaborate indicators. The study does not identify a treatment, diagnose
+deer damage, or validate a rule for allocating field visits.
+
+## Introduction {#research-context}
+
+Successful regeneration requires seedlings to advance into larger size classes.
+Michigan field studies describe plentiful small
+seedlings alongside limited larger regeneration [@henry2021]. Sugar-maple age
+structure in managed northern hardwoods also shows that small-diameter stems
+may be old; existing saplings do not necessarily represent recent establishment
+[@henry2023]. These studies differ from standard FIA in their stand samples
+and size definitions, so their estimates cannot be treated as statewide
+rates for the cohort examined here.
+
+Previous FIA research has examined the relationship between seedling
+measurements and subsequent recruitment. Harris and colleagues compared
+one seedling class with six height classes using boosted regression trees,
+including conspecific sapling abundance and tree basal area as candidate
+predictors. Their species-specific analyses were restricted to subplots with
+baseline seedlings, and taller seedlings were particularly informative
+[@harris2022]. Their work provides a basis for evaluating the contribution
+of both seedling measurements and existing conspecific size classes.
+Recent northeastern studies distinguish
+small-seedling composition from established sapling abundance [@harris2026]
+and examine recovery after disturbance over longer intervals
+[@harris2026disturbance].
+
+We examine how much information routinely available seedling counts provide
+about recorded sapling entry after accounting for sampled coverage and the
+time between inventories. We then test whether existing maple saplings and
+larger trees improve prediction on the same observations. This regional
+comparison complements earlier FIA studies while distinguishing recruitment
+from changes in the status of previously tagged saplings. Differences in
+subplot populations, seedling definitions, and validation procedures prevent
+direct comparison with published AUC values from studies using regeneration
+indicator (RI) measurements.
+
+The primary objectives were to quantify the predictive contribution of ordinary
+seedling counts, assess the additional contribution of maple sapling density
+and established-maple basal area, and describe the subsequent fates of tagged
+baseline saplings. We also evaluated fixed survey-selection strategies and
+examined the comparability of ordinary counts with RI length measurements.
+These secondary analyses address possible applications and measurement
+extensions of the main study.
+
+## Methods
+
+### Source and cohort
+
+The study uses the pinned Michigan FIADB SQLite snapshot and current-evaluation
+cohort, EVALID 262501, rather than all historical intervals. Baseline ecological
+eligibility is accessible northern hardwood forest (type group 800) with live
+established sugar maple at least five inches diameter. The selected baseline
+forest-type codes are 801, 802, 805, and 809. Follow-up forest type need not remain
+in group 800. The source pair construction requires an intended plot predecessor,
+one-to-one condition mapping, at least 90% mapped-area overlap relative to both
+visits, and a 4.5–8.5-year interval. Selection and joins are documented in the
+[analysis decisions](../docs/analysis-decisions.md#source-and-cohort).
+
+The recruitment audit additionally verifies sampled forest and mapped
+microplot-condition area at both visits. Both visits use the national design,
+the same offset microplot arrangement, and manual versions at least 5.1.
+Follow-ups are remeasurements; production QA codes 1 and 7 are retained.
+QA 7 is a supervised production check, not an invalid duplicate
+[@burrill2025fiadb].
+
+Direct subplot predecessor identifiers (`PREV_SBP_CN`) are entirely
+unpopulated in this snapshot. Continuity is reconstructed from the verified
+plot predecessor, subplot number, and microplot condition-change matrix.
+Nine source pairs fail the conservative matrix-versus-condition proportion
+check; one contains unresolved newly recorded saplings. These ten pairs are
+excluded rather than assigned zero outcomes. One separately verified sampled
+follow-up has no live TREE records and `BALIVE=0`; its missing derived tree
+metrics are reconciled to zero only in the new recruitment dataset.
+
+The starting current-evaluation dataset contains 932 condition intervals.
+The nine inconsistent mappings and one ambiguous-entry interval are distinct
+exclusions, leaving 922. The 914 exact-overlap intervals and the 672 intervals
+with baseline seedlings are alternative subsets of that retained cohort,
+not additional sequential exclusions. Conditions represent mapped forest
+domains within a plot; a physical plot can therefore contribute more than
+one condition. The analytical unit is one condition observed across its two
+linked visits, not a seedling, individual microplot, or independent stand.
+
+Eligible rows must have complete, finite outcomes and predictor fields.
+The modeling code stops on missing required values rather than silently
+dropping different rows for different models. No predictor imputation is used.
+Absent species tallies become zero only after sampled-forest eligibility and
+record checks; an unsampled or ambiguous interval is not assigned a zero.
+
+### Recorded recruitment endpoint
+
+The binary response is at least one new live sugar-maple sapling at follow-up:
+`SPCD=318`, `STATUSCD=1`, diameter at least one and less than five inches
+(2.54 to less than 12.7 cm), `RECONCILECD=1`, and no predecessor TREE record.
+Candidates must occur on a comparable shared sampled microplot. Reconcile code
+1 can also describe entry on formerly nonforest land, so it is insufficient
+without the preceding sampling-frame checks [@burrill2025fiadb].
+
+These are recorded surviving entrants into the FIA sapling class, not individual
+baseline seedlings followed through time. Entrants that die before remeasurement
+or exceed the restricted size class are not counted. Large newly recorded
+subplot trees are excluded because sampled area increases at the five-inch
+boundary. Exact mapped-area overlap is a sensitivity analysis; mapped fractions
+do not establish an individual stem's lineage or exact location.
+
+### Predictors and fixed comparisons
+
+All eligible pairs and the subset with baseline seedlings detected are principal
+analysis populations, fitted separately. The second asks whether measurements
+distinguish entrants among conditions already containing seedlings. Both use
+four fixed logistic models:
+
+1. Training-sample prevalence only.
+2. Observation design: baseline microplot coverage and realized interval.
+3. Count and design: those variables plus `log1p` ordinary maple seedling count.
+4. Stages and design: the count model plus `log1p` baseline maple sapling
+   density and `log1p` established-maple basal area.
+
+Ordinary counts sum `SEEDLING.TREECOUNT` and are checked against
+`TREECOUNT_CALC`. Sapling density uses FIA stem expansion and sampled microplot
+area; established-maple basal area uses live stems at least five inches diameter
+and the corresponding sampled area. Coverage is a model covariate, not a
+claim that raw counts were collected over identical footprints. Standard
+hardwood tallies omit the smallest seedlings, and counts above five may be
+estimated [@fiafield2023]. A recorded count is not necessarily an exact number
+of independent seed-origin individuals.
+
+Training-only standardization precedes fitting. The objective is summed binomial
+negative log likelihood plus $\lambda\sum_j\beta_j^2/2$ for slopes, with
+$\lambda=1$ and an unpenalized intercept. This fixed ridge penalty was not tuned
+to optimize the findings. Ordinary GLM coefficient p-values are not attached
+to penalized fits. No additional competitor, beech, climate, or treatment
+predictor is selected after examining these recruitment results.
+
+```{r}
+#| label: tbl-recruitment-predictors
+#| tbl-cap: "Predictor definitions and transformations. All quantities except the realized interval are measured at baseline. Log transformations use the listed source units."
+tibble::tribble(
+  ~Predictor, ~`Source quantity and unit`, ~Transformation, ~`First included`,
+  "Microplot coverage", "MICRPROP_UNADJ; fraction of nominal microplot area in the condition", "Identity", "Design",
+  "Elapsed interval", "Time between linked measurements; years", "Identity", "Design",
+  "Maple seedling count", "Sum of TREECOUNT across sampled condition microplots; count", "log(1 + count)", "Count",
+  "Maple sapling density", "Sum of sapling TPA_UNADJ divided by MICRPROP_UNADJ; stems per acre", "log(1 + density)", "Stages",
+  "Established maple basal area", "Expanded live-maple basal area for diameter at least 5 inches; square feet per acre", "log(1 + basal area)", "Stages"
+) |> knitr::kable(align = c("l", "l", "l", "l"))
+```
+
+For each predictor, transformation precedes centering and division by its
+training-sample standard deviation. The same training center and scale are
+then applied to held-out observations. A constant training predictor uses a
+scale of one, preventing division by zero. The model is
+$p_i=1/(1+\exp(-\eta_i))$, where
+$\eta_i=\beta_0+\sum_j\beta_j z_{ij}$ and the included standardized predictors
+follow the four-model sequence. Coverage and interval enter as estimated
+slopes, not offsets. The response is binary entry, so the model does not
+estimate the number of new saplings or an annual recruitment rate.
+
+The production optimizer uses Newton steps with a backtracking line search,
+a maximum of 100 iterations, and finite-coefficient and gradient checks.
+Model dimensions are zero, two, three, and five slopes, respectively, plus
+the intercept. Coefficients from subsequent fits to each complete analysis
+population are descriptive summaries; all performance claims use held-out
+predictions, not those full-population fitted values. The appendix reports
+the coefficients without unpenalized standard errors or significance stars.
+
+### Validation and uncertainty
+
+Five folds hold out entire counties, balancing condition counts without using
+outcomes in assignment. All models within a population use identical
+observations and folds. Every physical plot stays in one fold. Scaling and
+fitting use training counties only. County separation prevents the same county
+from entering both sets, but does not impose a distance buffer between nearby
+plots in neighboring counties or guarantee environmental separation.
+
+Brier score and log loss evaluate probabilities; AUC and average precision
+(AP) evaluate discrimination. Losses average equally over condition intervals:
+they are neither plot-balanced nor FIA survey-weighted population estimates.
+Calibration intercept and slope are estimated jointly by regressing outcomes
+on held-out log odds. They are diagnostics, not recalibration of predictions;
+the joint intercept is not a separately fitted calibration-in-the-large
+intercept. Mean predicted probability and the observed-to-expected ratio
+are also exported. Rank metrics for the prevalence benchmark are omitted
+because differences in fold-specific prevalence do not constitute a meaningful
+individual ranking.
+
+Specifically, the Brier score is the mean squared probability error,
+$n^{-1}\sum_i(y_i-p_i)^2$. Log loss is
+$-n^{-1}\sum_i[y_i\log(p_i)+(1-y_i)\log(1-p_i)]$; probabilities are bounded
+between $10^{-12}$ and $1-10^{-12}$ for numerical scoring. Lower losses are
+better. AUC compares event and nonevent rankings with half credit for tied
+probabilities. AP sums precision over increments in recall after grouping
+equal probabilities. AP depends on event prevalence, so the two nested
+populations are not interchangeable benchmarks. We report probability loss,
+ranking, and calibration separately because improvement in one need not
+imply improvement in the others.
+
+Counties are ordered by descending condition count, with county identifier
+breaking ties, and assigned to the currently least-loaded fold. Fold size,
+then county count, then fold number resolve assignment ties. This is a single
+deterministic partition, not repeated random cross-validation. The two
+populations receive their own size-balanced partition. Metrics pool all
+out-of-fold predictions within each population rather than averaging its
+five fold-specific AUC values. Appendix fold denominators show how many
+events actually support each held-out comparison.
+
+Uncertainty uses `r bootstrap$resamples_requested[[1]]` resamples per
+population of whole counties, repeating scaling and all held-out fits.
+All `r sum(bootstrap$resamples_succeeded)` resamples succeed. Original fold
+assignments, model set, and penalty remain fixed. Paired differences subtract
+the reference model on identical cases; negative Brier differences favor the
+added information. Percentile intervals characterize this resampling scheme.
+They exclude uncertainty from selecting the question, cohort, model set,
+and source snapshot. These data were already explored; this is not
+preregistration or external validation. The 300 draws provide finite Monte
+Carlo precision for the interval endpoints; their displayed digits should not
+be read as equally precise inferential information. No equivalence margin or
+minimum useful improvement was specified, and no multiple-comparison correction
+is applied. Interpretation emphasizes the matched Brier contrasts; additional
+metrics and secondary analyses are descriptive.
+
+Each bootstrap draw samples the population's counties with replacement,
+using the same number of county draws as observed counties. Every condition
+in a selected county receives its county's sampling multiplicity as a
+frequency weight. All copies remain in that county's original fold, so
+resampling cannot put a duplicate county into both training and testing.
+Weighted training means, sample standard deviations, model fits, and pooled
+scores are recomputed in each draw. Counties drawn zero times have no
+evaluation weight. The reported limits are the 2.5th and 97.5th percentiles
+of the 300 resulting metrics or paired differences, not standard errors
+calculated by treating 922 conditions as independent replicates. The stored
+seed is 20260908 in each population; this does not make the nested analyses
+independent.
+
+Descriptive count-bin intervals use a separate 2,000-draw county resampling
+of observed event fractions, without fitting a model. A bin with no observed
+events has a degenerate empirical interval at zero; it does not establish a
+zero population risk. These intervals and the model-refit intervals answer
+different questions and should not be combined.
+
+Fixed sensitivities restrict to exact overlap or follow-up manual version at
+least 9, or use penalties 0 and 4. A retrospective temporal assessment trains
+on follow-ups before 2023 and tests 2023 onward, with no shared physical plots.
+Realized interval is known at follow-up. Accordingly, these are conditional
+next-visit assessments, not validated fixed-horizon forecasts available at
+baseline. Count agreement and manual-version screening do not establish that
+every historical field procedure is identical; individual baseline regional
+editions were not all verified.
+
+### Linked sapling fates
+
+A companion cohort follows live tagged baseline maple saplings on the expected
+successor plot before restricting follow-up species, status, or diameter.
+Comparable recorded death, live persistence below five inches, and live
+advancement to at least five inches are separated from frame inconsistency,
+species reidentification, and no-longer-sampled records. Fate eligibility is
+assessed separately from the new-entrant outcome: an ambiguous new arrival
+does not alone invalidate an existing tagged stem's link. Annual diameter
+difference divides follow-up minus baseline diameter by elapsed years and
+is summarized only for comparable surviving maples. No mortality mechanism,
+treatment effect, or independent-stem sampling assumption is imposed.
+
+### Use of AI assistance
+
+OpenAI Codex was used to assist with literature searching, analysis code
+development and checking, and manuscript revision. Computational checks do not
+constitute independent scientific review. Human authors retain responsibility
+for the data interpretation, references, and submitted content.
+
+## Results
+
+### Cohort support
+
+The final cohort contains `r cohort$conditions` condition intervals on
+`r cohort$physical_plots` physical plots in `r cohort$counties` counties.
+There are `r cohort$new_saplings` qualifying saplings in
+`r cohort$recruit_conditions` conditions. Baseline measurements span
+`r calendar$baseline_year_min`–`r calendar$baseline_year_max`; follow-ups span
+`r calendar$followup_year_min`–`r calendar$followup_year_max`. Observed intervals
+range from `r sprintf("%.2f", calendar$interval_years_min)` to
+`r sprintf("%.2f", calendar$interval_years_max)` years, with median
+`r sprintf("%.1f", calendar$interval_years_median)`. Baseline microplot coverage
+ranges from `r percent(calendar$coverage_min)` to `r percent(calendar$coverage_max)`,
+with median `r percent(calendar$coverage_median)`.
+
+```{r}
+#| label: tbl-recruitment-flow
+#| tbl-cap: "Analysis support. The baseline-detected subset is nested within all eligible pairs; these are unweighted sample counts."
+support |> dplyr::transmute(Population = short_population(.data$population),
+  Conditions = .data$conditions, Plots = .data$physical_plots, Counties = .data$counties,
+  `With entry` = .data$events, `New saplings` = .data$new_saplings) |> knitr::kable()
+```
+
+All 100 recruit-bearing conditions had seedlings at baseline. The 250 eligible
+baseline-zero conditions had no qualifying entry, which does not establish a
+true probability of zero. Exact overlap retains 914 intervals and all 169
+entrants; the eight excluded nonexact intervals have no qualifying entrants.
+The full [cohort flow](../outputs/tables/recruitment-cohort-flow.csv) preserves
+source counts and alternative restrictions without presenting them as successive
+exclusions.
+
+### Seedling abundance and observed entry
+
+```{r}
+#| label: fig-recruitment-counts
+#| fig-cap: "Recorded new-sapling entry by baseline seedling count. Error bars resample whole counties; descriptive bins are not stocking thresholds."
+#| fig-alt: "Entry frequency rises with baseline seedling count, reaching approximately 26 percent among conditions with more than twenty recorded seedlings."
+#| out-width: "100%"
+knitr::include_graphics(here::here("outputs", "figures", "10_recruitment_counts.png"))
+```
+
+```{r}
+#| label: tbl-recruitment-counts
+#| tbl-cap: "Numerators and denominators for the abundance comparison."
+count_intervals |> dplyr::transmute(`Baseline count` = .data$count_group, Conditions = .data$conditions,
+  `With new tally` = .data$conditions_with_new_tally,
+  `Recorded entry` = percent(.data$recruitment_fraction),
+  `95% interval` = paste(percent(.data$lower), "to", percent(.data$upper))) |> knitr::kable()
+```
+
+Recorded entry rises from one of 82 conditions with one seedling to
+`r high$conditions_with_new_tally` of `r high$conditions`
+(`r percent(high$recruitment_fraction)`) with more than twenty. The remaining
+`r high$conditions - high$conditions_with_new_tally` high-count conditions have
+no qualifying new tally. These are observations on the sampled footprint, not
+stand-level failure rates. Neither the 20-count boundary nor one new sapling
+is an ecological adequacy threshold.
+
+Existing maple saplings also show a descriptive association: 86 of 567 conditions
+with baseline saplings record entry, compared with 14 of 355 without saplings.
+This unadjusted contrast does not measure their incremental predictive value.
+
+### Held out performance
+
+```{r}
+#| label: tbl-recruitment-cv-all
+#| tbl-cap: "County-held-out performance across all 922 eligible intervals. Lower Brier and log loss are better; AP denotes average precision."
+model_table("All eligible pairs")
+```
+
+```{r}
+#| label: tbl-recruitment-cv-positive
+#| tbl-cap: "County-held-out performance among 672 baseline seedling detections, with separately fitted models."
+model_table("Baseline seedlings detected")
+```
+
+The count model's AUC is `r sprintf("%.3f", all_count$roc_auc)` overall and
+`r sprintf("%.3f", positive_count$roc_auc)` among baseline detections.
+Adding maple stages yields `r sprintf("%.3f", all_stage$roc_auc)` and
+`r sprintf("%.3f", positive_stage$roc_auc)`, respectively. The lower conditional
+discrimination illustrates the harder task of distinguishing entry within
+already seedling-bearing conditions. Pooled ranking partly benefits from
+separating baseline zeros from positive counts.
+
+Count-model mean predicted probabilities are
+`r percent(all_count$mean_predicted_probability)` overall and
+`r percent(positive_count$mean_predicted_probability)` among baseline detections;
+observed fractions are `r percent(all_count$event_fraction)` and
+`r percent(positive_count$event_fraction)`. Corresponding observed-to-expected
+ratios are `r sprintf("%.3f", all_count$observed_expected_ratio)` and
+`r sprintf("%.3f", positive_count$observed_expected_ratio)`.
+Calibration slopes below one, especially within baseline detections, caution
+against interpreting near-matching average probabilities as established local
+calibration or transportability. Complete calibration diagnostics are retained
+in the [validation table](../outputs/tables/recruitment-model-validation.csv).
+
+```{r}
+#| label: tbl-recruitment-calibration
+#| tbl-cap: "Calibration of pooled county-held-out predictions. All denotes all 922 eligible intervals; Detected denotes the 672 baseline-detected intervals. O/E is observed events divided by summed predicted probabilities."
+cv |> dplyr::filter(.data$model != "Prevalence") |>
+  dplyr::transmute(Population = population_code(.data$population), Model = short_model(.data$model),
+    `Mean predicted` = percent(.data$mean_predicted_probability),
+    `Joint intercept` = sprintf("%.3f", .data$calibration_intercept),
+    Slope = sprintf("%.3f", .data$calibration_slope),
+    `O/E` = sprintf("%.3f", .data$observed_expected_ratio)) |> knitr::kable()
+```
+
+The count-model calibration slope is
+`r sprintf("%.3f", all_count$calibration_slope)` overall and
+`r sprintf("%.3f", positive_count$calibration_slope)` within detections;
+the stage-model slopes are `r sprintf("%.3f", all_stage$calibration_slope)`
+and `r sprintf("%.3f", positive_stage$calibration_slope)`. These point
+diagnostics suggest overly dispersed log-odds predictions, especially in
+the detected subset, but no calibration-parameter uncertainty intervals
+were estimated. Near-unit O/E describes average agreement and does not
+resolve probability errors within subgroups. Absolute Brier and AUC
+intervals are reported in the appendix; model comparisons use paired
+differences rather than overlap of separate marginal intervals.
+
+### Incremental information and matched capacity
+
+```{r}
+#| label: fig-recruitment-added-value
+#| fig-cap: "Paired Brier differences on matched observations, with full-refit county-bootstrap 95% intervals. Negative differences favor the added information."
+#| fig-alt: "Counts improve pooled Brier beyond observation design; added maple stages have small point improvements with intervals spanning zero in both populations."
+#| out-width: "100%"
+knitr::include_graphics(here::here("outputs", "figures", "11_recruitment_incremental_value.png"))
+```
+
+```{r}
+#| label: tbl-recruitment-differences
+#| tbl-cap: "Named model minus reference Brier differences. Intervals are percentile summaries, not equivalence tests."
+paired |> dplyr::filter(.data$metric == "brier_score") |>
+  dplyr::transmute(Population = short_population(.data$population),
+    Addition = ifelse(.data$model == "Seedling count and design", "Count to design", "Stages to count"),
+    Difference = sprintf("%.5f", .data$difference),
+    `95% interval` = sprintf("%.5f to %.5f", .data$lower, .data$upper)) |> knitr::kable()
+```
+
+Count addition improves pooled Brier by
+`r contrast("All eligible pairs", "Seedling count and design")`.
+Within baseline detections the difference is
+`r contrast("Baseline seedlings detected", "Seedling count and design")`;
+its interval crosses zero despite improved ranking. Stage additions produce
+small point improvements in both populations, with intervals spanning benefit
+and harm. This does not establish equivalence or demonstrate that stage
+information could never be useful.
+
+The probability scores do not give identical strength of evidence. Among
+baseline detections, count addition changes log loss by
+`r contrast("Baseline seedlings detected", "Seedling count and design", "log_loss")`,
+whose interval excludes zero even though the Brier interval crosses zero.
+Its AUC and AP contrasts also favor counts in the stored resampling results.
+Counts therefore improve ranking and log loss in that subset, while their
+average squared-error improvement is less certain. The metrics describe
+different aspects of predictive performance.
+
+For stage addition, the AUC differences are
+`r contrast("All eligible pairs", "Maple stages and design", "roc_auc")`
+overall and
+`r contrast("Baseline seedlings detected", "Maple stages and design", "roc_auc")`
+within detections. Stage-addition intervals for log loss and AP also cross
+zero. Thus, the higher stage-model point AUC does not establish a reliable
+increment over the count model. The appendix includes all matched log-loss,
+AUC, and AP contrasts, including results that qualify the headline finding.
+
+At the same highest-probability 25% capacity, the count model captures 60
+recruit-bearing conditions among 230 selected overall; the stage model captures
+58. Among baseline detections, the respective numbers are 44 and 43 among 168.
+Selection uses held-out probabilities and stable source-key tie breaking;
+tie-neutral results are also exported. This capacity is diagnostic, not a
+recommended survey rule or a measured fieldwork budget.
+
+### Sensitivities and temporal assessment
+
+Exact overlap, the declared penalty alternatives, and the recent-manual
+restriction do not reverse the broad discrimination pattern. The recent-manual
+restriction changes both the sample and calendar distribution; it is not an
+isolated experiment on protocol effects. The
+[complete sensitivity table](../outputs/tables/recruitment-model-sensitivities.csv)
+reports every fitted benchmark, denominator, and metric.
+
+```{r}
+#| label: tbl-recruitment-sensitivity-detail
+#| tbl-cap: "Fixed sensitivity comparisons on matched cases. Each Brier pair lists count then stage; the difference is stage minus count. No new uncertainty intervals were computed for these sensitivities."
+count_sensitivity <- sensitivity |> dplyr::filter(.data$model == "Seedling count and design")
+stage_sensitivity <- sensitivity |> dplyr::filter(.data$model == "Maple stages and design")
+matched_sensitivity <- dplyr::inner_join(count_sensitivity, stage_sensitivity,
+  by = c("population", "sensitivity", "observations", "events"), suffix = c("_count", "_stage"))
+stopifnot(nrow(matched_sensitivity) == 8L)
+matched_sensitivity |> dplyr::transmute(Population = population_code(.data$population),
+  Restriction = dplyr::recode(.data$sensitivity, "Exact mapped overlap" = "Exact overlap",
+    "Follow-up manual >=9" = "Manual at least 9", "Ridge lambda 4" = "Penalty 4", "Unpenalized" = "Penalty 0"),
+  `N / events` = paste(.data$observations, .data$events, sep = " / "),
+  `Brier count / stage` = sprintf("%.5f / %.5f", .data$brier_score_count, .data$brier_score_stage),
+  Difference = sprintf("%.5f", .data$brier_score_stage - .data$brier_score_count),
+  `AUC count / stage` = sprintf("%.3f / %.3f", .data$roc_auc_count, .data$roc_auc_stage)) |> knitr::kable()
+```
+
+The recent-manual restriction retains 787 intervals with 92 events overall
+and 573 with 92 events among baseline detections. Exact-overlap support is
+914 and 668 intervals, respectively, with all 100 events retained in each.
+The alternative penalties keep the original denominators. Stage-minus-count
+Brier differences remain negative at their point estimates, but this sign
+stability is not a new test of improvement. These analyses retain the
+original county assignments within each population and do not search for
+a more favorable fold partition.
+
+```{r}
+#| label: tbl-recruitment-temporal
+#| tbl-cap: "Retrospective later-year performance. Follow-ups before 2023 train the models; 2023 onward test them."
+temporal |> dplyr::transmute(Population = short_population(.data$population), Model = short_model(.data$model),
+    `Test N` = .data$observations, Events = .data$events,
+    Brier = sprintf("%.5f", .data$brier_score),
+    AUC = ifelse(is.na(.data$roc_auc), "Not ranked", sprintf("%.3f", .data$roc_auc))) |> knitr::kable()
+```
+
+Training contains 547 intervals and 59 event-bearing conditions overall;
+testing contains 375 intervals and 41 event-bearing conditions. The
+baseline-detected counterparts contain 397 and 275 intervals, with the same
+event counts. No physical plot crosses the split. Stage-model test AUC is
+approximately 0.807 overall and 0.721 within baseline detections.
+This single retrospective split has no paired bootstrap uncertainty assessment
+and does not establish future-inventory or out-of-state performance. The
+[split support table](../outputs/tables/recruitment-model-temporal-support.csv)
+reports the changing calendar, manual, interval, plot, and county distributions.
+
+Overall, training comprises 535 plots in 55 counties and testing comprises
+368 plots in 49 counties. The detected subset comprises 395 training plots
+in 41 counties and 272 test plots in 36 counties. Median duration is seven
+years in all four groups. Follow-up manuals range from 8 to 9 in training
+and from 9 to 9.4 in testing; all test intervals use manual 9 or later.
+The split therefore evaluates both calendar change and changes in sample
+composition. Counties can recur across years even though physical plots do
+not, distinguishing this assessment from the county-held-out analysis.
+
+### Linked sapling fates
+
+Of 1,593 live tagged baseline maple saplings, 1,580 have comparable biological
+fates. Nine stems fail frame consistency, three living stems are reidentified
+as red maple, and one is no longer sampled under a cruiser-error reconciliation.
+These 13 remain in the accounting but are not assigned biological outcomes.
+
+```{r}
+#| label: tbl-recruitment-fates
+#| tbl-cap: "Tagged baseline saplings with comparable biological fates. Thirteen additional source stems are excluded for the reasons described in the text."
+fates |> dplyr::filter(.data$fate_eligible) |>
+  dplyr::group_by(.data$fate) |>
+  dplyr::summarise(Stems = sum(.data$trees), .groups = "drop") |>
+  dplyr::mutate(`Share of comparable stems` = percent(.data$Stems / sum(.data$Stems))) |>
+  dplyr::rename(`Recorded state` = .data$fate) |> knitr::kable()
+```
+
+The 58 larger live stems advanced out of the sapling size class rather than
+died. Among the 1,246 comparable surviving maples, median annual diameter
+difference is `r sprintf("%.4f", growth$median_increment_inches_year)` inches
+per year. There are `r growth$zero_increment` zero and
+`r growth$negative_increment` negative differences. Rounding,
+measurement-point changes, and survivor selection limit interpretation.
+These observations cannot establish suppression, cohort age, or future
+canopy replacement; individual stem numbers are not independent sample sizes.
+
+The 10th and 90th percentiles of annual diameter difference are
+`r sprintf("%.4f", growth$p10)` and `r sprintf("%.4f", growth$p90)` inches
+per year. Zero differences represent `r percent(growth$zero_increment / growth$survivors)`
+of comparable survivors and negative differences represent
+`r percent(growth$negative_increment / growth$survivors)`. These are
+unweighted stem summaries over variable intervals, not fitted growth curves
+or county-adjusted mortality estimates. Neither uncertainty intervals for
+fate proportions nor a predictor-based mortality model were estimated.
+
+### Secondary survey priority comparison {#survey-priority-comparison}
+
+A separate retrospective diagnostic asks whether model rankings concentrate
+conditions with baseline seedlings but no recorded entry. This outcome occurs
+in 572 of 672 conditions; it is not independently established survey need.
+At a fixed 168-condition capacity, expected no-entry capture is 143 under
+random selection, 162 under low raw count, 160 under the count model, and 163
+under the stage model. Cutoff ties are integrated rather than favorably ordered.
+
+```{r}
+#| label: tbl-recruitment-survey-detail
+#| tbl-cap: "All six fixed no-entry selection strategies among 672 baseline detections at a capacity of 168 conditions. Expected targets integrate cutoff ties; the interval describes the selected target fraction, not a paired strategy difference."
+survey_primary |> dplyr::transmute(Strategy = .data$policy,
+  `Expected targets` = sprintf("%.2f", .data$expected_targets),
+  `Selected target fraction` = percent(.data$selected_target_fraction),
+  `95% interval` = paste(percent(.data$lower), "to", percent(.data$upper)),
+  `All targets captured` = percent(.data$target_capture_fraction)) |> knitr::kable()
+```
+
+For the no-entry target, raw counts and predicted entry probabilities are
+ranked from low to high. Coverage-normalized count and absence of baseline
+saplings provide two additional simple comparators. Expected yield includes
+every condition strictly beyond the selection cutoff and assigns the
+remaining places uniformly within the cutoff tie. Fractional expected
+targets therefore express tie averaging, not fractional observed conditions.
+For each strategy, selected target fraction divides expected targets by
+168; target capture divides by all 572 no-entry conditions. These answer
+different questions. Random selection has a high expected yield because
+85.1% of the eligible detected subset already meets this descriptive target.
+
+The stage-minus-raw-count difference in selected target fraction is +0.60
+percentage points, with a 95% full-refit county-bootstrap interval of −3.66
+to +2.28. A separate 300 resamples per population all succeed. In later-year
+testing, raw counts yield 65.18 expected targets among 68 selected, versus 65
+for either model. The one-condition point gain is not a demonstrated decision
+advantage. Raw-count selection covers 168 plots versus 167 for the stage model,
+so equal condition capacity is not equal field cost.
+
+The opposite target of locating entrants yields 41 for high raw counts, 44 for
+the count model, and 43 for the stage model among 168 selected baseline
+detections. Fixed 10% and 50% capacities likewise do not establish stage-model
+dominance. A common seven-year scoring sensitivity changes predictions but not
+the observed variable-duration outcomes, so it cannot validate seven-year
+probabilities. Full [strategy results](../outputs/tables/recruitment-survey-summary.csv),
+[paired uncertainty](../outputs/tables/recruitment-survey-paired-differences.csv),
+[temporal selection](../outputs/tables/recruitment-survey-temporal.csv), and
+[common-horizon comparisons](../outputs/tables/recruitment-survey-common-horizon.csv)
+are retained. Meaningful net benefit requires defensible consequences of errors
+[@vickers2006]; no forest-survey utility threshold is assumed here.
+
+### Secondary length measurement audit
+
+The [RI measurement audit](ri-audit.qmd) retains 90 baseline intervals with
+14 recruit-bearing conditions. Ordinary counts equal RI classes at least one
+foot long on all 311 matched microplot-condition intervals. Thus, length
+distribution—not the collapsed RI total—is the potential extra measurement.
+Thirteen events occur among 44 conditions with baseline seedlings at least
+five feet long, versus one among 46 without them. This is an unadjusted
+descriptive contrast, not a paired held-out improvement over counts.
+
+Only ten development events and four later-year events are available. No height
+model is fitted. Annual 2016–2018 supplements were inspected, including an
+archived 2016 draft; individual 2012–2015 supplements remain an access gap.
+These qualifications constrain the secondary RI finding, not completion of
+the ordinary-count and linked-fate analyses.
+
+## Discussion
+
+Ordinary seedling counts contain information about recorded sapling entry in
+this selected Michigan sample. The count gradient and pooled probability-loss
+improvement argue against dismissing standard tallies as uninformative.
+However, discrimination is weaker within baseline detections, and its paired
+Brier improvement is uncertain. Abundant seedlings therefore indicate a higher
+chance of observing entry without establishing a secure advancing cohort.
+
+The added maple-stage predictors produce only small, uncertain improvements
+over a strong count benchmark. They do not improve captured entrants at the
+tested equal capacity, and their survey-priority point gain over raw counts
+is not reproduced in the later-year comparison. These are substantive limits
+of the tested predictors and models, not reasons to continue adding variables
+until a preferred explanation appears. Uncertainty spanning zero is not proof
+of no effect, practical equivalence, or irrelevance under every model form.
+
+In particular, existing sapling density and larger-tree basal area do not
+measure the height distribution of seedlings approaching the sapling boundary.
+Their uncertain incremental value therefore does not contradict evidence for
+height-resolved inventories [@harris2022]. Our additive, transformed linear
+predictors also leave nonlinear responses and interactions untested. The
+results limit the specific benchmark models evaluated here, not all possible
+uses of stage structure.
+
+The fate analysis explains why size-class absence and mortality must remain
+distinct. Surviving stems can move beyond the sapling boundary, while species
+reidentification and sampling corrections also alter apparent stage membership.
+Conversely, a new live sapling at one revisit does not measure all arrivals
+during the interval, adequate stocking, genetic origin, or subsequent survival
+to the canopy. Neither record-based endpoint supports a causal claim about
+browsing, competitors, or management.
+
+### Scope and limitations
+
+The target is retained sampled conditions, not all Michigan forests. Baseline
+ecological selection, current-evaluation membership, accessible forest,
+remeasurement, comparable area, and unambiguous records restrict inclusion.
+The exclusion audit protects outcome interpretation but does not remove
+selection bias. County grouping addresses part of the dependence structure;
+it does not provide survey weights or independent experimental replication.
+The main scores give each condition interval equal weight, so plots contributing
+more than one condition receive more total evaluation weight.
+
+Finite event support, estimated seedling tallies, varying sampled area and
+exposure duration, model-form choices, incomplete historical manual review,
+and one previously explored snapshot limit generalization. Resampling does
+not correct all of these limitations. Near-matching mean predicted and observed
+event fractions is not evidence of calibration everywhere, and the retrospective
+temporal split is not an untouched external test.
+
+The two analysis populations are nested and do not provide independent
+replications. Observed entry combines growth into the defined diameter class,
+survival until remeasurement, and recording on a small sampled footprint.
+Zero recorded entry cannot distinguish slow growth from mortality or absence
+of suitable seedlings. Likewise, the tagged-stem fate sample does not follow
+the untagged baseline seedlings; it cannot decompose their failure to enter
+the sapling class. Unmeasured browsing, understory competition, and disturbance
+may influence these processes, but this analysis does not estimate their effects.
+
+### Implications and optional future work
+
+The practical implication is to retain simple count-based benchmarks and state
+precisely what they predict. A management tool would additionally require a
+defined action, independently assessed survey need or treatment response,
+consequences of errors, and relevant external evaluation. No operational
+ranking or intervention rule is released.
+
+Length structure is a plausible follow-on hypothesis motivated by earlier FIA
+work [@harris2022], not the unfulfilled central objective of this paper.
+A [separate design](length-study.qmd) specifies a matched count-versus-length
+comparison and evaluation safeguards. Regional inventory acquisition and
+field validation are deferred extensions. Wisconsin or Minnesota data are not
+required to complete the bounded Michigan results, and no regional outcome or
+height-model result is claimed. The earlier beech association concerned
+seedling-detection loss and remains in the supporting pilot; it is not recast
+as a recruitment mechanism.
+
+## Conclusion
+
+Standard FIA seedling counts provide limited information about next-visit
+recorded sugar-maple sapling entry in selected Michigan northern hardwood
+conditions. Existing maple sapling density and established-maple basal area
+show no clear incremental improvement over the count benchmark under the
+specified comparisons. Linked tagged-stem accounting separately identifies
+recorded death, persistent live saplings, and surviving advancement beyond the
+sapling class. The core finding is an evidence-based boundary on what these
+common observations establish—not a claim of regeneration adequacy, biological
+failure, or validated management usefulness.
+
+## Reproducibility and evidence
+
+### Data and code availability
+
+The underlying public inventory is distributed through the USDA Forest Service
+FIA DataMart [@usfs_datamart]. The analysis uses Michigan evaluation 262501
+and the source archive identified by SHA-256
+`2c1eb908a47436d4edd0f3ba9e3d647b79a4f36cef972c5ba83277300817aee1`.
+The state download URL is updated over time; the evaluation identifier alone
+does not fix every source record. Reproducing the reported results therefore
+requires the identified snapshot, not an unchecked current download.
+
+Analysis scripts, configuration, an R dependency lockfile, aggregate tables,
+and figure data are publicly available in the
+[project repository](https://github.com/dineshpotla/canopy-to-cohort).
+Record-level derived
+datasets and predictions remain local. Exact FIA plot locations are neither
+used nor inferred. A version-specific public archive for the recruitment
+analysis has not yet been assigned; the earlier project release is not a
+release of these revised results.
+
+### Computational workflow
+
+The canonical manuscript, endpoint definitions, analysis contracts, aggregate
+tables, figures, and tests are maintained together. The
+[seedling-detection pilot](index.qmd) is preserved as a distinct exploratory
+analysis. With the pinned source and longitudinal cohort already built, run:
+
+```bash
+make recruitment-core
+make test
+make submission-audit
+make report
+```
+
+The core target rebuilds the endpoint, fixed models, figures, survey diagnostic,
+RI audits, and manuscript reconciliation. It does not download another state
+or fit a length model. `make paper-audit` independently recomputes manuscript
+metrics from stored held-out predictions and checks the exported evidence.
+
+Aggregate [paper support](../outputs/tables/recruitment-paper-support.csv),
+[numerical checks](../outputs/audits/recruitment-paper-checks.csv),
+[paired model differences](../outputs/tables/recruitment-model-paired-differences.csv),
+[fate accounting](../outputs/audits/recruitment-sapling-fates.csv), and
+[figure data](../outputs/tables/recruitment-model-count-strata-intervals.csv)
+accompany the manuscript. Raw inventories, record-level derived data, and
+predictions remain local and excluded from version control.
+The [evidence notes](../research/README.md) record source access and
+interpretation limits. Numerical cross-checks assess computational consistency;
+they do not replace scientific review or establish external validity.
+
+## Analytical appendix
+
+### County fold support and fitting diagnostics
+
+The appendix expands the same fixed analysis reported in the main text.
+All denotes the 922 eligible intervals and Detected denotes the 672 intervals
+with baseline seedlings. An event is a condition with at least one qualifying
+new sapling, not the number of saplings. The population-specific partitions
+and all model comparisons were fixed before the recruitment fits; earlier
+exploration of the source data is acknowledged in Methods.
+
+```{r}
+#| label: tbl-recruitment-fold-support
+#| tbl-cap: "Training and held-out support for each county fold. Every model within a population uses these same rows and outcomes."
+fold_diagnostics |> dplyr::filter(.data$model == "Seedling count and design") |>
+  dplyr::transmute(Population = population_code(.data$population), Fold = .data$fold,
+    `Train N / events` = paste(.data$training_n, .data$training_events, sep = " / "),
+    `Test N / events` = paste(.data$test_n, .data$test_events, sep = " / "),
+    `Test counties` = .data$test_counties) |> knitr::kable()
+```
+
+All `r nrow(fold_diagnostics)` original county-held-out model fits converged.
+The largest final absolute gradient component was
+`r sprintf("%.2e", max(fold_diagnostics$max_gradient))`, and the largest
+absolute coefficient was
+`r sprintf("%.3f", max(fold_diagnostics$max_absolute_coefficient))`.
+All 300 county-refit bootstrap draws in each population succeeded.
+Convergence establishes numerical completion of the specified objective;
+it does not establish an adequate sample size, a correct ecological model,
+or independent observations. The second numerical implementation described
+in the reproducibility handoff checks 40 county-held-out and eight temporal
+point-prediction fits, but does not replay the bootstrap intervals.
+
+### Absolute performance uncertainty
+
+```{r}
+#| label: tbl-recruitment-absolute-intervals
+#| tbl-cap: "Absolute held-out performance with 95% full-refit county-bootstrap intervals. Separate intervals describe each model, not the uncertainty of its difference from another model."
+cv |> dplyr::transmute(Population = population_code(.data$population),
+  Model = short_model(.data$model),
+  `Brier estimate and interval` = mapply(model_interval, .data$population, .data$model,
+    MoreArgs = list(metric = "brier_score", digits = 5)),
+  `AUC estimate and interval` = mapply(model_interval, .data$population, .data$model,
+    MoreArgs = list(metric = "roc_auc", digits = 3))) |> knitr::kable()
+```
+
+The wide within-detection AUC intervals reflect uncertainty in separating
+100 event conditions from 572 nonevent conditions under county resampling.
+No rank score is assigned to the fold-specific prevalence benchmark.
+These intervals retain fixed model choices, penalty, and county partition;
+they are not repeated-study coverage guarantees across new inventories.
+
+### Paired ranking and log loss contrasts
+
+```{r}
+#| label: tbl-recruitment-extended-contrasts
+#| tbl-cap: "Additional paired contrasts from the same 300 full-refit county draws per population. Negative log loss and positive AUC or AP differences favor the added information."
+paired |> dplyr::filter(.data$metric %in% c("log_loss", "roc_auc", "average_precision")) |>
+  dplyr::arrange(.data$population, .data$model, .data$metric) |>
+  dplyr::transmute(Population = population_code(.data$population),
+    Addition = ifelse(.data$model == "Seedling count and design", "Count to design", "Stages to count"),
+    Metric = dplyr::recode(.data$metric, "log_loss" = "Log loss", "roc_auc" = "AUC", "average_precision" = "AP"),
+    Difference = sprintf("%.4f", .data$difference),
+    `95% interval` = sprintf("%.4f to %.4f", .data$lower, .data$upper)) |> knitr::kable()
+```
+
+These are correlated comparisons on the same outcomes. They supplement the
+emphasis on Brier contrasts and have not been corrected for multiplicity.
+Differences are paired within each bootstrap draw; subtracting limits from
+the preceding absolute-interval table would not reproduce them.
+
+### Full population penalized coefficients
+
+```{r}
+#| label: tbl-recruitment-coefficients
+#| tbl-cap: "Full-population ridge coefficients on the standardized log-odds scale. Each column uses its own population's centers and scales. These are descriptive coefficients, not held-out effect estimates."
+coefficients |> dplyr::select(.data$model, .data$term, .data$population,
+    .data$penalized_log_odds_coefficient) |>
+  dplyr::mutate(population = population_code(.data$population)) |>
+  tidyr::pivot_wider(names_from = "population", values_from = "penalized_log_odds_coefficient") |>
+  dplyr::transmute(Model = short_model(.data$model),
+    Term = dplyr::recode(.data$term, "(Intercept)" = "Intercept",
+      "z_coverage" = "Coverage", "z_interval" = "Interval",
+      "z_seedling_count" = "Log seedling count", "z_sapling_tpa" = "Log sapling density",
+      "z_established_ba" = "Log established basal area"),
+    All = sprintf("%.4f", .data$All), Detected = sprintf("%.4f", .data$Detected)) |> knitr::kable()
+```
+
+A slope describes the fitted log-odds change per one population-specific
+standard deviation of the listed transformed predictor, with other terms
+held fixed. It is not a per-seedling effect or a causal response to changing
+the forest. Intercepts correspond to the population's centered predictors.
+Centers and scales for these descriptive fits remain in the saved model
+bundle; county-held-out fits use their own training-only scaling instead.
+
+The positive seedling-count and sapling-density slopes and the near-zero
+established-basal-area slopes describe these fitted models. They do not
+provide coefficient uncertainty, tests of biological importance, or a
+variable-importance ranking that accounts for correlated predictors.
+The predictive claim depends on held-out model contrasts, not on whether
+an individual fitted coefficient is positive or near zero.
+
+### Joint count and sapling strata
+
+```{r}
+#| label: tbl-recruitment-joint-strata
+#| tbl-cap: "Unadjusted joint distribution of baseline counts, existing saplings, and recorded entry in all eligible intervals. Cells are descriptive, not randomized or matched comparisons."
+joint_strata |> dplyr::transmute(`Baseline count` = .data$count_group,
+  `Existing saplings` = ifelse(.data$saplings_present, "Present", "Absent"),
+  Conditions = .data$conditions, `With entry` = .data$conditions_with_new_tally,
+  `Entry fraction` = percent(.data$recruitment_fraction)) |> knitr::kable()
+```
+
+In the greater-than-20 count bin, entry occurs in 59 of 202 conditions with
+existing saplings and 13 of 78 without them. This association motivates
+examining stage structure but does not establish additional predictive
+information after adjustment. Sparse and zero-event cells make their
+observed rates particularly uncertain. The bins were not optimized as
+ecological thresholds, and this cross-tabulation has no fitted interaction
+test or cell-specific uncertainty analysis.
+
+### Boundaries of the secondary evidence
+
+The RI comparison is a measurement audit on a smaller, partially overlapping
+sample, not a second validation of the main model. On matched microplot
+area, the ordinary count equals the sum of RI classes at least one foot
+long. The all-length RI total also includes shorter seedlings, so comparing
+that total directly with the ordinary count would change the measurement
+definition. The observed tall-seedling contrast is not adjusted for ordinary
+counts, existing maple stages, sampled coverage, or temporal differences.
+Four later-year events cannot support the proposed added-length evaluation
+as if it were a well-powered held-out comparison.
+
+The existing survey analysis tests fixed rankings and capacities against
+recorded outcomes. It does not measure travel time, treatment response,
+independent survey need, or the cost of a wrong decision. No deer-harvest,
+browsing, climate, or disturbance dataset has been joined to the core
+models. Those external-factor acquisition notes therefore supply neither
+an omitted adjusted effect nor additional validation for this paper.
+
+## References
+
+::: {#refs}
+:::

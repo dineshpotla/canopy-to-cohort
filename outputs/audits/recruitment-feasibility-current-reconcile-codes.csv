@@ -1,0 +1,9 @@
+reconcilecd,diameter_stage,previous_tree_link,records
+1,1 to less than 5 inches,FALSE,171
+1,At least 5 inches,FALSE,621
+3,At least 5 inches,FALSE,1
+7,1 to less than 5 inches,FALSE,2
+7,At least 5 inches,FALSE,5
+9,At least 5 inches,FALSE,2
+NA,1 to less than 5 inches,TRUE,1195
+NA,At least 5 inches,TRUE,10517

@@ -1,0 +1,3 @@
+resamples_requested,resamples_succeeded,resamples_failed,seed,uncertainty_scope,population
+300,300,0,20260908,"County-cluster percentile bootstrap with training scaling and all cross-validation fits repeated; fixed original county-fold assignment, fixed model set and lambda; excludes model-choice and snapshot-selection uncertainty",All eligible pairs
+300,300,0,20260908,"County-cluster percentile bootstrap with training scaling and all cross-validation fits repeated; fixed original county-fold assignment, fixed model set and lambda; excludes model-choice and snapshot-selection uncertainty",Baseline seedlings detected

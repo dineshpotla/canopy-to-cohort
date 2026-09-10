@@ -1,0 +1,5 @@
+count_group,conditions,losses,observed_loss_fraction,fraction_of_all_losses,median_raw_count,median_microplot_coverage,minimum_microplot_coverage,maximum_microplot_coverage
+1 tallied seedling,82,34,0.4146341463414634,0.4533333333333333,1,1,0.25,1
+2-5 tallied seedlings,129,26,0.20155038759689922,0.3466666666666667,3,1,0.15785,1
+6-20 tallied seedlings,183,12,0.06557377049180328,0.16,11,1,0.25,1
+>20 tallied seedlings,283,3,0.01060070671378092,0.04,53,1,0.25,1

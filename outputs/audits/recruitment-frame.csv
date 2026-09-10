@@ -1,0 +1,4 @@
+shared_microplot_sampled,shared_subplot_predecessor_matches,frame_proportions_valid,direct_subplot_predecessors_available,exact_overlap,recruits_outside_shared_subplots,condition_intervals
+TRUE,TRUE,FALSE,FALSE,FALSE,0,9
+TRUE,TRUE,TRUE,FALSE,FALSE,0,8
+TRUE,TRUE,TRUE,FALSE,TRUE,0,915
