@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-10">
+<meta name="description" content="Seedling abundance, sapling recruitment, and the fate of tagged sugar maples in Michigan FIA plots.">
+
+<title>Ordinary seedling counts and recorded sugar maple sapling recruitment in Michigan northern hardwoods – Canopy to Cohort</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5685cd926c25366c96d9f1407e584118.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Ordinary seedling counts and recorded sugar maple sapling recruitment in Michigan northern hardwoods – Canopy to Cohort">
+<meta property="og:description" content="Seedling abundance, sapling recruitment, and the fate of tagged sugar maples in Michigan FIA plots.">
+<meta property="og:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/10_recruitment_counts.png">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta property="og:image:height" content="972">
+<meta property="og:image:width" content="1620">
+<meta name="twitter:title" content="Ordinary seedling counts and recorded sugar maple sapling recruitment in Michigan northern hardwoods – Canopy to Cohort">
+<meta name="twitter:description" content="Seedling abundance, sapling recruitment, and the fate of tagged sugar maples in Michigan FIA plots.">
+<meta name="twitter:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/10_recruitment_counts.png">
+<meta name="twitter:image-height" content="972">
+<meta name="twitter:image-width" content="1620">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Canopy to Cohort</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../report/recruitment.html" aria-current="page"> 
+<span class="menu-text">Recruitment study</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../report/index.html"> 
+<span class="menu-text">Detection pilot</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/research-direction.html"> 
+<span class="menu-text">Research direction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/analysis-decisions.html"> 
+<span class="menu-text">Analysis decisions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dineshpotla/canopy-to-cohort"> <i class="bi bi-github" role="img" aria-label="GitHub repository">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-in-plain-language" id="toc-findings-in-plain-language" class="nav-link active" data-scroll-target="#findings-in-plain-language">Findings in plain language</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#study-implications" id="toc-study-implications" class="nav-link" data-scroll-target="#study-implications">Study implications</a></li>
+  <li><a href="#research-context" id="toc-research-context" class="nav-link" data-scroll-target="#research-context">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#source-and-cohort" id="toc-source-and-cohort" class="nav-link" data-scroll-target="#source-and-cohort">Source and cohort</a></li>
+  <li><a href="#recorded-recruitment-endpoint" id="toc-recorded-recruitment-endpoint" class="nav-link" data-scroll-target="#recorded-recruitment-endpoint">Recorded recruitment endpoint</a></li>
+  <li><a href="#predictors-and-fixed-comparisons" id="toc-predictors-and-fixed-comparisons" class="nav-link" data-scroll-target="#predictors-and-fixed-comparisons">Predictors and fixed comparisons</a></li>
+  <li><a href="#validation-and-uncertainty" id="toc-validation-and-uncertainty" class="nav-link" data-scroll-target="#validation-and-uncertainty">Validation and uncertainty</a></li>
+  <li><a href="#linked-sapling-fates" id="toc-linked-sapling-fates" class="nav-link" data-scroll-target="#linked-sapling-fates">Linked sapling fates</a></li>
+  <li><a href="#use-of-ai-assistance" id="toc-use-of-ai-assistance" class="nav-link" data-scroll-target="#use-of-ai-assistance">Use of AI assistance</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#cohort-support" id="toc-cohort-support" class="nav-link" data-scroll-target="#cohort-support">Cohort support</a></li>
+  <li><a href="#seedling-abundance-and-observed-entry" id="toc-seedling-abundance-and-observed-entry" class="nav-link" data-scroll-target="#seedling-abundance-and-observed-entry">Seedling abundance and observed entry</a></li>
+  <li><a href="#held-out-performance" id="toc-held-out-performance" class="nav-link" data-scroll-target="#held-out-performance">Held out performance</a></li>
+  <li><a href="#incremental-information-and-matched-capacity" id="toc-incremental-information-and-matched-capacity" class="nav-link" data-scroll-target="#incremental-information-and-matched-capacity">Incremental information and matched capacity</a></li>
+  <li><a href="#sensitivities-and-temporal-assessment" id="toc-sensitivities-and-temporal-assessment" class="nav-link" data-scroll-target="#sensitivities-and-temporal-assessment">Sensitivities and temporal assessment</a></li>
+  <li><a href="#linked-sapling-fates-1" id="toc-linked-sapling-fates-1" class="nav-link" data-scroll-target="#linked-sapling-fates-1">Linked sapling fates</a></li>
+  <li><a href="#survey-priority-comparison" id="toc-survey-priority-comparison" class="nav-link" data-scroll-target="#survey-priority-comparison">Secondary survey priority comparison</a></li>
+  <li><a href="#secondary-length-measurement-audit" id="toc-secondary-length-measurement-audit" class="nav-link" data-scroll-target="#secondary-length-measurement-audit">Secondary length measurement audit</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
+  <ul class="collapse">
+  <li><a href="#scope-and-limitations" id="toc-scope-and-limitations" class="nav-link" data-scroll-target="#scope-and-limitations">Scope and limitations</a></li>
+  <li><a href="#implications-and-optional-future-work" id="toc-implications-and-optional-future-work" class="nav-link" data-scroll-target="#implications-and-optional-future-work">Implications and optional future work</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#reproducibility-and-evidence" id="toc-reproducibility-and-evidence" class="nav-link" data-scroll-target="#reproducibility-and-evidence">Reproducibility and evidence</a>
+  <ul class="collapse">
+  <li><a href="#data-and-code-availability" id="toc-data-and-code-availability" class="nav-link" data-scroll-target="#data-and-code-availability">Data and code availability</a></li>
+  <li><a href="#computational-workflow" id="toc-computational-workflow" class="nav-link" data-scroll-target="#computational-workflow">Computational workflow</a></li>
+  </ul></li>
+  <li><a href="#analytical-appendix" id="toc-analytical-appendix" class="nav-link" data-scroll-target="#analytical-appendix">Analytical appendix</a>
+  <ul class="collapse">
+  <li><a href="#county-fold-support-and-fitting-diagnostics" id="toc-county-fold-support-and-fitting-diagnostics" class="nav-link" data-scroll-target="#county-fold-support-and-fitting-diagnostics">County fold support and fitting diagnostics</a></li>
+  <li><a href="#absolute-performance-uncertainty" id="toc-absolute-performance-uncertainty" class="nav-link" data-scroll-target="#absolute-performance-uncertainty">Absolute performance uncertainty</a></li>
+  <li><a href="#paired-ranking-and-log-loss-contrasts" id="toc-paired-ranking-and-log-loss-contrasts" class="nav-link" data-scroll-target="#paired-ranking-and-log-loss-contrasts">Paired ranking and log loss contrasts</a></li>
+  <li><a href="#full-population-penalized-coefficients" id="toc-full-population-penalized-coefficients" class="nav-link" data-scroll-target="#full-population-penalized-coefficients">Full population penalized coefficients</a></li>
+  <li><a href="#joint-count-and-sapling-strata" id="toc-joint-count-and-sapling-strata" class="nav-link" data-scroll-target="#joint-count-and-sapling-strata">Joint count and sapling strata</a></li>
+  <li><a href="#boundaries-of-the-secondary-evidence" id="toc-boundaries-of-the-secondary-evidence" class="nav-link" data-scroll-target="#boundaries-of-the-secondary-evidence">Boundaries of the secondary evidence</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/recruitment.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ordinary seedling counts and recorded sugar maple sapling recruitment in Michigan northern hardwoods</h1>
+</div>
+
+<div>
+  <div class="description">
+    Seedling abundance, sapling recruitment, and the fate of tagged sugar maples in Michigan FIA plots.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 10, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="findings-in-plain-language" class="level2">
+<h2 class="anchored" data-anchor-id="findings-in-plain-language">Findings in plain language</h2>
+<p>More seedlings were a useful clue to later sapling entry, but not a guarantee: only 72 of 280 sampled forest conditions with more than 20 seedlings initially had a new live maple sapling recorded at the next visit. Adding measurements of existing maple saplings and larger maples did not clearly improve prediction. Separately, following tagged saplings showed that some left the size class by growing, not dying.</p>
+<p>Here, a sapling has a trunk at least 1 inch but less than 5 inches in diameter at breast height. A new recorded sapling is not an individually tracked baseline seedling. These sample results do not establish statewide regeneration rates, diagnose why entry was absent, or identify a forest treatment.</p>
+<p><a href="../index.html">Project overview</a> · <a href="https://github.com/dineshpotla/canopy-to-cohort">Code and aggregate evidence</a></p>
+</section>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>We examined whether ordinary Forest Inventory and Analysis (FIA) seedling counts predict recorded sugar-maple (<em>Acer saccharum</em>) sapling recruitment in Michigan northern hardwoods and whether existing maple size structure improves prediction. The cohort contained 922 intervals on 903 physical plots across 66 counties, with baseline visits in 2011–2018 and follow-ups in 2018–2025; 169 new live saplings occurred in 100 conditions. We compared four prespecified logistic models using county-level cross-validation and 300 county-bootstrap resamples per population with model refitting. After accounting for sampled coverage and elapsed time, count-model AUC was 0.796 overall and 0.699 among 672 conditions with baseline seedlings. Counts improved Brier score relative to observation design alone, although the improvement among conditions with seedlings was uncertain. Adding maple sapling density and established-maple basal area changed Brier score by -0.00163 (95% interval -0.00529 to 0.00263) overall; the corresponding interval among conditions with seedlings also crossed zero. Separately, 1,580 comparable tagged saplings included 334 recorded deaths, 1,188 live saplings, and 58 live stems reaching 12.7 cm diameter. Seedling counts were informative about recorded entry, but the additional value of maple size structure was uncertain. These retrospective, unweighted comparisons do not establish regeneration adequacy or justify an operational management rule.</p>
+</section>
+<section id="study-implications" class="level2">
+<h2 class="anchored" data-anchor-id="study-implications">Study implications</h2>
+<p>Seedling counts were associated with new sugar-maple saplings recorded at the next inventory, but abundant seedlings do not establish successful replacement of canopy trees. In this Michigan sample, adding the abundance of existing maple saplings and larger maples did not clearly improve prediction over counts alone. Managers should distinguish recorded sapling entry from adequate regeneration and retain simple benchmarks when evaluating more elaborate indicators. The study does not identify a treatment, diagnose deer damage, or validate a rule for allocating field visits.</p>
+</section>
+<section id="research-context" class="level2">
+<h2 class="anchored" data-anchor-id="research-context">Introduction</h2>
+<p>Successful regeneration requires seedlings to advance into larger size classes. Michigan field studies describe plentiful small seedlings alongside limited larger regeneration <span class="citation" data-cites="henry2021">(<a href="#ref-henry2021" role="doc-biblioref">Henry et al. 2021</a>)</span>. Sugar-maple age structure in managed northern hardwoods also shows that small-diameter stems may be old; existing saplings do not necessarily represent recent establishment <span class="citation" data-cites="henry2023">(<a href="#ref-henry2023" role="doc-biblioref">Henry and Walters 2023</a>)</span>. These studies differ from standard FIA in their stand samples and size definitions, so their estimates cannot be treated as statewide rates for the cohort examined here.</p>
+<p>Previous FIA research has examined the relationship between seedling measurements and subsequent recruitment. Harris and colleagues compared one seedling class with six height classes using boosted regression trees, including conspecific sapling abundance and tree basal area as candidate predictors. Their species-specific analyses were restricted to subplots with baseline seedlings, and taller seedlings were particularly informative <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span>. Their work provides a basis for evaluating the contribution of both seedling measurements and existing conspecific size classes. Recent northeastern studies distinguish small-seedling composition from established sapling abundance <span class="citation" data-cites="harris2026">(<a href="#ref-harris2026" role="doc-biblioref">Harris et al. 2026b</a>)</span> and examine recovery after disturbance over longer intervals <span class="citation" data-cites="harris2026disturbance">(<a href="#ref-harris2026disturbance" role="doc-biblioref">Harris et al. 2026a</a>)</span>.</p>
+<p>We examine how much information routinely available seedling counts provide about recorded sapling entry after accounting for sampled coverage and the time between inventories. We then test whether existing maple saplings and larger trees improve prediction on the same observations. This regional comparison complements earlier FIA studies while distinguishing recruitment from changes in the status of previously tagged saplings. Differences in subplot populations, seedling definitions, and validation procedures prevent direct comparison with published AUC values from studies using regeneration indicator (RI) measurements.</p>
+<p>The primary objectives were to quantify the predictive contribution of ordinary seedling counts, assess the additional contribution of maple sapling density and established-maple basal area, and describe the subsequent fates of tagged baseline saplings. We also evaluated fixed survey-selection strategies and examined the comparability of ordinary counts with RI length measurements. These secondary analyses address possible applications and measurement extensions of the main study.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="source-and-cohort" class="level3">
+<h3 class="anchored" data-anchor-id="source-and-cohort">Source and cohort</h3>
+<p>The study uses the pinned Michigan FIADB SQLite snapshot and current-evaluation cohort, EVALID 262501, rather than all historical intervals. Baseline ecological eligibility is accessible northern hardwood forest (type group 800) with live established sugar maple at least five inches diameter. The selected baseline forest-type codes are 801, 802, 805, and 809. Follow-up forest type need not remain in group 800. The source pair construction requires an intended plot predecessor, one-to-one condition mapping, at least 90% mapped-area overlap relative to both visits, and a 4.5–8.5-year interval. Selection and joins are documented in the <a href="../docs/analysis-decisions.html#source-and-cohort">analysis decisions</a>.</p>
+<p>The recruitment audit additionally verifies sampled forest and mapped microplot-condition area at both visits. Both visits use the national design, the same offset microplot arrangement, and manual versions at least 5.1. Follow-ups are remeasurements; production QA codes 1 and 7 are retained. QA 7 is a supervised production check, not an invalid duplicate <span class="citation" data-cites="burrill2025fiadb">(<a href="#ref-burrill2025fiadb" role="doc-biblioref"><span class="nocase">Burrill et al.</span> 2025</a>)</span>.</p>
+<p>Direct subplot predecessor identifiers (<code>PREV_SBP_CN</code>) are entirely unpopulated in this snapshot. Continuity is reconstructed from the verified plot predecessor, subplot number, and microplot condition-change matrix. Nine source pairs fail the conservative matrix-versus-condition proportion check; one contains unresolved newly recorded saplings. These ten pairs are excluded rather than assigned zero outcomes. One separately verified sampled follow-up has no live TREE records and <code>BALIVE=0</code>; its missing derived tree metrics are reconciled to zero only in the new recruitment dataset.</p>
+<p>The starting current-evaluation dataset contains 932 condition intervals. The nine inconsistent mappings and one ambiguous-entry interval are distinct exclusions, leaving 922. The 914 exact-overlap intervals and the 672 intervals with baseline seedlings are alternative subsets of that retained cohort, not additional sequential exclusions. Conditions represent mapped forest domains within a plot; a physical plot can therefore contribute more than one condition. The analytical unit is one condition observed across its two linked visits, not a seedling, individual microplot, or independent stand.</p>
+<p>Eligible rows must have complete, finite outcomes and predictor fields. The modeling code stops on missing required values rather than silently dropping different rows for different models. No predictor imputation is used. Absent species tallies become zero only after sampled-forest eligibility and record checks; an unsampled or ambiguous interval is not assigned a zero.</p>
+</section>
+<section id="recorded-recruitment-endpoint" class="level3">
+<h3 class="anchored" data-anchor-id="recorded-recruitment-endpoint">Recorded recruitment endpoint</h3>
+<p>The binary response is at least one new live sugar-maple sapling at follow-up: <code>SPCD=318</code>, <code>STATUSCD=1</code>, diameter at least one and less than five inches (2.54 to less than 12.7 cm), <code>RECONCILECD=1</code>, and no predecessor TREE record. Candidates must occur on a comparable shared sampled microplot. Reconcile code 1 can also describe entry on formerly nonforest land, so it is insufficient without the preceding sampling-frame checks <span class="citation" data-cites="burrill2025fiadb">(<a href="#ref-burrill2025fiadb" role="doc-biblioref"><span class="nocase">Burrill et al.</span> 2025</a>)</span>.</p>
+<p>These are recorded surviving entrants into the FIA sapling class, not individual baseline seedlings followed through time. Entrants that die before remeasurement or exceed the restricted size class are not counted. Large newly recorded subplot trees are excluded because sampled area increases at the five-inch boundary. Exact mapped-area overlap is a sensitivity analysis; mapped fractions do not establish an individual stem’s lineage or exact location.</p>
+</section>
+<section id="predictors-and-fixed-comparisons" class="level3">
+<h3 class="anchored" data-anchor-id="predictors-and-fixed-comparisons">Predictors and fixed comparisons</h3>
+<p>All eligible pairs and the subset with baseline seedlings detected are principal analysis populations, fitted separately. The second asks whether measurements distinguish entrants among conditions already containing seedlings. Both use four fixed logistic models:</p>
+<ol type="1">
+<li>Training-sample prevalence only.</li>
+<li>Observation design: baseline microplot coverage and realized interval.</li>
+<li>Count and design: those variables plus <code>log1p</code> ordinary maple seedling count.</li>
+<li>Stages and design: the count model plus <code>log1p</code> baseline maple sapling density and <code>log1p</code> established-maple basal area.</li>
+</ol>
+<p>Ordinary counts sum <code>SEEDLING.TREECOUNT</code> and are checked against <code>TREECOUNT_CALC</code>. Sapling density uses FIA stem expansion and sampled microplot area; established-maple basal area uses live stems at least five inches diameter and the corresponding sampled area. Coverage is a model covariate, not a claim that raw counts were collected over identical footprints. Standard hardwood tallies omit the smallest seedlings, and counts above five may be estimated <span class="citation" data-cites="fiafield2023">(<a href="#ref-fiafield2023" role="doc-biblioref">U.S. Forest Service 2023</a>)</span>. A recorded count is not necessarily an exact number of independent seed-origin individuals.</p>
+<p>Training-only standardization precedes fitting. The objective is summed binomial negative log likelihood plus <span class="math inline">\(\lambda\sum_j\beta_j^2/2\)</span> for slopes, with <span class="math inline">\(\lambda=1\)</span> and an unpenalized intercept. This fixed ridge penalty was not tuned to optimize the findings. Ordinary GLM coefficient p-values are not attached to penalized fits. No additional competitor, beech, climate, or treatment predictor is selected after examining these recruitment results.</p>
+<div class="cell">
+<div id="tbl-recruitment-predictors" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Predictor definitions and transformations. All quantities except the realized interval are measured at baseline. Log transformations use the listed source units.
+</figcaption>
+<div aria-describedby="tbl-recruitment-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 56%">
+<col style="width: 13%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Predictor</th>
+<th style="text-align: left;">Source quantity and unit</th>
+<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;">First included</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Microplot coverage</td>
+<td style="text-align: left;">MICRPROP_UNADJ; fraction of nominal microplot area in the condition</td>
+<td style="text-align: left;">Identity</td>
+<td style="text-align: left;">Design</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Elapsed interval</td>
+<td style="text-align: left;">Time between linked measurements; years</td>
+<td style="text-align: left;">Identity</td>
+<td style="text-align: left;">Design</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Maple seedling count</td>
+<td style="text-align: left;">Sum of TREECOUNT across sampled condition microplots; count</td>
+<td style="text-align: left;">log(1 + count)</td>
+<td style="text-align: left;">Count</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maple sapling density</td>
+<td style="text-align: left;">Sum of sapling TPA_UNADJ divided by MICRPROP_UNADJ; stems per acre</td>
+<td style="text-align: left;">log(1 + density)</td>
+<td style="text-align: left;">Stages</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Established maple basal area</td>
+<td style="text-align: left;">Expanded live-maple basal area for diameter at least 5 inches; square feet per acre</td>
+<td style="text-align: left;">log(1 + basal area)</td>
+<td style="text-align: left;">Stages</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>For each predictor, transformation precedes centering and division by its training-sample standard deviation. The same training center and scale are then applied to held-out observations. A constant training predictor uses a scale of one, preventing division by zero. The model is <span class="math inline">\(p_i=1/(1+\exp(-\eta_i))\)</span>, where <span class="math inline">\(\eta_i=\beta_0+\sum_j\beta_j z_{ij}\)</span> and the included standardized predictors follow the four-model sequence. Coverage and interval enter as estimated slopes, not offsets. The response is binary entry, so the model does not estimate the number of new saplings or an annual recruitment rate.</p>
+<p>The production optimizer uses Newton steps with a backtracking line search, a maximum of 100 iterations, and finite-coefficient and gradient checks. Model dimensions are zero, two, three, and five slopes, respectively, plus the intercept. Coefficients from subsequent fits to each complete analysis population are descriptive summaries; all performance claims use held-out predictions, not those full-population fitted values. The appendix reports the coefficients without unpenalized standard errors or significance stars.</p>
+</section>
+<section id="validation-and-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="validation-and-uncertainty">Validation and uncertainty</h3>
+<p>Five folds hold out entire counties, balancing condition counts without using outcomes in assignment. All models within a population use identical observations and folds. Every physical plot stays in one fold. Scaling and fitting use training counties only. County separation prevents the same county from entering both sets, but does not impose a distance buffer between nearby plots in neighboring counties or guarantee environmental separation.</p>
+<p>Brier score and log loss evaluate probabilities; AUC and average precision (AP) evaluate discrimination. Losses average equally over condition intervals: they are neither plot-balanced nor FIA survey-weighted population estimates. Calibration intercept and slope are estimated jointly by regressing outcomes on held-out log odds. They are diagnostics, not recalibration of predictions; the joint intercept is not a separately fitted calibration-in-the-large intercept. Mean predicted probability and the observed-to-expected ratio are also exported. Rank metrics for the prevalence benchmark are omitted because differences in fold-specific prevalence do not constitute a meaningful individual ranking.</p>
+<p>Specifically, the Brier score is the mean squared probability error, <span class="math inline">\(n^{-1}\sum_i(y_i-p_i)^2\)</span>. Log loss is <span class="math inline">\(-n^{-1}\sum_i[y_i\log(p_i)+(1-y_i)\log(1-p_i)]\)</span>; probabilities are bounded between <span class="math inline">\(10^{-12}\)</span> and <span class="math inline">\(1-10^{-12}\)</span> for numerical scoring. Lower losses are better. AUC compares event and nonevent rankings with half credit for tied probabilities. AP sums precision over increments in recall after grouping equal probabilities. AP depends on event prevalence, so the two nested populations are not interchangeable benchmarks. We report probability loss, ranking, and calibration separately because improvement in one need not imply improvement in the others.</p>
+<p>Counties are ordered by descending condition count, with county identifier breaking ties, and assigned to the currently least-loaded fold. Fold size, then county count, then fold number resolve assignment ties. This is a single deterministic partition, not repeated random cross-validation. The two populations receive their own size-balanced partition. Metrics pool all out-of-fold predictions within each population rather than averaging its five fold-specific AUC values. Appendix fold denominators show how many events actually support each held-out comparison.</p>
+<p>Uncertainty uses 300 resamples per population of whole counties, repeating scaling and all held-out fits. All 600 resamples succeed. Original fold assignments, model set, and penalty remain fixed. Paired differences subtract the reference model on identical cases; negative Brier differences favor the added information. Percentile intervals characterize this resampling scheme. They exclude uncertainty from selecting the question, cohort, model set, and source snapshot. These data were already explored; this is not preregistration or external validation. The 300 draws provide finite Monte Carlo precision for the interval endpoints; their displayed digits should not be read as equally precise inferential information. No equivalence margin or minimum useful improvement was specified, and no multiple-comparison correction is applied. Interpretation emphasizes the matched Brier contrasts; additional metrics and secondary analyses are descriptive.</p>
+<p>Each bootstrap draw samples the population’s counties with replacement, using the same number of county draws as observed counties. Every condition in a selected county receives its county’s sampling multiplicity as a frequency weight. All copies remain in that county’s original fold, so resampling cannot put a duplicate county into both training and testing. Weighted training means, sample standard deviations, model fits, and pooled scores are recomputed in each draw. Counties drawn zero times have no evaluation weight. The reported limits are the 2.5th and 97.5th percentiles of the 300 resulting metrics or paired differences, not standard errors calculated by treating 922 conditions as independent replicates. The stored seed is 20260908 in each population; this does not make the nested analyses independent.</p>
+<p>Descriptive count-bin intervals use a separate 2,000-draw county resampling of observed event fractions, without fitting a model. A bin with no observed events has a degenerate empirical interval at zero; it does not establish a zero population risk. These intervals and the model-refit intervals answer different questions and should not be combined.</p>
+<p>Fixed sensitivities restrict to exact overlap or follow-up manual version at least 9, or use penalties 0 and 4. A retrospective temporal assessment trains on follow-ups before 2023 and tests 2023 onward, with no shared physical plots. Realized interval is known at follow-up. Accordingly, these are conditional next-visit assessments, not validated fixed-horizon forecasts available at baseline. Count agreement and manual-version screening do not establish that every historical field procedure is identical; individual baseline regional editions were not all verified.</p>
+</section>
+<section id="linked-sapling-fates" class="level3">
+<h3 class="anchored" data-anchor-id="linked-sapling-fates">Linked sapling fates</h3>
+<p>A companion cohort follows live tagged baseline maple saplings on the expected successor plot before restricting follow-up species, status, or diameter. Comparable recorded death, live persistence below five inches, and live advancement to at least five inches are separated from frame inconsistency, species reidentification, and no-longer-sampled records. Fate eligibility is assessed separately from the new-entrant outcome: an ambiguous new arrival does not alone invalidate an existing tagged stem’s link. Annual diameter difference divides follow-up minus baseline diameter by elapsed years and is summarized only for comparable surviving maples. No mortality mechanism, treatment effect, or independent-stem sampling assumption is imposed.</p>
+</section>
+<section id="use-of-ai-assistance" class="level3">
+<h3 class="anchored" data-anchor-id="use-of-ai-assistance">Use of AI assistance</h3>
+<p>OpenAI Codex was used to assist with literature searching, analysis code development and checking, and manuscript revision. Computational checks do not constitute independent scientific review. Human authors retain responsibility for the data interpretation, references, and submitted content.</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="cohort-support" class="level3">
+<h3 class="anchored" data-anchor-id="cohort-support">Cohort support</h3>
+<p>The final cohort contains 922 condition intervals on 903 physical plots in 66 counties. There are 169 qualifying saplings in 100 conditions. Baseline measurements span 2011–2018; follow-ups span 2018–2025. Observed intervals range from 5.42 to 8.08 years, with median 7.0. Baseline microplot coverage ranges from 15.4% to 100.0%, with median 100.0%.</p>
+<div class="cell">
+<div id="tbl-recruitment-flow" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Analysis support. The baseline-detected subset is nested within all eligible pairs; these are unweighted sample counts.
+</figcaption>
+<div aria-describedby="tbl-recruitment-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">Plots</th>
+<th style="text-align: right;">Counties</th>
+<th style="text-align: right;">With entry</th>
+<th style="text-align: right;">New saplings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: right;">922</td>
+<td style="text-align: right;">903</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">169</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: right;">672</td>
+<td style="text-align: right;">667</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">169</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>All 100 recruit-bearing conditions had seedlings at baseline. The 250 eligible baseline-zero conditions had no qualifying entry, which does not establish a true probability of zero. Exact overlap retains 914 intervals and all 169 entrants; the eight excluded nonexact intervals have no qualifying entrants. The full <a href="../outputs/tables/recruitment-cohort-flow.csv">cohort flow</a> preserves source counts and alternative restrictions without presenting them as successive exclusions.</p>
+</section>
+<section id="seedling-abundance-and-observed-entry" class="level3">
+<h3 class="anchored" data-anchor-id="seedling-abundance-and-observed-entry">Seedling abundance and observed entry</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-recruitment-counts" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Entry frequency rises with baseline seedling count, reaching approximately 26 percent among conditions with more than twenty recorded seedlings.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-recruitment-counts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../outputs/figures/10_recruitment_counts.png" class="img-fluid figure-img" style="width:100.0%" alt="Entry frequency rises with baseline seedling count, reaching approximately 26 percent among conditions with more than twenty recorded seedlings.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-recruitment-counts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Recorded new-sapling entry by baseline seedling count. Error bars resample whole counties; descriptive bins are not stocking thresholds.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-recruitment-counts" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-counts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Numerators and denominators for the abundance comparison.
+</figcaption>
+<div aria-describedby="tbl-recruitment-counts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Baseline count</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">With new tally</th>
+<th style="text-align: left;">Recorded entry</th>
+<th style="text-align: left;">95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">0.0% to 0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">1.2%</td>
+<td style="text-align: left;">0.0% to 3.4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2-5</td>
+<td style="text-align: right;">129</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">6.2%</td>
+<td style="text-align: left;">2.1% to 11.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6-20</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">10.5%</td>
+<td style="text-align: left;">7.5% to 14.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&gt;20</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: left;">25.7%</td>
+<td style="text-align: left;">20.4% to 32.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Recorded entry rises from one of 82 conditions with one seedling to 72 of 280 (25.7%) with more than twenty. The remaining 208 high-count conditions have no qualifying new tally. These are observations on the sampled footprint, not stand-level failure rates. Neither the 20-count boundary nor one new sapling is an ecological adequacy threshold.</p>
+<p>Existing maple saplings also show a descriptive association: 86 of 567 conditions with baseline saplings record entry, compared with 14 of 355 without saplings. This unadjusted contrast does not measure their incremental predictive value.</p>
+</section>
+<section id="held-out-performance" class="level3">
+<h3 class="anchored" data-anchor-id="held-out-performance">Held out performance</h3>
+<div class="cell">
+<div id="tbl-recruitment-cv-all" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-cv-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: County-held-out performance across all 922 eligible intervals. Lower Brier and log loss are better; AP denotes average precision.
+</figcaption>
+<div aria-describedby="tbl-recruitment-cv-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Brier</th>
+<th style="text-align: right;">Log loss</th>
+<th style="text-align: right;">AUC</th>
+<th style="text-align: right;">AP</th>
+<th style="text-align: right;">Calibration slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: right;">0.09708</td>
+<td style="text-align: right;">0.345</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Design</td>
+<td style="text-align: right;">0.09580</td>
+<td style="text-align: right;">0.339</td>
+<td style="text-align: right;">0.581</td>
+<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">0.710</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: right;">0.08764</td>
+<td style="text-align: right;">0.288</td>
+<td style="text-align: right;">0.796</td>
+<td style="text-align: right;">0.264</td>
+<td style="text-align: right;">0.962</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: right;">0.08601</td>
+<td style="text-align: right;">0.282</td>
+<td style="text-align: right;">0.806</td>
+<td style="text-align: right;">0.303</td>
+<td style="text-align: right;">0.944</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-recruitment-cv-positive" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-cv-positive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: County-held-out performance among 672 baseline seedling detections, with separately fitted models.
+</figcaption>
+<div aria-describedby="tbl-recruitment-cv-positive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Brier</th>
+<th style="text-align: right;">Log loss</th>
+<th style="text-align: right;">AUC</th>
+<th style="text-align: right;">AP</th>
+<th style="text-align: right;">Calibration slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: right;">0.12688</td>
+<td style="text-align: right;">0.421</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Design</td>
+<td style="text-align: right;">0.12618</td>
+<td style="text-align: right;">0.420</td>
+<td style="text-align: right;">0.543</td>
+<td style="text-align: right;">0.185</td>
+<td style="text-align: right;">0.503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: right;">0.11976</td>
+<td style="text-align: right;">0.390</td>
+<td style="text-align: right;">0.699</td>
+<td style="text-align: right;">0.262</td>
+<td style="text-align: right;">0.885</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: right;">0.11817</td>
+<td style="text-align: right;">0.383</td>
+<td style="text-align: right;">0.711</td>
+<td style="text-align: right;">0.295</td>
+<td style="text-align: right;">0.857</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The count model’s AUC is 0.796 overall and 0.699 among baseline detections. Adding maple stages yields 0.806 and 0.711, respectively. The lower conditional discrimination illustrates the harder task of distinguishing entry within already seedling-bearing conditions. Pooled ranking partly benefits from separating baseline zeros from positive counts.</p>
+<p>Count-model mean predicted probabilities are 10.9% overall and 14.9% among baseline detections; observed fractions are 10.8% and 14.9%. Corresponding observed-to-expected ratios are 0.993 and 0.997. Calibration slopes below one, especially within baseline detections, caution against interpreting near-matching average probabilities as established local calibration or transportability. Complete calibration diagnostics are retained in the <a href="../outputs/tables/recruitment-model-validation.csv">validation table</a>.</p>
+<div class="cell">
+<div id="tbl-recruitment-calibration" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-calibration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: Calibration of pooled county-held-out predictions. All denotes all 922 eligible intervals; Detected denotes the 672 baseline-detected intervals. O/E is observed events divided by summed predicted probabilities.
+</figcaption>
+<div aria-describedby="tbl-recruitment-calibration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 22%">
+<col style="width: 21%">
+<col style="width: 22%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Mean predicted</th>
+<th style="text-align: left;">Joint intercept</th>
+<th style="text-align: left;">Slope</th>
+<th style="text-align: left;">O/E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">10.8%</td>
+<td style="text-align: left;">-0.593</td>
+<td style="text-align: left;">0.710</td>
+<td style="text-align: left;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">10.9%</td>
+<td style="text-align: left;">-0.071</td>
+<td style="text-align: left;">0.962</td>
+<td style="text-align: left;">0.993</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">11.0%</td>
+<td style="text-align: left;">-0.105</td>
+<td style="text-align: left;">0.944</td>
+<td style="text-align: left;">0.988</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">14.9%</td>
+<td style="text-align: left;">-0.857</td>
+<td style="text-align: left;">0.503</td>
+<td style="text-align: left;">1.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">14.9%</td>
+<td style="text-align: left;">-0.183</td>
+<td style="text-align: left;">0.885</td>
+<td style="text-align: left;">0.997</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">14.9%</td>
+<td style="text-align: left;">-0.217</td>
+<td style="text-align: left;">0.857</td>
+<td style="text-align: left;">0.998</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The count-model calibration slope is 0.962 overall and 0.885 within detections; the stage-model slopes are 0.944 and 0.857. These point diagnostics suggest overly dispersed log-odds predictions, especially in the detected subset, but no calibration-parameter uncertainty intervals were estimated. Near-unit O/E describes average agreement and does not resolve probability errors within subgroups. Absolute Brier and AUC intervals are reported in the appendix; model comparisons use paired differences rather than overlap of separate marginal intervals.</p>
+</section>
+<section id="incremental-information-and-matched-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="incremental-information-and-matched-capacity">Incremental information and matched capacity</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-recruitment-added-value" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Counts improve pooled Brier beyond observation design; added maple stages have small point improvements with intervals spanning zero in both populations.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-recruitment-added-value-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../outputs/figures/11_recruitment_incremental_value.png" class="img-fluid figure-img" style="width:100.0%" alt="Counts improve pooled Brier beyond observation design; added maple stages have small point improvements with intervals spanning zero in both populations.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-recruitment-added-value-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Paired Brier differences on matched observations, with full-refit county-bootstrap 95% intervals. Negative differences favor the added information.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-recruitment-differences" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-differences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: Named model minus reference Brier differences. Intervals are percentile summaries, not equivalence tests.
+</figcaption>
+<div aria-describedby="tbl-recruitment-differences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Addition</th>
+<th style="text-align: left;">Difference</th>
+<th style="text-align: left;">95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">-0.00163</td>
+<td style="text-align: left;">-0.00529 to 0.00263</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">-0.00816</td>
+<td style="text-align: left;">-0.01182 to -0.00208</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">-0.00159</td>
+<td style="text-align: left;">-0.00551 to 0.00333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">-0.00641</td>
+<td style="text-align: left;">-0.01076 to 0.00207</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Count addition improves pooled Brier by -0.00816 (95% interval -0.01182 to -0.00208). Within baseline detections the difference is -0.00641 (95% interval -0.01076 to 0.00207); its interval crosses zero despite improved ranking. Stage additions produce small point improvements in both populations, with intervals spanning benefit and harm. This does not establish equivalence or demonstrate that stage information could never be useful.</p>
+<p>The probability scores do not give identical strength of evidence. Among baseline detections, count addition changes log loss by -0.03044 (95% interval -0.05263 to -0.00689), whose interval excludes zero even though the Brier interval crosses zero. Its AUC and AP contrasts also favor counts in the stored resampling results. Counts therefore improve ranking and log loss in that subset, while their average squared-error improvement is less certain. The metrics describe different aspects of predictive performance.</p>
+<p>For stage addition, the AUC differences are 0.00943 (95% interval -0.00629 to 0.02928) overall and 0.01127 (95% interval -0.01782 to 0.04663) within detections. Stage-addition intervals for log loss and AP also cross zero. Thus, the higher stage-model point AUC does not establish a reliable increment over the count model. The appendix includes all matched log-loss, AUC, and AP contrasts, including results that qualify the headline finding.</p>
+<p>At the same highest-probability 25% capacity, the count model captures 60 recruit-bearing conditions among 230 selected overall; the stage model captures 58. Among baseline detections, the respective numbers are 44 and 43 among 168. Selection uses held-out probabilities and stable source-key tie breaking; tie-neutral results are also exported. This capacity is diagnostic, not a recommended survey rule or a measured fieldwork budget.</p>
+</section>
+<section id="sensitivities-and-temporal-assessment" class="level3">
+<h3 class="anchored" data-anchor-id="sensitivities-and-temporal-assessment">Sensitivities and temporal assessment</h3>
+<p>Exact overlap, the declared penalty alternatives, and the recent-manual restriction do not reverse the broad discrimination pattern. The recent-manual restriction changes both the sample and calendar distribution; it is not an isolated experiment on protocol effects. The <a href="../outputs/tables/recruitment-model-sensitivities.csv">complete sensitivity table</a> reports every fitted benchmark, denominator, and metric.</p>
+<div class="cell">
+<div id="tbl-recruitment-sensitivity-detail" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-sensitivity-detail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8: Fixed sensitivity comparisons on matched cases. Each Brier pair lists count then stage; the difference is stage minus count. No new uncertainty intervals were computed for these sensitivities.
+</figcaption>
+<div aria-describedby="tbl-recruitment-sensitivity-detail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 22%">
+<col style="width: 12%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Restriction</th>
+<th style="text-align: left;">N / events</th>
+<th style="text-align: left;">Brier count / stage</th>
+<th style="text-align: left;">Difference</th>
+<th style="text-align: left;">AUC count / stage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Exact overlap</td>
+<td style="text-align: left;">914 / 100</td>
+<td style="text-align: left;">0.08829 / 0.08659</td>
+<td style="text-align: left;">-0.00170</td>
+<td style="text-align: left;">0.796 / 0.806</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Manual at least 9</td>
+<td style="text-align: left;">787 / 92</td>
+<td style="text-align: left;">0.09288 / 0.09046</td>
+<td style="text-align: left;">-0.00242</td>
+<td style="text-align: left;">0.798 / 0.809</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Penalty 4</td>
+<td style="text-align: left;">922 / 100</td>
+<td style="text-align: left;">0.08737 / 0.08574</td>
+<td style="text-align: left;">-0.00163</td>
+<td style="text-align: left;">0.797 / 0.806</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Penalty 0</td>
+<td style="text-align: left;">922 / 100</td>
+<td style="text-align: left;">0.08776 / 0.08615</td>
+<td style="text-align: left;">-0.00161</td>
+<td style="text-align: left;">0.796 / 0.806</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Exact overlap</td>
+<td style="text-align: left;">668 / 100</td>
+<td style="text-align: left;">0.12031 / 0.11865</td>
+<td style="text-align: left;">-0.00166</td>
+<td style="text-align: left;">0.700 / 0.711</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Manual at least 9</td>
+<td style="text-align: left;">573 / 92</td>
+<td style="text-align: left;">0.12675 / 0.12407</td>
+<td style="text-align: left;">-0.00268</td>
+<td style="text-align: left;">0.708 / 0.723</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Penalty 4</td>
+<td style="text-align: left;">672 / 100</td>
+<td style="text-align: left;">0.11956 / 0.11789</td>
+<td style="text-align: left;">-0.00167</td>
+<td style="text-align: left;">0.700 / 0.711</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Penalty 0</td>
+<td style="text-align: left;">672 / 100</td>
+<td style="text-align: left;">0.11985 / 0.11830</td>
+<td style="text-align: left;">-0.00155</td>
+<td style="text-align: left;">0.699 / 0.710</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The recent-manual restriction retains 787 intervals with 92 events overall and 573 with 92 events among baseline detections. Exact-overlap support is 914 and 668 intervals, respectively, with all 100 events retained in each. The alternative penalties keep the original denominators. Stage-minus-count Brier differences remain negative at their point estimates, but this sign stability is not a new test of improvement. These analyses retain the original county assignments within each population and do not search for a more favorable fold partition.</p>
+<div class="cell">
+<div id="tbl-recruitment-temporal" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-temporal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9: Retrospective later-year performance. Follow-ups before 2023 train the models; 2023 onward test them.
+</figcaption>
+<div aria-describedby="tbl-recruitment-temporal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 23%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Test N</th>
+<th style="text-align: right;">Events</th>
+<th style="text-align: left;">Brier</th>
+<th style="text-align: left;">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.09738</td>
+<td style="text-align: left;">Not ranked</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.09655</td>
+<td style="text-align: left;">0.574</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.08759</td>
+<td style="text-align: left;">0.803</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All eligible</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.08536</td>
+<td style="text-align: left;">0.807</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.12686</td>
+<td style="text-align: left;">Not ranked</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.12705</td>
+<td style="text-align: left;">0.522</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.11889</td>
+<td style="text-align: left;">0.716</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seedlings detected</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">0.11640</td>
+<td style="text-align: left;">0.721</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Training contains 547 intervals and 59 event-bearing conditions overall; testing contains 375 intervals and 41 event-bearing conditions. The baseline-detected counterparts contain 397 and 275 intervals, with the same event counts. No physical plot crosses the split. Stage-model test AUC is approximately 0.807 overall and 0.721 within baseline detections. This single retrospective split has no paired bootstrap uncertainty assessment and does not establish future-inventory or out-of-state performance. The <a href="../outputs/tables/recruitment-model-temporal-support.csv">split support table</a> reports the changing calendar, manual, interval, plot, and county distributions.</p>
+<p>Overall, training comprises 535 plots in 55 counties and testing comprises 368 plots in 49 counties. The detected subset comprises 395 training plots in 41 counties and 272 test plots in 36 counties. Median duration is seven years in all four groups. Follow-up manuals range from 8 to 9 in training and from 9 to 9.4 in testing; all test intervals use manual 9 or later. The split therefore evaluates both calendar change and changes in sample composition. Counties can recur across years even though physical plots do not, distinguishing this assessment from the county-held-out analysis.</p>
+</section>
+<section id="linked-sapling-fates-1" class="level3">
+<h3 class="anchored" data-anchor-id="linked-sapling-fates-1">Linked sapling fates</h3>
+<p>Of 1,593 live tagged baseline maple saplings, 1,580 have comparable biological fates. Nine stems fail frame consistency, three living stems are reidentified as red maple, and one is no longer sampled under a cruiser-error reconciliation. These 13 remain in the accounting but are not assigned biological outcomes.</p>
+<div class="cell">
+<div id="tbl-recruitment-fates" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-fates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10: Tagged baseline saplings with comparable biological fates. Thirteen additional source stems are excluded for the reasons described in the text.
+</figcaption>
+<div aria-describedby="tbl-recruitment-fates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Recorded state</th>
+<th style="text-align: right;">Stems</th>
+<th style="text-align: left;">Share of comparable stems</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alive; reached 5 inches</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: left;">3.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alive; remains sapling</td>
+<td style="text-align: right;">1188</td>
+<td style="text-align: left;">75.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Recorded dead</td>
+<td style="text-align: right;">334</td>
+<td style="text-align: left;">21.1%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The 58 larger live stems advanced out of the sapling size class rather than died. Among the 1,246 comparable surviving maples, median annual diameter difference is 0.0147 inches per year. There are 346 zero and 13 negative differences. Rounding, measurement-point changes, and survivor selection limit interpretation. These observations cannot establish suppression, cohort age, or future canopy replacement; individual stem numbers are not independent sample sizes.</p>
+<p>The 10th and 90th percentiles of annual diameter difference are 0.0000 and 0.0825 inches per year. Zero differences represent 27.8% of comparable survivors and negative differences represent 1.0%. These are unweighted stem summaries over variable intervals, not fitted growth curves or county-adjusted mortality estimates. Neither uncertainty intervals for fate proportions nor a predictor-based mortality model were estimated.</p>
+</section>
+<section id="survey-priority-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="survey-priority-comparison">Secondary survey priority comparison</h3>
+<p>A separate retrospective diagnostic asks whether model rankings concentrate conditions with baseline seedlings but no recorded entry. This outcome occurs in 572 of 672 conditions; it is not independently established survey need. At a fixed 168-condition capacity, expected no-entry capture is 143 under random selection, 162 under low raw count, 160 under the count model, and 163 under the stage model. Cutoff ties are integrated rather than favorably ordered.</p>
+<div class="cell">
+<div id="tbl-recruitment-survey-detail" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-survey-detail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11: All six fixed no-entry selection strategies among 672 baseline detections at a capacity of 168 conditions. Expected targets integrate cutoff ties; the interval describes the selected target fraction, not a paired strategy difference.
+</figcaption>
+<div aria-describedby="tbl-recruitment-survey-detail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 16%">
+<col style="width: 23%">
+<col style="width: 14%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Expected targets</th>
+<th style="text-align: left;">Selected target fraction</th>
+<th style="text-align: left;">95% interval</th>
+<th style="text-align: left;">All targets captured</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Random expectation</td>
+<td style="text-align: left;">143.00</td>
+<td style="text-align: left;">85.1%</td>
+<td style="text-align: left;">82.8% to 87.8%</td>
+<td style="text-align: left;">25.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Raw seedling count</td>
+<td style="text-align: left;">162.00</td>
+<td style="text-align: left;">96.4%</td>
+<td style="text-align: left;">93.5% to 99.3%</td>
+<td style="text-align: left;">28.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count per sampled coverage</td>
+<td style="text-align: left;">161.05</td>
+<td style="text-align: left;">95.9%</td>
+<td style="text-align: left;">91.7% to 99.2%</td>
+<td style="text-align: left;">28.2%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sapling presence</td>
+<td style="text-align: left;">156.75</td>
+<td style="text-align: left;">93.3%</td>
+<td style="text-align: left;">90.7% to 96.0%</td>
+<td style="text-align: left;">27.4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count model</td>
+<td style="text-align: left;">160.00</td>
+<td style="text-align: left;">95.2%</td>
+<td style="text-align: left;">88.4% to 99.0%</td>
+<td style="text-align: left;">28.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maple-stage model</td>
+<td style="text-align: left;">163.00</td>
+<td style="text-align: left;">97.0%</td>
+<td style="text-align: left;">91.9% to 99.2%</td>
+<td style="text-align: left;">28.5%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>For the no-entry target, raw counts and predicted entry probabilities are ranked from low to high. Coverage-normalized count and absence of baseline saplings provide two additional simple comparators. Expected yield includes every condition strictly beyond the selection cutoff and assigns the remaining places uniformly within the cutoff tie. Fractional expected targets therefore express tie averaging, not fractional observed conditions. For each strategy, selected target fraction divides expected targets by 168; target capture divides by all 572 no-entry conditions. These answer different questions. Random selection has a high expected yield because 85.1% of the eligible detected subset already meets this descriptive target.</p>
+<p>The stage-minus-raw-count difference in selected target fraction is +0.60 percentage points, with a 95% full-refit county-bootstrap interval of −3.66 to +2.28. A separate 300 resamples per population all succeed. In later-year testing, raw counts yield 65.18 expected targets among 68 selected, versus 65 for either model. The one-condition point gain is not a demonstrated decision advantage. Raw-count selection covers 168 plots versus 167 for the stage model, so equal condition capacity is not equal field cost.</p>
+<p>The opposite target of locating entrants yields 41 for high raw counts, 44 for the count model, and 43 for the stage model among 168 selected baseline detections. Fixed 10% and 50% capacities likewise do not establish stage-model dominance. A common seven-year scoring sensitivity changes predictions but not the observed variable-duration outcomes, so it cannot validate seven-year probabilities. Full <a href="../outputs/tables/recruitment-survey-summary.csv">strategy results</a>, <a href="../outputs/tables/recruitment-survey-paired-differences.csv">paired uncertainty</a>, <a href="../outputs/tables/recruitment-survey-temporal.csv">temporal selection</a>, and <a href="../outputs/tables/recruitment-survey-common-horizon.csv">common-horizon comparisons</a> are retained. Meaningful net benefit requires defensible consequences of errors <span class="citation" data-cites="vickers2006">(<a href="#ref-vickers2006" role="doc-biblioref">Vickers and Elkin 2006</a>)</span>; no forest-survey utility threshold is assumed here.</p>
+</section>
+<section id="secondary-length-measurement-audit" class="level3">
+<h3 class="anchored" data-anchor-id="secondary-length-measurement-audit">Secondary length measurement audit</h3>
+<p>The <a href="../report/ri-audit.html">RI measurement audit</a> retains 90 baseline intervals with 14 recruit-bearing conditions. Ordinary counts equal RI classes at least one foot long on all 311 matched microplot-condition intervals. Thus, length distribution—not the collapsed RI total—is the potential extra measurement. Thirteen events occur among 44 conditions with baseline seedlings at least five feet long, versus one among 46 without them. This is an unadjusted descriptive contrast, not a paired held-out improvement over counts.</p>
+<p>Only ten development events and four later-year events are available. No height model is fitted. Annual 2016–2018 supplements were inspected, including an archived 2016 draft; individual 2012–2015 supplements remain an access gap. These qualifications constrain the secondary RI finding, not completion of the ordinary-count and linked-fate analyses.</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>Ordinary seedling counts contain information about recorded sapling entry in this selected Michigan sample. The count gradient and pooled probability-loss improvement argue against dismissing standard tallies as uninformative. However, discrimination is weaker within baseline detections, and its paired Brier improvement is uncertain. Abundant seedlings therefore indicate a higher chance of observing entry without establishing a secure advancing cohort.</p>
+<p>The added maple-stage predictors produce only small, uncertain improvements over a strong count benchmark. They do not improve captured entrants at the tested equal capacity, and their survey-priority point gain over raw counts is not reproduced in the later-year comparison. These are substantive limits of the tested predictors and models, not reasons to continue adding variables until a preferred explanation appears. Uncertainty spanning zero is not proof of no effect, practical equivalence, or irrelevance under every model form.</p>
+<p>In particular, existing sapling density and larger-tree basal area do not measure the height distribution of seedlings approaching the sapling boundary. Their uncertain incremental value therefore does not contradict evidence for height-resolved inventories <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span>. Our additive, transformed linear predictors also leave nonlinear responses and interactions untested. The results limit the specific benchmark models evaluated here, not all possible uses of stage structure.</p>
+<p>The fate analysis explains why size-class absence and mortality must remain distinct. Surviving stems can move beyond the sapling boundary, while species reidentification and sampling corrections also alter apparent stage membership. Conversely, a new live sapling at one revisit does not measure all arrivals during the interval, adequate stocking, genetic origin, or subsequent survival to the canopy. Neither record-based endpoint supports a causal claim about browsing, competitors, or management.</p>
+<section id="scope-and-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="scope-and-limitations">Scope and limitations</h3>
+<p>The target is retained sampled conditions, not all Michigan forests. Baseline ecological selection, current-evaluation membership, accessible forest, remeasurement, comparable area, and unambiguous records restrict inclusion. The exclusion audit protects outcome interpretation but does not remove selection bias. County grouping addresses part of the dependence structure; it does not provide survey weights or independent experimental replication. The main scores give each condition interval equal weight, so plots contributing more than one condition receive more total evaluation weight.</p>
+<p>Finite event support, estimated seedling tallies, varying sampled area and exposure duration, model-form choices, incomplete historical manual review, and one previously explored snapshot limit generalization. Resampling does not correct all of these limitations. Near-matching mean predicted and observed event fractions is not evidence of calibration everywhere, and the retrospective temporal split is not an untouched external test.</p>
+<p>The two analysis populations are nested and do not provide independent replications. Observed entry combines growth into the defined diameter class, survival until remeasurement, and recording on a small sampled footprint. Zero recorded entry cannot distinguish slow growth from mortality or absence of suitable seedlings. Likewise, the tagged-stem fate sample does not follow the untagged baseline seedlings; it cannot decompose their failure to enter the sapling class. Unmeasured browsing, understory competition, and disturbance may influence these processes, but this analysis does not estimate their effects.</p>
+</section>
+<section id="implications-and-optional-future-work" class="level3">
+<h3 class="anchored" data-anchor-id="implications-and-optional-future-work">Implications and optional future work</h3>
+<p>The practical implication is to retain simple count-based benchmarks and state precisely what they predict. A management tool would additionally require a defined action, independently assessed survey need or treatment response, consequences of errors, and relevant external evaluation. No operational ranking or intervention rule is released.</p>
+<p>Length structure is a plausible follow-on hypothesis motivated by earlier FIA work <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span>, not the unfulfilled central objective of this paper. A <a href="../report/length-study.html">separate design</a> specifies a matched count-versus-length comparison and evaluation safeguards. Regional inventory acquisition and field validation are deferred extensions. Wisconsin or Minnesota data are not required to complete the bounded Michigan results, and no regional outcome or height-model result is claimed. The earlier beech association concerned seedling-detection loss and remains in the supporting pilot; it is not recast as a recruitment mechanism.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Standard FIA seedling counts provide limited information about next-visit recorded sugar-maple sapling entry in selected Michigan northern hardwood conditions. Existing maple sapling density and established-maple basal area show no clear incremental improvement over the count benchmark under the specified comparisons. Linked tagged-stem accounting separately identifies recorded death, persistent live saplings, and surviving advancement beyond the sapling class. The core finding is an evidence-based boundary on what these common observations establish—not a claim of regeneration adequacy, biological failure, or validated management usefulness.</p>
+</section>
+<section id="reproducibility-and-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility-and-evidence">Reproducibility and evidence</h2>
+<section id="data-and-code-availability" class="level3">
+<h3 class="anchored" data-anchor-id="data-and-code-availability">Data and code availability</h3>
+<p>The underlying public inventory is distributed through the USDA Forest Service FIA DataMart <span class="citation" data-cites="usfs_datamart">(<a href="#ref-usfs_datamart" role="doc-biblioref">U.S. Forest Service 2026</a>)</span>. The analysis uses Michigan evaluation 262501 and the source archive identified by SHA-256 <code>2c1eb908a47436d4edd0f3ba9e3d647b79a4f36cef972c5ba83277300817aee1</code>. The state download URL is updated over time; the evaluation identifier alone does not fix every source record. Reproducing the reported results therefore requires the identified snapshot, not an unchecked current download.</p>
+<p>Analysis scripts, configuration, an R dependency lockfile, aggregate tables, and figure data are publicly available in the <a href="https://github.com/dineshpotla/canopy-to-cohort">project repository</a>. Record-level derived datasets and predictions remain local. Exact FIA plot locations are neither used nor inferred. A version-specific public archive for the recruitment analysis has not yet been assigned; the earlier project release is not a release of these revised results.</p>
+</section>
+<section id="computational-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="computational-workflow">Computational workflow</h3>
+<p>The canonical manuscript, endpoint definitions, analysis contracts, aggregate tables, figures, and tests are maintained together. The <a href="../report/index.html">seedling-detection pilot</a> is preserved as a distinct exploratory analysis. With the pinned source and longitudinal cohort already built, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> recruitment-core</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> test</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> submission-audit</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> report</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The core target rebuilds the endpoint, fixed models, figures, survey diagnostic, RI audits, and manuscript reconciliation. It does not download another state or fit a length model. <code>make paper-audit</code> independently recomputes manuscript metrics from stored held-out predictions and checks the exported evidence.</p>
+<p>Aggregate <a href="../outputs/tables/recruitment-paper-support.csv">paper support</a>, <a href="../outputs/audits/recruitment-paper-checks.csv">numerical checks</a>, <a href="../outputs/tables/recruitment-model-paired-differences.csv">paired model differences</a>, <a href="../outputs/audits/recruitment-sapling-fates.csv">fate accounting</a>, and <a href="../outputs/tables/recruitment-model-count-strata-intervals.csv">figure data</a> accompany the manuscript. Raw inventories, record-level derived data, and predictions remain local and excluded from version control. The <a href="../research/README.md">evidence notes</a> record source access and interpretation limits. Numerical cross-checks assess computational consistency; they do not replace scientific review or establish external validity.</p>
+</section>
+</section>
+<section id="analytical-appendix" class="level2">
+<h2 class="anchored" data-anchor-id="analytical-appendix">Analytical appendix</h2>
+<section id="county-fold-support-and-fitting-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="county-fold-support-and-fitting-diagnostics">County fold support and fitting diagnostics</h3>
+<p>The appendix expands the same fixed analysis reported in the main text. All denotes the 922 eligible intervals and Detected denotes the 672 intervals with baseline seedlings. An event is a condition with at least one qualifying new sapling, not the number of saplings. The population-specific partitions and all model comparisons were fixed before the recruitment fits; earlier exploration of the source data is acknowledged in Methods.</p>
+<div class="cell">
+<div id="tbl-recruitment-fold-support" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-fold-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;12: Training and held-out support for each county fold. Every model within a population uses these same rows and outcomes.
+</figcaption>
+<div aria-describedby="tbl-recruitment-fold-support-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: right;">Fold</th>
+<th style="text-align: left;">Train N / events</th>
+<th style="text-align: left;">Test N / events</th>
+<th style="text-align: right;">Test counties</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">737 / 75</td>
+<td style="text-align: left;">185 / 25</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">737 / 89</td>
+<td style="text-align: left;">185 / 11</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">738 / 78</td>
+<td style="text-align: left;">184 / 22</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">738 / 78</td>
+<td style="text-align: left;">184 / 22</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">738 / 80</td>
+<td style="text-align: left;">184 / 20</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">537 / 79</td>
+<td style="text-align: left;">135 / 21</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">537 / 84</td>
+<td style="text-align: left;">135 / 16</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">538 / 81</td>
+<td style="text-align: left;">134 / 19</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">538 / 76</td>
+<td style="text-align: left;">134 / 24</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">538 / 80</td>
+<td style="text-align: left;">134 / 20</td>
+<td style="text-align: right;">9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>All 40 original county-held-out model fits converged. The largest final absolute gradient component was 5.95e-08, and the largest absolute coefficient was 2.921. All 300 county-refit bootstrap draws in each population succeeded. Convergence establishes numerical completion of the specified objective; it does not establish an adequate sample size, a correct ecological model, or independent observations. The second numerical implementation described in the reproducibility handoff checks 40 county-held-out and eight temporal point-prediction fits, but does not replay the bootstrap intervals.</p>
+</section>
+<section id="absolute-performance-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="absolute-performance-uncertainty">Absolute performance uncertainty</h3>
+<div class="cell">
+<div id="tbl-recruitment-absolute-intervals" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-absolute-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13: Absolute held-out performance with 95% full-refit county-bootstrap intervals. Separate intervals describe each model, not the uncertainty of its difference from another model.
+</figcaption>
+<div aria-describedby="tbl-recruitment-absolute-intervals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 35%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Brier estimate and interval</th>
+<th style="text-align: left;">AUC estimate and interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: left;">0.09708 (0.07659 to 0.11300)</td>
+<td style="text-align: left;">Not ranked</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">0.09580 (0.07613 to 0.11298)</td>
+<td style="text-align: left;">0.581 (0.453 to 0.651)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">0.08764 (0.06947 to 0.10354)</td>
+<td style="text-align: left;">0.796 (0.730 to 0.841)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">0.08601 (0.07050 to 0.10115)</td>
+<td style="text-align: left;">0.806 (0.736 to 0.850)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: left;">0.12688 (0.10844 to 0.14360)</td>
+<td style="text-align: left;">Not ranked</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">0.12618 (0.10819 to 0.14446)</td>
+<td style="text-align: left;">0.543 (0.371 to 0.606)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">0.11976 (0.10676 to 0.13927)</td>
+<td style="text-align: left;">0.699 (0.619 to 0.746)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">0.11817 (0.10731 to 0.13831)</td>
+<td style="text-align: left;">0.711 (0.622 to 0.757)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The wide within-detection AUC intervals reflect uncertainty in separating 100 event conditions from 572 nonevent conditions under county resampling. No rank score is assigned to the fold-specific prevalence benchmark. These intervals retain fixed model choices, penalty, and county partition; they are not repeated-study coverage guarantees across new inventories.</p>
+</section>
+<section id="paired-ranking-and-log-loss-contrasts" class="level3">
+<h3 class="anchored" data-anchor-id="paired-ranking-and-log-loss-contrasts">Paired ranking and log loss contrasts</h3>
+<div class="cell">
+<div id="tbl-recruitment-extended-contrasts" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-extended-contrasts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;14: Additional paired contrasts from the same 300 full-refit county draws per population. Negative log loss and positive AUC or AP differences favor the added information.
+</figcaption>
+<div aria-describedby="tbl-recruitment-extended-contrasts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Addition</th>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Difference</th>
+<th style="text-align: left;">95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">AP</td>
+<td style="text-align: left;">0.0397</td>
+<td style="text-align: left;">-0.0095 to 0.0753</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">Log loss</td>
+<td style="text-align: left;">-0.0069</td>
+<td style="text-align: left;">-0.0176 to 0.0046</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">AUC</td>
+<td style="text-align: left;">0.0094</td>
+<td style="text-align: left;">-0.0063 to 0.0293</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">AP</td>
+<td style="text-align: left;">0.1347</td>
+<td style="text-align: left;">0.0865 to 0.1999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">Log loss</td>
+<td style="text-align: left;">-0.0501</td>
+<td style="text-align: left;">-0.0720 to -0.0257</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">AUC</td>
+<td style="text-align: left;">0.2150</td>
+<td style="text-align: left;">0.1410 to 0.3453</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">AP</td>
+<td style="text-align: left;">0.0325</td>
+<td style="text-align: left;">-0.0130 to 0.0786</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">Log loss</td>
+<td style="text-align: left;">-0.0065</td>
+<td style="text-align: left;">-0.0193 to 0.0082</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Stages to count</td>
+<td style="text-align: left;">AUC</td>
+<td style="text-align: left;">0.0113</td>
+<td style="text-align: left;">-0.0178 to 0.0466</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">AP</td>
+<td style="text-align: left;">0.0772</td>
+<td style="text-align: left;">0.0337 to 0.1517</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">Log loss</td>
+<td style="text-align: left;">-0.0304</td>
+<td style="text-align: left;">-0.0526 to -0.0069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Detected</td>
+<td style="text-align: left;">Count to design</td>
+<td style="text-align: left;">AUC</td>
+<td style="text-align: left;">0.1563</td>
+<td style="text-align: left;">0.0852 to 0.2955</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>These are correlated comparisons on the same outcomes. They supplement the emphasis on Brier contrasts and have not been corrected for multiplicity. Differences are paired within each bootstrap draw; subtracting limits from the preceding absolute-interval table would not reproduce them.</p>
+</section>
+<section id="full-population-penalized-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="full-population-penalized-coefficients">Full population penalized coefficients</h3>
+<div class="cell">
+<div id="tbl-recruitment-coefficients" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15: Full-population ridge coefficients on the standardized log-odds scale. Each column uses its own population’s centers and scales. These are descriptive coefficients, not held-out effect estimates.
+</figcaption>
+<div aria-describedby="tbl-recruitment-coefficients-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">All</th>
+<th style="text-align: left;">Detected</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Prevalence</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">-2.1066</td>
+<td style="text-align: left;">-1.7440</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">-2.2047</td>
+<td style="text-align: left;">-1.7784</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">Coverage</td>
+<td style="text-align: left;">0.5364</td>
+<td style="text-align: left;">0.2932</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Design</td>
+<td style="text-align: left;">Interval</td>
+<td style="text-align: left;">0.1297</td>
+<td style="text-align: left;">0.1458</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">-2.6619</td>
+<td style="text-align: left;">-1.9697</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">Coverage</td>
+<td style="text-align: left;">0.1518</td>
+<td style="text-align: left;">0.1072</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">Interval</td>
+<td style="text-align: left;">0.0989</td>
+<td style="text-align: left;">0.1084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Count + design</td>
+<td style="text-align: left;">Log seedling count</td>
+<td style="text-align: left;">1.1739</td>
+<td style="text-align: left;">0.7797</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">-2.8088</td>
+<td style="text-align: left;">-2.0572</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Coverage</td>
+<td style="text-align: left;">0.0912</td>
+<td style="text-align: left;">0.0658</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Interval</td>
+<td style="text-align: left;">0.1137</td>
+<td style="text-align: left;">0.1222</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Log seedling count</td>
+<td style="text-align: left;">1.1731</td>
+<td style="text-align: left;">0.8008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Log sapling density</td>
+<td style="text-align: left;">0.5244</td>
+<td style="text-align: left;">0.4716</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stages + design</td>
+<td style="text-align: left;">Log established basal area</td>
+<td style="text-align: left;">-0.0021</td>
+<td style="text-align: left;">0.0039</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>A slope describes the fitted log-odds change per one population-specific standard deviation of the listed transformed predictor, with other terms held fixed. It is not a per-seedling effect or a causal response to changing the forest. Intercepts correspond to the population’s centered predictors. Centers and scales for these descriptive fits remain in the saved model bundle; county-held-out fits use their own training-only scaling instead.</p>
+<p>The positive seedling-count and sapling-density slopes and the near-zero established-basal-area slopes describe these fitted models. They do not provide coefficient uncertainty, tests of biological importance, or a variable-importance ranking that accounts for correlated predictors. The predictive claim depends on held-out model contrasts, not on whether an individual fitted coefficient is positive or near zero.</p>
+</section>
+<section id="joint-count-and-sapling-strata" class="level3">
+<h3 class="anchored" data-anchor-id="joint-count-and-sapling-strata">Joint count and sapling strata</h3>
+<div class="cell">
+<div id="tbl-recruitment-joint-strata" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-recruitment-joint-strata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16: Unadjusted joint distribution of baseline counts, existing saplings, and recorded entry in all eligible intervals. Cells are descriptive, not randomized or matched comparisons.
+</figcaption>
+<div aria-describedby="tbl-recruitment-joint-strata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Baseline count</th>
+<th style="text-align: left;">Existing saplings</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">With entry</th>
+<th style="text-align: left;">Entry fraction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Absent</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.0%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Absent</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2-5</td>
+<td style="text-align: left;">Absent</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">0.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2-5</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">9.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6-20</td>
+<td style="text-align: left;">Absent</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6-20</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">13.4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&gt;20</td>
+<td style="text-align: left;">Absent</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">16.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&gt;20</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: left;">29.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In the greater-than-20 count bin, entry occurs in 59 of 202 conditions with existing saplings and 13 of 78 without them. This association motivates examining stage structure but does not establish additional predictive information after adjustment. Sparse and zero-event cells make their observed rates particularly uncertain. The bins were not optimized as ecological thresholds, and this cross-tabulation has no fitted interaction test or cell-specific uncertainty analysis.</p>
+</section>
+<section id="boundaries-of-the-secondary-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="boundaries-of-the-secondary-evidence">Boundaries of the secondary evidence</h3>
+<p>The RI comparison is a measurement audit on a smaller, partially overlapping sample, not a second validation of the main model. On matched microplot area, the ordinary count equals the sum of RI classes at least one foot long. The all-length RI total also includes shorter seedlings, so comparing that total directly with the ordinary count would change the measurement definition. The observed tall-seedling contrast is not adjusted for ordinary counts, existing maple stages, sampled coverage, or temporal differences. Four later-year events cannot support the proposed added-length evaluation as if it were a well-powered held-out comparison.</p>
+<p>The existing survey analysis tests fixed rankings and capacities against recorded outcomes. It does not measure travel time, treatment response, independent survey need, or the cost of a wrong decision. No deer-harvest, browsing, climate, or disturbance dataset has been joined to the core models. Those external-factor acquisition notes therefore supply neither an omitted adjusted effect nor additional validation for this paper.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-burrill2025fiadb" class="csl-entry" role="listitem">
+<span class="nocase">Burrill, Elizabeth A. et al.</span> 2025. <em>The Forest Inventory and Analysis Database: Database Description and User Guide for Phase 2, Version 9.4</em>. U.S. Department of Agriculture, Forest Service. <a href="https://research.fs.usda.gov/understory/forest-inventory-and-analysis-database-user-guide-nfi">https://research.fs.usda.gov/understory/forest-inventory-and-analysis-database-user-guide-nfi</a>.
+</div>
+<div id="ref-harris2026disturbance" class="csl-entry" role="listitem">
+Harris, Lucas B., Melissa A. Pastore, and Anthony W. D’Amato. 2026a. <span>“Tree Regeneration Following Natural Disturbance and Harvesting Indicates Challenges Maintaining Forest Composition and Tree Species Diversity in Northern <span>USA</span> Forests.”</span> <em>Journal of Applied Ecology</em> 63 (8): e70522. <a href="https://doi.org/10.1111/1365-2664.70522">https://doi.org/10.1111/1365-2664.70522</a>.
+</div>
+<div id="ref-harris2026" class="csl-entry" role="listitem">
+Harris, Lucas B., Melissa A. Pastore, and Anthony W. D’Amato. 2026b. <span>“Tree Regeneration Trends in Forests of the Northeastern <span>USA</span> and Their Implications for Resilience and Restoration.”</span> <em>Ecological Applications</em> 36 (5): e70288. <a href="https://doi.org/10.1002/eap.70288">https://doi.org/10.1002/eap.70288</a>.
+</div>
+<div id="ref-harris2022" class="csl-entry" role="listitem">
+Harris, Lucas B., Christopher W. Woodall, and Anthony W. D’Amato. 2022. <span>“Increasing the Utility of Tree Regeneration Inventories: Linking Seedling Abundance to Sapling Recruitment.”</span> <em>Ecological Indicators</em> 145: 109654. <a href="https://doi.org/10.1016/j.ecolind.2022.109654">https://doi.org/10.1016/j.ecolind.2022.109654</a>.
+</div>
+<div id="ref-henry2023" class="csl-entry" role="listitem">
+Henry, Catherine R., and Michael B. Walters. 2023. <span>“Sugar Maple (<span class="nocase">Acer saccharum</span>) Age Structure Reveals Limited Establishment and Development of Age Cohorts in Response to Selection Management in Northern Hardwood Forests.”</span> <em>Forest Ecology and Management</em> 546: 121356. <a href="https://doi.org/10.1016/j.foreco.2023.121356">https://doi.org/10.1016/j.foreco.2023.121356</a>.
+</div>
+<div id="ref-henry2021" class="csl-entry" role="listitem">
+Henry, Catherine R., Michael B. Walters, Andrew O. Finley, Gary J. Roloff, and Evan J. Farinosi. 2021. <span>“Complex Drivers of Sugar Maple (<span class="nocase">Acer saccharum</span>) Regeneration Reveal Challenges to Long-Term Sustainability of Managed Northern Hardwood Forests.”</span> <em>Forest Ecology and Management</em> 479: 118541. <a href="https://doi.org/10.1016/j.foreco.2020.118541">https://doi.org/10.1016/j.foreco.2020.118541</a>.
+</div>
+<div id="ref-fiafield2023" class="csl-entry" role="listitem">
+U.S. Forest Service. 2023. <em>National Core Field Guide, Version 9.3</em>. <span>U.S. Department of Agriculture, Forest Service</span>. <a href="https://research.fs.usda.gov/sites/default/files/2024-02/wo-v9-3_sep2023_fg_nfi_natl.pdf">https://research.fs.usda.gov/sites/default/files/2024-02/wo-v9-3_sep2023_fg_nfi_natl.pdf</a>.
+</div>
+<div id="ref-usfs_datamart" class="csl-entry" role="listitem">
+U.S. Forest Service. 2026. <em>FIA DataMart</em>. <a href="https://research.fs.usda.gov/products/dataandtools/fia-datamart">https://research.fs.usda.gov/products/dataandtools/fia-datamart</a>.
+</div>
+<div id="ref-vickers2006" class="csl-entry" role="listitem">
+Vickers, Andrew J., and Elena B. Elkin. 2006. <span>“Decision Curve Analysis: A Novel Method for Evaluating Prediction Models.”</span> <em>Medical Decision Making</em> 26 (6): 565–74. <a href="https://doi.org/10.1177/0272989X06295361">https://doi.org/10.1177/0272989X06295361</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dineshpotla\.github\.io\/canopy-to-cohort\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/recruitment.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

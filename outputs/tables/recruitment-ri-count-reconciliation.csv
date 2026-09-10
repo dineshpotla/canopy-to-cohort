@@ -1,0 +1,3 @@
+unit,observations,ordinary_count,ri_at_least_one_foot,ri_all_lengths,ri_stump_source,exact_count_agreements,missing_comparisons,maximum_absolute_difference
+Condition intervals,90,2658,2658,9489,4,90,0,0
+Microplot-condition intervals,311,2658,2658,9489,4,311,0,0

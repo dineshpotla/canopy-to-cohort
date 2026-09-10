@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Michigan FIA regeneration-indicator sampling, count reconciliation, and support for a height-information comparison.">
+
+<title>Regeneration length classes and measurement feasibility – Canopy to Cohort</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5685cd926c25366c96d9f1407e584118.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Regeneration length classes and measurement feasibility – Canopy to Cohort">
+<meta property="og:description" content="Michigan FIA regeneration-indicator sampling, count reconciliation, and support for a height-information comparison.">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta name="twitter:title" content="Regeneration length classes and measurement feasibility – Canopy to Cohort">
+<meta name="twitter:description" content="Michigan FIA regeneration-indicator sampling, count reconciliation, and support for a height-information comparison.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Canopy to Cohort</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../report/recruitment.html"> 
+<span class="menu-text">Recruitment study</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../report/index.html"> 
+<span class="menu-text">Detection pilot</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/research-direction.html"> 
+<span class="menu-text">Research direction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/analysis-decisions.html"> 
+<span class="menu-text">Analysis decisions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dineshpotla/canopy-to-cohort"> <i class="bi bi-github" role="img" aria-label="GitHub repository">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-and-direction" id="toc-findings-and-direction" class="nav-link active" data-scroll-target="#findings-and-direction">Findings and direction</a></li>
+  <li><a href="#endpoint-and-population" id="toc-endpoint-and-population" class="nav-link" data-scroll-target="#endpoint-and-population">Endpoint and population</a></li>
+  <li><a href="#sampling-and-protocol-definitions" id="toc-sampling-and-protocol-definitions" class="nav-link" data-scroll-target="#sampling-and-protocol-definitions">Sampling and protocol definitions</a>
+  <ul class="collapse">
+  <li><a href="#historical-coverage-and-date-limitations" id="toc-historical-coverage-and-date-limitations" class="nav-link" data-scroll-target="#historical-coverage-and-date-limitations">Historical coverage and date limitations</a></li>
+  </ul></li>
+  <li><a href="#eligibility-and-valid-zeros" id="toc-eligibility-and-valid-zeros" class="nav-link" data-scroll-target="#eligibility-and-valid-zeros">Eligibility and valid zeros</a></li>
+  <li><a href="#count-reconciliation" id="toc-count-reconciliation" class="nav-link" data-scroll-target="#count-reconciliation">Count reconciliation</a></li>
+  <li><a href="#descriptive-length-support" id="toc-descriptive-length-support" class="nav-link" data-scroll-target="#descriptive-length-support">Descriptive length support</a></li>
+  <li><a href="#forecasting-feasibility-and-next-decision" id="toc-forecasting-feasibility-and-next-decision" class="nav-link" data-scroll-target="#forecasting-feasibility-and-next-decision">Forecasting feasibility and next decision</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/ri-audit.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Regeneration length classes and measurement feasibility</h1>
+</div>
+
+<div>
+  <div class="description">
+    Michigan FIA regeneration-indicator sampling, count reconciliation, and support for a height-information comparison.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="findings-and-direction" class="level2">
+<h2 class="anchored" data-anchor-id="findings-and-direction">Findings and direction</h2>
+<p>The Michigan regeneration-indicator (RI) records support a descriptive measurement study, but not a strong new forecasting claim. The baseline sampling and record checks retain 90 condition intervals on 87 physical plots, with 14 recruit-bearing conditions. The appropriate next scientific question is whether seedling length distribution adds information beyond ordinary counts on the same sampled area, not whether another stand variable can improve a headline metric.</p>
+<p>Taller seedlings provide a plausible lead. Among 44 conditions with RI maple seedlings at least five feet long, 13 had recorded new saplings at follow-up; among 46 without such seedlings, 1 did. This is a retrospective association in an already explored sample. It is not a held-out comparison with seedling abundance, proof of individual survival, or a management threshold.</p>
+<p>The information constraint remains decisive: the existing later-year split would provide 10 development events and 4 assessment events. No height-class model is fitted. The current contribution is a reconciled measurement audit and a more specific testable hypothesis; evidence for an operational survey tool remains absent.</p>
+</section>
+<section id="endpoint-and-population" class="level2">
+<h2 class="anchored" data-anchor-id="endpoint-and-population">Endpoint and population</h2>
+<p>The source population is the 922 eligible intervals from the <a href="../report/recruitment.html#source-and-cohort">recruitment study</a>, not all Michigan forest conditions. The outcome remains a new live sugar-maple sapling tally at follow-up, using the existing species, diameter, reconciliation, predecessor, and shared-sampling checks. No eligibility rule is relaxed to obtain more RI records or events.</p>
+<p>Baseline RI is a potential predictor. Follow-up RI is a different measurement and is not needed to establish baseline length structure when the follow-up TREE endpoint is otherwise valid. Requiring RI at both visits would answer a narrower question and could discard valid baseline observations. Neither condition intervals nor sampled microplots are whole management stands, and these results are not statewide, survey-weighted population estimates.</p>
+</section>
+<section id="sampling-and-protocol-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-and-protocol-definitions">Sampling and protocol definitions</h2>
+<p>The database dictionary retires <code>REGEN_SUBP_STATUS_CD</code> from inventory year 2015 and identifies <code>REGEN_MICR_STATUS_CD</code> as the status field populated across years. Code 1 identifies sampled RI on accessible forest; code 2 is sampled but without accessible forest on the microplot. Codes 3-5 are nonsampled and code 9 is historically ambiguous. A blank retired field is therefore not a reason to reject an otherwise valid code-1 forest sample. Conversely, code 2 cannot verify RI coverage of a positive forest-condition area. <span class="citation" data-cites="burrill2025fiadb">(<a href="#ref-burrill2025fiadb" role="doc-biblioref"><span class="nocase">Burrill et al.</span> 2025, sec. 6.2.10</a> and 6.2.22)</span></p>
+<p>The baseline screen requires RI plot presence, code-1 coverage of every contributing condition-microplot slice, consistent subplot identifiers, compatible core sampling, and a reconstructed condition area matching the existing microplot proportion. RI seedling records must have valid condition and subplot-condition foreign keys, species/source/length codes, and counts. Duplicate keys stop the calculation; invalid records make the affected plot’s RI measurements unavailable. Missing species tallies are not zero-filled until the measurement frame passes.</p>
+<p>The inspected annual supplements specify a May-September RI window and established seedlings at least two inches long, below one inch DBH. Length is measured along the seedling from base to terminal bud, not necessarily vertical height. Counts above five may be estimated. Stump sprouts and suckers from one origin are not independent stems; only the tallest qualifying stump sprout is tallied. These details limit biological interpretations of the count totals. <span class="citation" data-cites="nrsri2016 nrsri2018">(<a href="#ref-nrsri2016" role="doc-biblioref">U.S. Forest Service 2016, sec. 6.0</a> and 6.4; <a href="#ref-nrsri2018" role="doc-biblioref">U.S. Forest Service 2018, 18–22</a>)</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>RI class</th>
+<th>Recorded length</th>
+<th>Role in this audit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2 to less than 6 inches</td>
+<td>Below the ordinary hardwood minimum</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>6 to less than 12 inches</td>
+<td>Below the ordinary hardwood minimum</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1 to less than 3 feet</td>
+<td>Ordinary-size comparison</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>3 to less than 5 feet</td>
+<td>Ordinary-size comparison</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>5 to less than 10 feet</td>
+<td>Prespecified taller group</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>At least 10 feet</td>
+<td>Prespecified taller group</td>
+</tr>
+</tbody>
+</table>
+<p>The codes agree in the inspected 2016-2018 supplements and the v9.4 dictionary. Source code 1 denotes other seedlings and code 2 stump sprouts; code 3 is reserved for selected large-seeded species, not sugar maple. <span class="citation" data-cites="nrsri2017 burrill2025fiadb">(<a href="#ref-nrsri2017" role="doc-biblioref">U.S. Forest Service 2017, 21–22</a>; <a href="#ref-burrill2025fiadb" role="doc-biblioref"><span class="nocase">Burrill et al.</span> 2025, secs. 6.3.14–16</a>)</span></p>
+<p>The earlier RI technical report documents the same length schema and the regional inventory’s development. It does not substitute for reading every annual field supplement. <span class="citation" data-cites="mcwilliams2015ri">(<a href="#ref-mcwilliams2015ri" role="doc-biblioref"><span class="nocase">McWilliams et al.</span> 2015, 18–23</a> and 72)</span></p>
+<section id="historical-coverage-and-date-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="historical-coverage-and-date-limitations">Historical coverage and date limitations</h3>
+<p>The full relevant sections of the 2016, 2017, and 2018 annual supplements were inspected. These years cover 37 available baseline intervals with four events. The 53 older intervals have dictionary and historical technical-report support, but their individual 2012-2015 annual supplements were not recovered. Full version-by-version protocol equivalence is not certified.</p>
+<p>The official archive’s 2016 copy is marked DRAFT. Its length boundaries agree with the inspected 2017/2018 supplements and dictionary, but a final deployed 2016 edition is not certified. Older generic cross-references also retain inconsistent subplot/status wording; the audit uses the explicit microplot status table and dictionary. These qualifications are retained in the <a href="../research/notes/ri-protocol-evidence.md">protocol note</a>.</p>
+<p><code>PLOT.MANUAL</code> is not treated as a precise P2+ supplement edition: for example, baseline records store 7.0 while the available annual supplements include 7.1 and 7.2. Year-specific documentary coverage is recorded separately. Plot measurement dates provide a plausibility screen, not proof of the exact RI measurement day or leaf condition; the RI tables expose no separate field date.</p>
+</section>
+</section>
+<section id="eligibility-and-valid-zeros" class="level2">
+<h2 class="anchored" data-anchor-id="eligibility-and-valid-zeros">Eligibility and valid zeros</h2>
+<div class="cell">
+<div id="tbl-ri-flow" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ri-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Baseline RI eligibility and narrower sensitivity populations. Rows after the primary available cohort are separate restrictions, not a single sequential funnel.
+</figcaption>
+<div aria-describedby="tbl-ri-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 59%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Screen</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">Plots</th>
+<th style="text-align: right;">Counties</th>
+<th style="text-align: right;">Recruit-bearing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Recruitment-eligible intervals</td>
+<td style="text-align: right;">922</td>
+<td style="text-align: right;">903</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Baseline RI plot record</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Complete baseline RI condition frame</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frame and RI record checks pass</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Baseline RI available, including date screen</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Available baseline RI and standard seedlings detected</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Available RI and annual baseline guide inspected (2016-2018)</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RI available at both visits, including date screen</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">13</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>All 90 baseline records pass the implemented frame, record, and date checks. They cover 311 contributing microplot-condition intervals and have exact mapped overlap in the existing recruitment frame. This is a qualified local eligibility finding, not independent certification of all field measurements. The other 832 eligible recruitment intervals have no baseline RI plot record; their length-class values remain unavailable, not zero.</p>
+<p>At follow-up, two intervals fail the RI frame checks and two more have plot dates outside the RI window, leaving 86 under a both-visit restriction. These four flags do not invalidate their baseline RI or the existing TREE endpoint. The date flags require clarification before using follow-up RI to estimate length-class changes.</p>
+<div class="cell">
+<div id="tbl-ri-zeros" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ri-zeros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Maple tally states on the 90 baseline RI-available intervals.
+</figcaption>
+<div aria-describedby="tbl-ri-zeros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Baseline state</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">Plots</th>
+<th style="text-align: right;">Recruit-bearing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RI maple at least one foot</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No RI maple tally on verified frame</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RI maple only below one foot</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The 19 conditions without ordinary baseline seedling detections split into nine with no qualifying RI maple tally and ten containing only smaller RI seedlings. Thus an ordinary zero is not equivalent to an all-size RI zero. None of those 19 had the defined recorded entry in this snapshot; that does not imply that small seedlings can never advance or that recruitment cannot follow a zero.</p>
+</section>
+<section id="count-reconciliation" class="level2">
+<h2 class="anchored" data-anchor-id="count-reconciliation">Count reconciliation</h2>
+<p>The ordinary maple count equals the sum of RI classes 3-6 in every one of the 311 matched microplot-condition intervals and all 90 condition intervals. Both totals are 2,658. Including the two smaller RI classes raises the recorded total to 9,489; four of those tallies use the stump-source category.</p>
+<div class="cell">
+<div id="tbl-ri-reconciliation" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ri-reconciliation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Same-area comparison of ordinary counts and RI counts at least one foot long.
+</figcaption>
+<div aria-describedby="tbl-ri-reconciliation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 13%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Unit</th>
+<th style="text-align: right;">Comparisons</th>
+<th style="text-align: right;">Exact matches</th>
+<th style="text-align: right;">Ordinary total</th>
+<th style="text-align: right;">RI &gt;=1 ft total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Condition intervals</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">2658</td>
+<td style="text-align: right;">2658</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Microplot-condition intervals</td>
+<td style="text-align: right;">311</td>
+<td style="text-align: right;">311</td>
+<td style="text-align: right;">2658</td>
+<td style="text-align: right;">2658</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>This establishes numerical redundancy of the collapsed counts in this sample, not independence of the two measurements. Shared or derived tally information is a plausible explanation for exact agreement; the database-generation code has not been audited, so a specific derivation mechanism is not asserted. It would be misleading to count agreement as independent field validation.</p>
+<p>The candidate additional information is the distribution among length classes and the smaller-size counts. Comparing all 9,489 RI tallies with the 2,658 ordinary tallies as though they measured the same size range would confound measurement definition with information gain. Neither denominator supports an individual seedling-to-sapling survival rate.</p>
+</section>
+<section id="descriptive-length-support" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-length-support">Descriptive length support</h2>
+<p>The at-least-five-foot grouping was fixed before calculating these associations, based on the published RI schema and the recruitment literature’s emphasis on taller seedlings. Harris and colleagues already showed that length classes can improve recruitment prediction in a larger regional FIA sample; the present Michigan result is not a novel demonstration of that general idea. <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span></p>
+<div class="cell">
+<div id="tbl-ri-height" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ri-height-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Recorded recruitment by baseline taller-seedling presence. Intervals are descriptive 95% county-bootstrap intervals, not forecast-validation intervals.
+</figcaption>
+<div aria-describedby="tbl-ri-height-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Maple &gt;=5 ft</th>
+<th style="text-align: right;">Conditions</th>
+<th style="text-align: right;">Recruit-bearing</th>
+<th style="text-align: left;">Entry fraction</th>
+<th style="text-align: left;">95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">All RI-available intervals</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">29.5%</td>
+<td style="text-align: left;">18.9% to 42.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All RI-available intervals</td>
+<td style="text-align: left;">Not recorded</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2.2%</td>
+<td style="text-align: left;">0.0% to 8.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Standard baseline seedlings detected</td>
+<td style="text-align: left;">Present</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">29.5%</td>
+<td style="text-align: left;">19.4% to 43.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Standard baseline seedlings detected</td>
+<td style="text-align: left;">Not recorded</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">3.7%</td>
+<td style="text-align: left;">0.0% to 13.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The primary contrast is 29.5% versus 2.2%. Restricting to the 71 ordinary-detected conditions removes the easiest ordinary-zero group, but still does not adjust for differences in counts, interval length, site, or existing maple stages. A tall seedling is already closer in size to the recorded sapling boundary; this association must not be reinterpreted as a causal effect of height or browsing.</p>
+<p>The intervals resample whole counties 2,000 times without fitting a prediction model. The one-event group is particularly fragile: its bootstrap distribution can contain no events, so a zero lower bound is not evidence of zero underlying risk. The intervals omit question selection, historical-protocol uncertainty, measurement error, and uncertainty about the intended survey decision.</p>
+<div class="cell">
+<div id="tbl-ri-classes" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ri-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Support for the six RI classes. Conditions can occur in several rows; event counts must not be summed across classes.
+</figcaption>
+<div aria-describedby="tbl-ri-classes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 21%">
+<col style="width: 30%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Class</th>
+<th style="text-align: right;">Recorded tally</th>
+<th style="text-align: right;">Conditions with class</th>
+<th style="text-align: right;">Recruit-bearing among those</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4804</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2027</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1939</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">401</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="forecasting-feasibility-and-next-decision" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-feasibility-and-next-decision">Forecasting feasibility and next decision</h2>
+<p>A development/assessment split following the existing calendar boundary has 53 development intervals with ten events and 37 later intervals with four events, with no shared physical plots across the split. One missed assessment event would change observed event recall by 25 percentage points. These already explored outcomes are not an untouched validation set even if their length predictors were previously unused.</p>
+<p>As a precision illustration only, even a hypothetical rule finding all 14 event plots would have an exact two-sided binomial 95% lower recall bound of 76.8% under independent-event sampling. This is not the observed rule’s recall, a clustered confidence interval, or a sample-size justification. Geographic dependence and a held-out sample would further constrain what can be learned.</p>
+<p>The evidence supports retaining length structure as the next measurement hypothesis. It does not support a six-class fitted forecasting model or an operational score from this subset. A useful next study would fix a single supportable length representation, retain ordinary counts and sampling area as comparators on identical cases, and evaluate the paired gain in a separate, adequately supported inventory sample. A meaningful gain, forecasting horizon, decision target, action unit, and measurement cost must be specified first.</p>
+<p>Within the existing Michigan snapshot, the baseline measurement milestone is complete with the historical-access qualifications above. The defensible contribution is the distinction between seedling abundance, length structure, and recorded sapling entry, together with explicit limits on usefulness. Acquiring other inventories or coordinating field work requires a separate scope decision; neither has occurred. The <a href="../docs/survey-validation-plan.html">survey validation plan</a> records these gates.</p>
+<p>The subsequent <a href="../report/length-study.html">count-versus-length design</a> fixes a one-term comparison and planning scenarios. Its outcome-free historical opportunity screen finds only six physical plots beyond the current recruitment cohort among positive-seedling opportunities, before full eligibility checks. It does not establish a new independent Michigan test sample.</p>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>Run <code>make ri-audit</code> after the recruitment dataset exists. The <a href="../outputs/tables/recruitment-ri-eligibility.csv">eligibility table</a>, <a href="../outputs/tables/recruitment-ri-count-reconciliation.csv">matched-count results</a>, <a href="../outputs/tables/recruitment-ri-height-support.csv">length support</a>, and <a href="../outputs/tables/recruitment-ri-split-support.csv">split support</a> contain the aggregate evidence. Record-level joins remain local and Git-ignored.</p>
+<p>The <a href="../research/runs/recruitment-2026-09-08/ri-contract.md">audit contract</a>, <a href="../research/notes/ri-protocol-evidence.md">protocol evidence note</a>, and <a href="../research/runs/recruitment-2026-09-08/ri-review.md">claim review</a> distinguish declared analytical rules, documentary access, local results, and limitations.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-burrill2025fiadb" class="csl-entry" role="listitem">
+<span class="nocase">Burrill, Elizabeth A. et al.</span> 2025. <em>The Forest Inventory and Analysis Database: Database Description and User Guide for Phase 2, Version 9.4</em>. U.S. Department of Agriculture, Forest Service. <a href="https://research.fs.usda.gov/understory/forest-inventory-and-analysis-database-user-guide-nfi">https://research.fs.usda.gov/understory/forest-inventory-and-analysis-database-user-guide-nfi</a>.
+</div>
+<div id="ref-harris2022" class="csl-entry" role="listitem">
+Harris, Lucas B., Christopher W. Woodall, and Anthony W. D’Amato. 2022. <span>“Increasing the Utility of Tree Regeneration Inventories: Linking Seedling Abundance to Sapling Recruitment.”</span> <em>Ecological Indicators</em> 145: 109654. <a href="https://doi.org/10.1016/j.ecolind.2022.109654">https://doi.org/10.1016/j.ecolind.2022.109654</a>.
+</div>
+<div id="ref-mcwilliams2015ri" class="csl-entry" role="listitem">
+<span class="nocase">McWilliams, William H. et al.</span> 2015. <em>A Regeneration Indicator for Forest Inventory and Analysis: History, Sampling, Estimation, Analytics, and Potential Use in the Midwest and Northeast United States</em>. NRS-148. U.S. Department of Agriculture, Forest Service, Northern Research Station. <a href="https://research.fs.usda.gov/download/treesearch/48367.pdf">https://research.fs.usda.gov/download/treesearch/48367.pdf</a>.
+</div>
+<div id="ref-nrsri2016" class="csl-entry" role="listitem">
+U.S. Forest Service. 2016. <em>National Core Field Guide, Volume <span>I</span> Supplement: Field Data Collection Procedures for Phase 2+ Plots, Version 7.0</em>. Northern Research Station. <a href="https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034508947">https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034508947</a>.
+</div>
+<div id="ref-nrsri2017" class="csl-entry" role="listitem">
+U.S. Forest Service. 2017. <em>National Core Field Guide, Volume <span>I</span> Supplement: Field Data Collection Procedures for Phase 2+ Plots, Version 7.1</em>. Northern Research Station. <a href="https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034501747">https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034501747</a>.
+</div>
+<div id="ref-nrsri2018" class="csl-entry" role="listitem">
+U.S. Forest Service. 2018. <em>National Core Field Guide, Volume <span>I</span> Supplement: Field Data Collection Procedures for Phase 2+ Plots, Version 7.2</em>. Northern Research Station. <a href="https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034540147">https://usfs-public.app.box.com/s/x7gdq3latjy1i5936ni46hm1u7g4v12v/file/1178034540147</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dineshpotla\.github\.io\/canopy-to-cohort\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/ri-audit.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

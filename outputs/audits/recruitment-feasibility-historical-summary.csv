@@ -1,0 +1,17 @@
+metric,value,note
+All positive historical microplot condition links,40109,"Current PLOT.MANUAL>=1; scope is all qualifying database visits, not one EVALID."
+Provisional historical condition intervals,2308,Baseline active group-800 forest code and live maple DIA>=5; forest sampled both visits; national design 1 both visits; manuals>=1; one-to-one mapping; relative overlap>=0.9 both; predecessor match; positive finite interval.
+Physical plots,1102,Repeated intervals and multiple conditions are not independent plots.
+Counties,70,Unweighted feasibility sample; not a statewide population estimate.
+Intervals with new saplings,230,"Conservative RECONCILECD=1, live maple 1<=DIA<5, null prior tree key."
+New sapling records,345,Only surviving new tally stems; arrivals that died between visits are unobserved.
+Physical plots with new saplings,180,"Useful support is events across independent plots, not just tree counts."
+Counties with new saplings,32,Geographic event support.
+Earliest baseline measurement year,2004,Historical feasibility only.
+Latest baseline measurement year,2018,Historical feasibility only.
+Earliest follow-up measurement year,2009,Historical feasibility only.
+Latest follow-up measurement year,2025,Historical feasibility only.
+Minimum interval years,2.8333333333333335,Measurement year plus month difference; no narrow interval filter applied.
+Median interval years,6.083333333333333,Model would need to account for variable exposure duration.
+Maximum interval years,8.083333333333334,Long intervals need separate comparability review.
+Intervals outside 4.5 to 8.5 years,110,Existing current-cohort interval bounds; no exclusion made for this feasibility audit.

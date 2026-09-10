@@ -1,0 +1,5 @@
+cohort,conditions,physical_plots,counties,recruit_conditions,new_saplings,baseline_seedling_detections
+Source strict pairs,932,913,66,101,171,677
+Reconciled recruitment cohort,922,903,66,100,169,672
+Exact-overlap sensitivity,914,895,66,100,169,668
+QA_STATUS=1 both visits sensitivity,919,900,66,99,168,669

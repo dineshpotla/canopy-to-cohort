@@ -1,0 +1,9 @@
+screen,conditions,physical_plots,counties,events,event_plots,new_saplings,standard_seedling_detections
+Recruitment-eligible intervals,922,903,66,100,100,169,672
+Baseline RI plot record,90,87,32,14,14,30,71
+Complete baseline RI condition frame,90,87,32,14,14,30,71
+Frame and RI record checks pass,90,87,32,14,14,30,71
+"Baseline RI available, including date screen",90,87,32,14,14,30,71
+Available baseline RI and standard seedlings detected,71,69,27,14,14,30,71
+Available RI and annual baseline guide inspected (2016-2018),37,35,18,4,4,5,29
+"RI available at both visits, including date screen",86,83,31,13,13,29,67

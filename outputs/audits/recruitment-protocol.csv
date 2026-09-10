@@ -1,0 +1,14 @@
+baseline_manual,followup_manual,baseline_kindcd,followup_kindcd,baseline_qa_status,followup_qa_status,baseline_microplot_loc,followup_microplot_loc,seedling_count_protocol_valid,condition_intervals
+5.1,8,1,2,1,1,OFFSET,OFFSET,TRUE,1
+5.1,8,2,2,1,1,OFFSET,OFFSET,TRUE,81
+6,8,1,2,1,1,OFFSET,OFFSET,TRUE,17
+6,8,2,2,1,1,OFFSET,OFFSET,TRUE,37
+6,9,1,2,1,1,OFFSET,OFFSET,TRUE,85
+6,9,1,2,7,1,OFFSET,OFFSET,TRUE,1
+6,9,2,2,1,1,OFFSET,OFFSET,TRUE,316
+6,9,2,2,1,7,OFFSET,OFFSET,TRUE,1
+7,9,1,2,1,1,OFFSET,OFFSET,TRUE,8
+7,9,2,2,1,1,OFFSET,OFFSET,TRUE,241
+7,9,2,2,1,7,OFFSET,OFFSET,TRUE,1
+7,9.4,1,2,1,1,OFFSET,OFFSET,TRUE,6
+7,9.4,2,2,1,1,OFFSET,OFFSET,TRUE,137

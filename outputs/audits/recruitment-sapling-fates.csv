@@ -1,0 +1,9 @@
+fate,followup_statuscd,followup_reconcilecd,followup_spcd,fate_eligible,trees
+Alive; reached 5 inches,1,NA,318,FALSE,1
+Alive; reached 5 inches,1,NA,318,TRUE,58
+Alive; remains sapling,1,NA,318,FALSE,5
+Alive; remains sapling,1,NA,318,TRUE,1188
+No longer sampled,0,7,318,FALSE,1
+Recorded dead,2,NA,318,FALSE,3
+Recorded dead,2,NA,318,TRUE,334
+Species reidentified,1,NA,316,FALSE,3

@@ -1,0 +1,5 @@
+split,conditions,events,physical_plots,counties,followup_year_min,followup_year_max,followup_manual_min,followup_manual_max,followup_manual_at_least_9,interval_years_min,interval_years_median,interval_years_max,physical_plots_shared,cutoff_year,population
+Training,547,59,535,55,2018,2022,8,9,412,5.416666666666667,7,8.083333333333334,0,2023,All eligible pairs
+Testing,375,41,368,49,2023,2025,9,9.4,375,6,7,7.916666666666667,0,2023,All eligible pairs
+Training,397,59,395,41,2018,2022,8,9,298,5.416666666666667,7,8.083333333333334,0,2023,Baseline seedlings detected
+Testing,275,41,272,36,2023,2025,9,9.4,275,6,7,7.916666666666667,0,2023,Baseline seedlings detected
