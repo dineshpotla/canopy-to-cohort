@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-10">
+<meta name="description" content="County-safe maps and earlier exploratory figures from the Canopy to Cohort FIA workflow.">
+
+<title>Maps and exploratory visuals – Canopy to Cohort</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5685cd926c25366c96d9f1407e584118.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Maps and exploratory visuals – Canopy to Cohort">
+<meta property="og:description" content="County-safe maps and earlier exploratory figures from the Canopy to Cohort FIA workflow.">
+<meta property="og:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/07_recruitment_cohort_map.png">
+<meta property="og:site_name" content="Canopy to Cohort">
+<meta property="og:image:height" content="2176">
+<meta property="og:image:width" content="2240">
+<meta name="twitter:title" content="Maps and exploratory visuals – Canopy to Cohort">
+<meta name="twitter:description" content="County-safe maps and earlier exploratory figures from the Canopy to Cohort FIA workflow.">
+<meta name="twitter:image" content="https://dineshpotla.github.io/canopy-to-cohort/outputs/figures/07_recruitment_cohort_map.png">
+<meta name="twitter:image-height" content="2176">
+<meta name="twitter:image-width" content="2240">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed report-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Canopy to Cohort</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../report/recruitment.html"> 
+<span class="menu-text">Recruitment study</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../report/spatial-context.html" aria-current="page"> 
+<span class="menu-text">Maps and visuals</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../report/index.html"> 
+<span class="menu-text">Detection pilot</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/research-direction.html"> 
+<span class="menu-text">Research direction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/analysis-decisions.html"> 
+<span class="menu-text">Analysis decisions</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../docs/data-dictionary.html"> 
+<span class="menu-text">Data dictionary</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/dineshpotla/canopy-to-cohort"> <i class="bi bi-github" role="img" aria-label="GitHub repository">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#current-recruitment-study" id="toc-current-recruitment-study" class="nav-link active" data-scroll-target="#current-recruitment-study">Current recruitment study</a></li>
+  <li><a href="#earlier-foundation-composition-and-size-classes" id="toc-earlier-foundation-composition-and-size-classes" class="nav-link" data-scroll-target="#earlier-foundation-composition-and-size-classes">Earlier foundation: composition and size classes</a>
+  <ul class="collapse">
+  <li><a href="#sample-composition" id="toc-sample-composition" class="nav-link" data-scroll-target="#sample-composition">Sample composition</a></li>
+  <li><a href="#separating-established-trees-from-seedlings" id="toc-separating-established-trees-from-seedlings" class="nav-link" data-scroll-target="#separating-established-trees-from-seedlings">Separating established trees from seedlings</a></li>
+  </ul></li>
+  <li><a href="#earlier-detection-pilot-and-spatial-summaries" id="toc-earlier-detection-pilot-and-spatial-summaries" class="nav-link" data-scroll-target="#earlier-detection-pilot-and-spatial-summaries">Earlier detection pilot and spatial summaries</a>
+  <ul class="collapse">
+  <li><a href="#county-level-pilot-context" id="toc-county-level-pilot-context" class="nav-link" data-scroll-target="#county-level-pilot-context">County-level pilot context</a></li>
+  </ul></li>
+  <li><a href="#earlier-model-evidence" id="toc-earlier-model-evidence" class="nav-link" data-scroll-target="#earlier-model-evidence">Earlier model evidence</a></li>
+  <li><a href="#how-to-read-the-visual-record" id="toc-how-to-read-the-visual-record" class="nav-link" data-scroll-target="#how-to-read-the-visual-record">How to read the visual record</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/spatial-context.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Maps and exploratory visuals</h1>
+<p class="subtitle lead">Spatial context, size-class evidence, and the path to the recruitment study</p>
+</div>
+
+<div>
+  <div class="description">
+    County-safe maps and earlier exploratory figures from the Canopy to Cohort FIA workflow.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 10, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="report-opening column-page">
+<div class="report-opening-copy">
+<p><span class="report-eyebrow">Michigan · county-safe FIA geography · exploratory visuals</span></p>
+<p><span class="report-deck">Maps explain where the evidence comes from; they do not turn a sample into a statewide estimate.</span></p>
+<p>This page brings the project’s visual evidence together. The current recruitment study is shown first. The earlier maps and charts remain because they explain the sample, separate FIA size classes, and show how the research question changed. They are labeled as foundation or pilot evidence where they are not part of the recruitment endpoint.</p>
+</div>
+<div class="report-cover-figure">
+<p><img src="../outputs/figures/07_recruitment_cohort_map.png" class="img-fluid" alt="Map of Michigan counties shaded by the number of eligible recruitment condition intervals. Northern counties contain most of the retained intervals; counties with no retained interval are gray."></p>
+<p><span class="report-cover-caption">The current recruitment cohort is mapped by county, never by exact FIA plot location.</span></p>
+</div>
+</div>
+<section id="current-recruitment-study" class="level2">
+<h2 class="anchored" data-anchor-id="current-recruitment-study">Current recruitment study</h2>
+<p>The primary analysis retains 922 baseline to follow-up condition intervals on 903 physical plots across 66 counties. The map shows <strong>where the retained sample is distributed</strong>, not the probability of recruitment in each county. Counties with more intervals are darker because they contribute more observations; that is sample support, not a county ranking.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-current-recruitment-map" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Michigan county map shaded by retained recruitment condition intervals; northern counties have most of the sample and counties with no retained intervals are gray.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-current-recruitment-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../outputs/figures/07_recruitment_cohort_map.png" class="img-fluid figure-img" style="width:100.0%" alt="Michigan county map shaded by retained recruitment condition intervals; northern counties have most of the sample and counties with no retained intervals are gray.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-current-recruitment-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Current recruitment cohort by county. Fill shows the number of retained condition intervals on the square-root scale. This is a sample-support map, not a design-based county estimate or an exact plot map.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The two current result figures belong to the recruitment report: the count gradient shows recorded entry by baseline seedling count, and the paired Brier plot compares added information on matched observations. Their interpretation depends on the held-out county design and the caveats in the <a href="../report/recruitment.html">full recruitment report</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/10_recruitment_counts.png" class="img-fluid figure-img" alt="Bars show recorded new sapling entry increasing from zero among 250 zero-count conditions to 25.7 percent among 280 conditions with more than 20 recorded seedlings."></p>
+<figcaption>Recorded new-sapling entry by baseline maple seedling count.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/11_recruitment_incremental_value.png" class="img-fluid figure-img" alt="County-bootstrap intervals show a clearer improvement when seedling count is added to observation design, while the additional maple-stage improvement is small and intervals cross zero."></p>
+<figcaption>Paired Brier differences for added seedling counts and maple stages.</figcaption>
+</figure>
+</div>
+</section>
+<section id="earlier-foundation-composition-and-size-classes" class="level2">
+<h2 class="anchored" data-anchor-id="earlier-foundation-composition-and-size-classes">Earlier foundation: composition and size classes</h2>
+<p>These figures come from the earlier cross-sectional analysis of 1,457 forest conditions in 78 counties. They are useful context for understanding which species and size classes were present before the project moved to repeated visits. They are not estimates of the current recruitment endpoint.</p>
+<section id="sample-composition" class="level3">
+<h3 class="anchored" data-anchor-id="sample-composition">Sample composition</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/02_species_composition.png" class="img-fluid figure-img" alt="Horizontal bars show the share of live-tree basal-area contribution for the leading species in the earlier FIA sample, with sugar maple highlighted."></p>
+<figcaption>Species composition in the earlier cross-sectional cohort.</figcaption>
+</figure>
+</div>
+<p>This chart describes the composition of the analyzed sample. It does not imply that basal-area contribution is a statewide FIA estimate or that larger maple basal area measures recent regeneration.</p>
+</section>
+<section id="separating-established-trees-from-seedlings" class="level3">
+<h3 class="anchored" data-anchor-id="separating-established-trees-from-seedlings">Separating established trees from seedlings</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/03_regeneration_quadrant.png" class="img-fluid figure-img" alt="A two-part figure relates positive sugar-maple seedling tallies to established-tree basal-area share and counts conditions with zero seedling tallies separately."></p>
+<figcaption>Earlier size-class screen.</figcaption>
+</figure>
+</div>
+<p>This screen motivated separating established trees, saplings, and seedlings. The later recruitment study asks a different question by using the next-visit recorded sapling entry as its endpoint.</p>
+</section>
+</section>
+<section id="earlier-detection-pilot-and-spatial-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="earlier-detection-pilot-and-spatial-summaries">Earlier detection pilot and spatial summaries</h2>
+<p>The detection pilot followed whether a seedling tally was present at both visits. That remains a supporting analysis because a missing later tally is not the same as failed recruitment. Its repeated-transition figures are available on the <a href="../report/index.html">detection pilot page</a>.</p>
+<section id="county-level-pilot-context" class="level3">
+<h3 class="anchored" data-anchor-id="county-level-pilot-context">County-level pilot context</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/01_study_area_sample_map.png" class="img-fluid figure-img" alt="Michigan county map shaded by the number of analyzed condition observations in the earlier cross-sectional foundation, with counties lacking observations in gray."></p>
+<figcaption>Earlier sample-support map.</figcaption>
+</figure>
+</div>
+<p>The earlier sample-support map used a different cohort and denominator than the current recruitment map. Keeping both visible makes that change explicit.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/05_county_gap_map.png" class="img-fluid figure-img" alt="Michigan counties shaded by the fraction of seedling-sampled conditions flagged as potential detection gaps in the earlier pilot; counties with insufficient support are gray."></p>
+<figcaption>Exploratory detection-gap map.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/06_county_gap_uncertainty.png" class="img-fluid figure-img" alt="County interval plot showing wide unweighted uncertainty around exploratory detection-gap fractions after a minimum support screen."></p>
+<figcaption>Uncertainty in the earlier county gap summaries.</figcaption>
+</figure>
+</div>
+<p>The two county-gap figures are descriptive summaries of the earlier detection pilot. They are not county rankings, statewide rates, or maps of biological regeneration failure. The county identifier is the only spatial link used; exact FIA plot locations are not available in the public data and are neither used nor inferred here.</p>
+</section>
+</section>
+<section id="earlier-model-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="earlier-model-evidence">Earlier model evidence</h2>
+<p>The original cross-sectional model and its diagnostics remain available for technical review. They document the model foundation, but they should not be read as the answer to the current recruitment question.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/04_model_effects.png" class="img-fluid figure-img" alt="Forest plot of adjusted effects from the earlier cross-sectional seedling-detection model, with uncertainty intervals for measured stand, observation, and climate variables."></p>
+<figcaption>Earlier cross-sectional model effects.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../outputs/figures/model_diagnostics.png" class="img-fluid figure-img" alt="Two-panel residual diagnostic from the earlier cross-sectional mixed-effects model, showing simulation-based residual checks against reference behavior."></p>
+<figcaption>Earlier model diagnostics.</figcaption>
+</figure>
+</div>
+<p>The current recruitment report uses a separate fixed benchmark sequence, county-held-out validation, and a distinct recorded-entry endpoint. Keeping the old model figures here preserves the analytical history without blending its associations with the new result.</p>
+</section>
+<section id="how-to-read-the-visual-record" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="how-to-read-the-visual-record">How to read the visual record</h2>
+<ul>
+<li><strong>Current recruitment evidence:</strong> the county-support map, count-gradient figure, and paired model-comparison figure. These correspond to the 922-pair recruitment analysis.</li>
+<li><strong>Foundation evidence:</strong> species composition and the earlier size-class screen. These helped define the ecological question.</li>
+<li><strong>Detection-pilot evidence:</strong> repeated tally transitions, county-gap maps, earlier model effects, and diagnostics. These describe observation changes, not individual seedling survival or sapling recruitment.</li>
+</ul>
+<p>The <a href="../docs/research-direction.html">research direction</a> records why the project moved from detection loss to sapling recruitment. The <a href="../report/recruitment.html">full recruitment report</a> contains the primary estimates, uncertainty, methods, and limitations.</p>
+<div class="report-footer column-page">
+<p><strong>Canopy to Cohort</strong> · Spatial context and exploratory visuals · <a href="../report/recruitment.html">Primary recruitment study</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dineshpotla\.github\.io\/canopy-to-cohort\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/report/spatial-context.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
