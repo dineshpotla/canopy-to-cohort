@@ -40,7 +40,7 @@ is not a publication decision.
 ## Rebuild from the pinned source
 
 Restore the R environment using `renv.lock` and inspect the package setup
-requirements in `DESCRIPTION` and `scripts/00_setup.R`. This revision's checks
+requirements in `DESCRIPTION` and `scripts/00_setup.R`. The checks
 run on R 4.6.1. Do not silently update the source data, package versions, cohort,
 or analysis contract while attempting an exact reproduction.
 
@@ -65,9 +65,10 @@ make paper-word PAPER_PYTHON=/path/to/python
 ```
 
 Replace the Python path with the installed runtime. The paper remains editable;
-six review comments come from the versioned comment file in `research/runs/`.
-The analytical-detail revision embeds sixteen tables in the main text and
-appendix. `paper-audit` additionally reconciles the exposed coefficients,
+its methods review record is retained in the repository alongside the source
+analysis.
+The paper embeds sixteen tables in the main text and appendix. `paper-audit`
+additionally reconciles the exposed coefficients,
 fold diagnostics, interval-table point estimates, and joint strata with the
 saved model bundle. These checks do not rerun the bootstrap intervals.
 The full local HTML site uses `make report` and includes supporting pages with
