@@ -5,10 +5,9 @@ toc: true
 
 ## Objective
 
-This is an optional follow-on plan. The Michigan core research and revised
-paper are complete; operational validation is not a prerequisite for reporting
-their bounded findings. Regional acquisition is deferred under the user's
-core-paper priority.
+This optional follow-up plan specifies how a future study could evaluate the
+field usefulness of regeneration measurements. It builds on the completed
+Michigan [recruitment study](../report/recruitment.qmd).
 
 Determine whether additional regeneration measurements improve a specified
 survey decision enough to justify their collection cost, compared with a simple
@@ -53,9 +52,9 @@ frame/date flags leave 86 both-visit intervals without changing the baseline
 predictor cohort. Individual 2012-2015 annual supplements remain an access gap.
 
 The 14-event overlap does not establish adequate support for a multi-height
-prediction model. Selecting only this subset changes the population, and all
-of its outcomes were already part of the explored Michigan cohort. It is not
-external validation simply because the extra predictors were unused earlier.
+prediction model. Selecting only this subset changes the population, and its
+outcomes are already part of the Michigan cohort. It is not external validation
+merely because additional predictors were not part of the primary model.
 
 ## Completed measurement milestone and remaining limits
 
@@ -100,10 +99,10 @@ The [count-versus-length design](../report/length-study.qmd) now specifies the
 research comparison and executable precision scenarios. Its historical Michigan
 metadata census finds 88 positive-seedling opportunities on 79 plots before full
 eligibility checks, only six plots outside the current recruitment cohort.
-These are not new event counts or an independent evaluation set. The user has
-authorized a Wisconsin/Minnesota feasibility screen, not fitting on those rows.
-Archive access currently blocks that screen; see the
-[access review](../research/runs/recruitment-2026-09-08/regional-access-review.md).
+These are not new event counts or an independent evaluation set. The project
+includes a Wisconsin/Minnesota feasibility screen, not model fitting on those
+rows. Archive access currently blocks that screen, so the regional work
+remains a feasibility plan rather than a result.
 The conditional next-visit research target remains distinct from the operational
 requirements below.
 
@@ -172,6 +171,6 @@ Run `make survey-audit` after the recruitment model bundle exists. Script 16
 reproduces the capacity comparison and full-refit uncertainty; script 17
 reproduces the RI availability screen. The separate `make ri-audit` target
 reproduces the measurement and support audit. The
-[survey contract](../research/runs/recruitment-2026-09-08/survey-contract.md)
-and [source note](../research/notes/survey-priority-evidence.md) separate the
-declared choices, local results, and external evidence.
+[analysis decisions](analysis-decisions.md) and
+[reproducibility guide](recruitment-reproducibility.md) separate declared
+choices, local results, and external evidence.

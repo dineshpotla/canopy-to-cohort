@@ -1,324 +1,193 @@
 ---
 title: "Analytical data dictionary"
-description: "Fields, units, derivations, and missing-value rules used in the Canopy to Cohort analysis"
+description: "Fields, units, derivations, and missing-value rules for the Michigan sugar-maple recruitment study."
 toc: true
 ---
 
-This dictionary documents the record grains and principal fields used in the
-recruitment reanalysis, longitudinal detection pilot, and retained cross-sectional foundation. It
-describes derived analytical data; record-level FIA observations are
-intentionally not distributed with the public repository.
+This dictionary documents the data used in the
+[recruitment study](../report/recruitment.qmd): paired forest conditions,
+recorded sapling entry, model predictors, and linked sapling fates. Record-level
+data and predictions remain local; public outputs contain aggregate evidence.
 
-The v2.0 detection analysis is now an exploratory pilot. The
-[revised research direction](research-direction.md) is implemented in the
-[recruitment report](../report/recruitment.qmd). Record-level recruitment data
-and predictions remain local; aggregate results and audits are exported.
+## Analytical units and keys
 
-## Recruitment endpoint and linked fates
+The primary analytical unit is one forest condition observed across two linked
+visits. A physical plot can contain multiple conditions. Tree and seedling
+summaries join to the condition pair at the appropriate level to avoid
+multiplying observations through many-to-many joins.
 
-- A conservative new live maple sapling tally has `SPCD=318`, `STATUSCD=1`,
-  `1 <= DIA < 5` inches, `RECONCILECD=1`, and no `PREV_TRE_CN`. It must occur
-  on comparable sampled area. This is not individual seedling survival, an
-  exact recruitment date, or a count of stems that entered and died between visits.
-- Baseline saplings are followed using successor `PREV_TRE_CN` to baseline
-  `TREE.CN`, restricted to the expected successor plot. Retain fate status,
-  reconciliation code, diameter, species corrections, and condition continuity.
-  Unlinked or out-of-sample records are not deaths; living stems reaching
-  5 inches have left the sapling size class, not disappeared biologically.
-- One fully sampled current-pair follow-up has no live TREE rows and missing
-  derived sapling metrics. The audit reconciles its absence using source
-  records; the new endpoint builder handles this verified zero explicitly.
-  This is not authorization to fill all missing tree measurements with zeros.
-- Historical feasibility removes the single-evaluation restriction but retains
-  baseline northern-hardwood and established-maple eligibility. Its 2,308
-  intervals are provisional and reuse physical plots. Protocol and observation
-  comparability must be validated before treating them as an analysis cohort.
-
-`data/processed/recruitment_condition_pairs.rds` retains all 932 source pairs,
-including excluded observations, at condition-interval grain.
-`data/processed/recruitment_sapling_fates.rds` retains 1,593 tagged baseline
-stems at stem-interval grain. Neither file is distributed.
+`data/processed/recruitment_condition_pairs.rds` retains 932 source pairs,
+including excluded observations. Of these, 922 qualify for analysis, representing
+903 physical plots and 66 counties. The source spans baseline measurements in
+2011–2018 and follow-ups in 2018–2025.
 
 | Field | Type / unit | Definition |
 |---|---|---|
-| `recruitment_eligible` | logical | Passed plot, protocol, shared microplot-frame, and new-record ambiguity checks; 922 intervals qualify. |
-| `exclusion_reason` | text | Explicit failed opportunity or unresolved-record rule. Excluded outcomes are `NA`, not zero. |
-| `outcome_recruitment` | 0 / 1 / `NA` | At least one qualifying new live maple sapling at follow-up, defined only on eligible intervals. |
-| `baseline_seedling_count` | recorded count | Baseline maple `SEEDLING.TREECOUNT` summed by condition, checked against calculated counts; above-five microplot counts may be estimated. |
-| `baseline_maple_sapling_tpa` | stems/acre | Baseline live maple sapling `TPA_UNADJ` divided by microplot condition coverage; not a statewide survey weight. |
-| `direct_subplot_predecessors_available` | logical | Whether every relevant subplot has a direct predecessor link; all false in this snapshot because the source field is empty. |
-| `exact_overlap` | logical | Exact mapped-area match within tolerance at the aggregate and relevant microplot levels; not an individual coordinate check. |
-| `fate_eligible` | logical | Tagged stem has a comparable linked biological fate after frame, identity, and record-status checks; distinct from recruitment-pair eligibility. |
-| `outcome_survival` | 0 / 1 / `NA` | Linked, comparable baseline sapling is still recorded alive (1), dead or removed (0); `NA` for ambiguous or ineligible fates. Removal is kept distinct from death in `outcome_death`. |
-| `reached_five_inches` | logical | Follow-up record is live maple at or above five inches; biological summaries also require `fate_eligible`. |
+| `baseline_plt_cn`, `baseline_condid` | Identifiers | Baseline plot-visit and condition key; ecological eligibility and predictors come from this visit. |
+| `current_plt_cn`, `current_condid` | Identifiers | Follow-up plot-visit and condition key supplying the recruitment outcome. |
+| `physical_plot_key` | Character identifier | State, unit, county, and plot combination; used to check repeated contributions and separation of training and test plots. |
+| `geoid` | Five-character code | State and county FIPS code used for map joins, county folds, and county resampling. |
+| `county_name` | Text | County name resolved from FIA reference data. |
+| `baseline_measyear`, `followup_measyear` | Year | Measurement years for the paired visits. |
+| `interval_years` | Years | Elapsed interval from measurement year and month; inventory year supplies a fallback when measurement year is missing. |
+
+## Sampling and eligibility
+
+| Field | Type / unit | Definition |
+|---|---|---|
+| `primary_pair_eligible` | Logical | Baseline ecological eligibility, comparable sampled forest at follow-up, one-to-one condition mapping, and sufficient relative overlap. |
+| `baseline_micrprop_unadj`, `followup_micrprop_unadj` | Proportion | Unadjusted microplot-area fraction assigned to the condition at each visit. |
+| `overlap_prop` | Proportion | Sum of microplot condition-change proportions across the four microplots, divided by four. |
+| `baseline_overlap_fraction`, `followup_overlap_fraction` | Proportion | Shared overlap divided by the condition's microplot coverage at the respective visit; source eligibility requires at least 0.90 on both sides. |
+| `protocol_design_comparable` | Logical | National design, manual versions at least 5.1, permitted production QA codes, remeasurement, and unchanged microplot arrangement. |
+| `shared_microplot_sampled` | Logical | Both visits demonstrate sampling on every relevant shared microplot. |
+| `shared_subplot_predecessor_matches` | Logical | Verified plot/subplot links and agreement of any populated direct subplot predecessor. |
+| `direct_subplot_predecessors_available` | Logical | Every relevant direct subplot predecessor is populated; false throughout this snapshot because `PREV_SBP_CN` is empty. |
+| `frame_proportions_valid` | Logical | Each shared microplot proportion fits within both visits' mapped condition proportions. |
+| `exact_overlap` | Logical | Aggregate and individual microplot mapped proportions agree within tolerance; used for sensitivity analysis. |
+| `recruitment_eligible` | Logical | Passed source-pair, protocol, sampled-area, count, and new-record checks; 922 intervals qualify. |
+| `exclusion_reason` | Text | Explicit reason for exclusion or unresolved eligibility; preserves the accounting for all 932 pairs. |
+
+The analysis excludes nine pairs with inconsistent microplot proportions and
+one with ambiguous new saplings. Missing or ambiguous opportunities do not
+become negative recruitment outcomes. The model requires complete, finite
+predictor fields and stops rather than silently dropping different observations.
+
+## Recruitment endpoint
+
+A qualifying new live sugar-maple sapling has `SPCD=318`, `STATUSCD=1`,
+diameter at least 1 inch and less than 5 inches, `RECONCILECD=1`, and no
+predecessor TREE record. It must occur on a comparable shared sampled microplot.
+
+| Field | Type / unit | Definition |
+|---|---|---|
+| `new_maple_sapling_count` | Count | Qualifying new live maple sapling records assigned to the condition pair; interpretation requires `recruitment_eligible`. |
+| `ambiguous_new_maple_sapling_count` | Count | Newly recorded live maple saplings that lack a resolved entrant classification; positive values prevent recruitment eligibility. |
+| `outcome_recruitment` | 0 / 1 / `NA` | At least one qualifying entrant on an eligible interval; excluded intervals retain `NA`. |
+| `followup_zero_tree_corrected` | Logical | Explicit correction of derived tree quantities for a source-verified sampled follow-up with no live TREE records and `BALIVE=0`. |
+
+The retained cohort contains 169 qualifying saplings in 100 conditions.
+These records describe surviving entrants present at the next visit. They
+do not link individual baseline seedlings to later trees or identify entrants
+that died before remeasurement.
 
 The [endpoint definitions](../outputs/audits/recruitment-definitions.csv) and
-[protocol audit](../outputs/audits/recruitment-protocol.csv) expose the rules.
+[protocol audit](../outputs/audits/recruitment-protocol.csv) document the rules.
+Implementation:
+[`R/recruitment.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/recruitment.R).
 
-Recruitment models use `log1p` count, `log1p` maple sapling stem density,
-`log1p` established-maple basal area, microplot coverage, and interval.
-Each model uses only its declared subset. Scaling is fit within training data;
-the full-refit bootstrap repeats scaling. See the
-[analysis contract](../research/runs/recruitment-2026-09-08/analysis-contract.md).
+## Model predictors and transformations
 
-## Record grain and keys
+| Source field | Unit and derivation | Model field / transformation |
+|---|---|---|
+| `baseline_micrprop_unadj` | Fraction of nominal microplot area in the baseline condition | `z_coverage`; identity, then training standardization |
+| `interval_years` | Elapsed years between visits, known at follow-up | `z_interval`; identity, then training standardization |
+| `baseline_seedling_count` | Baseline maple `SEEDLING.TREECOUNT` summed across condition microplots and checked against `TREECOUNT_CALC` | `z_seedling_count`; `log(1 + x)`, then training standardization |
+| `baseline_maple_sapling_tpa` | Live maple sapling `TPA_UNADJ` summed and divided by baseline microplot coverage; stems per acre | `z_sapling_tpa`; `log(1 + x)`, then training standardization |
+| `baseline_established_maple_ba_ft2_ac` | Basal area of live maples at least five inches in diameter, corrected for sampled area; square feet per acre | `z_established_ba`; `log(1 + x)`, then training standardization |
 
-### Survey-priority outputs
+Four logistic models use training prevalence, design variables, design plus
+count, and design plus count plus maple stages. Each model uses its declared
+subset of the five predictors. All eligible intervals and the 672 intervals
+with positive baseline counts have separately fitted comparisons.
 
-The `recruitment-survey-*.csv` tables report aggregate strategies on the existing
-model populations. They do not contain individual site recommendations.
+Training means and standard deviations determine scaling of both training
+and held-out observations. A constant training predictor uses a scale of one.
+Bootstrap fits repeat this process. The primary ridge penalty equals one and
+leaves the intercept unpenalized.
+
+Ordinary counts may include field estimates above five seedlings per record.
+`TPA_UNADJ` expands observations within the plot design and is not a
+statewide survey weight. Neither raw count nor seedling density identifies
+independent seed-origin individuals.
+
+Implementation:
+[`R/recruitment_models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/recruitment_models.R).
+
+## Validation outputs
+
+The `recruitment-model-*.csv` files report aggregate model evidence. Their
+populations overlap; scores weight condition intervals equally.
+
+| Field or quantity | Interpretation |
+|---|---|
+| `population`, `model` | The analysis population and one of the four declared benchmarks. |
+| `observations`, `events` | Evaluated condition intervals and intervals with recorded entry. An event is not a stem count. |
+| `brier_score` | Mean squared difference between recorded outcome and predicted probability; lower values indicate less error. |
+| `log_loss` | Mean negative log probability of the observed outcome; lower values indicate less error. |
+| `roc_auc`, `average_precision` | Ranking metrics; average precision also depends on event prevalence. |
+| `calibration_intercept`, `calibration_slope` | Joint regression of outcomes on held-out predicted log odds; diagnostic estimates. |
+| `mean_predicted_probability`, `observed_expected_ratio` | Average predicted probability and observed events divided by summed predicted probabilities. |
+| `difference` | Named model minus reference score on identical observations; a negative Brier difference favors the added information. |
+| `lower`, `upper` | Percentile limits for the quantity identified by the table, from resampling whole counties and refitting models. |
+
+County folds keep each physical plot together. The temporal assessment
+instead separates follow-ups before 2023 from those in 2023 onward with no
+shared physical plots. Neither assessment provides untouched external
+validation of this fixed source snapshot.
+
+## Linked sapling fates
+
+`data/processed/recruitment_sapling_fates.rds` contains 1,593 baseline stems
+at stem-interval level. Links use successor `PREV_TRE_CN` and the expected
+successor plot. The 1,580 comparable stems have 334 recorded deaths,
+1,188 live saplings, and 58 live stems reaching at least five inches.
+
+| Field | Type / unit | Definition |
+|---|---|---|
+| `tree_cn`, `followup_tree_cn` | Identifiers | Baseline TREE record and its linked successor. |
+| `fate` | Text | Recorded death, removal, live persistence, live advancement, or an explicit unresolved/record-correction category. |
+| `fate_eligible` | Logical | Comparable frame, condition link, species, and recorded biological state; assessed separately from recruitment eligibility. |
+| `outcome_survival` | 0 / 1 / `NA` | Still alive (1), dead or removed (0), or ineligible/unresolved (`NA`). |
+| `outcome_death` | 0 / 1 / `NA` | Recorded death among eligible stems; removals retain `NA` in this endpoint. |
+| `reached_five_inches` | Logical | Live follow-up maple at or above five inches; biological summaries also require `fate_eligible`. |
+| `annual_diameter_increment` | Inches/year | Follow-up minus baseline diameter divided by elapsed years for comparable surviving maples. |
+
+Species reidentification, inconsistent sampling frames, and no-longer-sampled
+records remain in the accounting. A missing or ineligible successor is not
+assigned a biological death.
+
+## Supporting survey and measurement outputs
+
+The `recruitment-survey-*.csv` tables compare fixed selection strategies.
 
 | Field | Meaning |
 |---|---|
-| `objective` | Either no recorded entry or recorded entry; score priority reverses accordingly. Neither is independently assessed survey need. |
-| `requested_fraction`, `capacity` | Fixed illustrative fraction and `floor(n * fraction)` condition-interval count. Not an actual survey budget. |
-| `expected_targets` | Expected target count under uniform allocation within cutoff-score ties. Can be fractional. |
-| `selected_target_fraction` | Expected targets divided by capacity; different from the fraction of all targets captured. |
-| `target_capture_fraction` | Expected targets divided by all target conditions in the evaluated population. |
-| `random_expected_targets` | Capacity times target prevalence, not one simulated random sample. |
-| `minimum_targets_over_cutoff_ties`, `maximum_targets_over_cutoff_ties` | Attainable target counts across cutoff-tie allocations; not confidence limits. |
-| `deterministic_selected_physical_plots` | Distinct plots selected using stable source-key order, showing why condition capacity is not equal field cost. |
-| `lower`, `upper` | Full-refit county-bootstrap percentile limits for selected target fraction or its paired difference, as identified by the output table. |
+| `objective` | Recorded entry or no recorded entry; determines the ranking direction. |
+| `requested_fraction`, `capacity` | Fixed selection fraction and its condition-interval count. |
+| `expected_targets` | Expected number of target conditions after averaging selection uniformly across cutoff ties. |
+| `selected_target_fraction` | Expected targets divided by selection capacity. |
+| `target_capture_fraction` | Expected targets divided by all target conditions. |
+| `lower`, `upper` | County-bootstrap limits for the quantity identified by the table, including paired strategy differences where specified. |
 
-RI availability tables have a different purpose: `screen` indicates record
-presence only. `LENGTH_CLASS_CD`, seedling-source codes, and RI sampling-status
-codes remain raw codes in that preliminary export. Their subsequent decoding
-and sampling checks are in the separate RI measurement audit below.
-
-### RI measurement outputs
-
-The `recruitment-ri-*.csv` tables describe the checked baseline measurement
-subset, not fitted predictions. Record-level data are held in the ignored
+The `recruitment-ri-*.csv` tables describe a measurement subset of 90
+intervals with 14 recorded-entry conditions. They contain no fitted length
+model. Record-level measurement data remain in the local
 `data/processed/recruitment_ri_audit.rds` bundle.
 
 | Field | Meaning |
 |---|---|
-| `baseline_ri_frame_valid` | Complete code-1 forest-condition RI microplot coverage, valid subplot linkage, and agreement with the condition's sampled proportion. |
-| `baseline_ri_available` | Frame and record checks plus the May-September plot-date plausibility screen. Missing RI measurements remain unavailable. |
-| `ri_class_1` through `ri_class_6` | Maple tally counts in the six verified length classes; unavailable outside the accepted baseline frame. |
-| `ri_all_count` | Total recorded maple RI count across length classes and permitted source groups. Not independent seedlings or genets. |
-| `ri_standard_size_count` | Sum of classes 3-6, at least one foot long; compared with ordinary hardwood counts on identical units. |
-| `ri_tall_count` | Sum of classes 5-6, at least five feet long; not the one-inch DBH sapling boundary. |
-| `ri_zero` | No qualifying RI maple tally on a verified available baseline frame; not no germination or no future recruitment. |
-| `annual_ri_guide_reviewed` | Baseline year 2016-2018 has an inspected annual supplement; the 2016 archived copy is a draft. Not universal protocol certification. |
-| `event_fraction`, `lower`, `upper` | Descriptive recorded-entry fraction and county-bootstrap limits for the declared group, not prediction accuracy or a causal effect. |
+| `baseline_ri_frame_valid` | Complete RI forest-condition microplot coverage, consistent links, and matching sampled proportions. |
+| `baseline_ri_available` | Frame and record checks plus the May–September plot-date plausibility screen. |
+| `ri_class_1` through `ri_class_6` | Recorded maple counts in the six length classes. |
+| `ri_standard_size_count` | Sum of classes 3–6, at least one foot long; reconciled with ordinary counts on identical units. |
+| `ri_tall_count` | Sum of classes 5–6, at least five feet long. |
+| `ri_zero` | No qualifying maple tally on a verified available RI frame. |
+| `annual_ri_guide_reviewed` | Baseline year has an inspected annual supplement; 2016–2018 guides were inspected, including a 2016 draft. |
 
-Nine intervals have valid RI maple tally zeros; 832 lack baseline RI and retain
-missing length information. Ten ordinary-zero intervals contain RI maple only
-below one foot. These observation states are deliberately distinct.
+Nine available intervals have verified RI maple zeros. The 832 intervals
+without available baseline RI retain missing length information. Ten
+ordinary-count-zero intervals contain RI maples only below one foot.
 
-### Analytical units
+## Geographic and interpretation boundaries
 
-The primary analytical unit is one baseline–follow-up forest-condition pair.
-Each visit retains the composite key `PLT_CN + CONDID`. Tree and seedling records
-are first aggregated independently to visit-condition grain and only then joined
-to pair records, preventing many-to-many row inflation.
+The study map counts eligible recruitment intervals by `geoid`. Its colors
+describe sample coverage. The analysis does not use or infer exact FIA plot
+coordinates or estimate county regeneration rates.
 
-| Field | Type / unit | Definition |
-|---|---|---|
-| `plt_cn` | character identifier | FIA plot-visit control number. Used as a relational key; not a coordinate. |
-| `condid` | integer identifier | Condition number within the plot visit. |
-| `geoid` | five-character code | State and county FIPS code used for county-safe spatial joins and the county random intercept. |
-| `county_name` | character | FIA county name resolved from the database reference table. |
-| `measyear` | year | Calendar year of field measurement. Observations in this release span 2018–2025. |
-| `forest_type` | character | Active type in FIA maple/beech/birch group 800 (codes 801, 802, 805, or 809), which this project uses as its operational northern-hardwood cohort. |
+The outcomes and scores are descriptive or predictive results for the selected
+Michigan sample. They do not provide survey-weighted population estimates,
+individual seedling survival, a causal effect, or an operational treatment rule.
 
-### Longitudinal pair keys and quality fields
-
-| Field | Type / unit | Definition |
-|---|---|---|
-| `baseline_plt_cn`, `baseline_condid` | identifiers | Previous-visit condition key. Primary eligibility and all ecological predictors are defined here. |
-| `current_plt_cn`, `current_condid` | identifiers | Current-evaluation condition key supplying the follow-up outcome. |
-| `physical_plot_key` | character identifier | Stable state–unit–county–plot key used only to audit multiple conditions within a physical plot. |
-| `baseline_pair_degree`, `current_pair_degree` | count | Number of positive microplot condition links on each side, computed before ecological filtering. |
-| `strict_one_to_one` | logical | `TRUE` only when both pair degrees equal one. |
-| `overlap_prop` | proportion | `SUBPTYP_PROP_CHNG` summed for `SUBPTYP = 2` across the four microplots and divided by four. |
-| `baseline_overlap_fraction` | proportion | `overlap_prop / baseline_micrprop_unadj`. |
-| `followup_overlap_fraction` | proportion | `overlap_prop / followup_micrprop_unadj`. |
-| `primary_pair_eligible` | logical | Baseline eligible with established maple, comparable forested follow-up, strict one-to-one mapping, at least 90% overlap on both sides, and a positive interval. |
-| `interval_years` | years | Difference in measurement year plus month fraction; inventory year is the fallback if measurement year is missing. |
-
-## Sampling and stand context
-
-| Field | Type / unit | Definition and missing-value rule |
-|---|---|---|
-| `condprop_unadj` | proportion | Unadjusted plot-area share assigned to the condition. Retained for FIA area context; it is not used as a universal tree-frame denominator. |
-| `micrprop_unadj` | proportion | Unadjusted share of microplot sampling assigned to the condition. A value greater than zero demonstrates seedling sampling opportunity. |
-| `subpprop_unadj` | proportion | Unadjusted share of subplot sampling assigned to the condition; used for live trees measured on subplots. |
-| `macrprop_unadj` | proportion | Unadjusted share of macroplot sampling assigned to the condition; used only when a populated macroplot breakpoint applies. |
-| `seedling_sampled` | logical | `TRUE` only when `micrprop_unadj > 0`. An absent seedling record may become zero only under this condition. |
-| `stand_age` | years | FIA stand-age estimate (`STDAGE`). Missing values remain missing and are never silently imputed. |
-| `disturbed` | logical | `TRUE` when any of `DSTRBCD1`–`DSTRBCD3` contains a positive disturbance code. |
-| `treated` | logical | `TRUE` when any of `TRTCD1`–`TRTCD3` contains a positive treatment code. Used only in the retained cross-sectional model; excluded from the primary longitudinal model. |
-
-## Live-tree and size-class metrics
-
-Live trees have `STATUSCD = 1`. Sugar maple is resolved from `REF_SPECIES` as
-*Acer saccharum*, FIA species code 318. For tree \(i\), the plot-basis basal-area
-contribution is
-
-\[
-0.005454 \times \mathrm{DIA}_i^2 \times \mathrm{TPA\_UNADJ}_i.
-\]
-
-| Field | Unit | Definition |
-|---|---|---|
-| `total_ba_ft2_ac` | ft²/acre | Sum of frame-corrected live-tree contributions: microplot records divide by `micrprop_unadj`, subplot records by `subpprop_unadj`, and applicable macroplot records by `macrprop_unadj`. |
-| `maple_ba_ft2_ac` | ft²/acre | Sugar-maple component of the frame-corrected live-tree density. |
-| `maple_sapling_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of live sugar-maple TREE records with DBH 1–4.9 inches. |
-| `maple_sapling_present` | logical | `TRUE` when at least one live sugar-maple TREE record has DBH 1–4.9 inches. The longitudinal model uses its baseline value. |
-| `overstory_total_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of all live TREE records with DBH ≥ 5 inches. |
-| `established_maple_ba_ft2_ac` | ft²/acre | Frame-corrected basal area of live sugar-maple TREE records with DBH ≥ 5 inches. |
-| `nonmaple_ba_ft2_ac` | ft²/acre | `total_ba_ft2_ac - maple_ba_ft2_ac`, bounded below at zero. |
-| `maple_ba_share` | proportion | Frame-corrected sugar-maple basal area divided by frame-corrected total live-tree basal area. |
-| `established_maple_ba_share` | proportion | `established_maple_ba_ft2_ac / overstory_total_ba_ft2_ac`, with zero assigned when no live DBH ≥ 5-inch tree basal area is present. Used only for the descriptive gap screen. |
-| `established_maple_records` | count | Number of live sugar-maple TREE records with DBH ≥ 5 inches. Baseline longitudinal eligibility requires at least one. |
-
-American beech is resolved from `REF_SPECIES` as *Fagus grandifolia*, FIA
-species code 531. The longitudinal builder also publishes
-`beech_ba_ft2_ac`, `beech_sapling_ba_ft2_ac`, and
-`beech_established_ba_ft2_ac` for each visit. The primary model uses baseline
-American beech sapling basal area.
-
-The derived total is checked against FIA `COND.BALIVE`; the pipeline enforces
-strict correlation and absolute-error gates that detect use of a wrong sampling
-frame. Implementation:
-[`R/basal_area.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/basal_area.R).
-
-## Regeneration metrics and response
-
-| Field | Type / unit | Definition and interpretation |
-|---|---|---|
-| `maple_seedling_tpa` | trees/acre | Sugar-maple seedling `TPA_UNADJ` summed on the plot basis and divided by `micrprop_unadj`. `NA` when seedling sampling was not demonstrated. |
-| `maple_seedling_detected` | 0 / 1 / `NA` | `1` when a sampled condition has positive sugar-maple seedling density; `0` when sampled but none were tallied; `NA` when sampling opportunity is unknown. |
-| `outcome_no_seedlings` | 0 / 1 | Retained cross-sectional model response: `1 - maple_seedling_detected`. It means “no seedlings tallied,” not confirmed ecological absence. |
-| `established_percentile` | 0–1 | Sample percentile of `established_maple_ba_share` among conditions with usable seedling sampling. |
-| `regeneration_percentile` | 0–1 | Sample percentile of `log(1 + maple_seedling_tpa)` among usable conditions. |
-| `potential_gap` | logical | `TRUE` when `established_maple_ba_share` is at or above the sample upper-third threshold and no sugar-maple seedlings were tallied. Exploratory, not a validated ecological index. |
-| `potential_gap_sensitivity` | logical | Alternative flag using the upper-quartile established-share threshold. |
-
-Implementation: [`R/regeneration.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/regeneration.R)
-and [`R/features.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/features.R).
-
-## Longitudinal transition and response fields
-
-| Field | Type / unit | Definition and interpretation |
-|---|---|---|
-| `baseline_seedling_detected` | 0 / 1 | Sugar-maple seedling detection at the previous visit. |
-| `followup_seedling_detected` | 0 / 1 | Sugar-maple seedling detection at the mapped current visit. |
-| `seedling_transition` | factor | One of persistent non-detection, appearance, loss, or persistence. |
-| `seedling_detection_loss` | 0 / 1 / `NA` | For baseline detections only: `1 - followup_seedling_detected`; `NA` for baseline non-detections. |
-| `seedling_detection_appearance` | 0 / 1 / `NA` | For baseline non-detections only: the follow-up state; `NA` for baseline detections. |
-| `baseline_other_nonmaple_ba_ft2_ac` | ft²/acre | Baseline non-maple basal area minus American beech sapling basal area, bounded below at zero. Established beech remains in this background stand-structure term. |
-| `followup_group_800` | logical | Whether the follow-up condition remains in forest-type group 800. A post-baseline sensitivity descriptor, not an eligibility rule. |
-
-## Climate fields
-
-Climate fields are 1991–2020 Daymet normals from the 1-km cell containing each
-Census Gazetteer county internal point. They are county-scale spatial proxies,
-not plot-level measurements or county-wide areal averages.
-
-| Field | Unit | Definition |
-|---|---|---|
-| `mean_annual_temp_c` | °C | Mean across years of daily `(tmin + tmax) / 2`, averaged within year and then across 1991–2020. |
-| `mean_annual_precip_mm` | mm/year | Mean annual sum of daily precipitation across 1991–2020. |
-
-Implementation: [`R/climate.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/climate.R).
-
-## Longitudinal model transformations
-
-The model-complete loss cohort contains 677 baseline detections, including 75
-loss events. Continuous predictors are standardized after `log1p`
-transformation where stated. Cross-validation relearns every center and scale
-from its training counties only.
-
-| Model field | Source and transformation |
-|---|---|
-| `z_baseline_seedling_tpa` | standardized `log(1 + baseline_maple_seedling_tpa)` |
-| `maple_sapling_present` | baseline logical indicator, with `FALSE` as the reference |
-| `z_established_maple_ba` | standardized `log(1 + baseline_established_maple_ba_ft2_ac)` |
-| `z_beech_sapling_ba` | standardized `log(1 + baseline_beech_sapling_ba_ft2_ac)` |
-| `z_other_nonmaple_ba` | standardized `log(1 + baseline_other_nonmaple_ba_ft2_ac)` |
-| `z_microplot_coverage` | standardized `baseline_micrprop_unadj` |
-| `z_interval_years` | standardized `interval_years` |
-
-The primary loss fit is a binomial GLM with county-cluster CR1 confidence intervals.
-Five-fold internal validation holds out whole counties. A county
-random-intercept GLMM is reported only as sensitivity evidence. Implementation:
-[`R/longitudinal_models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/longitudinal_models.R).
-
-The secondary appearance cohort contains 255 baseline non-detections, including
-59 later detections. It reuses `maple_sapling_present`,
-`z_established_maple_ba`, `z_microplot_coverage`, and `z_interval_years`; no
-baseline seedling-density term is possible because all starting tallies are
-zero. Its four-slope model uses county-cluster CR1 intervals and the same
-training-only scaling and county-held-out validation protocol. Implementation:
-[`R/longitudinal_appearance_models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/longitudinal_appearance_models.R).
-
-## Retained cross-sectional model transformations
-
-Continuous predictors are standardized after defining the final model-complete
-cohort, so one standardized unit refers to the fitted 1,072-condition primary cohort.
-Basal-area predictors are transformed with `log(1 + x)` before standardization.
-The scaling means, standard deviations, transformations, and cohort size are
-published as a separate audit table.
-
-| Model field | Source and transformation |
-|---|---|
-| `z_maple_ba` | standardized `log(1 + established_maple_ba_ft2_ac)` in the primary model; retained as a linear term after functional-form comparison |
-| `maple_sapling_present` | factor with `FALSE` as the reference level |
-| `z_nonmaple_ba` | standardized `log(1 + nonmaple_ba_ft2_ac)` |
-| `z_microplot_coverage` | standardized `micrprop_unadj` |
-| `treated` | factor with `FALSE` as the reference level |
-| `z_stand_age` | standardized `stand_age` |
-| `disturbed` | factor with `FALSE` as the reference level |
-| `z_mean_temp` | standardized `mean_annual_temp_c` |
-| `z_precip` | standardized `mean_annual_precip_mm` |
-| `z_year` | standardized `measyear` |
-
-The supported release model is a mixed-effects logistic regression with a
-county random intercept. It separates established-tree basal area from
-sugar-maple sapling presence and reports adjusted probability profiles by
-sapling state. Ten-fold internal grouped validation holds out whole counties, relearns
-transformations within each training fold, and predicts held-out counties with
-fixed effects only. Conventional coefficient inference is supplemented by
-Benjamini–Hochberg adjusted p-values and a county-cluster CR1 sensitivity
-analysis. Model construction and support gates are in
-[`R/models.R`](https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/models.R).
-
-The contextual full-cohort baseline uses standardized `log(1 + maple_ba_ft2_ac)`
-with a three-degree-of-freedom natural spline. It is not the primary inferential
-model because the exposure combines saplings and established trees.
-
-## Length-study planning fields
-
-The [study design](../report/length-study.qmd) and `make length-plan` create
-planning outputs, not another fitted model. `length_study_opportunity_metadata.rds`
-is local and ignored; published `recruitment-length-*.csv` files are aggregates.
-
-| Field or quantity | Definition and boundary |
-|---|---|
-| `baseline_condition_visits` | Distinct baseline plot-record/condition pairs in the RI metadata screen; not validated recruitment intervals. |
-| `physical_plots` | Distinct state/unit/county/plot combinations; one plot may have several historical visits. |
-| `standard_maple_record_present` | At least one positive ordinary maple seedling row at baseline; a presence screen, not full count/frame validation. |
-| `successor_count` | Number of distinct successor PLOT records declaring this baseline as predecessor; zero/ambiguous successors remain separate. |
-| `in_current_recruitment_plot_set` | Membership in the current 903-plot cohort; nonmembership does not establish untouched evaluation data. |
-| Q = H/N | Fraction of reconciled standard-size maple seedlings in RI classes 5-6. Undefined for N = 0; not a fraction surviving to saplings. |
-| Paired Brier gain | Count loss minus length loss, averaged within plot then across plots. Positive favors length; differs from condition-average weighting. |
-| `loss_difference_sd` | Hypothetical SD of plot-level paired losses in the planning table, not an estimated RI-model quantity. |
-| `variance_inflation` | Assumed multiplier of mean-loss variance relative to independent plots; not a measured county design effect. |
-| `complete_evaluation_plots` | Rounded normal-approximation precision requirement under specified assumptions; not training size, power, or calibration adequacy. |
-| `candidate_plots_at_assumed_retention` | Complete-plot requirement divided by assumed retention and rounded upward; an expected-yield scaling, not guaranteed enrollment. |
-| `independent_event_units` | Plug-in Wilson-width calculation at assumed fixed-rule recall; event units rather than total plots and not paired-policy precision. |
-
-## Interpretation boundaries
-
-- `TPA_UNADJ` expands records within the plot design; it is not a statewide survey weight.
-- Zeros are assigned only when the relevant sampling opportunity is demonstrated.
-- Exact FIA plot locations are confidential. Public FIADB coordinates may be approximate; this analysis neither uses nor infers them, relying only on county identifiers.
-- Gap flags and fitted associations are exploratory and are not causal or design-based prevalence estimates.
-- The retained cross-sectional size-class associations do not estimate transitions; the v2.0 repeated-condition outcome does not track individual seedlings.
-- Detection appearance is an operational gain state, not verified recruitment, colonization, or recovery; its weak validation does not support site-level gain targeting.
-- County Wilson intervals are unweighted binomial reference intervals. They ignore FIA survey design and within-county clustering and are descriptive rather than inferential county estimates.
-
-See [Analysis decisions](analysis-decisions.md) for the complete decision log.
+See [Analysis decisions](analysis-decisions.md) for the cohort and comparison
+rules and the [research paper](../report/recruitment.qmd) for their results.

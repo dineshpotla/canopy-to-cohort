@@ -2,17 +2,13 @@ project:
   type: website
   output-dir: _site
   resources:
-    - research/**
-    - "!research/notes/browse-data-request-draft.md"
     - docs/recruitment-reproducibility.md
   render:
     - index.qmd
-    - report/index.qmd
     - report/recruitment.qmd
     - report/spatial-context.qmd
     - report/ri-audit.qmd
     - report/length-study.qmd
-    - docs/research-direction.md
     - docs/survey-validation-plan.md
     - docs/analysis-decisions.md
     - docs/data-dictionary.md
@@ -32,11 +28,7 @@ website:
       - href: report/recruitment.qmd
         text: Recruitment study
       - href: report/spatial-context.qmd
-        text: Maps and visuals
-      - href: report/index.qmd
-        text: Detection pilot
-      - href: docs/research-direction.md
-        text: Research direction
+        text: Map and figures
       - href: docs/analysis-decisions.md
         text: Analysis decisions
       - href: docs/data-dictionary.md
@@ -54,7 +46,7 @@ format:
     css: styles.css
     toc: true
     code-fold: true
-    code-tools: true
+    code-tools: false
     embed-resources: false
 
 execute:

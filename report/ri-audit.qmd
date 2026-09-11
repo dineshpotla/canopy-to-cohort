@@ -29,21 +29,21 @@ short <- all_height[all_height$group == "No RI maple at least five feet recorded
 pct <- function(x) scales::percent(x, accuracy = 0.1)
 ```
 
-## Findings and direction
+## Measurement findings
 
 The Michigan regeneration-indicator (RI) records support a descriptive
 measurement study, but not a strong new forecasting claim. The baseline
 sampling and record checks retain `r main$conditions` condition intervals on
 `r main$physical_plots` physical plots, with `r main$events` recruit-bearing
-conditions. The appropriate next scientific question is whether seedling
-length distribution adds information beyond ordinary counts on the same
-sampled area, not whether another stand variable can improve a headline metric.
+conditions. The audit examines whether seedling length measurements add
+distinct information beyond the ordinary counts recorded on the same
+sampled area.
 
 Taller seedlings provide a plausible lead. Among `r tall$conditions` conditions
 with RI maple seedlings at least five feet long, `r tall$events` had recorded
 new saplings at follow-up; among `r short$conditions` without such seedlings,
-`r short$events` did. This is a retrospective association in an already explored
-sample. It is not a held-out comparison with seedling abundance, proof of
+`r short$events` did. This is a retrospective association in an existing sample.
+It is not a held-out comparison with seedling abundance, proof of
 individual survival, or a management threshold.
 
 The information constraint remains decisive: the existing later-year split
@@ -110,9 +110,10 @@ dictionary. Source code 1 denotes other seedlings and code 2 stump sprouts;
 code 3 is reserved for selected large-seeded species, not sugar maple.
 [@nrsri2017, pp. 21-22; @burrill2025fiadb, sec. 6.3.14-16]
 
-The earlier RI technical report documents the same length schema and the
-regional inventory's development. It does not substitute for reading every
-annual field supplement. [@mcwilliams2015ri, pp. 18-23 and 72]
+The inspected supplements and the FIA dictionary define the length schema used
+here. They provide the documentary basis for this audit, but they do not
+substitute for a year-by-year review of every field supplement.
+[@mcwilliams2015ri, pp. 18-23 and 72]
 
 ### Historical coverage and date limitations
 
@@ -127,7 +128,7 @@ with the inspected 2017/2018 supplements and dictionary, but a final deployed
 2016 edition is not certified. Older generic cross-references also retain
 inconsistent subplot/status wording; the audit uses the explicit microplot
 status table and dictionary. These qualifications are retained in the
-[protocol note](../research/notes/ri-protocol-evidence.md).
+[data dictionary](../docs/data-dictionary.md) and [analysis decisions](../docs/analysis-decisions.md).
 
 `PLOT.MANUAL` is not treated as a precise P2+ supplement edition: for example,
 baseline records store 7.0 while the available annual supplements include 7.1
@@ -285,10 +286,10 @@ Run `make ri-audit` after the recruitment dataset exists. The
 [split support](../outputs/tables/recruitment-ri-split-support.csv) contain the
 aggregate evidence. Record-level joins remain local and Git-ignored.
 
-The [audit contract](../research/runs/recruitment-2026-09-08/ri-contract.md),
-[protocol evidence note](../research/notes/ri-protocol-evidence.md), and
-[claim review](../research/runs/recruitment-2026-09-08/ri-review.md) distinguish
-declared analytical rules, documentary access, local results, and limitations.
+The [data dictionary](../docs/data-dictionary.md),
+[analysis decisions](../docs/analysis-decisions.md), and linked results tables
+distinguish declared analytical rules, documentary access, local results, and
+limitations.
 
 ## References
 

@@ -9,8 +9,8 @@ Authors@R: person(
 Description: Reproducible analysis of recorded sugar maple sapling recruitment
     and linked sapling fates in Michigan northern hardwood Forest Inventory and
     Analysis observations. Includes audited sampling continuity, benchmark models,
-    county-held-out validation, full-refit bootstrap uncertainty, and retained
-    exploratory seedling-detection analyses.
+    county-held-out validation, full-refit bootstrap uncertainty, county maps,
+    and reproducible research reports.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:

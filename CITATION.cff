@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this workflow, please cite it using the metadata below."
-title: "Canopy to Cohort: Evaluating Sugar Maple Regeneration Indicators in Michigan Northern Hardwoods"
+title: "Canopy to Cohort: Ordinary Seedling Counts and Recorded Sugar Maple Sapling Recruitment in Michigan Northern Hardwoods"
 type: software
 authors:
   - family-names: Potla
@@ -15,7 +15,7 @@ keywords:
   - northern hardwoods
   - sugar maple
   - longitudinal analysis
-  - seedling detection
+  - seedling abundance
   - sapling recruitment
   - prognostic modeling
   - spatial analysis

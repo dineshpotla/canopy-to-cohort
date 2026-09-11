@@ -105,37 +105,25 @@ and some entrants may die or grow beyond the studied size class between visits.
 These are unweighted results for the study sample, not statewide rates.
 :::
 
-## How the question developed
+## Explore the study
 
-The [earlier detection study](report/index.qmd) examined whether seedlings were
-recorded at one visit and not at the next. That is a different question from
-whether young trees entered the sapling class. The new study audits repeated
-FIA visits and newly recorded stems to examine that transition directly.
-It does not claim to follow individual seedlings into individual saplings.
+The [research paper](report/recruitment.qmd) explains how I linked repeated FIA
+observations, checked the recruitment endpoint, and compared the models. It
+presents the findings alongside their uncertainty, limitations, and ecological
+context. The [study map and figures](report/spatial-context.qmd) show the
+geographic coverage and the two main predictive comparisons.
 
-The [research direction](docs/research-direction.md) explains this progression.
-The [full report](report/recruitment.qmd) places the analysis alongside existing
-FIA research and provides the statistical comparisons, uncertainty, and limitations.
-The [maps and exploratory visuals](report/spatial-context.qmd) preserve the
-county context, earlier size-class figures, and detection-pilot charts.
+## Supporting analyses
 
-## What remains to be tested
+The [survey-priority comparison](report/recruitment.qmd#survey-priority-comparison)
+tests whether model rankings help locate conditions with seedlings but no
+recorded sapling entry. The results do not establish an advantage over a simple
+count rule or a benefit from fieldwork.
 
-Two possible extensions are documented separately from the completed findings:
-
-- **Seedling length:** a smaller measurement audit suggests a reason to test
-  whether taller seedlings add information beyond counts. Only 14 conditions
-  in that subset had new saplings, so no added-length prediction claim is made.
-  See the [measurement audit](report/ri-audit.qmd) and
-  [follow-up study design](report/length-study.qmd).
-- **Deer and browsing:** public sources have been assessed, but a suitable
-  geographic match and exposure measure remain unresolved. No deer effect has
-  been estimated in this study. See the
-  [source-feasibility assessment](research/notes/external-factor-feasibility.md).
-
-A [survey-priority comparison](report/recruitment.qmd#survey-priority-comparison)
-also tests simple rules against the models. It does not establish fieldwork
-benefit or a treatment recommendation.
+The [seedling-length measurement audit](report/ri-audit.qmd) checks whether
+additional length measurements supply information beyond ordinary counts.
+Its smaller sample contains only 14 conditions with recorded entry, which
+limits conclusions about the predictive value of seedling length.
 
 ## Inspect and reproduce
 
@@ -151,6 +139,6 @@ make report
 
 Start with the [reproducibility guide](docs/recruitment-reproducibility.md),
 [data dictionary](docs/data-dictionary.md), or
-[research evidence](research/README.md). Source data and record-level predictions
-are not redistributed. This is a public research draft, not a peer-reviewed
-publication or an independently validated management tool.
+[analysis decisions](docs/analysis-decisions.md). Source data and record-level
+predictions are not redistributed. This is a public research draft, not a
+peer-reviewed publication or an independently validated management tool.

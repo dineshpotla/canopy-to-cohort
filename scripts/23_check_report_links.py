@@ -1,4 +1,4 @@
-"""Check local files and HTML fragments for the nine rendered research pages."""
+"""Check local files and HTML fragments for the research site and its redirects."""
 import json
 from html.parser import HTMLParser
 from pathlib import Path

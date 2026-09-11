@@ -22,11 +22,10 @@ example_precision <- precision[precision$half_width == .01 & precision$variance_
 
 ## Research objective
 
-This is an optional follow-on design. The Michigan ordinary-count and
-linked-fate core study is complete in the [revised paper](recruitment.qmd).
-Regional acquisition is deferred under the user's core-paper priority; it
-does not block those results. The access history below is retained, not a
-request to keep retrying downloads.
+This optional follow-up design builds on the completed Michigan
+[recruitment study](recruitment.qmd). It specifies the additional measurements
+and evaluation sample needed to assess seedling length. Regional acquisition
+and external validation are future work.
 
 Determine whether the length distribution of established sugar-maple seedlings
 improves predictions of recorded sapling entry beyond ordinary seedling counts
@@ -35,7 +34,8 @@ measurement comparison with a credible assessment sample. A survey-ranking
 tool, a treatment prescription, and a forecast of canopy replacement are
 different products requiring additional evidence.
 
-The Michigan [measurement audit](ri-audit.qmd) supplies a useful pilot: 90
+The Michigan [measurement audit](ri-audit.qmd) supplies local feasibility
+evidence: 90
 baseline intervals on 87 physical plots contain 14 recruit-bearing conditions.
 The 71 intervals with ordinary baseline seedling detections contain all 14
 events. Taller-seedling presence is associated with subsequent entry, but its
@@ -79,8 +79,8 @@ This is a small potential extension, not a new independent evaluation sample.
 The screen does not establish RI microplot status, source/count validity,
 condition continuity, shared-area eligibility, or sapling-entry events for the
 additional visits. It queries no new recruitment outcomes. The wider historical
-Michigan source was already explored in earlier feasibility work; unused rows
-or predictors do not make it untouched validation. The 106 baseline condition
+Michigan source is not an untouched validation sample; unused rows or predictors
+do not make it one. The 106 baseline condition
 visits without a linked successor are unresolved opportunities in this snapshot,
 not guaranteed future observations or a scheduled data release.
 
@@ -187,9 +187,9 @@ D_j = \frac{1}{m_j}\sum_{i=1}^{m_j}
 $$
 
 Positive gain favors length. Equal plot weighting prevents plots with more
-conditions from automatically dominating the evaluation. It differs from the
-earlier condition-average results, which must not be substituted as the new
-benchmark. This is a selected-cohort comparison, not a statewide design-weighted
+conditions from automatically dominating the evaluation. It differs from a
+condition-average estimator, which must not be substituted as the benchmark.
+This is a selected-cohort comparison, not a statewide design-weighted
 estimate of forest condition.
 
 Evaluate the frozen models once on the reserved sample. Resample whole counties
@@ -264,7 +264,7 @@ recall, a data-selected capacity rule, or dependent conditions on the same plot.
 They illustrate why four or fourteen events do not settle a forecasting claim.
 
 Before recruitment or model fitting, replace the planning inputs with defensible
-development/external-pilot ranges, assess training complexity and calibration
+development and external-assessment ranges, assess training complexity and calibration
 precision separately, and simulate the proposed cluster structure. Do not add
 the planning sample counts together or automatically treat their maximum as a
 fully justified study size: they address different quantities and assumptions.
@@ -295,9 +295,9 @@ obtain a favorable result would not complete this research objective.
 
 ## Regional acquisition status
 
-On September 9, 2026, the user authorized downloading and screening Wisconsin
-and Minnesota under the same scientific definitions. Acquisition was attempted,
-but neither ZIP could be retrieved: the archive endpoints return an empty
+The regional feasibility screen covers Wisconsin and Minnesota under the same
+scientific definitions. Acquisition was attempted, but neither ZIP could be
+retrieved: the archive endpoints return an empty
 response in repeated HTTP checks, and the DataMart landing page also fails in
 the browser. **Regional sample size and validation feasibility remain unknown.**
 This is an access blocker, not evidence of inadequate samples.
@@ -316,13 +316,10 @@ it is intentionally separate from the Michigan pipeline. A successful transfer
 must pass archive, state, table, integrity, and disk-space guards. The success
 path is not yet exercised on the actual regional archives.
 
-The [regional contract](../research/runs/recruitment-2026-09-08/regional-feasibility-contract.md)
-keeps recruitment outcomes unopened during scientific feasibility screening.
-The [access review](../research/runs/recruitment-2026-09-08/regional-access-review.md)
-documents alternative-route checks and the distinction between reachable
-release notes and inaccessible inventory files. Retry acquisition when the
-endpoint is reachable; the WI/MN scope decision is already made. No additional
-model, outcome comparison, or regional validation result is supplied here.
+The [survey validation plan](../docs/survey-validation-plan.md) keeps regional
+feasibility separate from the Michigan outcome analysis. Archive access remains
+blocked, so no additional model, outcome comparison, or regional validation
+result is supplied here.
 
 ## Reproducibility
 
@@ -332,10 +329,9 @@ score for future use; they have not scored a new RI model. Record-level metadata
 remain local and Git-ignored. No additional inventory was downloaded and no
 model was fitted for this design.
 
-The [design contract](../research/runs/recruitment-2026-09-08/length-study-contract.md),
-[source and claim review](../research/runs/recruitment-2026-09-08/length-study-review.md),
-and [survey validation plan](../docs/survey-validation-plan.md) retain the
-scientific and operational boundaries.
+The [survey validation plan](../docs/survey-validation-plan.md) and
+[analysis decisions](../docs/analysis-decisions.md) retain the scientific and
+operational boundaries.
 
 ## References
 
