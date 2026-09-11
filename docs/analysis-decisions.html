@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Cohort selection, recruitment definitions, model comparisons, and validation for the Michigan sugar-maple study.">
 
-<title>analysis-decisions – Canopy to Cohort</title>
+<title>Analysis decisions – Canopy to Cohort</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,11 +78,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Canopy to Cohort">
-<meta property="og:description" content="Sugar-maple recruitment in Michigan FIA: audited sapling entry, linked-stem fates, and held-out comparisons of regeneration indicators.">
+<meta property="og:title" content="Analysis decisions – Canopy to Cohort">
+<meta property="og:description" content="Cohort selection, recruitment definitions, model comparisons, and validation for the Michigan sugar-maple study.">
 <meta property="og:site_name" content="Canopy to Cohort">
-<meta name="twitter:title" content="Canopy to Cohort">
-<meta name="twitter:description" content="Sugar-maple recruitment in Michigan FIA: audited sapling entry, linked-stem fates, and held-out comparisons of regeneration indicators.">
+<meta name="twitter:title" content="Analysis decisions – Canopy to Cohort">
+<meta name="twitter:description" content="Cohort selection, recruitment definitions, model comparisons, and validation for the Michigan sugar-maple study.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -309,15 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../report/spatial-context.html"> 
-<span class="menu-text">Maps and visuals</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../report/index.html"> 
-<span class="menu-text">Detection pilot</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../docs/research-direction.html"> 
-<span class="menu-text">Research direction</span></a>
+<span class="menu-text">Map and figures</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../docs/analysis-decisions.html" aria-current="page"> 
@@ -351,198 +309,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#analysis-decisions" id="toc-analysis-decisions" class="nav-link active" data-scroll-target="#analysis-decisions">Analysis decisions</a>
-  <ul class="collapse">
-  <li><a href="#core-paper-completion-on-9-september-2026" id="toc-core-paper-completion-on-9-september-2026" class="nav-link" data-scroll-target="#core-paper-completion-on-9-september-2026">Core paper completion on 9 September 2026</a></li>
-  <li><a href="#authorized-regional-feasibility-9-september-2026" id="toc-authorized-regional-feasibility-9-september-2026" class="nav-link" data-scroll-target="#authorized-regional-feasibility-9-september-2026">Authorized regional feasibility: 9 September 2026</a></li>
-  <li><a href="#count-versus-length-study-design-9-september-2026" id="toc-count-versus-length-study-design-9-september-2026" class="nav-link" data-scroll-target="#count-versus-length-study-design-9-september-2026">Count-versus-length study design: 9 September 2026</a></li>
-  <li><a href="#ri-measurement-audit-9-september-2026" id="toc-ri-measurement-audit-9-september-2026" class="nav-link" data-scroll-target="#ri-measurement-audit-9-september-2026">RI measurement audit: 9 September 2026</a></li>
-  <li><a href="#survey-priority-extension-8-september-2026" id="toc-survey-priority-extension-8-september-2026" class="nav-link" data-scroll-target="#survey-priority-extension-8-september-2026">Survey-priority extension: 8 September 2026</a></li>
-  <li><a href="#recruitment-reanalysis-8-september-2026" id="toc-recruitment-reanalysis-8-september-2026" class="nav-link" data-scroll-target="#recruitment-reanalysis-8-september-2026">Recruitment reanalysis: 8 September 2026</a></li>
-  <li><a href="#direction-review-7-september-2026" id="toc-direction-review-7-september-2026" class="nav-link" data-scroll-target="#direction-review-7-september-2026">Direction review: 7 September 2026</a></li>
-  <li><a href="#declared-pilot-boundaries" id="toc-declared-pilot-boundaries" class="nav-link" data-scroll-target="#declared-pilot-boundaries">Declared pilot boundaries</a></li>
-  <li><a href="#source-and-cohort" id="toc-source-and-cohort" class="nav-link" data-scroll-target="#source-and-cohort">Source and cohort</a></li>
-  <li><a href="#detection-pilot-longitudinal-design" id="toc-detection-pilot-longitudinal-design" class="nav-link" data-scroll-target="#detection-pilot-longitudinal-design">Detection-pilot longitudinal design</a></li>
-  <li><a href="#secondary-appearance-design" id="toc-secondary-appearance-design" class="nav-link" data-scroll-target="#secondary-appearance-design">Secondary appearance design</a></li>
-  <li><a href="#cross-sectional-size-class-foundation" id="toc-cross-sectional-size-class-foundation" class="nav-link" data-scroll-target="#cross-sectional-size-class-foundation">Cross-sectional size-class foundation</a></li>
-  <li><a href="#retained-cross-sectional-model" id="toc-retained-cross-sectional-model" class="nav-link" data-scroll-target="#retained-cross-sectional-model">Retained cross-sectional model</a></li>
-  <li><a href="#descriptive-gap-screen" id="toc-descriptive-gap-screen" class="nav-link" data-scroll-target="#descriptive-gap-screen">Descriptive gap screen</a></li>
-  <li><a href="#spatial-decision" id="toc-spatial-decision" class="nav-link" data-scroll-target="#spatial-decision">Spatial decision</a></li>
-  </ul></li>
+  <li><a href="#source-and-cohort" id="toc-source-and-cohort" class="nav-link active" data-scroll-target="#source-and-cohort">Source and cohort</a></li>
+  <li><a href="#sampling-and-linkage-checks" id="toc-sampling-and-linkage-checks" class="nav-link" data-scroll-target="#sampling-and-linkage-checks">Sampling and linkage checks</a></li>
+  <li><a href="#recorded-recruitment-endpoint" id="toc-recorded-recruitment-endpoint" class="nav-link" data-scroll-target="#recorded-recruitment-endpoint">Recorded recruitment endpoint</a></li>
+  <li><a href="#predictors-and-model-comparisons" id="toc-predictors-and-model-comparisons" class="nav-link" data-scroll-target="#predictors-and-model-comparisons">Predictors and model comparisons</a></li>
+  <li><a href="#validation-and-uncertainty" id="toc-validation-and-uncertainty" class="nav-link" data-scroll-target="#validation-and-uncertainty">Validation and uncertainty</a></li>
+  <li><a href="#sensitivity-and-temporal-comparisons" id="toc-sensitivity-and-temporal-comparisons" class="nav-link" data-scroll-target="#sensitivity-and-temporal-comparisons">Sensitivity and temporal comparisons</a></li>
+  <li><a href="#linked-sapling-fates" id="toc-linked-sapling-fates" class="nav-link" data-scroll-target="#linked-sapling-fates">Linked sapling fates</a></li>
+  <li><a href="#supporting-analyses" id="toc-supporting-analyses" class="nav-link" data-scroll-target="#supporting-analyses">Supporting analyses</a></li>
+  <li><a href="#geography-and-interpretation" id="toc-geography-and-interpretation" class="nav-link" data-scroll-target="#geography-and-interpretation">Geography and interpretation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/docs/analysis-decisions.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/dineshpotla/canopy-to-cohort/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content" id="quarto-document-content">
 
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysis decisions</h1>
+</div>
+
+<div>
+  <div class="description">
+    Cohort selection, recruitment definitions, model comparisons, and validation for the Michigan sugar-maple study.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
 
-<section id="analysis-decisions" class="level1">
-<h1>Analysis decisions</h1>
-<p>This log records choices that materially affect the scientific interpretation. It is updated from the actual FIA schema and cohort diagnostics; species, forest-type, status, disturbance, and treatment fields are checked against FIA reference tables or the FIADB user guide.</p>
-<section id="core-paper-completion-on-9-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="core-paper-completion-on-9-september-2026">Core paper completion on 9 September 2026</h2>
-<p>The user prioritizes the Michigan core research and paper over regional acquisition. The <a href="../research/runs/recruitment-2026-09-08/core-paper-contract.md">completion contract</a> keeps the endpoint, two populations, model sequence, folds, penalty, full-refit uncertainty, and temporal assessment. No new predictors or length models are fitted. The paper is organized around ordinary-count information, added maple-stage value, and linked tagged-stem fates.</p>
-<p>Main metrics give equal weight to condition intervals, not plots or FIA expansion weights. This differs from the plot-balanced metric proposed for the optional length study. Realized interval yields a conditional retrospective next-visit target, not a validated fixed-horizon forecast. Joint calibration intercept and slope are distinguished from calibration-in-the-large.</p>
-<p><code>make recruitment-core</code> reproduces the Michigan analyses and paper audit without regional acquisition or length planning. The audit recomputes metrics from stored predictions and reconciles cohort, resampling, and fate summaries. Regional and operational validation are future work, not reasons to withhold the bounded core results. No publication or independent final sign-off is claimed.</p>
-</section>
-<section id="authorized-regional-feasibility-9-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="authorized-regional-feasibility-9-september-2026">Authorized regional feasibility: 9 September 2026</h2>
-<p>The user authorized Wisconsin and Minnesota public-inventory acquisition and feasibility screening. The <a href="../research/runs/recruitment-2026-09-08/regional-feasibility-contract.md">regional contract</a> preserves the species, forest types, same-area comparison, and outcome-blinded boundary. No regional model fitting or field coordination is included.</p>
-<p>Both archive transfers currently fail with empty HTTP responses. Reachable update histories do not substitute for records; no regional sample counts are inferred. <code>make regional-acquire</code> records failures explicitly and, on successful retrieval, guards disk space, archive paths, SQLite integrity, source state, and immutable file hashes. It is separate from the Michigan pipeline. See the <a href="../research/runs/recruitment-2026-09-08/regional-access-review.md">access review</a>. The scientific screen remains pending, not completed or statistically negative.</p>
-</section>
-<section id="count-versus-length-study-design-9-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="count-versus-length-study-design-9-september-2026">Count-versus-length study design: 9 September 2026</h2>
-<p>The <a href="../research/runs/recruitment-2026-09-08/length-study-contract.md">design contract</a> and <a href="../report/length-study.html">study protocol</a> specify the next comparison; no additional recruitment outcomes or length models are produced.</p>
-<ul>
-<li>Use ordinary seedling count, coverage, and elapsed interval as the simple benchmark; add only the fraction of standard-size seedlings in RI classes 5-6. Restrict the primary comparison to positive ordinary counts and verified same-area definitions. Do not encode an undefined zero-denominator fraction.</li>
-<li>Retain the recorded next-visit endpoint and label its realized-duration adjustment as retrospective and conditional, not an exact-horizon forecast.</li>
-<li>Predeclare date-based choice of one interval per plot within a period, plot-balanced training and paired Brier evaluation, and no shared plot across development/assessment. Positive Brier gain favors length; field utility and a minimum meaningful gain are not inferred from that sign.</li>
-<li>Census only RI opportunity metadata in the local snapshot. Of 88 positive- seedling opportunities on 79 plots, seven visits on six plots are outside the current 903-plot cohort. Additional frame/condition/protocol checks remain. These rows do not constitute an independent evaluation sample.</li>
-<li>Export 54 hypothetical paired-loss precision scenarios and separate plug-in Wilson recall-width illustrations. They do not establish power, calibration adequacy, training sample size, actual RI effect size, or guaranteed retention.</li>
-<li>Recommend a separately scoped Wisconsin/Minnesota feasibility screen; a geographic extension tests transport and is not Michigan-specific validation.</li>
-</ul>
-<p>Run <code>make length-plan</code>. No new state inventory, model, publication, or field coordination is included in this completed design.</p>
-</section>
-<section id="ri-measurement-audit-9-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="ri-measurement-audit-9-september-2026">RI measurement audit: 9 September 2026</h2>
-<p>The <a href="../research/runs/recruitment-2026-09-08/ri-contract.md">RI contract</a> fixes a measurement audit before any new height model. The <a href="../report/ri-audit.html">audit report</a> is the resulting descriptive study.</p>
-<ul>
-<li>Retain the existing 922-interval recruitment endpoint and eligible population. Baseline RI is screened independently of follow-up RI; TREE endpoint sampling remains governed by the recruitment audit.</li>
-<li>Require code-1 RI coverage of every contributing forest-condition microplot, consistent core/RI subplot links, reconstructed condition area, valid condition/subplot-condition foreign keys, and valid count/source/length codes. A missing retired subplot-status field is allowed; a contradictory populated field is not. Unknown or nonsampled RI is unavailable, not zero.</li>
-<li>Screen plot dates for May-September; no separate RI field date is present. Treat date failures as unresolved plausibility flags, not proof of actual out-of-season RI collection.</li>
-<li>Keep all six classes and source categories; compare ordinary counts to RI classes 3-6 on identical units. The resulting 311/311 exact matches establish numerical redundancy, not independent field validation or an audited database derivation mechanism.</li>
-<li>Prespecify classes 5-6 as the taller group. Report associations for all 90 available baseline intervals and for the 71 ordinary-detected intervals. Use 2,000 county resamples for descriptive intervals, not forecast validation.</li>
-<li>Record historical coverage: 2016-2018 supplements inspected, including an archived 2016 draft; individual 2012-2015 supplements remain unrecovered. Do not equate the stored core <code>PLOT.MANUAL</code> number with a P2+ annual edition.</li>
-<li>Stop before fitting height models: 14 total event plots split into ten development and four later-year events. A larger sample and a meaningful paired gain are needed before claiming incremental usefulness.</li>
-</ul>
-<p>No external inventory, fieldwork, management rule, or publication is included.</p>
-</section>
-<section id="survey-priority-extension-8-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="survey-priority-extension-8-september-2026">Survey-priority extension: 8 September 2026</h2>
-<p>The <a href="../research/runs/recruitment-2026-09-08/survey-contract.md">survey contract</a> declares a retrospective decision proxy after the first recruitment results: locating no recorded entry among baseline-detected conditions. It does not redefine the biological endpoint or establish actual survey need.</p>
-<ul>
-<li>Compare random expectation, raw count, count per sampled coverage, sapling presence, and the two existing count/stage models. No extra predictor search.</li>
-<li>Use 25% condition-interval capacity as the main comparison and 10%/50% as fixed alternatives. Report the reversed objective of locating recorded entry.</li>
-<li>Integrate uniform random selection within cutoff ties for the main target counts. Retain deterministic source-key capture, attainable tie bounds, and distinct selected plots; do not equate conditions with a fieldwork budget.</li>
-<li>Reuse original county folds and run 300 full-refit county resamples per population, including repeat scaling and selection. All 600 succeed.</li>
-<li>Retain the earlier temporal test. A common seven-year scoring sensitivity changes only test predictors, not training intervals or scaling; actual outcome durations remain variable, so seven-year probabilities are unvalidated.</li>
-<li>Do not invent utility weights or a net-benefit threshold for surveying. The selected proxy is common, and a strong simple rule is the reference.</li>
-<li>Inventory the local RI tables only for record availability. Ninety eligible intervals have baseline RI plot records and 14 recorded-entry events. No absent RI row is recoded as zero, and no height model is fitted from this screen.</li>
-</ul>
-<p>Stage-model yield exceeds the raw-count rule by one expected condition at 168-condition capacity, with paired uncertainty spanning zero. This motivated the subsequent RI measurement audit above; the <a href="../docs/survey-validation-plan.html">validation plan</a> still does not authorize an operational ranking release.</p>
-</section>
-<section id="recruitment-reanalysis-8-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="recruitment-reanalysis-8-september-2026">Recruitment reanalysis: 8 September 2026</h2>
-<p>The new <a href="../report/recruitment.html">recruitment report</a> implements the direction review below. The <a href="../research/runs/recruitment-2026-09-08/analysis-contract.md">analysis contract</a> records the fixed endpoint, benchmark sequence, and interpretation limits.</p>
-<ul>
-<li>The endpoint is a newly tallied live sugar-maple TREE record with <code>1 &lt;= DIA &lt; 5</code>, <code>RECONCILECD=1</code>, and no predecessor. It is not the fate of an individually tagged baseline seedling.</li>
-<li>Sampling checks use the intended plot predecessor, sampled forest status, national design, unchanged microplot arrangement, subplot numbers, and microplot condition-change proportions. <code>SUBPLOT.PREV_SBP_CN</code> is entirely empty in this database, so continuity is reconstructed, not directly verified through that field. Production QA codes 1 and 7 are retained.</li>
-<li>The source has 932 pairs. Nine fail the conservative shared-proportion check and one has ambiguous new saplings, leaving 922 intervals and 169 entrants in 100 conditions. Unresolved opportunities are not negative outcomes.</li>
-<li>Both all eligible pairs and the 672 pairs with baseline seedlings detected are principal model populations. All 100 recruit-bearing conditions are in the latter. A zero observed event rate in baseline non-detections is not treated as a known probability of zero.</li>
-<li>Four fixed logistic models compare prevalence, observation opportunity, recorded seedling count, and maple stage structure. The penalty is summed binomial negative log likelihood plus <code>1/2 * sum(beta^2)</code> for slopes only. Counts and sapling density are <code>log1p</code> transformed; scaling is learned within each training sample. No coefficient p-values are attached to ridge fits.</li>
-<li>Five folds hold out counties; their allocation uses counts, not outcomes. Paired uncertainty uses 300 county resamples per population, refitting scaling and all four models. Original folds and the model set stay fixed. All 600 resamples succeed. The bootstrap omits question/model-set selection uncertainty and is not an independent validation dataset.</li>
-<li>Brier score, log loss, AUC, average precision, calibration, and equal-capacity capture are reported on identical held-out observations within each population. Probability ties use stable key order, with tie-neutral capture also exported.</li>
-<li>Exact mapped overlap, follow-up manual version 9 onward, and penalties 0 and 4 are sensitivities. A retrospective pre-2023/2023-onward split shares no physical plots. The data snapshot was previously explored.</li>
-<li>Tagged baseline saplings are searched on the expected successor plot before filtering follow-up species, diameter, or status. Frame-ineligible, reidentified, and cruiser-error records stay in the accounting but receive no biological fate outcome. The fate cohort has its own eligibility flag; an ambiguous new arrival does not by itself invalidate an existing tagged stem’s follow-up.</li>
-<li>One source-verified sampled zero with <code>BALIVE=0</code> corrects missing derived follow-up tree metrics in the new data only. This is not general imputation.</li>
-</ul>
-<p>The stage models’ small added Brier improvements have intervals spanning zero, and they capture no more recruit-bearing conditions at equal capacity. The analysis is not extended with extra predictors to obtain a preferred result.</p>
-</section>
-<section id="direction-review-7-september-2026" class="level2">
-<h2 class="anchored" data-anchor-id="direction-review-7-september-2026">Direction review: 7 September 2026</h2>
-<p>The <a href="../docs/research-direction.html">research direction and goals</a> supersede the earlier interpretation. It proposed evaluating recorded sapling recruitment and linked-stem fates, now implemented as described above. The detection analysis below is retained as an exploratory pilot, and its operational field-triage claim is withdrawn. Audit scripts 11 and 12 reproduce the benchmark reassessment and candidate-endpoint counts. Existing outcomes have been explored, so neither the reanalysis nor a later temporal split of this snapshot is untouched validation.</p>
-<p>The full detection model improves Brier by only 0.00102 over starting abundance, coverage, and interval; a conditional county-bootstrap interval spans zero. Using total non-maple basal area as the comparator does not erase the beech association. Its uncertainty and limited added prediction argue against a beech-centered research agenda, not against testing beech as one hypothesis.</p>
-</section>
-<section id="declared-pilot-boundaries" class="level2">
-<h2 class="anchored" data-anchor-id="declared-pilot-boundaries">Declared pilot boundaries</h2>
-<ol type="1">
-<li>The primary analytical key is a baseline and follow-up condition pair. Each visit retains its <code>PLT_CN + CONDID</code> key.</li>
-<li>The pilot’s primary response is loss of sugar-maple seedling detection between sampled visits. A separate secondary response captures detection appearance among baseline non-detections. Neither is tracked mortality, recruitment, or confirmed ecological absence.</li>
-<li>The regeneration-gap flag is a descriptive screen, not a validated index or the regression response.</li>
-<li>Climate is a county-scale proxy and cannot be interpreted as plot exposure.</li>
-<li>Maps summarize the analyzed sample, not design-based county or statewide population estimates.</li>
-<li>Exact FIA plot locations are neither used nor inferred.</li>
-<li>Formal FIA population estimation remains a future extension. Transition counts and predictions are sample analyses, not statewide prevalence.</li>
-</ol>
-</section>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>I used repeated public FIA observations to evaluate three questions: how much ordinary seedling counts tell us about recorded sapling entry, whether maple size structure adds predictive information, and what happens to tagged baseline saplings. This page documents the decisions behind the <a href="../report/recruitment.html">research paper</a>.</p>
 <section id="source-and-cohort" class="level2">
 <h2 class="anchored" data-anchor-id="source-and-cohort">Source and cohort</h2>
+<p>I used the Michigan FIADB SQLite snapshot identified in <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/config/config.yml">configuration</a> and the <a href="../outputs/audits/data-provenance.csv">provenance audit</a>. The source archive has SHA-256 <code>2c1eb908a47436d4edd0f3ba9e3d647b79a4f36cef972c5ba83277300817aee1</code>.</p>
+<p>Evaluation 262501 supplies the current-evaluation cohort. I selected baseline accessible forests in maple/beech/birch group 800 with live sugar maple at least five inches in diameter. The selected forest-type codes are 801, 802, 805, and 809; sugar maple is <code>SPCD=318</code>. Follow-up forest type may change.</p>
+<p>I required an intended plot predecessor, one-to-one condition mapping, at least 90% mapped microplot-area overlap relative to each visit, and an interval of 4.5–8.5 years. A forest condition is a mapped part of a plot with similar forest characteristics. One plot can contribute more than one condition.</p>
+<p>The source contains 932 condition pairs. Nine fail the conservative shared-area check and one contains ambiguous new saplings. Excluding these leaves <strong>922 intervals on 903 physical plots in 66 counties</strong>. The <a href="../outputs/tables/recruitment-cohort-flow.csv">cohort flow</a> records these counts and the alternative restrictions. Baseline measurements span 2011–2018 and follow-ups span 2018–2025.</p>
+</section>
+<section id="sampling-and-linkage-checks" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-and-linkage-checks">Sampling and linkage checks</h2>
+<p>Both visits must use the national design, an unchanged microplot arrangement, manual version at least 5.1, and demonstrated sampled forest. Follow-ups must be remeasurements. I retained production QA codes 1 and 7; code 7 identifies a supervised production check.</p>
+<p>The direct subplot predecessor field, <code>PREV_SBP_CN</code>, is empty in this snapshot. I reconstructed continuity from the verified plot predecessor, subplot number, and <code>SUBP_COND_CHNG_MTRX</code> microplot links. The mapped shared proportion cannot exceed the corresponding condition proportion at either visit. Any populated predecessor identifier must agree with its expected link.</p>
+<p>The <a href="../outputs/audits/recruitment-frame.csv">frame audit</a> and <a href="../outputs/audits/recruitment-protocol.csv">protocol audit</a> record these checks. The 914 exact-overlap intervals form a sensitivity subset.</p>
+<p>I assigned zero only after establishing sampling opportunity and verifying the relevant records. One fully checked follow-up with no live TREE records and <code>BALIVE=0</code> has an explicit zero correction. The model code stops on missing required predictors; it does not impute them or silently change the observations across models.</p>
+</section>
+<section id="recorded-recruitment-endpoint" class="level2">
+<h2 class="anchored" data-anchor-id="recorded-recruitment-endpoint">Recorded recruitment endpoint</h2>
+<p>I defined the binary outcome as at least one qualifying new live maple sapling at follow-up. Each qualifying TREE record must have:</p>
 <ul>
-<li><strong>FIADB source.</strong> Michigan’s SQLite FIADB archive was retrieved from the FIA DataMart. The acquisition audit records the URL, byte size, retrieval time, and SHA-256 checksum.</li>
-<li><strong>Evaluation.</strong> Release v2.0.0 pins EVALID 262501, “MICHIGAN 2025: 2019-2025: CURRENT AREA, CURRENT VOLUME.” The evaluation inventory window is 2019–2025; assigned measurement records span 2018–2025. A configuration change is required to analyze a different evaluation.</li>
-<li><strong>Operational northern-hardwood cohort.</strong> FIA forest-type group 800 is the maple / beech / birch group. Active retained types resolve from <code>REF_FOREST_TYPE</code>: 801 sugar maple / beech / yellow birch, 802 black cherry, 805 hard maple / basswood, and 809 red maple / upland.</li>
-<li><strong>Sugar maple.</strong> <code>REF_SPECIES</code> resolves <em>Acer saccharum</em> to SPCD 318.</li>
-<li><strong>Seedling opportunity.</strong> A condition is sampled only when <code>MICRPROP_UNADJ &gt; 0</code>. An absent sugar-maple SEEDLING row becomes zero only under that demonstrated opportunity.</li>
+<li><code>SPCD=318</code> and <code>STATUSCD=1</code>;</li>
+<li>diameter at least 1 inch and less than 5 inches;</li>
+<li><code>RECONCILECD=1</code> and no predecessor TREE record;</li>
+<li>a comparable shared sampled microplot.</li>
 </ul>
+<p>The cohort contains <strong>169 qualifying saplings in 100 conditions</strong>. This endpoint records surviving entrants present at remeasurement. It cannot identify which individual baseline seedlings became saplings or count entrants that died or exceeded the size class between visits. Reconcile code 1 alone does not establish recruitment on comparable forested area.</p>
+<p>The <a href="../outputs/audits/recruitment-definitions.csv">endpoint definitions</a> document the rules and their interpretation.</p>
 </section>
-<section id="detection-pilot-longitudinal-design" class="level2">
-<h2 class="anchored" data-anchor-id="detection-pilot-longitudinal-design">Detection-pilot longitudinal design</h2>
-<ul>
-<li><strong>Time ordering.</strong> Ecological eligibility and every ecological predictor are defined at baseline. Follow-up is screened only for a valid outcome observation—sampled accessible forest with positive microplot coverage—and is never used to define baseline forest type, established-maple status, or predictor values. Interval length is an exposure-time design covariate known only after the follow-up measurement.</li>
-<li><strong>Condition linkage.</strong> <code>SUBP_COND_CHNG_MTRX</code> is the authoritative linkage. <code>SUBPTYP = 2</code> is used because the response is measured on microplots. Matrix rows are aggregated to one baseline–follow-up condition pair before any tree or seedling records are joined.</li>
-<li><strong>Pair quality.</strong> Baseline-side and follow-up-side pair degrees are calculated on the full microplot matrix before ecological filtering. The primary cohort requires degree one on both sides. This prevents a split or merge from being disguised as a one-to-one pair after filtering.</li>
-<li><strong>Footprint continuity.</strong> Pair overlap is the sum of <code>SUBPTYP_PROP_CHNG</code> across the four microplots divided by four. Eligibility requires overlap divided by both visits’ <code>MICRPROP_UNADJ</code> to be at least 0.90. This relative rule retains small but spatially stable conditions. The 932 primary pairs all exceed 0.991 on both ratios.</li>
-<li><strong>Baseline cohort.</strong> The baseline plot must be sampled; the condition must be accessible forest in active forest-type group 800 with positive microplot coverage and at least one live sugar-maple TREE record at DBH ≥5 inches.</li>
-<li><strong>Follow-up observation.</strong> The mapped follow-up plot must be sampled and the condition must be accessible forest with positive microplot coverage. It is not required to remain in group 800 because that classification is post-baseline; 915 of 932 pairs nevertheless do so.</li>
-<li><strong>Transition states.</strong> Detection is derived independently at each visit. The four states are persistent non-detection (196), appearance (59), loss (75), and persistence (602). The primary loss model uses the 677 conditions detected at baseline.</li>
-<li><strong>Pilot predictors.</strong> The seven v2 slopes are standardized <code>log1p</code> baseline seedling density, baseline sugar-maple sapling presence, standardized <code>log1p</code> established-maple basal area, standardized <code>log1p</code> American beech sapling basal area, standardized <code>log1p</code> non-maple basal area excluding beech saplings, standardized baseline microplot coverage, and standardized interval length. Retaining established beech in the residual stand-structure term makes the sapling hypothesis a size-class-specific contrast. All tree and stand predictors are baseline-only.</li>
-<li><strong>Event support.</strong> Seventy-five loss events provide 10.7 events per slope. Splines, treatment, climate, forest-type indicators, disturbance, and stand age are excluded from the primary loss model to protect that event budget. This ratio is descriptive, not an adequacy guarantee. Future model planning must account for clustering, outcome frequency, expected performance, and shrinkage; tests verify arithmetic rather than certify a ten-event threshold.</li>
-<li><strong>Inference.</strong> The primary binomial GLM reports county-cluster CR1 confidence intervals. A county random-intercept fit is a non-singular sensitivity model, not a required gate for the forecasting specification.</li>
-<li><strong>Validation.</strong> Five deterministic folds withhold whole counties. Every fold relearns continuous transformations using training counties only, and every held-out fold contains both loss and persistence events.</li>
-<li><strong>Causal boundary.</strong> Coefficients are prognostic associations. American beech is a mechanism hypothesis for targeted follow-up, not evidence that beech removal would prevent loss. Inter-visit treatment is excluded because timing and confounding by indication do not support a causal contrast.</li>
-<li><strong>Repeated-count boundary.</strong> The loss model is conditioned on a positive baseline tally and then uses that tally’s density as a predictor. Low positive counts are mechanically more likely to become zero under repeated sampling, so the density association can reflect regression to the mean or count variability as well as biological change.</li>
-</ul>
+<section id="predictors-and-model-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="predictors-and-model-comparisons">Predictors and model comparisons</h2>
+<p>I fit the same four logistic benchmarks separately to all 922 eligible intervals and the 672 intervals with baseline seedlings. The second population tests whether measurements distinguish entry among conditions that already contained seedlings. Both populations contain the same 100 conditions with recorded entry and overlap rather than providing independent replications.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Predictors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prevalence</td>
+<td>Training-sample event fraction</td>
+</tr>
+<tr class="even">
+<td>Observation design</td>
+<td>Baseline microplot coverage and elapsed interval</td>
+</tr>
+<tr class="odd">
+<td>Count and design</td>
+<td>Observation design plus ordinary maple seedling count</td>
+</tr>
+<tr class="even">
+<td>Maple stages and design</td>
+<td>Count and design plus maple sapling density and established-maple basal area</td>
+</tr>
+</tbody>
+</table>
+<p>The ordinary count sums <code>SEEDLING.TREECOUNT</code>; the audit checks agreement with <code>TREECOUNT_CALC</code>. Sapling density accounts for microplot condition coverage. Established-maple basal area uses live stems at least five inches in diameter and the appropriate sampled area.</p>
+<p>I apply <code>log(1 + x)</code> to count, sapling density, and basal area. Centering and scaling use training data only and repeat within each bootstrap fit. The ridge objective is summed binomial negative log likelihood plus one-half the sum of squared slopes. The intercept is unpenalized and the primary penalty is fixed at one. I did not tune it to improve these findings.</p>
+<p>The <a href="../docs/data-dictionary.html">data dictionary</a> lists the source fields and units. The <a href="https://github.com/dineshpotla/canopy-to-cohort/blob/main/R/recruitment_models.R">model module</a> implements these comparisons.</p>
 </section>
-<section id="secondary-appearance-design" class="level2">
-<h2 class="anchored" data-anchor-id="secondary-appearance-design">Secondary appearance design</h2>
-<ul>
-<li><strong>Conditional question.</strong> The appearance cohort contains the 255 primary condition pairs without a baseline sugar-maple seedling detection. The outcome is one for a positive follow-up tally and zero for persistent non-detection; 59 appearances are observed.</li>
-<li><strong>Lean specification.</strong> The four pilot slopes are: baseline sugar-maple sapling presence, standardized <code>log1p</code> established-maple basal area, standardized baseline microplot coverage, and standardized interval length. Beech and general competitor terms are excluded because the beech hypothesis concerns loss and the smaller appearance cohort cannot support a broad model.</li>
-<li><strong>Event support.</strong> The full cohort provides 14.75 appearances per slope. The leanest county-held-out training set retains 42 appearances, or 10.5 per slope.</li>
-<li><strong>Inference and validation.</strong> County-cluster CR1 intervals and the same five-fold county-held-out procedure are used. Transformations are relearned within each training fold.</li>
-<li><strong>Result boundary.</strong> The model barely improves Brier score over fold-specific prevalence and has held-out AUC 0.566 with calibration slope 0.460. It is a weak result for this tested specification, cohort, and partition—not a predictive limit of the database or a usable site-ranking tool.</li>
-</ul>
+<section id="validation-and-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="validation-and-uncertainty">Validation and uncertainty</h2>
+<p>I held out whole counties in five folds. Assignment balances condition counts without using outcomes, and every physical plot stays in one fold. Each population has its own deterministic partition. All models within a population use identical observations and folds.</p>
+<p>Brier score and log loss evaluate probability error; AUC and average precision evaluate ranking. The scores give equal weight to condition intervals. They are unweighted sample summaries. Joint calibration intercept and slope, mean predicted probability, and observed-to-expected ratios describe calibration.</p>
+<p>Paired uncertainty uses 300 resamples of whole counties per population. Each draw repeats training scaling and model fitting while preserving the county folds, model set, and penalty. All 600 draws succeeded. Negative model-minus-reference Brier differences favor the added information. Separate descriptive count-bin intervals use 2,000 county resamples.</p>
+<p>I had explored this source snapshot before fixing the recruitment comparisons. The analysis is retrospective, and its bootstrap does not include uncertainty from choosing the question, cohort, or model set. It does not provide external validation. I specified no equivalence margin or minimum useful improvement and applied no multiple-comparison correction.</p>
+<p>See the <a href="../outputs/tables/recruitment-model-validation.csv">validation results</a> and <a href="../outputs/tables/recruitment-model-paired-differences.csv">paired differences</a>.</p>
 </section>
-<section id="cross-sectional-size-class-foundation" class="level2">
-<h2 class="anchored" data-anchor-id="cross-sectional-size-class-foundation">Cross-sectional size-class foundation</h2>
-<p>The retained v1.3.0 model separates FIA TREE size classes instead of treating all live sugar-maple basal area as established canopy structure.</p>
-<ul>
-<li><strong>Established-tree cohort.</strong> The primary cohort requires at least one live sugar-maple TREE record with DBH ≥ 5 inches, FIA’s subplot-tree threshold. This rule is inventory-defined, independent of the seedling outcome, and retains 1,072 sampled conditions in 66 counties.</li>
-<li><strong>Sapling stage.</strong> Sugar-maple sapling presence means at least one live TREE record with DBH 1–4.9 inches. Presence is kept separate from established-tree basal area.</li>
-<li><strong>Competitor basal area.</strong> The model uses live non-maple basal area. It does not subtract established sugar maple from total basal area because that would misclassify sugar-maple saplings as competitors.</li>
-<li><strong>Basal-area frames.</strong> Each live-tree plot-basis contribution is <code>0.005454 * DIA^2 * TPA_UNADJ</code>. Condition density uses <code>MICRPROP_UNADJ</code> for microplot trees, <code>SUBPPROP_UNADJ</code> for subplot trees, and <code>MACRPROP_UNADJ</code> only above an applicable populated macroplot breakpoint. Derived total live basal area must pass strict agreement gates against <code>COND.BALIVE</code>.</li>
-</ul>
-<p>The previous full-cohort model is retained as an explicitly labeled baseline. Its nonlinear curve mixes 1–4.9-inch sugar-maple saplings into its basal-area predictor and includes conditions without established sugar maple. It therefore mixes species absence with regeneration continuity and is not the primary model.</p>
+<section id="sensitivity-and-temporal-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="sensitivity-and-temporal-comparisons">Sensitivity and temporal comparisons</h2>
+<p>The fixed checks restrict observations to exact overlap or follow-up manual version at least 9, or change the penalty to 0 or 4. Each comparison uses matched observations. The <a href="../outputs/tables/recruitment-model-sensitivities.csv">sensitivity table</a> reports the resulting denominators and scores.</p>
+<p>The retrospective temporal comparison trains on follow-ups before 2023 and tests follow-ups from 2023 onward. No physical plot crosses that split, although counties can recur. Protocol and sample composition also change across years.</p>
+<p>Elapsed interval is known at follow-up. These comparisons assess conditional next-visit outcomes over variable durations; they do not validate a fixed forecast horizon available at baseline.</p>
 </section>
-<section id="retained-cross-sectional-model" class="level2">
-<h2 class="anchored" data-anchor-id="retained-cross-sectional-model">Retained cross-sectional model</h2>
-<ul>
-<li><strong>Response.</strong> <code>outcome_no_seedlings = 1 - maple_seedling_detected</code>.</li>
-<li><strong>Fixed effects.</strong> Standardized <code>log1p</code> established sugar-maple basal area, sugar-maple sapling presence, standardized <code>log1p</code> non-maple basal area, microplot condition coverage, recorded treatment, stand age, disturbance, county temperature and precipitation proxies, and measurement year.</li>
-<li><strong>Functional form.</strong> A linear standardized <code>log1p</code> established-tree term is selected. A two-degree-of-freedom spline did not improve fit. Binary sapling presence had lower AIC than no sapling term, continuous sapling basal area, or presence plus positive sapling amount.</li>
-<li><strong>Treatment.</strong> The FIA treatment indicator is included because it is complete, scientifically relevant, and supported by 151 primary-cohort observations. It remains observational and is never described as a management effect.</li>
-<li><strong>Grouping.</strong> County GEOID is the retained random intercept. Adding a plot visit intercept produced zero estimated variance, a singular fit, and no AIC improvement.</li>
-<li><strong>Inference.</strong> Conventional fixed-effect summaries use model-based Wald 95% intervals. A fixed-effect logistic model with county-cluster CR1 covariance is reported as sensitivity evidence.</li>
-<li><strong>Validation.</strong> Ten deterministic folds hold out whole counties. Every fold relearns transformations from training data and predicts held-out counties with fixed effects only. This is internal geographic validation, not external validation.</li>
-<li><strong>Forest type.</strong> Indicators are evaluated through an omnibus sensitivity; the dominant type 801 is also refit alone. Sparse type cells are not interpreted individually.</li>
-<li><strong>Diagnostics.</strong> DHARMa checks cover uniformity, dispersion, outliers, and residual quantiles. A county-plus-plot random-structure comparison and collinearity audit are published.</li>
-</ul>
+<section id="linked-sapling-fates" class="level2">
+<h2 class="anchored" data-anchor-id="linked-sapling-fates">Linked sapling fates</h2>
+<p>I linked tagged baseline maple saplings to TREE records on their expected successor plot before screening follow-up species, status, or diameter. Fate eligibility has its own checks: an ambiguous new entrant does not alone invalidate an existing stem’s link.</p>
+<p>Of 1,593 baseline saplings, 1,580 have comparable biological fates: 334 recorded dead, 1,188 alive within the sapling class, and 58 alive at or above five inches. Nine stems fail frame consistency, three have a species reidentification, and one has a no-longer-sampled reconciliation. These 13 remain in the accounting without biological outcome assignments.</p>
+<p>Annual diameter difference divides follow-up minus baseline diameter by elapsed years for comparable surviving maples. Recorded death and size-class advancement describe distinct outcomes. The study does not estimate a mortality mechanism or infer canopy replacement from growth beyond five inches.</p>
 </section>
-<section id="descriptive-gap-screen" class="level2">
-<h2 class="anchored" data-anchor-id="descriptive-gap-screen">Descriptive gap screen</h2>
-<p>The high-established threshold is the upper third of frame-corrected established sugar-maple basal-area share among seedling-sampled conditions. The share denominator includes only live trees with DBH ≥ 5 inches. An upper-quartile alternative is reported. The sample-relative threshold is never reused to construct the inferential cohort.</p>
+<section id="supporting-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="supporting-analyses">Supporting analyses</h2>
+<p>The <a href="../report/recruitment.html#survey-priority-comparison">survey comparison</a> evaluates fixed selection rules on the same observations. Its primary comparison integrates ties at 25% condition capacity; 10% and 50% are fixed alternatives. The target of no recorded entry does not independently establish survey need, field cost, or treatment benefit.</p>
+<p>The <a href="../report/ri-audit.html">RI measurement audit</a> checks sampling coverage, dates, record codes, and seedling lengths in a subset of 90 intervals with 14 recorded-entry conditions. Ordinary counts match the RI counts at least one foot long on all 311 comparable microplot-condition intervals. The audit retains length classes and source categories. It does not fit a length model.</p>
 </section>
-<section id="spatial-decision" class="level2">
-<h2 class="anchored" data-anchor-id="spatial-decision">Spatial decision</h2>
-<p>The Daymet normal uses the cell at each Census Gazetteer county internal point. It is a county proxy, not a county-wide areal mean. Plot-level residual spatial autocorrelation cannot be tested without plot coordinates. A naïve test on county-aggregated residuals was rejected because it is unstable and does not represent plot-scale dependence.</p>
+<section id="geography-and-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="geography-and-interpretation">Geography and interpretation</h2>
+<p>The <a href="../report/spatial-context.html">study map</a> joins FIA county identifiers to county polygons and displays counts of eligible condition intervals. Exact FIA plot coordinates are neither used nor inferred. Map colors show sample support and cannot establish county regeneration rates or rankings.</p>
+<p>The results apply to the selected Michigan sample. They do not provide FIA survey-weighted statewide estimates, identify causes of absent entry, or validate a forest treatment. Adding maple size measurements did not clearly improve prediction under the specified comparisons; uncertainty spanning zero does not establish equivalence.</p>
+<p>The <a href="recruitment-reproducibility.md">reproducibility guide</a> describes the pinned inputs, computation, and verification commands.</p>
 
 
-<!-- -->
-
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -629,57 +531,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1009,401 +860,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     }
   });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analysis decisions</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This log records choices that materially affect the scientific interpretation.</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>It is updated from the actual FIA schema and cohort diagnostics; species,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>forest-type, status, disturbance, and treatment fields are checked against FIA</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>reference tables or the FIADB user guide.</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core paper completion on 9 September 2026</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>The user prioritizes the Michigan core research and paper over regional</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>acquisition. The <span class="co">[</span><span class="ot">completion contract</span><span class="co">](../research/runs/recruitment-2026-09-08/core-paper-contract.md)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>keeps the endpoint, two populations, model sequence, folds, penalty, full-refit</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>uncertainty, and temporal assessment. No new predictors or length models are</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>fitted. The paper is organized around ordinary-count information, added</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>maple-stage value, and linked tagged-stem fates.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Main metrics give equal weight to condition intervals, not plots or FIA</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>expansion weights. This differs from the plot-balanced metric proposed for</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>the optional length study. Realized interval yields a conditional retrospective</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>next-visit target, not a validated fixed-horizon forecast. Joint calibration</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>intercept and slope are distinguished from calibration-in-the-large.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">`make recruitment-core`</span> reproduces the Michigan analyses and paper audit</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>without regional acquisition or length planning. The audit recomputes metrics</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>from stored predictions and reconciles cohort, resampling, and fate summaries.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Regional and operational validation are future work, not reasons to withhold</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>the bounded core results. No publication or independent final sign-off is claimed.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Authorized regional feasibility: 9 September 2026</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>The user authorized Wisconsin and Minnesota public-inventory acquisition and</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>feasibility screening. The <span class="co">[</span><span class="ot">regional contract</span><span class="co">](../research/runs/recruitment-2026-09-08/regional-feasibility-contract.md)</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>preserves the species, forest types, same-area comparison, and outcome-blinded</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>boundary. No regional model fitting or field coordination is included.</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Both archive transfers currently fail with empty HTTP responses. Reachable</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>update histories do not substitute for records; no regional sample counts are</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>inferred. <span class="in">`make regional-acquire`</span> records failures explicitly and, on successful</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>retrieval, guards disk space, archive paths, SQLite integrity, source state,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>and immutable file hashes. It is separate from the Michigan pipeline. See the</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">access review</span><span class="co">](../research/runs/recruitment-2026-09-08/regional-access-review.md)</span>.</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>The scientific screen remains pending, not completed or statistically negative.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Count-versus-length study design: 9 September 2026</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">design contract</span><span class="co">](../research/runs/recruitment-2026-09-08/length-study-contract.md)</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>and <span class="co">[</span><span class="ot">study protocol</span><span class="co">](../report/length-study.qmd)</span> specify the next comparison;</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>no additional recruitment outcomes or length models are produced.</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use ordinary seedling count, coverage, and elapsed interval as the simple</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  benchmark; add only the fraction of standard-size seedlings in RI classes</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  5-6. Restrict the primary comparison to positive ordinary counts and verified</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  same-area definitions. Do not encode an undefined zero-denominator fraction.</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Retain the recorded next-visit endpoint and label its realized-duration</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  adjustment as retrospective and conditional, not an exact-horizon forecast.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Predeclare date-based choice of one interval per plot within a period,</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  plot-balanced training and paired Brier evaluation, and no shared plot across</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  development/assessment. Positive Brier gain favors length; field utility and</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  a minimum meaningful gain are not inferred from that sign.</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Census only RI opportunity metadata in the local snapshot. Of 88 positive-</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  seedling opportunities on 79 plots, seven visits on six plots are outside the</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  current 903-plot cohort. Additional frame/condition/protocol checks remain.</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  These rows do not constitute an independent evaluation sample.</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export 54 hypothetical paired-loss precision scenarios and separate plug-in</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  Wilson recall-width illustrations. They do not establish power, calibration</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  adequacy, training sample size, actual RI effect size, or guaranteed retention.</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recommend a separately scoped Wisconsin/Minnesota feasibility screen; a</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  geographic extension tests transport and is not Michigan-specific validation.</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Run <span class="in">`make length-plan`</span>. No new state inventory, model, publication, or field</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>coordination is included in this completed design.</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## RI measurement audit: 9 September 2026</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">RI contract</span><span class="co">](../research/runs/recruitment-2026-09-08/ri-contract.md)</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>fixes a measurement audit before any new height model. The</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">audit report</span><span class="co">](../report/ri-audit.qmd)</span> is the resulting descriptive study.</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Retain the existing 922-interval recruitment endpoint and eligible population.</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>  Baseline RI is screened independently of follow-up RI; TREE endpoint sampling</span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  remains governed by the recruitment audit.</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Require code-1 RI coverage of every contributing forest-condition microplot,</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  consistent core/RI subplot links, reconstructed condition area, valid</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>  condition/subplot-condition foreign keys, and valid count/source/length codes.</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  A missing retired subplot-status field is allowed; a contradictory populated</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>  field is not. Unknown or nonsampled RI is unavailable, not zero.</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Screen plot dates for May-September; no separate RI field date is present.</span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>  Treat date failures as unresolved plausibility flags, not proof of actual</span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  out-of-season RI collection.</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep all six classes and source categories; compare ordinary counts to RI</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>  classes 3-6 on identical units. The resulting 311/311 exact matches establish</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>  numerical redundancy, not independent field validation or an audited database</span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>  derivation mechanism.</span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prespecify classes 5-6 as the taller group. Report associations for all 90</span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  available baseline intervals and for the 71 ordinary-detected intervals.</span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>  Use 2,000 county resamples for descriptive intervals, not forecast validation.</span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Record historical coverage: 2016-2018 supplements inspected, including an</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>  archived 2016 draft; individual 2012-2015 supplements remain unrecovered.</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>  Do not equate the stored core <span class="in">`PLOT.MANUAL`</span> number with a P2+ annual edition.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stop before fitting height models: 14 total event plots split into ten</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>  development and four later-year events. A larger sample and a meaningful</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>  paired gain are needed before claiming incremental usefulness.</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>No external inventory, fieldwork, management rule, or publication is included.</span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Survey-priority extension: 8 September 2026</span></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">survey contract</span><span class="co">](../research/runs/recruitment-2026-09-08/survey-contract.md)</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>declares a retrospective decision proxy after the first recruitment results:</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>locating no recorded entry among baseline-detected conditions. It does not</span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>redefine the biological endpoint or establish actual survey need.</span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare random expectation, raw count, count per sampled coverage, sapling</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  presence, and the two existing count/stage models. No extra predictor search.</span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use 25% condition-interval capacity as the main comparison and 10%/50% as</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  fixed alternatives. Report the reversed objective of locating recorded entry.</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Integrate uniform random selection within cutoff ties for the main target</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>  counts. Retain deterministic source-key capture, attainable tie bounds, and</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  distinct selected plots; do not equate conditions with a fieldwork budget.</span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reuse original county folds and run 300 full-refit county resamples per</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>  population, including repeat scaling and selection. All 600 succeed.</span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Retain the earlier temporal test. A common seven-year scoring sensitivity</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  changes only test predictors, not training intervals or scaling; actual</span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>  outcome durations remain variable, so seven-year probabilities are unvalidated.</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Do not invent utility weights or a net-benefit threshold for surveying.</span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  The selected proxy is common, and a strong simple rule is the reference.</span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inventory the local RI tables only for record availability. Ninety eligible</span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>  intervals have baseline RI plot records and 14 recorded-entry events. No</span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>  absent RI row is recoded as zero, and no height model is fitted from this screen.</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>Stage-model yield exceeds the raw-count rule by one expected condition at</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>168-condition capacity, with paired uncertainty spanning zero. This motivated</span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>the subsequent RI measurement audit above; the</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">validation plan</span><span class="co">](survey-validation-plan.md)</span> still does not authorize an</span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>operational ranking release.</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recruitment reanalysis: 8 September 2026</span></span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>The new <span class="co">[</span><span class="ot">recruitment report</span><span class="co">](../report/recruitment.qmd)</span> implements the direction</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>review below. The <span class="co">[</span><span class="ot">analysis contract</span><span class="co">](../research/runs/recruitment-2026-09-08/analysis-contract.md)</span></span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>records the fixed endpoint, benchmark sequence, and interpretation limits.</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The endpoint is a newly tallied live sugar-maple TREE record with</span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>  <span class="in">`1 &lt;= DIA &lt; 5`</span>, <span class="in">`RECONCILECD=1`</span>, and no predecessor. It is not the fate of</span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>  an individually tagged baseline seedling.</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sampling checks use the intended plot predecessor, sampled forest status,</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>  national design, unchanged microplot arrangement, subplot numbers, and</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>  microplot condition-change proportions. <span class="in">`SUBPLOT.PREV_SBP_CN`</span> is entirely</span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>  empty in this database, so continuity is reconstructed, not directly verified</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>  through that field. Production QA codes 1 and 7 are retained.</span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The source has 932 pairs. Nine fail the conservative shared-proportion check</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>  and one has ambiguous new saplings, leaving 922 intervals and 169 entrants</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>  in 100 conditions. Unresolved opportunities are not negative outcomes.</span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Both all eligible pairs and the 672 pairs with baseline seedlings detected</span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>  are principal model populations. All 100 recruit-bearing conditions are in</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>  the latter. A zero observed event rate in baseline non-detections is not</span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>  treated as a known probability of zero.</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Four fixed logistic models compare prevalence, observation opportunity,</span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  recorded seedling count, and maple stage structure. The penalty is summed</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>  binomial negative log likelihood plus <span class="in">`1/2 * sum(beta^2)`</span> for slopes only.</span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>  Counts and sapling density are <span class="in">`log1p`</span> transformed; scaling is learned within</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>  each training sample. No coefficient p-values are attached to ridge fits.</span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Five folds hold out counties; their allocation uses counts, not outcomes.</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>  Paired uncertainty uses 300 county resamples per population, refitting</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>  scaling and all four models. Original folds and the model set stay fixed.</span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>  All 600 resamples succeed. The bootstrap omits question/model-set selection</span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>  uncertainty and is not an independent validation dataset.</span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Brier score, log loss, AUC, average precision, calibration, and equal-capacity</span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>  capture are reported on identical held-out observations within each population.</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>  Probability ties use stable key order, with tie-neutral capture also exported.</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exact mapped overlap, follow-up manual version 9 onward, and penalties 0 and</span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>  4 are sensitivities. A retrospective pre-2023/2023-onward split shares no</span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>  physical plots. The data snapshot was previously explored.</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tagged baseline saplings are searched on the expected successor plot before</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>  filtering follow-up species, diameter, or status. Frame-ineligible, reidentified,</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  and cruiser-error records stay in the accounting but receive no biological</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>  fate outcome. The fate cohort has its own eligibility flag; an ambiguous new</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>  arrival does not by itself invalidate an existing tagged stem's follow-up.</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>One source-verified sampled zero with <span class="in">`BALIVE=0`</span> corrects missing derived</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>  follow-up tree metrics in the new data only. This is not general imputation.</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>The stage models' small added Brier improvements have intervals spanning zero,</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>and they capture no more recruit-bearing conditions at equal capacity. The</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>analysis is not extended with extra predictors to obtain a preferred result.</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Direction review: 7 September 2026</span></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">research direction and goals</span><span class="co">](research-direction.md)</span> supersede the earlier</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>interpretation. It proposed evaluating recorded sapling recruitment</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>and linked-stem fates, now implemented as described above. The detection analysis below</span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>is retained as an exploratory pilot, and its operational field-triage claim is</span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>withdrawn. Audit scripts 11 and 12 reproduce the benchmark reassessment and</span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>candidate-endpoint counts. Existing outcomes have been explored, so neither</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>the reanalysis nor a later temporal split of this snapshot is untouched validation.</span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>The full detection model improves Brier by only 0.00102 over starting abundance,</span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>coverage, and interval; a conditional county-bootstrap interval spans zero.</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>Using total non-maple basal area as the comparator does not erase the beech</span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>association. Its uncertainty and limited added prediction argue against a</span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>beech-centered research agenda, not against testing beech as one hypothesis.</span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Declared pilot boundaries</span></span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The primary analytical key is a baseline and follow-up condition pair. Each</span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>   visit retains its <span class="in">`PLT_CN + CONDID`</span> key.</span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The pilot's primary response is loss of sugar-maple seedling detection between</span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>   sampled visits. A separate secondary response captures detection appearance</span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>   among baseline non-detections. Neither is tracked mortality, recruitment, or</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>   confirmed ecological absence.</span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The regeneration-gap flag is a descriptive screen, not a validated index or</span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>   the regression response.</span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Climate is a county-scale proxy and cannot be interpreted as plot exposure.</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Maps summarize the analyzed sample, not design-based county or statewide</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>   population estimates.</span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Exact FIA plot locations are neither used nor inferred.</span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Formal FIA population estimation remains a future extension. Transition</span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>   counts and predictions are sample analyses, not statewide prevalence.</span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## Source and cohort</span></span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FIADB source.** Michigan's SQLite FIADB archive was retrieved from the FIA</span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>  DataMart. The acquisition audit records the URL, byte size, retrieval time,</span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>  and SHA-256 checksum.</span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Evaluation.** Release v2.0.0 pins EVALID 262501, “MICHIGAN 2025:</span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>  2019-2025: CURRENT AREA, CURRENT VOLUME.” The evaluation inventory window is</span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>  2019–2025; assigned measurement records span 2018–2025. A configuration</span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>  change is required to analyze a different evaluation.</span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Operational northern-hardwood cohort.** FIA forest-type group 800 is the</span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>  maple / beech / birch group. Active retained types resolve from</span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>  <span class="in">`REF_FOREST_TYPE`</span>: 801 sugar maple / beech / yellow birch, 802 black cherry,</span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>  805 hard maple / basswood, and 809 red maple / upland.</span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sugar maple.** <span class="in">`REF_SPECIES`</span> resolves *Acer saccharum* to SPCD 318.</span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Seedling opportunity.** A condition is sampled only when</span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>  <span class="in">`MICRPROP_UNADJ &gt; 0`</span>. An absent sugar-maple SEEDLING row becomes zero only</span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>  under that demonstrated opportunity.</span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detection-pilot longitudinal design</span></span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Time ordering.** Ecological eligibility and every ecological predictor are</span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>  defined at baseline. Follow-up is screened only for a valid outcome</span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>  observation—sampled accessible forest with positive microplot coverage—and</span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>  is never used to define baseline forest type, established-maple status, or</span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>  predictor values. Interval length is an exposure-time design covariate known</span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>  only after the follow-up measurement.</span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Condition linkage.** <span class="in">`SUBP_COND_CHNG_MTRX`</span> is the authoritative linkage.</span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>  <span class="in">`SUBPTYP = 2`</span> is used because the response is measured on microplots. Matrix</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>  rows are aggregated to one baseline–follow-up condition pair before any tree</span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>  or seedling records are joined.</span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pair quality.** Baseline-side and follow-up-side pair degrees are calculated</span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>  on the full microplot matrix before ecological filtering. The primary cohort</span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>  requires degree one on both sides. This prevents a split or merge from being</span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>  disguised as a one-to-one pair after filtering.</span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Footprint continuity.** Pair overlap is the sum of</span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>  <span class="in">`SUBPTYP_PROP_CHNG`</span> across the four microplots divided by four. Eligibility</span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>  requires overlap divided by both visits' <span class="in">`MICRPROP_UNADJ`</span> to be at least</span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>  0.90. This relative rule retains small but spatially stable conditions. The</span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>  932 primary pairs all exceed 0.991 on both ratios.</span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Baseline cohort.** The baseline plot must be sampled; the condition must be</span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>  accessible forest in active forest-type group 800 with positive microplot</span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>  coverage and at least one live sugar-maple TREE record at DBH ≥5 inches.</span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Follow-up observation.** The mapped follow-up plot must be sampled and the</span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>  condition must be accessible forest with positive microplot coverage. It is</span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>  not required to remain in group 800 because that classification is</span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>  post-baseline; 915 of 932 pairs nevertheless do so.</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Transition states.** Detection is derived independently at each visit.</span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>  The four states are persistent non-detection (196), appearance (59), loss</span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>  (75), and persistence (602). The primary loss model uses the 677 conditions</span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>  detected at baseline.</span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pilot predictors.** The seven v2 slopes are</span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>  standardized <span class="in">`log1p`</span> baseline seedling density, baseline sugar-maple sapling presence,</span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>  standardized <span class="in">`log1p`</span> established-maple basal area, standardized <span class="in">`log1p`</span></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>  American beech sapling basal area, standardized <span class="in">`log1p`</span> non-maple basal area</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>  excluding beech saplings, standardized baseline microplot coverage, and</span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>  standardized interval length. Retaining established beech in the residual</span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>  stand-structure term makes the sapling hypothesis a size-class-specific</span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>  contrast. All tree and stand predictors are baseline-only.</span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event support.** Seventy-five loss events provide 10.7 events per slope.</span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>  Splines, treatment, climate, forest-type indicators, disturbance, and stand</span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>  age are excluded from the primary loss model to protect that event budget.</span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>  This ratio is descriptive, not an adequacy guarantee. Future model planning</span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a>  must account for clustering, outcome frequency, expected performance, and</span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>  shrinkage; tests verify arithmetic rather than certify a ten-event threshold.</span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Inference.** The primary binomial GLM reports county-cluster CR1 confidence</span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>  intervals. A county random-intercept fit is a non-singular sensitivity model,</span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>  not a required gate for the forecasting specification.</span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Validation.** Five deterministic folds withhold whole counties. Every fold</span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>  relearns continuous transformations using training counties only, and every</span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>  held-out fold contains both loss and persistence events.</span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Causal boundary.** Coefficients are prognostic associations. American beech</span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>  is a mechanism hypothesis for targeted follow-up, not evidence that beech</span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>  removal would prevent loss. Inter-visit treatment is excluded because timing</span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>  and confounding by indication do not support a causal contrast.</span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Repeated-count boundary.** The loss model is conditioned on a positive</span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>  baseline tally and then uses that tally's density as a predictor. Low positive</span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>  counts are mechanically more likely to become zero under repeated sampling,</span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>  so the density association can reflect regression to the mean or count</span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>  variability as well as biological change.</span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## Secondary appearance design</span></span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Conditional question.** The appearance cohort contains the 255 primary</span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>  condition pairs without a baseline sugar-maple seedling detection. The</span>
-<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a>  outcome is one for a positive follow-up tally and zero for persistent</span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>  non-detection; 59 appearances are observed.</span>
-<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Lean specification.** The four pilot slopes are:</span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>  baseline sugar-maple sapling presence, standardized <span class="in">`log1p`</span> established-maple</span>
-<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a>  basal area, standardized baseline microplot coverage, and standardized</span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>  interval length. Beech and general competitor terms are excluded because the</span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>  beech hypothesis concerns loss and the smaller appearance cohort cannot</span>
-<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>  support a broad model.</span>
-<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event support.** The full cohort provides 14.75 appearances per slope. The</span>
-<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a>  leanest county-held-out training set retains 42 appearances, or 10.5 per</span>
-<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a>  slope.</span>
-<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Inference and validation.** County-cluster CR1 intervals and the same</span>
-<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a>  five-fold county-held-out procedure are used. Transformations are relearned</span>
-<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>  within each training fold.</span>
-<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Result boundary.** The model barely improves Brier score over fold-specific</span>
-<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>  prevalence and has held-out AUC 0.566 with calibration slope 0.460. It is</span>
-<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a>  a weak result for this tested specification, cohort, and partition—not a</span>
-<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>  predictive limit of the database or a usable site-ranking tool.</span>
-<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cross-sectional size-class foundation</span></span>
-<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>The retained v1.3.0 model separates FIA TREE size classes instead of treating</span>
-<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>all live sugar-maple basal area as established canopy structure.</span>
-<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Established-tree cohort.** The primary cohort requires at least one live</span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>  sugar-maple TREE record with DBH ≥ 5 inches, FIA's subplot-tree threshold.</span>
-<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>  This rule is inventory-defined, independent of the seedling outcome, and</span>
-<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>  retains 1,072 sampled conditions in 66 counties.</span>
-<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sapling stage.** Sugar-maple sapling presence means at least one live TREE</span>
-<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>  record with DBH 1–4.9 inches. Presence is kept separate from established-tree</span>
-<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>  basal area.</span>
-<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Competitor basal area.** The model uses live non-maple basal area. It does</span>
-<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>  not subtract established sugar maple from total basal area because that would</span>
-<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>  misclassify sugar-maple saplings as competitors.</span>
-<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Basal-area frames.** Each live-tree plot-basis contribution is</span>
-<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>  <span class="in">`0.005454 * DIA^2 * TPA_UNADJ`</span>. Condition density uses <span class="in">`MICRPROP_UNADJ`</span> for</span>
-<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a>  microplot trees, <span class="in">`SUBPPROP_UNADJ`</span> for subplot trees, and <span class="in">`MACRPROP_UNADJ`</span> only</span>
-<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>  above an applicable populated macroplot breakpoint. Derived total live basal</span>
-<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>  area must pass strict agreement gates against <span class="in">`COND.BALIVE`</span>.</span>
-<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a>The previous full-cohort model is retained as an explicitly labeled baseline.</span>
-<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>Its nonlinear curve mixes 1–4.9-inch sugar-maple saplings into its basal-area</span>
-<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>predictor and includes conditions without established sugar maple. It therefore</span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>mixes species absence with regeneration continuity and is not the primary model.</span>
-<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a><span class="fu">## Retained cross-sectional model</span></span>
-<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Response.** <span class="in">`outcome_no_seedlings = 1 - maple_seedling_detected`</span>.</span>
-<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fixed effects.** Standardized <span class="in">`log1p`</span> established sugar-maple basal area,</span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>  sugar-maple sapling presence, standardized <span class="in">`log1p`</span> non-maple basal area,</span>
-<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>  microplot condition coverage, recorded treatment, stand age, disturbance,</span>
-<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>  county temperature and precipitation proxies, and measurement year.</span>
-<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Functional form.** A linear standardized <span class="in">`log1p`</span> established-tree term is</span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>  selected. A two-degree-of-freedom spline did not improve fit. Binary sapling</span>
-<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>  presence had lower AIC than no sapling term, continuous sapling basal area,</span>
-<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>  or presence plus positive sapling amount.</span>
-<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Treatment.** The FIA treatment indicator is included because it is complete,</span>
-<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>  scientifically relevant, and supported by 151 primary-cohort observations.</span>
-<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>  It remains observational and is never described as a management effect.</span>
-<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Grouping.** County GEOID is the retained random intercept. Adding a plot</span>
-<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>  visit intercept produced zero estimated variance, a singular fit, and no AIC</span>
-<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>  improvement.</span>
-<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Inference.** Conventional fixed-effect summaries use model-based Wald 95%</span>
-<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>  intervals. A fixed-effect logistic model with county-cluster CR1 covariance</span>
-<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>  is reported as sensitivity evidence.</span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Validation.** Ten deterministic folds hold out whole counties. Every fold</span>
-<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>  relearns transformations from training data and predicts held-out counties</span>
-<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>  with fixed effects only. This is internal geographic validation, not external</span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>  validation.</span>
-<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Forest type.** Indicators are evaluated through an omnibus sensitivity;</span>
-<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>  the dominant type 801 is also refit alone. Sparse type cells are not</span>
-<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>  interpreted individually.</span>
-<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Diagnostics.** DHARMa checks cover uniformity, dispersion, outliers, and</span>
-<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>  residual quantiles. A county-plus-plot random-structure comparison and</span>
-<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>  collinearity audit are published.</span>
-<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a><span class="fu">## Descriptive gap screen</span></span>
-<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a>The high-established threshold is the upper third of frame-corrected</span>
-<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>established sugar-maple basal-area share among seedling-sampled conditions. The</span>
-<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a>share denominator includes only live trees with DBH ≥ 5 inches. An upper-quartile</span>
-<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>alternative is reported. The sample-relative threshold is never reused to</span>
-<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a>construct the inferential cohort.</span>
-<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spatial decision</span></span>
-<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a>The Daymet normal uses the cell at each Census Gazetteer county internal point.</span>
-<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>It is a county proxy, not a county-wide areal mean. Plot-level residual spatial</span>
-<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a>autocorrelation cannot be tested without plot coordinates. A naïve test on</span>
-<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>county-aggregated residuals was rejected because it is unstable and does not</span>
-<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a>represent plot-scale dependence.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+  </script>
 </div> <!-- /content -->
 
 

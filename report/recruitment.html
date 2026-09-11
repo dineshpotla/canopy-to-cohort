@@ -366,15 +366,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../report/spatial-context.html"> 
-<span class="menu-text">Maps and visuals</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../report/index.html"> 
-<span class="menu-text">Detection pilot</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../docs/research-direction.html"> 
-<span class="menu-text">Research direction</span></a>
+<span class="menu-text">Map and figures</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../docs/analysis-decisions.html"> 
@@ -500,7 +492,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="findings-in-plain-language">Findings in plain language</h2>
 <p>More seedlings were a useful clue to later sapling entry, but not a guarantee: only 72 of 280 sampled forest conditions with more than 20 seedlings initially had a new live maple sapling recorded at the next visit. Adding measurements of existing maple saplings and larger maples did not clearly improve prediction. Separately, following tagged saplings showed that some left the size class by growing, not dying.</p>
 <p>Here, a sapling has a trunk at least 1 inch but less than 5 inches in diameter at breast height. A new recorded sapling is not an individually tracked baseline seedling. These sample results do not establish statewide regeneration rates, diagnose why entry was absent, or identify a forest treatment.</p>
-<p><a href="../index.html">Project overview</a> · <a href="../report/spatial-context.html">Maps and exploratory visuals</a> · <a href="https://github.com/dineshpotla/canopy-to-cohort">Code and aggregate evidence</a></p>
+<p><a href="../index.html">Project overview</a> · <a href="../report/spatial-context.html">Study map and figures</a> · <a href="https://github.com/dineshpotla/canopy-to-cohort">Code and aggregate evidence</a></p>
 </section>
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
@@ -893,7 +885,7 @@ Table&nbsp;5: County-held-out performance among 672 baseline seedling detections
 </div>
 </div>
 <p>The count model’s AUC is 0.796 overall and 0.699 among baseline detections. Adding maple stages yields 0.806 and 0.711, respectively. The lower conditional discrimination illustrates the harder task of distinguishing entry within already seedling-bearing conditions. Pooled ranking partly benefits from separating baseline zeros from positive counts.</p>
-<p>Count-model mean predicted probabilities are 10.9% overall and 14.9% among baseline detections; observed fractions are 10.8% and 14.9%. Corresponding observed-to-expected ratios are 0.993 and 0.997. Calibration slopes below one, especially within baseline detections, caution against interpreting near-matching average probabilities as established local calibration or transportability. I retain complete calibration diagnostics in in the <a href="../outputs/tables/recruitment-model-validation.csv">validation table</a>.</p>
+<p>Count-model mean predicted probabilities are 10.9% overall and 14.9% among baseline detections; observed fractions are 10.8% and 14.9%. Corresponding observed-to-expected ratios are 0.993 and 0.997. Calibration slopes below one, especially within baseline detections, caution against interpreting near-matching average probabilities as established local calibration or transportability. I retain complete calibration diagnostics in the <a href="../outputs/tables/recruitment-model-validation.csv">validation table</a>.</p>
 <div class="cell">
 <div id="tbl-recruitment-calibration" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1379,7 +1371,7 @@ Table&nbsp;11: All six fixed no-entry selection strategies among 672 baseline de
 </div>
 <p>For the no-entry target, raw counts and predicted entry probabilities are ranked from low to high. Coverage-normalized count and absence of baseline saplings provide two additional simple comparators. Expected yield includes every condition strictly beyond the selection cutoff and assigns the remaining places uniformly within the cutoff tie. Fractional expected targets therefore express tie averaging, not fractional observed conditions. For each strategy, selected target fraction divides expected targets by 168; target capture divides by all 572 no-entry conditions. These answer different questions. Random selection has a high expected yield because 85.1% of the eligible detected subset already meets this descriptive target.</p>
 <p>The stage-minus-raw-count difference in selected target fraction is +0.60 percentage points, with a 95% full-refit county-bootstrap interval of −3.66 to +2.28. A separate 300 resamples per population all succeed. In later-year testing, raw counts yield 65.18 expected targets among 68 selected, versus 65 for either model. The one-condition point gain is not a demonstrated decision advantage. Raw-count selection covers 168 plots versus 167 for the stage model, so equal condition capacity is not equal field cost.</p>
-<p>The opposite target of locating entrants yields 41 for high raw counts, 44 for the count model, and 43 for the stage model among 168 selected baseline detections. Fixed 10% and 50% capacities likewise do not establish stage-model dominance. A common seven-year scoring sensitivity changes predictions but not the observed variable-duration outcomes, so it cannot validate seven-year probabilities. I retain full <a href="../outputs/tables/recruitment-survey-summary.csv">strategy results</a>, <a href="../outputs/tables/recruitment-survey-paired-differences.csv">paired uncertainty</a>, <a href="../outputs/tables/recruitment-survey-temporal.csv">temporal selection</a>, and <a href="../outputs/tables/recruitment-survey-common-horizon.csv">common-horizon comparisons</a> are retained. Meaningful net benefit requires defensible consequences of errors <span class="citation" data-cites="vickers2006">(<a href="#ref-vickers2006" role="doc-biblioref">Vickers and Elkin 2006</a>)</span>; no forest-survey utility threshold is assumed here.</p>
+<p>The opposite target of locating entrants yields 41 for high raw counts, 44 for the count model, and 43 for the stage model among 168 selected baseline detections. Fixed 10% and 50% capacities likewise do not establish stage-model dominance. A common seven-year scoring sensitivity changes predictions but not the observed variable-duration outcomes, so it cannot validate seven-year probabilities. I retain full <a href="../outputs/tables/recruitment-survey-summary.csv">strategy results</a>, <a href="../outputs/tables/recruitment-survey-paired-differences.csv">paired uncertainty</a>, <a href="../outputs/tables/recruitment-survey-temporal.csv">temporal selection</a>, and <a href="../outputs/tables/recruitment-survey-common-horizon.csv">common-horizon comparisons</a>. Meaningful net benefit requires defensible consequences of errors <span class="citation" data-cites="vickers2006">(<a href="#ref-vickers2006" role="doc-biblioref">Vickers and Elkin 2006</a>)</span>; no forest-survey utility threshold is assumed here.</p>
 </section>
 <section id="secondary-length-measurement-audit" class="level3">
 <h3 class="anchored" data-anchor-id="secondary-length-measurement-audit">Secondary length measurement audit</h3>
@@ -1402,7 +1394,7 @@ Table&nbsp;11: All six fixed no-entry selection strategies among 672 baseline de
 <section id="implications-and-optional-future-work" class="level3">
 <h3 class="anchored" data-anchor-id="implications-and-optional-future-work">Implications and optional future work</h3>
 <p>The practical implication is to retain simple count-based benchmarks and state precisely what they predict. A management tool would additionally require a defined action, independently assessed survey need or treatment response, consequences of errors, and relevant external evaluation. No operational ranking or intervention rule is released.</p>
-<p>Length structure is a plausible follow-on hypothesis motivated by earlier FIA work <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span>, not the unfulfilled central objective of this paper. A <a href="../report/length-study.html">separate design</a> specifies a matched count-versus-length comparison and evaluation safeguards. Regional inventory acquisition and field validation are deferred extensions. Wisconsin or Minnesota data are not required to complete the bounded Michigan results, and no regional outcome or height-model result is claimed. The earlier beech association concerned seedling-detection loss and remains in the supporting pilot; it is not recast as a recruitment mechanism.</p>
+<p>Length structure is a plausible follow-on hypothesis motivated by earlier FIA work <span class="citation" data-cites="harris2022">(<a href="#ref-harris2022" role="doc-biblioref">Harris et al. 2022</a>)</span>, not the unfulfilled central objective of this paper. A <a href="../report/length-study.html">separate design</a> specifies a matched count-versus-length comparison and evaluation safeguards. Regional inventory acquisition and field validation are deferred extensions. Wisconsin or Minnesota data are not required to complete the bounded Michigan results, and no regional outcome or height-model result is claimed.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
@@ -1414,11 +1406,11 @@ Table&nbsp;11: All six fixed no-entry selection strategies among 672 baseline de
 <section id="data-and-code-availability" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-code-availability">Data and code availability</h3>
 <p>The underlying public inventory is distributed through the USDA Forest Service FIA DataMart <span class="citation" data-cites="usfs_datamart">(<a href="#ref-usfs_datamart" role="doc-biblioref">U.S. Forest Service 2026</a>)</span>. The analysis uses Michigan evaluation 262501 and the source archive identified by SHA-256 <code>2c1eb908a47436d4edd0f3ba9e3d647b79a4f36cef972c5ba83277300817aee1</code>. The state download URL is updated over time; the evaluation identifier alone does not fix every source record. Reproducing the reported results therefore requires the identified snapshot, not an unchecked current download.</p>
-<p>Analysis scripts, configuration, an R dependency lockfile, aggregate tables, and figure data are publicly available in the <a href="https://github.com/dineshpotla/canopy-to-cohort">project repository</a>. Record-level derived datasets and predictions remain local. Exact FIA plot locations are neither used nor inferred. A version-specific public archive for the recruitment analysis has not yet been assigned; the earlier project release is not a release of these revised results.</p>
+<p>Analysis scripts, configuration, an R dependency lockfile, aggregate tables, and figure data are publicly available in the <a href="https://github.com/dineshpotla/canopy-to-cohort">project repository</a>. Record-level derived datasets and predictions remain local. Exact FIA plot locations are neither used nor inferred. A version-specific public archive for the recruitment analysis has not yet been assigned. Cite the exact Git commit when referring to these results.</p>
 </section>
 <section id="computational-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="computational-workflow">Computational workflow</h3>
-<p>The canonical manuscript, endpoint definitions, analysis contracts, aggregate tables, figures, and tests are maintained together. The <a href="../report/index.html">seedling-detection pilot</a> is preserved as a distinct exploratory analysis. With the pinned source and longitudinal cohort already built, run:</p>
+<p>I maintain the manuscript, endpoint definitions, analysis contracts, aggregate tables, figures, and tests together. With the pinned source and linked cohort already built, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> recruitment-core</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> test</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> submission-audit</span>

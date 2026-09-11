@@ -2,42 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dineshpotla.github.io/canopy-to-cohort/docs/data-dictionary.html</loc>
-    <lastmod>2026-09-09T14:42:08.738Z</lastmod>
+    <lastmod>2026-09-11T01:32:03.221Z</lastmod>
   </url>
   <url>
     <loc>https://dineshpotla.github.io/canopy-to-cohort/docs/survey-validation-plan.html</loc>
-    <lastmod>2026-09-10T01:53:53.666Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/length-study.html</loc>
-    <lastmod>2026-09-10T01:57:55.803Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/spatial-context.html</loc>
-    <lastmod>2026-09-10T20:08:06.706Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/index.html</loc>
-    <lastmod>2026-09-09T00:27:23.531Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/index.html</loc>
-    <lastmod>2026-09-10T20:07:35.644Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/recruitment.html</loc>
-    <lastmod>2026-09-10T20:27:11.695Z</lastmod>
+    <lastmod>2026-09-11T01:33:02.491Z</lastmod>
   </url>
   <url>
     <loc>https://dineshpotla.github.io/canopy-to-cohort/report/ri-audit.html</loc>
-    <lastmod>2026-09-10T02:03:33.272Z</lastmod>
+    <lastmod>2026-09-11T01:33:02.492Z</lastmod>
   </url>
   <url>
-    <loc>https://dineshpotla.github.io/canopy-to-cohort/docs/research-direction.html</loc>
-    <lastmod>2026-09-10T01:53:53.665Z</lastmod>
+    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/recruitment.html</loc>
+    <lastmod>2026-09-11T01:27:09.970Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dineshpotla.github.io/canopy-to-cohort/index.html</loc>
+    <lastmod>2026-09-11T01:27:09.969Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/spatial-context.html</loc>
+    <lastmod>2026-09-11T01:28:57.031Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dineshpotla.github.io/canopy-to-cohort/report/length-study.html</loc>
+    <lastmod>2026-09-11T01:33:02.490Z</lastmod>
   </url>
   <url>
     <loc>https://dineshpotla.github.io/canopy-to-cohort/docs/analysis-decisions.html</loc>
-    <lastmod>2026-09-10T01:53:53.666Z</lastmod>
+    <lastmod>2026-09-11T01:30:18.481Z</lastmod>
   </url>
 </urlset>

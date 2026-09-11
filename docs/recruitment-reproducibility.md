@@ -1,7 +1,7 @@
-# Recruitment manuscript reproducibility handoff
+# Recruitment study reproducibility guide
 
 Prepared September 10, 2026. This records the local inputs and commands for the
-revised Michigan manuscript. Code, aggregate evidence, and the HTML report are
+Michigan recruitment manuscript. Code, aggregate evidence, and the HTML report are
 publicly available on [GitHub](https://github.com/dineshpotla/canopy-to-cohort).
 This is not a claim that an immutable archive exists or that a clean-machine
 reproduction has been completed. Cite the exact Git commit for this public draft.
@@ -18,7 +18,7 @@ reproduction of the reported results.
 
 The core cohort has 922 intervals on 903 plots in 66 counties; 100 intervals
 contain 169 recorded entrants. These are sample counts, not population totals.
-Do not replace the recruitment endpoint with the earlier detection-loss pilot.
+The endpoint counts qualifying new live maple saplings on comparable sampled area.
 
 ## Local verification without refitting the research models
 
@@ -53,8 +53,7 @@ make recruitment-core
 make submission-audit
 ```
 
-The common cohort is built directly from the database; no new climate download,
-regional inventory, or pilot model fit is required for this path. The script
+The common cohort is built directly from the Michigan database. The script
 sequence and dependency requirements have been inspected, but a fresh-machine
 run from an empty cache remains a release check rather than a completed claim.
 
@@ -79,7 +78,7 @@ necessary new ecological analysis.
 
 The public source includes the canonical manuscript, bibliography, configuration,
 dependency lockfile, required R modules and scripts, tests, analysis contracts,
-aggregate evidence, and the two scientific figures. The editable Word export
+aggregate evidence, the county map, and the two result figures. The editable Word export
 is built locally, not distributed on the website. A future archival deposit
 should include a machine-readable checksum manifest and the exact code revision.
 Keep cohort construction, model fitting, evidence auditing, and document
